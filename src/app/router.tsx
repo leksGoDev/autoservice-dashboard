@@ -9,7 +9,7 @@ import { OrdersPage } from "../pages/orders/OrdersPage";
 import { VehiclesPage } from "../pages/vehicles/VehiclesPage";
 import { WorkBoardPage } from "../pages/work-board/WorkBoardPage";
 
-export const router = createBrowserRouter([
+export const appRoutes = [
   {
     path: "/",
     element: <AppShell />,
@@ -55,4 +55,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+export const router = createBrowserRouter(appRoutes);
