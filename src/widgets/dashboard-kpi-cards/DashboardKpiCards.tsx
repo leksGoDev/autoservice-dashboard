@@ -1,24 +1,39 @@
+import type { DashboardMetrics } from "@/entities/dashboard/model/types";
+
 import { WidgetCard } from "../../shared/ui/WidgetCard";
 
-export type DashboardKpi = {
+type DashboardKpiCardsProps = {
+  metrics: DashboardMetrics;
+};
+
+type KpiCard = {
   id: string;
   label: string;
   value: string;
-  trend: string;
-  trendTone: "up" | "down" | "neutral";
 };
 
-type DashboardKpiCardsProps = {
-  items: DashboardKpi[];
-};
+function formatCurrency(value: number) {
+  return `$${value.toLocaleString()}`;
+}
 
-export function DashboardKpiCards({ items }: DashboardKpiCardsProps) {
+export function DashboardKpiCards({ metrics }: DashboardKpiCardsProps) {
+  const items: KpiCard[] = [
+    { id: "active", label: "Active Orders", value: String(metrics.active) },
+    { id: "overdue", label: "Overdue Orders", value: String(metrics.overdue) },
+    { id: "scheduled", label: "Scheduled Orders", value: String(metrics.scheduled) },
+    { id: "today", label: "Revenue Today", value: formatCurrency(metrics.revenueToday) },
+    {
+      id: "month",
+      label: "Revenue This Month",
+      value: formatCurrency(metrics.revenueThisMonth),
+    },
+  ];
+
   return (
     <div className="dashboard-kpi-grid">
       {items.map((item) => (
         <WidgetCard key={item.id} title={item.label} className="dashboard-kpi-grid__item">
           <p className="dashboard-kpi-grid__value">{item.value}</p>
-          <p className={`dashboard-kpi-grid__trend dashboard-kpi-grid__trend--${item.trendTone}`}>{item.trend}</p>
         </WidgetCard>
       ))}
     </div>

@@ -1,11 +1,6 @@
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import type { MechanicWorkloadItem } from "@/entities/dashboard/model/types";
 
-export type MechanicWorkloadItem = {
-  id: string;
-  name: string;
-  activeOrders: number;
-  utilization: number;
-};
+import { WidgetCard } from "../../shared/ui/WidgetCard";
 
 type DashboardMechanicWorkloadProps = {
   items: MechanicWorkloadItem[];
@@ -28,11 +23,11 @@ export function DashboardMechanicWorkload({ items }: DashboardMechanicWorkloadPr
     <WidgetCard title="Mechanic Workload" description="Current active workload by mechanic">
       <ul className="workload-list">
         {items.map((item) => (
-          <li key={item.id} className="workload-list__item">
+          <li key={item.mechanicId} className="workload-list__item">
             <div className="workload-list__row">
-              <p className="workload-list__name">{item.name}</p>
+              <p className="workload-list__name">{item.mechanicName}</p>
               <span className={`workload-list__badge workload-list__badge--${workloadTone(item.utilization)}`}>
-                {item.activeOrders} active
+                {item.assignedOrders} active
               </span>
             </div>
             <div className="workload-list__meta">

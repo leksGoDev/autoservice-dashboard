@@ -1,22 +1,25 @@
+import type { RecentOrderItem } from "@/entities/dashboard/model/types";
+
 import { WidgetCard } from "../../shared/ui/WidgetCard";
 
-export type RecentOrder = {
-  id: string;
-  customer: string;
-  vehicle: string;
-  status: "Scheduled" | "In Progress" | "Waiting Parts" | "Completed" | "Cancelled";
-  priority: "Low" | "Medium" | "High" | "Urgent";
-  mechanic: string;
-  totalCost: number;
-  createdAt: string;
-};
-
 type DashboardRecentOrdersProps = {
-  orders: RecentOrder[];
+  orders: RecentOrderItem[];
 };
 
-function token(value: string) {
-  return value.toLowerCase().replace(/\s+/g, "-");
+function formatStatus(status: RecentOrderItem["status"]) {
+  if (status === "in_progress") {
+    return "In Progress";
+  }
+
+  if (status === "waiting_parts") {
+    return "Waiting Parts";
+  }
+
+  return status[0].toUpperCase() + status.slice(1);
+}
+
+function formatPriority(priority: RecentOrderItem["priority"]) {
+  return priority[0].toUpperCase() + priority.slice(1);
 }
 
 export function DashboardRecentOrders({ orders }: DashboardRecentOrdersProps) {
@@ -39,18 +42,22 @@ export function DashboardRecentOrders({ orders }: DashboardRecentOrdersProps) {
           <tbody>
             {orders.map((order) => (
               <tr key={order.id}>
-                <td className="dashboard-table__mono">{order.id}</td>
-                <td>{order.customer}</td>
-                <td>{order.vehicle}</td>
+                <td className="dashboard-table__mono">{order.number}</td>
+                <td>{order.customerName}</td>
+                <td>{order.vehicleLabel}</td>
                 <td>
-                  <span className={`status-chip status-chip--${token(order.status)}`}>{order.status}</span>
+                  <span className={`status-chip status-chip--${order.status.replace("_", "-")}`}>
+                    {formatStatus(order.status)}
+                  </span>
                 </td>
                 <td>
-                  <span className={`priority-chip priority-chip--${token(order.priority)}`}>{order.priority}</span>
+                  <span className={`priority-chip priority-chip--${order.priority}`}>
+                    {formatPriority(order.priority)}
+                  </span>
                 </td>
-                <td>{order.mechanic}</td>
+                <td>{order.assignedMechanic}</td>
                 <td>${order.totalCost.toLocaleString()}</td>
-                <td>{order.createdAt}</td>
+                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>

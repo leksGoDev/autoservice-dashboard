@@ -1,3 +1,5 @@
+import type { DashboardOrdersTrendPoint } from "@/entities/dashboard/model/types";
+
 import {
   Bar,
   BarChart,
@@ -11,14 +13,8 @@ import {
 
 import { WidgetCard } from "../../shared/ui/WidgetCard";
 
-export type OrdersTrendPoint = {
-  label: string;
-  created: number;
-  completed: number;
-};
-
 type DashboardOrdersTrendProps = {
-  data: OrdersTrendPoint[];
+  data: DashboardOrdersTrendPoint[];
 };
 
 export function DashboardOrdersTrend({ data }: DashboardOrdersTrendProps) {
@@ -32,7 +28,15 @@ export function DashboardOrdersTrend({ data }: DashboardOrdersTrendProps) {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid stroke="rgba(154, 164, 178, 0.12)" strokeDasharray="3 3" />
-            <XAxis dataKey="label" tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
+            <XAxis
+              dataKey="date"
+              tick={{ fill: "#9aa4b2", fontSize: 12 }}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value: string) =>
+                new Date(value).toLocaleDateString(undefined, { month: "short", day: "numeric" })
+              }
+            />
             <YAxis tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
             <Tooltip
               contentStyle={{
@@ -43,7 +47,7 @@ export function DashboardOrdersTrend({ data }: DashboardOrdersTrendProps) {
               }}
             />
             <Legend wrapperStyle={{ fontSize: 12 }} />
-            <Bar dataKey="created" name="Created" fill="#6ba4ff" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="total" name="Total" fill="#6ba4ff" radius={[6, 6, 0, 0]} />
             <Bar dataKey="completed" name="Completed" fill="#22c55e" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>

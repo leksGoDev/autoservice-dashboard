@@ -29,6 +29,55 @@
   color: var(--color-text-secondary);
 }
 
+.dashboard-page__range {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.dashboard-page__range-button {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: rgba(15, 17, 21, 0.45);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.dashboard-page__range-button--active {
+  color: var(--color-text-primary);
+  border-color: rgba(107, 164, 255, 0.4);
+  background: rgba(107, 164, 255, 0.2);
+}
+
+.dashboard-state {
+  border: 1px dashed rgba(154, 164, 178, 0.35);
+  border-radius: 12px;
+  padding: 18px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dashboard-state--error {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fecaca;
+}
+
+.dashboard-state__retry {
+  border: 1px solid rgba(107, 164, 255, 0.4);
+  border-radius: 10px;
+  background: rgba(107, 164, 255, 0.18);
+  color: var(--color-text-primary);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
 .dashboard-page__charts {
   display: grid;
   gap: 16px;

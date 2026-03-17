@@ -1,3 +1,5 @@
+import type { DashboardRevenuePoint } from "@/entities/dashboard/model/types";
+
 import {
   Area,
   AreaChart,
@@ -10,13 +12,8 @@ import {
 
 import { WidgetCard } from "../../shared/ui/WidgetCard";
 
-export type RevenuePoint = {
-  label: string;
-  revenue: number;
-};
-
 type DashboardRevenueChartProps = {
-  data: RevenuePoint[];
+  data: DashboardRevenuePoint[];
 };
 
 export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
@@ -36,7 +33,15 @@ export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
               </linearGradient>
             </defs>
             <CartesianGrid stroke="rgba(154, 164, 178, 0.12)" strokeDasharray="3 3" />
-            <XAxis dataKey="label" tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
+            <XAxis
+              dataKey="date"
+              tick={{ fill: "#9aa4b2", fontSize: 12 }}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value: string) =>
+                new Date(value).toLocaleDateString(undefined, { month: "short", day: "numeric" })
+              }
+            />
             <YAxis
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
               tickLine={false}
