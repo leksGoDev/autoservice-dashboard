@@ -3,10 +3,11 @@ import type { OrderStatus } from "@/entities/order/model/types";
 export type DashboardRange = "7d" | "30d" | "90d";
 
 export interface DashboardMetrics {
-  revenueTotal: number;
-  activeOrders: number;
-  completedToday: number;
-  averageCycleHours: number;
+  active: number;
+  overdue: number;
+  scheduled: number;
+  revenueToday: number;
+  revenueThisMonth: number;
 }
 
 export interface DashboardRevenuePoint {
@@ -38,8 +39,13 @@ export interface RecentOrderItem {
   id: string;
   number: string;
   customerName: string;
+  vehicleLabel: string;
   status: OrderStatus;
-  updatedAt: string;
+  priority: "low" | "medium" | "high";
+  assignedMechanic: string;
+  jobsCount: number;
+  totalCost: number;
+  createdDate: string;
 }
 
 export interface DashboardOverview {
