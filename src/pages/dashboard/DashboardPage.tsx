@@ -1,5 +1,15 @@
-import { dashboardKpiItems, dashboardOrdersTrendData, dashboardRecentActivity, dashboardRecentOrders, dashboardRevenueData } from "./model/dashboard-snapshot";
+import "./dashboard.css";
+
+import {
+  dashboardKpiItems,
+  dashboardMechanicWorkload,
+  dashboardOrdersTrendData,
+  dashboardRecentActivity,
+  dashboardRecentOrders,
+  dashboardRevenueData,
+} from "./model/dashboard-snapshot";
 import { DashboardKpiCards } from "../../widgets/dashboard-kpi-cards/DashboardKpiCards";
+import { DashboardMechanicWorkload } from "../../widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
 import { DashboardRevenueChart } from "../../widgets/dashboard-revenue-chart/DashboardRevenueChart";
 import { DashboardOrdersTrend } from "../../widgets/dashboard-orders-trend/DashboardOrdersTrend";
 import { DashboardRecentOrders } from "../../widgets/dashboard-recent-orders/DashboardRecentOrders";
@@ -25,7 +35,10 @@ export function DashboardPage() {
 
       <div className="dashboard-page__bottom">
         <DashboardRecentOrders orders={dashboardRecentOrders} />
-        <DashboardRecentActivity items={dashboardRecentActivity} />
+        <div className="dashboard-page__side">
+          <DashboardMechanicWorkload items={dashboardMechanicWorkload} />
+          <DashboardRecentActivity items={dashboardRecentActivity} />
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import type { ActivityItem } from "../../../widgets/dashboard-recent-activity/DashboardRecentActivity";
 import type { DashboardKpi } from "../../../widgets/dashboard-kpi-cards/DashboardKpiCards";
+import type { MechanicWorkloadItem } from "../../../widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
 import type { OrdersTrendPoint } from "../../../widgets/dashboard-orders-trend/DashboardOrdersTrend";
 import type { RecentOrder } from "../../../widgets/dashboard-recent-orders/DashboardRecentOrders";
 import type { RevenuePoint } from "../../../widgets/dashboard-revenue-chart/DashboardRevenueChart";
@@ -120,4 +121,11 @@ export const dashboardRecentActivity: ActivityItem[] = [
     time: "42 min ago",
     tone: "danger",
   },
+];
+
+export const dashboardMechanicWorkload: MechanicWorkloadItem[] = [
+  { id: "m-1", name: "A. Novak", activeOrders: 6, utilization: 92 },
+  { id: "m-2", name: "I. Smirnov", activeOrders: 5, utilization: 84 },
+  { id: "m-3", name: "D. Kim", activeOrders: 4, utilization: 72 },
+  { id: "m-4", name: "P. Ivanov", activeOrders: 3, utilization: 64 },
 ];
