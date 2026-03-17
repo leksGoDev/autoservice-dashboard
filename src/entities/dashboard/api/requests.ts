@@ -1,3 +1,5 @@
+import { DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
+import { apiEndpoints } from "@/shared/api/endpoints";
 import { httpRequest } from "@/shared/api/http-client";
 import type {
   DashboardMetrics,
@@ -11,42 +13,44 @@ import type {
 } from "../model/types";
 
 export function getDashboardMetrics() {
-  return httpRequest<DashboardMetrics>("/dashboard/metrics", { method: "GET" });
+  return httpRequest<DashboardMetrics>(apiEndpoints.dashboard.metrics, { method: "GET" });
 }
 
-export function getDashboardRevenue(range: DashboardRange = "30d") {
-  return httpRequest<DashboardRevenuePoint[]>("/dashboard/revenue", {
+export function getDashboardRevenue(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
+  return httpRequest<DashboardRevenuePoint[]>(apiEndpoints.dashboard.revenue, {
     method: "GET",
     query: { range },
   });
 }
 
-export function getDashboardOrdersTrend(range: DashboardRange = "30d") {
-  return httpRequest<DashboardOrdersTrendPoint[]>("/dashboard/orders-trend", {
+export function getDashboardOrdersTrend(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
+  return httpRequest<DashboardOrdersTrendPoint[]>(apiEndpoints.dashboard.ordersTrend, {
     method: "GET",
     query: { range },
   });
 }
 
 export function getDashboardMechanicWorkload() {
-  return httpRequest<MechanicWorkloadItem[]>("/dashboard/mechanic-workload", {
+  return httpRequest<MechanicWorkloadItem[]>(apiEndpoints.dashboard.mechanicWorkload, {
     method: "GET",
   });
 }
 
 export function getDashboardRecentActivity() {
-  return httpRequest<RecentActivityItem[]>("/dashboard/recent-activity", {
+  return httpRequest<RecentActivityItem[]>(apiEndpoints.dashboard.recentActivity, {
     method: "GET",
   });
 }
 
 export function getDashboardRecentOrders() {
-  return httpRequest<RecentOrderItem[]>("/dashboard/recent-orders", {
+  return httpRequest<RecentOrderItem[]>(apiEndpoints.dashboard.recentOrders, {
     method: "GET",
   });
 }
 
-export async function getDashboardOverview(range: DashboardRange = "30d"): Promise<DashboardOverview> {
+export async function getDashboardOverview(
+  range: DashboardRange = DEFAULT_DASHBOARD_RANGE,
+): Promise<DashboardOverview> {
   const [metrics, revenue, ordersTrend, mechanicWorkload, recentActivity, recentOrders] =
     await Promise.all([
       getDashboardMetrics(),

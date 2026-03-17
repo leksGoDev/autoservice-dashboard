@@ -1,9 +1,10 @@
+import { apiEndpoints } from "@/shared/api/endpoints";
 import { httpRequest } from "@/shared/api/http-client";
 import type { ListResponse } from "@/shared/api/types";
 import type { OrderListItem, OrdersListParams } from "../model/types";
 
 export function getOrdersList(params: OrdersListParams = {}) {
-  return httpRequest<ListResponse<OrderListItem>>("/orders", {
+  return httpRequest<ListResponse<OrderListItem>>(apiEndpoints.orders.list, {
     method: "GET",
     query: {
       page: params.page,

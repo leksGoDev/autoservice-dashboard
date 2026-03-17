@@ -1,6 +1,8 @@
 import { delay, http, HttpResponse } from "msw";
 
 import type { DashboardRange } from "@/entities/dashboard/model/types";
+import { DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
+import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 import {
   dashboardMetricsFixture,
   getOrdersTrendFixtureByRange,
@@ -15,16 +17,16 @@ function parseDashboardRange(input: string | null): DashboardRange {
     return input;
   }
 
-  return "30d";
+  return DEFAULT_DASHBOARD_RANGE;
 }
 
 export const dashboardHandlers = [
-  http.get("/api/dashboard/metrics", async () => {
+  http.get(toMswPath(apiEndpoints.dashboard.metrics), async () => {
     await delay(250);
     return HttpResponse.json(dashboardMetricsFixture);
   }),
 
-  http.get("/api/dashboard/revenue", async ({ request }) => {
+  http.get(toMswPath(apiEndpoints.dashboard.revenue), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
     const range = parseDashboardRange(url.searchParams.get("range"));
@@ -32,7 +34,7 @@ export const dashboardHandlers = [
     return HttpResponse.json(getRevenueFixtureByRange(range));
   }),
 
-  http.get("/api/dashboard/orders-trend", async ({ request }) => {
+  http.get(toMswPath(apiEndpoints.dashboard.ordersTrend), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
     const range = parseDashboardRange(url.searchParams.get("range"));
@@ -40,17 +42,17 @@ export const dashboardHandlers = [
     return HttpResponse.json(getOrdersTrendFixtureByRange(range));
   }),
 
-  http.get("/api/dashboard/mechanic-workload", async () => {
+  http.get(toMswPath(apiEndpoints.dashboard.mechanicWorkload), async () => {
     await delay(250);
     return HttpResponse.json(mechanicWorkloadFixture);
   }),
 
-  http.get("/api/dashboard/recent-activity", async () => {
+  http.get(toMswPath(apiEndpoints.dashboard.recentActivity), async () => {
     await delay(250);
     return HttpResponse.json(recentActivityFixture);
   }),
 
-  http.get("/api/dashboard/recent-orders", async () => {
+  http.get(toMswPath(apiEndpoints.dashboard.recentOrders), async () => {
     await delay(250);
     return HttpResponse.json(recentOrdersFixture);
   }),

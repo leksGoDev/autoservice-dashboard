@@ -2,6 +2,13 @@ import { delay, http, HttpResponse } from "msw";
 
 import type { OrderListItem } from "@/entities/order/model/types";
 import { ordersFixture } from "@/mocks/fixtures/orders";
+import {
+  DEFAULT_LIST_PAGE,
+  DEFAULT_LIST_PAGE_SIZE,
+  DEFAULT_ORDERS_SORT_BY,
+  DEFAULT_ORDERS_SORT_DIRECTION,
+} from "@/shared/api/constants";
+import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 
 function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: string) {
   const direction = sortDirection === "asc" ? 1 : -1;
@@ -21,16 +28,16 @@ function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: strin
 }
 
 export const ordersHandlers = [
-  http.get("/api/orders", async ({ request }) => {
+  http.get(toMswPath(apiEndpoints.orders.list), async ({ request }) => {
     await delay(350);
 
     const url = new URL(request.url);
-    const page = Number(url.searchParams.get("page") ?? "1");
-    const pageSize = Number(url.searchParams.get("pageSize") ?? "10");
+    const page = Number(url.searchParams.get("page") ?? String(DEFAULT_LIST_PAGE));
+    const pageSize = Number(url.searchParams.get("pageSize") ?? String(DEFAULT_LIST_PAGE_SIZE));
     const search = (url.searchParams.get("search") ?? "").toLowerCase().trim();
     const status = url.searchParams.get("status");
-    const sortBy = url.searchParams.get("sortBy") ?? "createdAt";
-    const sortDirection = url.searchParams.get("sortDirection") ?? "desc";
+    const sortBy = url.searchParams.get("sortBy") ?? DEFAULT_ORDERS_SORT_BY;
+    const sortDirection = url.searchParams.get("sortDirection") ?? DEFAULT_ORDERS_SORT_DIRECTION;
 
     let filtered = [...ordersFixture];
 

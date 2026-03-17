@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
 import { queryKeys } from "@/shared/api/query-keys";
 import type { DashboardRange } from "../model/types";
 import {
@@ -19,14 +20,14 @@ export function useDashboardMetricsQuery() {
   });
 }
 
-export function useDashboardRevenueQuery(range: DashboardRange = "30d") {
+export function useDashboardRevenueQuery(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
   return useQuery({
     queryKey: queryKeys.dashboard.revenue(range),
     queryFn: () => getDashboardRevenue(range),
   });
 }
 
-export function useDashboardOrdersTrendQuery(range: DashboardRange = "30d") {
+export function useDashboardOrdersTrendQuery(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
   return useQuery({
     queryKey: queryKeys.dashboard.ordersTrend(range),
     queryFn: () => getDashboardOrdersTrend(range),
@@ -54,7 +55,7 @@ export function useDashboardRecentOrdersQuery() {
   });
 }
 
-export function useDashboardOverviewQuery(range: DashboardRange = "30d") {
+export function useDashboardOverviewQuery(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
   return useQuery({
     queryKey: queryKeys.dashboard.overview(range),
     queryFn: () => getDashboardOverview(range),
