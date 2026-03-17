@@ -6,4 +6,8 @@ export const queryKeys = {
   orders: ordersQueryKeys,
 } as const;
 
-export type { DashboardRangeKey, OrdersListParamsKey } from "./query-keys/types";
+export type {
+  DashboardRangeKey,
+  DashboardRecentOrdersParamsKey,
+  OrdersListParamsKey,
+} from "./query-keys/types";
