@@ -28,9 +28,17 @@ export interface MechanicWorkloadItem {
   utilization: number;
 }
 
+export type RecentActivityType =
+  | "order_created"
+  | "order_scheduled"
+  | "status_changed"
+  | "mechanic_assigned"
+  | "parts_updated";
+
 export interface RecentActivityItem {
   id: string;
-  timestamp: string;
+  type: RecentActivityType;
+  createdAt: string;
   message: string;
   orderId: string;
 }
@@ -45,7 +53,13 @@ export interface RecentOrderItem {
   assignedMechanic: string;
   jobsCount: number;
   totalCost: number;
-  createdDate: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DashboardRecentOrdersParams {
+  range?: DashboardRange;
+  limit?: number;
 }
 
 export interface DashboardOverview {
