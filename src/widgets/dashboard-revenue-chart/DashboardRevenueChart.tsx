@@ -1,3 +1,8 @@
+import type { FC } from "react";
+
+import type { DashboardRevenuePoint } from "@/entities/dashboard/model/types";
+import { formatCurrency, formatDashboardChartDate } from "@/entities/dashboard/model/presentation";
+
 import {
   Area,
   AreaChart,
@@ -8,18 +13,13 @@ import {
   YAxis,
 } from "recharts";
 
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-export type RevenuePoint = {
-  label: string;
-  revenue: number;
-};
+interface DashboardRevenueChartProps {
+  data: DashboardRevenuePoint[];
+}
 
-type DashboardRevenueChartProps = {
-  data: RevenuePoint[];
-};
-
-export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
+export const DashboardRevenueChart: FC<DashboardRevenueChartProps> = ({ data }) => {
   return (
     <WidgetCard
       title="Revenue Chart"
@@ -36,7 +36,13 @@ export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
               </linearGradient>
             </defs>
             <CartesianGrid stroke="rgba(154, 164, 178, 0.12)" strokeDasharray="3 3" />
-            <XAxis dataKey="label" tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
+            <XAxis
+              dataKey="date"
+              tick={{ fill: "#9aa4b2", fontSize: 12 }}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value: string) => formatDashboardChartDate(value)}
+            />
             <YAxis
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
               tickLine={false}
@@ -53,7 +59,7 @@ export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
               formatter={(value) => {
                 const amount = typeof value === "number" ? value : Number(value ?? 0);
 
-                return [`$${amount.toLocaleString()}`, "Revenue"];
+                return [formatCurrency(amount), "Revenue"];
               }}
             />
             <Area
@@ -68,4 +74,4 @@ export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
       </div>
     </WidgetCard>
   );
-}
+};

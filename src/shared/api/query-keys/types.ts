@@ -1,5 +1,10 @@
 export type DashboardRangeKey = "7d" | "30d" | "90d";
 
+export interface DashboardRecentOrdersParamsKey {
+  range?: DashboardRangeKey;
+  limit?: number;
+}
+
 export interface OrdersListParamsKey {
   page?: number;
   pageSize?: number;

@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
-type WidgetCardProps = {
+interface WidgetCardProps {
   title: string;
   description?: string;
   className?: string;
   children: ReactNode;
-};
+}
 
-export function WidgetCard({ title, description, className, children }: WidgetCardProps) {
+export const WidgetCard: FC<WidgetCardProps> = ({ title, description, className, children }) => {
   const cardClassName = className ? `widget-card ${className}` : "widget-card";
 
   return (
@@ -19,4 +19,4 @@ export function WidgetCard({ title, description, className, children }: WidgetCa
       {children}
     </section>
   );
-}
+};

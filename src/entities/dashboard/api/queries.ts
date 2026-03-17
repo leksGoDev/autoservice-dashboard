@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
 import { queryKeys } from "@/shared/api/query-keys";
-import type { DashboardRange } from "../model/types";
+import type { DashboardRange, DashboardRecentOrdersParams } from "../model/types";
 import {
   getDashboardMechanicWorkload,
   getDashboardMetrics,
@@ -13,10 +13,10 @@ import {
   getDashboardRevenue,
 } from "./requests";
 
-export function useDashboardMetricsQuery() {
+export function useDashboardMetricsQuery(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
   return useQuery({
-    queryKey: queryKeys.dashboard.metrics(),
-    queryFn: getDashboardMetrics,
+    queryKey: queryKeys.dashboard.metrics(range),
+    queryFn: () => getDashboardMetrics(range),
   });
 }
 
@@ -34,24 +34,27 @@ export function useDashboardOrdersTrendQuery(range: DashboardRange = DEFAULT_DAS
   });
 }
 
-export function useDashboardMechanicWorkloadQuery() {
+export function useDashboardMechanicWorkloadQuery(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
   return useQuery({
-    queryKey: queryKeys.dashboard.mechanicWorkload(),
-    queryFn: getDashboardMechanicWorkload,
+    queryKey: queryKeys.dashboard.mechanicWorkload(range),
+    queryFn: () => getDashboardMechanicWorkload(range),
   });
 }
 
-export function useDashboardRecentActivityQuery() {
+export function useDashboardRecentActivityQuery(range: DashboardRange = DEFAULT_DASHBOARD_RANGE) {
   return useQuery({
-    queryKey: queryKeys.dashboard.recentActivity(),
-    queryFn: getDashboardRecentActivity,
+    queryKey: queryKeys.dashboard.recentActivity(range),
+    queryFn: () => getDashboardRecentActivity(range),
   });
 }
 
-export function useDashboardRecentOrdersQuery() {
+export function useDashboardRecentOrdersQuery(params: DashboardRecentOrdersParams = {}) {
+  const range = params.range ?? DEFAULT_DASHBOARD_RANGE;
+  const limit = params.limit;
+
   return useQuery({
-    queryKey: queryKeys.dashboard.recentOrders(),
-    queryFn: getDashboardRecentOrders,
+    queryKey: queryKeys.dashboard.recentOrders({ range, limit }),
+    queryFn: () => getDashboardRecentOrders({ range, limit }),
   });
 }
 

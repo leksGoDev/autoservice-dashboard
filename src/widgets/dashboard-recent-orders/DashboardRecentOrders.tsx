@@ -1,25 +1,21 @@
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import type { FC } from "react";
 
-export type RecentOrder = {
-  id: string;
-  customer: string;
-  vehicle: string;
-  status: "Scheduled" | "In Progress" | "Waiting Parts" | "Completed" | "Cancelled";
-  priority: "Low" | "Medium" | "High" | "Urgent";
-  mechanic: string;
-  totalCost: number;
-  createdAt: string;
-};
+import type { RecentOrderItem } from "@/entities/dashboard/model/types";
+import {
+  formatCurrency,
+  formatDashboardDate,
+  formatOrderPriority,
+  formatOrderStatus,
+  getStatusChipModifier,
+} from "@/entities/dashboard/model/presentation";
 
-type DashboardRecentOrdersProps = {
-  orders: RecentOrder[];
-};
+import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-function token(value: string) {
-  return value.toLowerCase().replace(/\s+/g, "-");
+interface DashboardRecentOrdersProps {
+  orders: RecentOrderItem[];
 }
 
-export function DashboardRecentOrders({ orders }: DashboardRecentOrdersProps) {
+export const DashboardRecentOrders: FC<DashboardRecentOrdersProps> = ({ orders }) => {
   return (
     <WidgetCard title="Recent Orders" description="Latest service orders across all statuses">
       <div className="dashboard-table-wrap">
@@ -39,18 +35,22 @@ export function DashboardRecentOrders({ orders }: DashboardRecentOrdersProps) {
           <tbody>
             {orders.map((order) => (
               <tr key={order.id}>
-                <td className="dashboard-table__mono">{order.id}</td>
-                <td>{order.customer}</td>
-                <td>{order.vehicle}</td>
+                <td className="dashboard-table__mono">{order.number}</td>
+                <td>{order.customerName}</td>
+                <td>{order.vehicleLabel}</td>
                 <td>
-                  <span className={`status-chip status-chip--${token(order.status)}`}>{order.status}</span>
+                  <span className={`status-chip status-chip--${getStatusChipModifier(order.status)}`}>
+                    {formatOrderStatus(order.status)}
+                  </span>
                 </td>
                 <td>
-                  <span className={`priority-chip priority-chip--${token(order.priority)}`}>{order.priority}</span>
+                  <span className={`priority-chip priority-chip--${order.priority}`}>
+                    {formatOrderPriority(order.priority)}
+                  </span>
                 </td>
-                <td>{order.mechanic}</td>
-                <td>${order.totalCost.toLocaleString()}</td>
-                <td>{order.createdAt}</td>
+                <td>{order.assignedMechanic}</td>
+                <td>{formatCurrency(order.totalCost)}</td>
+                <td>{formatDashboardDate(order.createdAt)}</td>
               </tr>
             ))}
           </tbody>
@@ -58,4 +58,4 @@ export function DashboardRecentOrders({ orders }: DashboardRecentOrdersProps) {
       </div>
     </WidgetCard>
   );
-}
+};

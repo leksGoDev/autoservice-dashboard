@@ -1,38 +1,24 @@
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import type { FC } from "react";
 
-export type MechanicWorkloadItem = {
-  id: string;
-  name: string;
-  activeOrders: number;
-  utilization: number;
-};
+import type { MechanicWorkloadItem } from "@/entities/dashboard/model/types";
+import { getWorkloadTone } from "@/entities/dashboard/model/presentation";
 
-type DashboardMechanicWorkloadProps = {
+import { WidgetCard } from "@/shared/ui/WidgetCard";
+
+interface DashboardMechanicWorkloadProps {
   items: MechanicWorkloadItem[];
-};
-
-function workloadTone(utilization: number) {
-  if (utilization >= 90) {
-    return "danger";
-  }
-
-  if (utilization >= 75) {
-    return "warning";
-  }
-
-  return "normal";
 }
 
-export function DashboardMechanicWorkload({ items }: DashboardMechanicWorkloadProps) {
+export const DashboardMechanicWorkload: FC<DashboardMechanicWorkloadProps> = ({ items }) => {
   return (
     <WidgetCard title="Mechanic Workload" description="Current active workload by mechanic">
       <ul className="workload-list">
         {items.map((item) => (
-          <li key={item.id} className="workload-list__item">
+          <li key={item.mechanicId} className="workload-list__item">
             <div className="workload-list__row">
-              <p className="workload-list__name">{item.name}</p>
-              <span className={`workload-list__badge workload-list__badge--${workloadTone(item.utilization)}`}>
-                {item.activeOrders} active
+              <p className="workload-list__name">{item.mechanicName}</p>
+              <span className={`workload-list__badge workload-list__badge--${getWorkloadTone(item.utilization)}`}>
+                {item.assignedOrders} active
               </span>
             </div>
             <div className="workload-list__meta">
@@ -46,4 +32,4 @@ export function DashboardMechanicWorkload({ items }: DashboardMechanicWorkloadPr
       </ul>
     </WidgetCard>
   );
-}
+};
