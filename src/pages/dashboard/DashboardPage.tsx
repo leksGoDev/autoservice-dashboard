@@ -5,12 +5,22 @@ import { useState } from "react";
 import type { DashboardRange } from "@/entities/dashboard/model/types";
 import { useDashboardOverviewQuery } from "@/entities/dashboard/api/queries";
 import { DASHBOARD_RANGES, DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
-import { DashboardKpiCards } from "../../widgets/dashboard-kpi-cards/DashboardKpiCards";
-import { DashboardMechanicWorkload } from "../../widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
-import { DashboardRevenueChart } from "../../widgets/dashboard-revenue-chart/DashboardRevenueChart";
-import { DashboardOrdersTrend } from "../../widgets/dashboard-orders-trend/DashboardOrdersTrend";
-import { DashboardRecentOrders } from "../../widgets/dashboard-recent-orders/DashboardRecentOrders";
-import { DashboardRecentActivity } from "../../widgets/dashboard-recent-activity/DashboardRecentActivity";
+import { DashboardKpiCards } from "@/widgets/dashboard-kpi-cards/DashboardKpiCards";
+import { DashboardMechanicWorkload } from "@/widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
+import { DashboardRevenueChart } from "@/widgets/dashboard-revenue-chart/DashboardRevenueChart";
+import { DashboardOrdersTrend } from "@/widgets/dashboard-orders-trend/DashboardOrdersTrend";
+import { DashboardRecentOrders } from "@/widgets/dashboard-recent-orders/DashboardRecentOrders";
+import { DashboardRecentActivity } from "@/widgets/dashboard-recent-activity/DashboardRecentActivity";
+
+const DASHBOARD_COPY = {
+  eyebrow: "Overview",
+  title: "Operations Dashboard",
+  description: "Live operational snapshot for order flow, revenue, and recent workshop activity.",
+  loading: "Loading dashboard data...",
+  error: "Failed to load dashboard data.",
+  retry: "Retry",
+  empty: "No dashboard data for selected range.",
+};
 
 export function DashboardPage() {
   const [range, setRange] = useState<DashboardRange>(DEFAULT_DASHBOARD_RANGE);
@@ -23,11 +33,9 @@ export function DashboardPage() {
   return (
     <section className="dashboard-page">
       <header className="dashboard-page__hero">
-        <span className="dashboard-page__eyebrow">Overview</span>
-        <h1 className="dashboard-page__title">Operations Dashboard</h1>
-        <p className="dashboard-page__description">
-          Live operational snapshot for order flow, revenue, and recent workshop activity.
-        </p>
+        <span className="dashboard-page__eyebrow">{DASHBOARD_COPY.eyebrow}</span>
+        <h1 className="dashboard-page__title">{DASHBOARD_COPY.title}</h1>
+        <p className="dashboard-page__description">{DASHBOARD_COPY.description}</p>
         <div className="dashboard-page__range">
           {DASHBOARD_RANGES.map((value) => (
             <button
@@ -43,14 +51,14 @@ export function DashboardPage() {
       </header>
 
       {isLoading ? (
-        <section className="dashboard-state">Loading dashboard data...</section>
+        <section className="dashboard-state">{DASHBOARD_COPY.loading}</section>
       ) : null}
 
       {isError ? (
         <section className="dashboard-state dashboard-state--error">
-          Failed to load dashboard data.
+          {DASHBOARD_COPY.error}
           <button type="button" className="dashboard-state__retry" onClick={() => overviewQuery.refetch()}>
-            Retry
+            {DASHBOARD_COPY.retry}
           </button>
         </section>
       ) : null}
@@ -76,7 +84,7 @@ export function DashboardPage() {
 
       {!isLoading && !isError && !data ? (
         <section className="dashboard-state">
-          No dashboard data for selected range.
+          {DASHBOARD_COPY.empty}
         </section>
       ) : null}
     </section>

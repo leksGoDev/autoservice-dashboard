@@ -1,4 +1,7 @@
+import type { FC } from "react";
+
 import type { DashboardRevenuePoint } from "@/entities/dashboard/model/types";
+import { formatCurrency, formatDashboardChartDate } from "@/entities/dashboard/model/presentation";
 
 import {
   Area,
@@ -10,13 +13,13 @@ import {
   YAxis,
 } from "recharts";
 
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-type DashboardRevenueChartProps = {
+interface DashboardRevenueChartProps {
   data: DashboardRevenuePoint[];
-};
+}
 
-export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
+export const DashboardRevenueChart: FC<DashboardRevenueChartProps> = ({ data }) => {
   return (
     <WidgetCard
       title="Revenue Chart"
@@ -38,9 +41,7 @@ export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value: string) =>
-                new Date(value).toLocaleDateString(undefined, { month: "short", day: "numeric" })
-              }
+              tickFormatter={(value: string) => formatDashboardChartDate(value)}
             />
             <YAxis
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
@@ -58,7 +59,7 @@ export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
               formatter={(value) => {
                 const amount = typeof value === "number" ? value : Number(value ?? 0);
 
-                return [`$${amount.toLocaleString()}`, "Revenue"];
+                return [formatCurrency(amount), "Revenue"];
               }}
             />
             <Area
@@ -73,4 +74,4 @@ export function DashboardRevenueChart({ data }: DashboardRevenueChartProps) {
       </div>
     </WidgetCard>
   );
-}
+};

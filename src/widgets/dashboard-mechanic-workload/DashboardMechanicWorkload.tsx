@@ -1,24 +1,15 @@
+import type { FC } from "react";
+
 import type { MechanicWorkloadItem } from "@/entities/dashboard/model/types";
+import { getWorkloadTone } from "@/entities/dashboard/model/presentation";
 
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-type DashboardMechanicWorkloadProps = {
+interface DashboardMechanicWorkloadProps {
   items: MechanicWorkloadItem[];
-};
-
-function workloadTone(utilization: number) {
-  if (utilization >= 90) {
-    return "danger";
-  }
-
-  if (utilization >= 75) {
-    return "warning";
-  }
-
-  return "normal";
 }
 
-export function DashboardMechanicWorkload({ items }: DashboardMechanicWorkloadProps) {
+export const DashboardMechanicWorkload: FC<DashboardMechanicWorkloadProps> = ({ items }) => {
   return (
     <WidgetCard title="Mechanic Workload" description="Current active workload by mechanic">
       <ul className="workload-list">
@@ -26,7 +17,7 @@ export function DashboardMechanicWorkload({ items }: DashboardMechanicWorkloadPr
           <li key={item.mechanicId} className="workload-list__item">
             <div className="workload-list__row">
               <p className="workload-list__name">{item.mechanicName}</p>
-              <span className={`workload-list__badge workload-list__badge--${workloadTone(item.utilization)}`}>
+              <span className={`workload-list__badge workload-list__badge--${getWorkloadTone(item.utilization)}`}>
                 {item.assignedOrders} active
               </span>
             </div>
@@ -41,4 +32,4 @@ export function DashboardMechanicWorkload({ items }: DashboardMechanicWorkloadPr
       </ul>
     </WidgetCard>
   );
-}
+};

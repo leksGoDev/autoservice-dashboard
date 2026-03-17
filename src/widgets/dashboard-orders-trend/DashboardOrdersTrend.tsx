@@ -1,4 +1,7 @@
+import type { FC } from "react";
+
 import type { DashboardOrdersTrendPoint } from "@/entities/dashboard/model/types";
+import { formatDashboardChartDate } from "@/entities/dashboard/model/presentation";
 
 import {
   Bar,
@@ -11,13 +14,13 @@ import {
   YAxis,
 } from "recharts";
 
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-type DashboardOrdersTrendProps = {
+interface DashboardOrdersTrendProps {
   data: DashboardOrdersTrendPoint[];
-};
+}
 
-export function DashboardOrdersTrend({ data }: DashboardOrdersTrendProps) {
+export const DashboardOrdersTrend: FC<DashboardOrdersTrendProps> = ({ data }) => {
   return (
     <WidgetCard
       title="Orders Trend"
@@ -33,9 +36,7 @@ export function DashboardOrdersTrend({ data }: DashboardOrdersTrendProps) {
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value: string) =>
-                new Date(value).toLocaleDateString(undefined, { month: "short", day: "numeric" })
-              }
+              tickFormatter={(value: string) => formatDashboardChartDate(value)}
             />
             <YAxis tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
             <Tooltip
@@ -54,4 +55,4 @@ export function DashboardOrdersTrend({ data }: DashboardOrdersTrendProps) {
       </div>
     </WidgetCard>
   );
-}
+};

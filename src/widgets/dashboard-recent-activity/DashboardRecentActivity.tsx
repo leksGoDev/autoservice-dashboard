@@ -1,57 +1,22 @@
-import type { RecentActivityItem, RecentActivityType } from "@/entities/dashboard/model/types";
+import type { FC } from "react";
 
-import { WidgetCard } from "../../shared/ui/WidgetCard";
+import type { RecentActivityItem } from "@/entities/dashboard/model/types";
+import { formatRelativeTime, getActivityTone } from "@/entities/dashboard/model/presentation";
 
-type DashboardRecentActivityProps = {
+import { WidgetCard } from "@/shared/ui/WidgetCard";
+
+interface DashboardRecentActivityProps {
   items: RecentActivityItem[];
-};
-
-function toneFromActivityType(type: RecentActivityType) {
-  if (type === "parts_updated") {
-    return "warning";
-  }
-
-  if (type === "status_changed") {
-    return "success";
-  }
-
-  if (type === "order_created" || type === "order_scheduled" || type === "mechanic_assigned") {
-    return "neutral";
-  }
-
-  return "neutral";
 }
 
-function formatRelativeTime(dateIso: string) {
-  const timestamp = new Date(dateIso).getTime();
-  const now = Date.now();
-  const diffMinutes = Math.max(0, Math.round((now - timestamp) / 60000));
-
-  if (diffMinutes < 1) {
-    return "Just now";
-  }
-
-  if (diffMinutes < 60) {
-    return `${diffMinutes} min ago`;
-  }
-
-  const diffHours = Math.round(diffMinutes / 60);
-
-  if (diffHours < 24) {
-    return `${diffHours} h ago`;
-  }
-
-  return new Date(dateIso).toLocaleDateString();
-}
-
-export function DashboardRecentActivity({ items }: DashboardRecentActivityProps) {
+export const DashboardRecentActivity: FC<DashboardRecentActivityProps> = ({ items }) => {
   return (
     <WidgetCard title="Recent Activity" description="Operational changes in chronological order">
       <ul className="activity-feed">
         {items.map((item) => (
           <li key={item.id} className="activity-feed__item">
             <span
-              className={`activity-feed__dot activity-feed__dot--${toneFromActivityType(item.type)}`}
+              className={`activity-feed__dot activity-feed__dot--${getActivityTone(item.type)}`}
               aria-hidden="true"
             />
             <div className="activity-feed__content">
@@ -64,4 +29,4 @@ export function DashboardRecentActivity({ items }: DashboardRecentActivityProps)
       </ul>
     </WidgetCard>
   );
-}
+};

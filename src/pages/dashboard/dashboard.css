@@ -137,23 +137,6 @@
   font-weight: 700;
 }
 
-.dashboard-kpi-grid__trend {
-  margin: 0;
-  font-size: 13px;
-}
-
-.dashboard-kpi-grid__trend--up {
-  color: var(--color-success);
-}
-
-.dashboard-kpi-grid__trend--down {
-  color: var(--color-danger);
-}
-
-.dashboard-kpi-grid__trend--neutral {
-  color: var(--color-text-secondary);
-}
-
 .dashboard-chart-card {
   min-height: 320px;
 }
@@ -249,11 +232,6 @@
 .priority-chip--high {
   color: #93c5fd;
   background: rgba(0, 58, 143, 0.28);
-}
-
-.priority-chip--urgent {
-  color: #fecaca;
-  background: rgba(231, 34, 42, 0.22);
 }
 
 .activity-feed {

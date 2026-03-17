@@ -1,33 +1,35 @@
+import type { FC } from "react";
+
 import type { DashboardMetrics } from "@/entities/dashboard/model/types";
+import { formatCurrency, KPI_CARD_CONFIG } from "@/entities/dashboard/model/presentation";
+import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-import { WidgetCard } from "../../shared/ui/WidgetCard";
-
-type DashboardKpiCardsProps = {
+interface DashboardKpiCardsProps {
   metrics: DashboardMetrics;
-};
+}
+
+type KpiId = (typeof KPI_CARD_CONFIG)[number]["id"];
 
 type KpiCard = {
-  id: string;
+  id: KpiId;
   label: string;
   value: string;
 };
 
-function formatCurrency(value: number) {
-  return `$${value.toLocaleString()}`;
-}
+export const DashboardKpiCards: FC<DashboardKpiCardsProps> = ({ metrics }) => {
+  const valueById: Record<KpiId, string> = {
+    active: String(metrics.active),
+    overdue: String(metrics.overdue),
+    scheduled: String(metrics.scheduled),
+    today: formatCurrency(metrics.revenueToday),
+    month: formatCurrency(metrics.revenueThisMonth),
+  };
 
-export function DashboardKpiCards({ metrics }: DashboardKpiCardsProps) {
-  const items: KpiCard[] = [
-    { id: "active", label: "Active Orders", value: String(metrics.active) },
-    { id: "overdue", label: "Overdue Orders", value: String(metrics.overdue) },
-    { id: "scheduled", label: "Scheduled Orders", value: String(metrics.scheduled) },
-    { id: "today", label: "Revenue Today", value: formatCurrency(metrics.revenueToday) },
-    {
-      id: "month",
-      label: "Revenue This Month",
-      value: formatCurrency(metrics.revenueThisMonth),
-    },
-  ];
+  const items: KpiCard[] = KPI_CARD_CONFIG.map((item) => ({
+    id: item.id,
+    label: item.label,
+    value: valueById[item.id],
+  }));
 
   return (
     <div className="dashboard-kpi-grid">
@@ -38,4 +40,4 @@ export function DashboardKpiCards({ metrics }: DashboardKpiCardsProps) {
       ))}
     </div>
   );
-}
+};
