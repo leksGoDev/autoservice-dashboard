@@ -1,16 +1,32 @@
-import { PagePlaceholder } from "../../shared/ui/PagePlaceholder";
-import { PlaceholderCard } from "../../shared/ui/PlaceholderCard";
+import { dashboardKpiItems, dashboardOrdersTrendData, dashboardRecentActivity, dashboardRecentOrders, dashboardRevenueData } from "./model/dashboard-snapshot";
+import { DashboardKpiCards } from "../../widgets/dashboard-kpi-cards/DashboardKpiCards";
+import { DashboardRevenueChart } from "../../widgets/dashboard-revenue-chart/DashboardRevenueChart";
+import { DashboardOrdersTrend } from "../../widgets/dashboard-orders-trend/DashboardOrdersTrend";
+import { DashboardRecentOrders } from "../../widgets/dashboard-recent-orders/DashboardRecentOrders";
+import { DashboardRecentActivity } from "../../widgets/dashboard-recent-activity/DashboardRecentActivity";
 
 export function DashboardPage() {
   return (
-    <PagePlaceholder
-      eyebrow="Overview"
-      title="Operational dashboard scaffold"
-      description="Foundation screen for KPI cards, revenue charts, orders trend, mechanic workload, recent orders, and recent activity."
-    >
-      <PlaceholderCard title="KPI Cards" text="Active orders, overdue work, scheduled jobs, daily revenue, and monthly revenue." />
-      <PlaceholderCard title="Charts" text="Revenue and orders trend widgets will connect to TanStack Query and mocked endpoints." />
-      <PlaceholderCard title="Activity Feed" text="Recent orders and activity will live in widgets once the data layer is wired." />
-    </PagePlaceholder>
+    <section className="dashboard-page">
+      <header className="dashboard-page__hero">
+        <span className="dashboard-page__eyebrow">Overview</span>
+        <h1 className="dashboard-page__title">Operations Dashboard</h1>
+        <p className="dashboard-page__description">
+          Live operational snapshot for order flow, revenue, and recent workshop activity.
+        </p>
+      </header>
+
+      <DashboardKpiCards items={dashboardKpiItems} />
+
+      <div className="dashboard-page__charts">
+        <DashboardRevenueChart data={dashboardRevenueData} />
+        <DashboardOrdersTrend data={dashboardOrdersTrendData} />
+      </div>
+
+      <div className="dashboard-page__bottom">
+        <DashboardRecentOrders orders={dashboardRecentOrders} />
+        <DashboardRecentActivity items={dashboardRecentActivity} />
+      </div>
+    </section>
   );
 }
