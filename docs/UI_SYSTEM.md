@@ -1,0 +1,451 @@
+# UI_SYSTEM.md
+# Autoservice Operations Dashboard — UI System
+
+## Overview
+
+This document defines the interface structure of the Autoservice Operations Dashboard.
+
+It describes:
+
+- application layout
+- main screens
+- page sections
+- tables
+- forms
+- charts
+- operational widgets
+- shared interaction patterns
+
+This document focuses on **what the user sees and uses**, not on code organization.
+
+---
+
+# Application Layout
+
+The application uses a desktop-first dashboard layout.
+
+Structure:
+
+- left sidebar navigation
+- top bar
+- main content area
+
+---
+
+## Sidebar Navigation
+
+Primary navigation items:
+
+- Dashboard
+- Orders
+- Customers
+- Vehicles
+- Mechanics
+- Analytics
+- Work Board
+
+The sidebar should support:
+
+- active item state
+- icon + label navigation
+- compact visual hierarchy
+
+---
+
+## Top Bar
+
+The top bar contains global actions and context.
+
+Expected elements:
+
+- global search
+- page title
+- optional status indicators
+- user menu
+
+---
+
+# Main Screens
+
+## Dashboard
+
+The main operational overview screen.
+
+### Main sections
+
+- KPI cards
+- revenue chart
+- orders trend
+- mechanic workload
+- recent orders
+- recent activity
+
+### KPI cards
+
+Key metrics:
+
+- active orders
+- overdue orders
+- scheduled orders
+- revenue today
+- revenue this month
+
+### Dashboard widgets
+
+- Revenue Chart
+- Orders Trend Chart
+- Mechanic Workload Widget
+- Recent Orders Table
+- Recent Activity Feed
+
+---
+
+## Orders Page
+
+Primary operational registry.
+
+### Main sections
+
+- filters toolbar
+- search
+- orders table
+- pagination
+
+### Orders table
+
+Columns:
+
+- order number
+- customer
+- vehicle
+- status
+- priority
+- assigned mechanic
+- jobs count
+- total cost
+- created date
+
+### Order actions
+
+- open details
+- change status
+- assign mechanic
+- flag order
+
+### Filters
+
+- status
+- priority
+- mechanic
+- date range
+
+---
+
+## Order Details Page
+
+Detailed page for a single work order.
+
+### Main sections
+
+- order summary
+- customer information
+- vehicle information
+- service jobs table
+- parts list
+- activity timeline
+
+### Order summary
+
+Displays:
+
+- order number
+- status
+- priority
+- created date
+- assigned mechanic
+- total price
+- flagged state
+
+### Service jobs table
+
+Columns:
+
+- job name
+- category
+- status
+- assigned mechanic
+- estimated hours
+- actual hours
+- labor price
+
+Main actions:
+
+- add job
+- update status
+- assign mechanic
+
+### Parts list
+
+Columns:
+
+- part name
+- quantity
+- unit price
+- total price
+
+Main actions:
+
+- add part
+- update quantity
+- remove part
+
+### Activity timeline
+
+Shows chronological events related to the order.
+
+Examples:
+
+- order created
+- order scheduled
+- mechanic assigned
+- job added
+- part added
+- status changed
+- order completed
+
+---
+
+## Customers Page
+
+Customer registry.
+
+### Main sections
+
+- search
+- customers table
+- pagination
+
+### Customers table
+
+Columns:
+
+- name
+- phone
+- email
+- vehicles count
+- orders count
+- last visit
+
+---
+
+## Customer Details Page
+
+Customer profile screen.
+
+### Main sections
+
+- customer information
+- vehicles list
+- order history
+
+---
+
+## Vehicles Page
+
+Vehicle registry.
+
+### Main sections
+
+- search
+- vehicles table
+- pagination
+
+### Vehicles table
+
+Columns:
+
+- plate number
+- VIN
+- make
+- model
+- year
+- owner
+- orders count
+
+---
+
+## Vehicle Details Page
+
+Vehicle profile screen.
+
+### Main sections
+
+- vehicle information
+- service history
+- related orders
+
+---
+
+## Mechanics Page
+
+Mechanic registry.
+
+### Main sections
+
+- search
+- mechanics table
+
+### Mechanics table
+
+Columns:
+
+- name
+- specialization
+- active jobs
+- status
+- experience years
+
+---
+
+## Analytics Page
+
+Operational analytics screen.
+
+### Main sections
+
+- revenue chart
+- orders per day
+- jobs by category
+- mechanic workload
+- filter controls for time range
+
+---
+
+## Work Board Page
+
+Operational kanban board for active orders.
+
+### Board columns
+
+- Scheduled
+- In Progress
+- Waiting Parts
+- Completed
+
+### Card content
+
+Each board card should display:
+
+- order number
+- vehicle
+- priority
+- assigned mechanic
+- brief status context
+
+### Board actions
+
+- move order between statuses
+- open order details
+- quick flag action
+
+---
+
+# Shared UI Patterns
+
+## Tables
+
+The system relies heavily on registries and data tables.
+
+Expected table behavior:
+
+- sorting
+- filtering
+- pagination
+- row hover state
+- row actions
+- status and priority indicators
+
+---
+
+## Forms
+
+Forms are used for:
+
+- creating orders
+- editing customers
+- adding service jobs
+- adding parts
+
+---
+
+## Charts
+
+Used on Dashboard and Analytics screens.
+
+Expected chart types:
+
+- line chart
+- bar chart
+- stacked bar chart
+- limited pie chart usage
+
+---
+
+## Search
+
+The application includes global search.
+
+Search targets:
+
+- order number
+- vehicle plate
+- customer name
+- customer phone
+
+---
+
+## Empty States
+
+Each major screen should support empty states when no data is available.
+
+Examples:
+
+- no orders found
+- no customers found
+- no activity yet
+
+---
+
+## Loading States
+
+Loading states should exist for:
+
+- tables
+- widgets
+- charts
+- detail pages
+
+---
+
+## Error States
+
+Error states should exist for major data-driven areas.
+
+Examples:
+
+- failed to load orders
+- failed to load dashboard metrics
+
+---
+
+## Summary
+
+The UI system is designed as a data-heavy, desktop-first operational dashboard.
+
+The main interface priorities are:
+
+- operational clarity
+- fast navigation
+- dense but readable information
+- smooth registry workflows
+- strong support for tables, widgets, and detail pages
