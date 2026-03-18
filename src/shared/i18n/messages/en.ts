@@ -44,6 +44,33 @@ export const enMessages = {
     error: "Failed to load dashboard data.",
     empty: "No dashboard data for selected range.",
   },
+  customersRegistry: {
+    title: "Customers registry",
+    description: "Search customers, browse the table, and open customer profile context.",
+    searchPlaceholder: "Search by name, phone, or email",
+    searchAria: "Customers search",
+    detailsLink: "Customer profile",
+    states: {
+      loading: "Loading customers...",
+      error: "Failed to load customers.",
+      empty: "No customers found.",
+    },
+    table: {
+      name: "Name",
+      phone: "Phone",
+      email: "Email",
+      vehiclesCount: "Vehicles",
+      ordersCount: "Orders",
+      lastVisit: "Last Visit",
+    },
+    pagination: {
+      empty: "No records",
+      summary: "Showing {{start}}-{{end}} of {{total}}",
+      pageOf: "Page {{page}} of {{totalPages}}",
+      previous: "Previous",
+      next: "Next",
+    },
+  },
   dashboard: {
     kpi: {
       active: "Active Orders",
