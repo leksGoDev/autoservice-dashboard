@@ -7,6 +7,7 @@ import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { MechanicsPage } from "../pages/mechanics/MechanicsPage";
 import { OrdersPage } from "../pages/orders/OrdersPage";
 import { VehiclesPage } from "../pages/vehicles/VehiclesPage";
+import { VehicleDetailsPage } from "../pages/vehicles/VehicleDetailsPage";
 import { WorkBoardPage } from "../pages/work-board/WorkBoardPage";
 
 export const appRoutes = [
@@ -36,6 +37,11 @@ export const appRoutes = [
       {
         path: "vehicles",
         element: <VehiclesPage />,
+        handle: { titleKey: "routes.vehicles" },
+      },
+      {
+        path: "vehicles/:vehicleId",
+        element: <VehicleDetailsPage />,
         handle: { titleKey: "routes.vehicles" },
       },
       {

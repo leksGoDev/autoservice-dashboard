@@ -134,19 +134,43 @@ export const enMessages = {
     },
     vehicles: {
       eyebrow: "Registry",
-      title: "Vehicles registry",
-      description:
-        "The vehicles screen will cover search, vehicle inventory tables, and navigation to service history.",
-      cards: {
-        tableTitle: "Vehicle Table",
-        tableText:
-          "Plate number, VIN, make, model, year, owner, and orders count will be tracked here.",
-        historyTitle: "Service History",
-        historyText: "Vehicle details will surface service history and related orders.",
-        patternsTitle: "Shared Patterns",
-        patternsText:
-          "Loading, empty, and error states will follow the same data-screen conventions as other registries.",
+      title: "Vehicles Registry",
+      description: "Search and track customer vehicles with quick entry points to service history.",
+      searchLabel: "Search vehicles",
+      searchPlaceholder: "Plate, VIN, make, model, owner",
+      searchButton: "Search",
+      clearSearch: "Clear search",
+      loading: "Loading vehicles registry...",
+      error: "Failed to load vehicles registry.",
+      empty: "No vehicles found yet.",
+      emptySearch: "No vehicles match your search.",
+      emptyHint: "Try another plate number, VIN, make, or owner name.",
+      summary: "{{start}}-{{end}} of {{total}} vehicles",
+      summaryEmpty: "0 vehicles",
+      pagination: "Page {{page}} / {{totalPages}}",
+      columns: {
+        plateNumber: "Plate Number",
+        vin: "VIN",
+        make: "Make",
+        model: "Model",
+        year: "Year",
+        owner: "Owner",
+        ordersCount: "Orders Count",
+        serviceHistory: "Service History",
       },
+      actions: {
+        prev: "Prev",
+        next: "Next",
+        serviceHistory: "Service history",
+      },
+    },
+    vehicleDetails: {
+      eyebrow: "Vehicle Details",
+      title: "Service history workspace",
+      description:
+        "This route is ready for detailed vehicle information, service history timeline, and related orders.",
+      vehicleId: "Vehicle ID: {{vehicleId}}",
+      back: "Back to vehicles",
     },
     mechanics: {
       eyebrow: "Operations",

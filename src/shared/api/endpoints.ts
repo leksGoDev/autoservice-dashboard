@@ -12,6 +12,9 @@ export const apiEndpoints = {
   orders: {
     list: "/orders",
   },
+  vehicles: {
+    list: "/vehicles",
+  },
 } as const;
 
 export function toMswPath(path: string): string {
