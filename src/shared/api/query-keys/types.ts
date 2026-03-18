@@ -13,3 +13,9 @@ export interface OrdersListParamsKey {
   sortDirection?: string;
   status?: string;
 }
+
+export interface VehiclesListParamsKey {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+}
