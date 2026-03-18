@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
+import styles from "./AppSidebar.module.css";
 
 const navigation = [
   { to: "/dashboard", labelKey: "nav.dashboard" },
@@ -16,19 +17,19 @@ export function AppSidebar() {
   const { t } = useI18n();
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar__brand">
-        <span className="sidebar__eyebrow">{t("sidebar.eyebrow")}</span>
-        <span className="sidebar__title">{t("sidebar.title")}</span>
+    <aside className={styles.sidebar}>
+      <div className={styles.brand}>
+        <span className={styles.eyebrow}>{t("sidebar.eyebrow")}</span>
+        <span className={styles.title}>{t("sidebar.title")}</span>
       </div>
 
-      <nav className="sidebar__nav" aria-label={t("sidebar.navAria")}>
+      <nav className={styles.nav} aria-label={t("sidebar.navAria")}>
         {navigation.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
-              isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
+              isActive ? `${styles.link} ${styles.linkActive}` : styles.link
             }
           >
             {t(item.labelKey)}

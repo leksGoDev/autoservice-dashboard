@@ -31,7 +31,7 @@ describe("AppShell", () => {
       </I18nProvider>,
     );
 
-    expect(await screen.findByText("Orders", { selector: ".topbar__title" })).toBeInTheDocument();
+    expect(await screen.findByText("Orders", { selector: "strong" })).toBeInTheDocument();
     expect(screen.getByText("Orders Content")).toBeInTheDocument();
   });
 });

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import styles from "./PagePlaceholder.module.css";
 
 type PagePlaceholderProps = {
   eyebrow: string;
@@ -14,13 +15,13 @@ export function PagePlaceholder({
   children,
 }: PagePlaceholderProps) {
   return (
-    <section className="page-placeholder">
-      <div className="page-placeholder__hero">
-        <span className="page-placeholder__eyebrow">{eyebrow}</span>
-        <h1 className="page-placeholder__title">{title}</h1>
-        <p className="page-placeholder__description">{description}</p>
+    <section className={styles.root}>
+      <div className={styles.hero}>
+        <span className={styles.eyebrow}>{eyebrow}</span>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.description}>{description}</p>
       </div>
-      <div className="page-placeholder__grid">{children}</div>
+      <div className={styles.grid}>{children}</div>
     </section>
   );
 }

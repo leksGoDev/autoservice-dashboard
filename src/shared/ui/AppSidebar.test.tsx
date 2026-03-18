@@ -17,7 +17,7 @@ describe("AppSidebar", () => {
     const ordersLink = screen.getByRole("link", { name: "Orders" });
     const dashboardLink = screen.getByRole("link", { name: "Dashboard" });
 
-    expect(ordersLink).toHaveClass("sidebar__link--active");
-    expect(dashboardLink).not.toHaveClass("sidebar__link--active");
+    expect(ordersLink).toHaveAttribute("aria-current", "page");
+    expect(dashboardLink).not.toHaveAttribute("aria-current", "page");
   });
 });

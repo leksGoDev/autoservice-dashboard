@@ -1,3 +1,5 @@
+import styles from "./PagePlaceholder.module.css";
+
 type PlaceholderCardProps = {
   title: string;
   text: string;
@@ -5,9 +7,9 @@ type PlaceholderCardProps = {
 
 export function PlaceholderCard({ title, text }: PlaceholderCardProps) {
   return (
-    <article className="page-placeholder__card">
-      <h2 className="page-placeholder__card-title">{title}</h2>
-      <p className="page-placeholder__card-text">{text}</p>
+    <article className={styles.card}>
+      <h2 className={styles.cardTitle}>{title}</h2>
+      <p className={styles.cardText}>{text}</p>
     </article>
   );
 }
