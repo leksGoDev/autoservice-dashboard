@@ -1,5 +1,3 @@
-import "./vehicles-registry.css";
-
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import type { FC, FormEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
@@ -8,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useVehiclesListQuery } from "@/entities/vehicle/api/queries";
 import type { VehicleListItem } from "@/entities/vehicle/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { DataState } from "@/shared/ui/DataState";
+import { PaginationShell } from "@/shared/ui/PaginationShell";
 
 const PAGE_SIZE = 10;
 
@@ -29,22 +29,29 @@ const VehiclesToolbar: FC<VehiclesToolbarProps> = ({
   const { t } = useI18n();
 
   return (
-    <form className="vehicles-toolbar" onSubmit={onSubmit}>
-      <label htmlFor="vehicles-search" className="vehicles-toolbar__label">
+    <form className="mt-2 grid items-end gap-[10px] md:grid-cols-[minmax(260px,1fr)_auto_auto]" onSubmit={onSubmit}>
+      <label htmlFor="vehicles-search" className="text-[12px] font-semibold text-[var(--color-text-secondary)] md:col-span-full">
         {t("pages.vehicles.searchLabel")}
       </label>
       <input
         id="vehicles-search"
-        className="vehicles-toolbar__search"
+        className="w-full rounded-xl border border-[var(--color-border)] bg-[rgba(15,17,21,0.45)] px-3 py-2.5 text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)]"
         value={searchInput}
         onChange={(event) => onSearchInputChange(event.target.value)}
         placeholder={t("pages.vehicles.searchPlaceholder")}
       />
-      <button type="submit" className="vehicles-toolbar__button">
+      <button
+        type="submit"
+        className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-3 py-2.5 text-[13px] font-semibold text-[var(--color-text-primary)]"
+      >
         {t("pages.vehicles.searchButton")}
       </button>
       {hasActiveSearch ? (
-        <button type="button" className="vehicles-toolbar__button vehicles-toolbar__button--ghost" onClick={onClearSearch}>
+        <button
+          type="button"
+          className="cursor-pointer rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.45)] px-3 py-2.5 text-[13px] font-semibold text-[var(--color-text-secondary)]"
+          onClick={onClearSearch}
+        >
           {t("pages.vehicles.clearSearch")}
         </button>
       ) : null}
@@ -56,12 +63,17 @@ const VehiclesLoadingState: FC = () => {
   const { t } = useI18n();
 
   return (
-    <section className="vehicles-state" aria-live="polite">
-      <span>{t("pages.vehicles.loading")}</span>
-      <div className="vehicles-skeleton" role="presentation" aria-hidden>
+    <section
+      className="rounded-2xl border border-[rgba(154,164,178,0.18)] bg-[rgba(27,33,48,0.9)] px-[18px] py-[18px] text-[var(--color-text-secondary)]"
+      aria-live="polite"
+    >
+      <div className="grid gap-[10px]">
+        <span>{t("pages.vehicles.loading")}</span>
+        <div className="grid gap-2" role="presentation" aria-hidden>
         {Array.from({ length: 6 }).map((_, index) => (
-          <span key={index} className="vehicles-skeleton__line" />
+          <span key={index} className="block h-[10px] animate-pulse rounded-full bg-[rgba(154,164,178,0.2)]" />
         ))}
+        </div>
       </div>
     </section>
   );
@@ -75,12 +87,19 @@ const VehiclesErrorState: FC<VehiclesErrorStateProps> = ({ onRetry }) => {
   const { t } = useI18n();
 
   return (
-    <section className="vehicles-state vehicles-state--error" aria-live="polite">
-      <span>{t("pages.vehicles.error")}</span>
-      <button type="button" className="vehicles-state__retry" onClick={onRetry}>
-        {t("common.retry")}
-      </button>
-    </section>
+    <DataState
+      tone="error"
+      message={t("pages.vehicles.error")}
+      action={
+        <button
+          type="button"
+          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
+          onClick={onRetry}
+        >
+          {t("common.retry")}
+        </button>
+      }
+    />
   );
 };
 
@@ -92,7 +111,10 @@ const VehiclesEmptyState: FC<VehiclesEmptyStateProps> = ({ hasActiveSearch }) =>
   const { t } = useI18n();
 
   return (
-    <section className="vehicles-state" aria-live="polite">
+    <section
+      className="grid gap-[10px] rounded-2xl border border-[rgba(154,164,178,0.18)] bg-[rgba(27,33,48,0.9)] px-[18px] py-[18px] text-[var(--color-text-secondary)]"
+      aria-live="polite"
+    >
       <strong>{hasActiveSearch ? t("pages.vehicles.emptySearch") : t("pages.vehicles.empty")}</strong>
       <span>{t("pages.vehicles.emptyHint")}</span>
     </section>
@@ -128,11 +150,15 @@ const VehiclesTable: FC<VehiclesTableProps> = ({
     return [
       columnHelper.accessor("plateNumber", {
         header: t("pages.vehicles.columns.plateNumber"),
-        cell: (info) => <span className="vehicles-table__mono">{info.getValue()}</span>,
+        cell: (info) => (
+          <span className="font-mono text-[13px] text-[#c9d1dd]">{info.getValue()}</span>
+        ),
       }),
       columnHelper.accessor("vin", {
         header: t("pages.vehicles.columns.vin"),
-        cell: (info) => <span className="vehicles-table__mono">{info.getValue()}</span>,
+        cell: (info) => (
+          <span className="font-mono text-[13px] text-[#c9d1dd]">{info.getValue()}</span>
+        ),
       }),
       columnHelper.accessor("make", {
         header: t("pages.vehicles.columns.make"),
@@ -153,7 +179,10 @@ const VehiclesTable: FC<VehiclesTableProps> = ({
         id: "serviceHistory",
         header: t("pages.vehicles.columns.serviceHistory"),
         cell: (info) => (
-          <Link to={`/vehicles/${info.row.original.id}`} className="vehicles-table__action">
+          <Link
+            to={`/vehicles/${info.row.original.id}`}
+            className="inline-flex rounded-full border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-2.5 py-1.5 text-[12px] font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
+          >
             {t("pages.vehicles.actions.serviceHistory")}
           </Link>
         ),
@@ -168,14 +197,17 @@ const VehiclesTable: FC<VehiclesTableProps> = ({
   });
 
   return (
-    <section className="vehicles-registry">
-      <div className="vehicles-registry__table-wrap">
-        <table className="vehicles-table">
+    <section className="grid gap-[14px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[14px]">
+      <div className="overflow-x-auto">
+        <table className="min-w-[980px] w-full border-collapse text-left text-[13px] max-[900px]:min-w-[760px]">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
+                  <th
+                    key={header.id}
+                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]"
+                  >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
                 ))}
@@ -184,9 +216,11 @@ const VehiclesTable: FC<VehiclesTableProps> = ({
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
+              <tr key={row.id} className="transition-colors hover:bg-[#20283a]">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                  <td key={cell.id} className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
                 ))}
               </tr>
             ))}
@@ -194,20 +228,16 @@ const VehiclesTable: FC<VehiclesTableProps> = ({
         </table>
       </div>
 
-      <footer className="vehicles-registry__footer">
-        <span className="vehicles-registry__summary">{summary}</span>
-        <div className="vehicles-pagination">
-          <button type="button" className="vehicles-pagination__button" disabled={!canPrev} onClick={onPrev}>
-            {t("pages.vehicles.actions.prev")}
-          </button>
-          <span className="vehicles-pagination__status">
-            {t("pages.vehicles.pagination", { page, totalPages })}
-          </span>
-          <button type="button" className="vehicles-pagination__button" disabled={!canNext} onClick={onNext}>
-            {t("pages.vehicles.actions.next")}
-          </button>
-        </div>
-      </footer>
+      <PaginationShell
+        summary={summary}
+        pageLabel={t("pages.vehicles.pagination", { page, totalPages })}
+        prevLabel={t("pages.vehicles.actions.prev")}
+        nextLabel={t("pages.vehicles.actions.next")}
+        canGoPrev={canPrev}
+        canGoNext={canNext}
+        onPrev={onPrev}
+        onNext={onNext}
+      />
     </section>
   );
 };
@@ -254,11 +284,13 @@ export const VehiclesRegistry: FC = () => {
   }
 
   return (
-    <section className="vehicles-page">
-      <header className="vehicles-page__hero">
-        <span className="vehicles-page__eyebrow">{t("pages.vehicles.eyebrow")}</span>
-        <h1 className="vehicles-page__title">{t("pages.vehicles.title")}</h1>
-        <p className="vehicles-page__description">{t("pages.vehicles.description")}</p>
+    <section className="grid gap-5">
+      <header className="grid gap-[10px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-6">
+        <span className="text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
+          {t("pages.vehicles.eyebrow")}
+        </span>
+        <h1 className="m-0 text-[28px] leading-[1.15]">{t("pages.vehicles.title")}</h1>
+        <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.vehicles.description")}</p>
 
         <VehiclesToolbar
           hasActiveSearch={hasActiveSearch}

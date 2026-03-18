@@ -27,34 +27,53 @@ export const CustomersRegistryTable: FC<CustomersRegistryTableProps> = ({
   headers,
 }) => {
   return (
-    <div className="customers-registry__table-wrap">
-      <table className="customers-registry__table">
+    <div className="overflow-x-auto">
+      <table className="min-w-[760px] w-full border-collapse text-left text-[13px]">
         <thead>
           <tr>
-            <th>{headers.name}</th>
-            <th>{headers.phone}</th>
-            <th>{headers.email}</th>
-            <th>{headers.vehiclesCount}</th>
-            <th>{headers.ordersCount}</th>
-            <th>{headers.lastVisit}</th>
+            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
+              {headers.name}
+            </th>
+            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
+              {headers.phone}
+            </th>
+            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
+              {headers.email}
+            </th>
+            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
+              {headers.vehiclesCount}
+            </th>
+            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
+              {headers.ordersCount}
+            </th>
+            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
+              {headers.lastVisit}
+            </th>
           </tr>
         </thead>
         <tbody>
           {rows.map((customer) => (
-            <tr key={customer.id}>
-              <td>
-                <div className="customers-registry__name-cell">
+            <tr key={customer.id} className="transition-colors hover:bg-[#20283a]">
+              <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                <div className="grid gap-[3px]">
                   <span>{customer.fullName}</span>
-                  <button type="button" className="customers-registry__row-link">
+                  <button
+                    type="button"
+                    className="cursor-pointer border-0 bg-transparent p-0 text-left text-[12px] text-[var(--color-accent-light-blue)] transition-colors hover:text-[#9ac0ff]"
+                  >
                     {detailsLabel}
                   </button>
                 </div>
               </td>
-              <td>{customer.phone}</td>
-              <td>{customer.email}</td>
-              <td>{customer.vehiclesCount}</td>
-              <td>{customer.ordersCount}</td>
-              <td>{formatCustomersRegistryDate(customer.lastVisitAt, locale, unknownLabel)}</td>
+              <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{customer.phone}</td>
+              <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{customer.email}</td>
+              <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                {customer.vehiclesCount}
+              </td>
+              <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{customer.ordersCount}</td>
+              <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                {formatCustomersRegistryDate(customer.lastVisitAt, locale, unknownLabel)}
+              </td>
             </tr>
           ))}
         </tbody>

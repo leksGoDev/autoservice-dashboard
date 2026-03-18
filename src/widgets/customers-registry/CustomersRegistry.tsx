@@ -1,5 +1,3 @@
-import "./customers-registry.css";
-
 import { useMemo, useState, type FC } from "react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
@@ -43,7 +41,7 @@ export const CustomersRegistry: FC = () => {
     <WidgetCard
       title={t("customersRegistry.title")}
       description={t("customersRegistry.description")}
-      className="customers-registry"
+      className="grid gap-4"
     >
       <CustomersRegistrySearch
         value={search}
@@ -62,7 +60,11 @@ export const CustomersRegistry: FC = () => {
           tone="error"
           message={t("customersRegistry.states.error")}
           action={
-            <button type="button" className="customers-registry__retry" onClick={() => query.refetch()}>
+            <button
+              type="button"
+              className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
+              onClick={() => query.refetch()}
+            >
               {t("common.retry")}
             </button>
           }
