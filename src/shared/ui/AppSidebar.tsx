@@ -1,24 +1,28 @@
 import { NavLink } from "react-router-dom";
 
+import { useI18n } from "@/shared/i18n/use-i18n";
+
 const navigation = [
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/orders", label: "Orders" },
-  { to: "/customers", label: "Customers" },
-  { to: "/vehicles", label: "Vehicles" },
-  { to: "/mechanics", label: "Mechanics" },
-  { to: "/analytics", label: "Analytics" },
-  { to: "/work-board", label: "Work Board" },
+  { to: "/dashboard", labelKey: "nav.dashboard" },
+  { to: "/orders", labelKey: "nav.orders" },
+  { to: "/customers", labelKey: "nav.customers" },
+  { to: "/vehicles", labelKey: "nav.vehicles" },
+  { to: "/mechanics", labelKey: "nav.mechanics" },
+  { to: "/analytics", labelKey: "nav.analytics" },
+  { to: "/work-board", labelKey: "nav.workBoard" },
 ];
 
 export function AppSidebar() {
+  const { t } = useI18n();
+
   return (
     <aside className="sidebar">
       <div className="sidebar__brand">
-        <span className="sidebar__eyebrow">Operations</span>
-        <span className="sidebar__title">Autoservice Dashboard</span>
+        <span className="sidebar__eyebrow">{t("sidebar.eyebrow")}</span>
+        <span className="sidebar__title">{t("sidebar.title")}</span>
       </div>
 
-      <nav className="sidebar__nav" aria-label="Primary navigation">
+      <nav className="sidebar__nav" aria-label={t("sidebar.navAria")}>
         {navigation.map((item) => (
           <NavLink
             key={item.to}
@@ -27,7 +31,7 @@ export function AppSidebar() {
               isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
             }
           >
-            {item.label}
+            {t(item.labelKey)}
           </NavLink>
         ))}
       </nav>
