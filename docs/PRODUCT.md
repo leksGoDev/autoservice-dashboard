@@ -17,6 +17,44 @@ The goal is to simulate a realistic B2B dashboard product.
 
 ---
 
+## Localization
+
+The application supports two interface languages:
+
+- English (`en`)
+- Russian (`ru`)
+
+Product rules:
+
+- English is the default language
+- the first load may use the browser language when it matches a supported locale
+- the selected language should persist between sessions when practical
+- language changes should apply immediately across the interface
+- localization applies to UI copy rather than to raw business data
+
+Localized UI copy includes:
+
+- navigation labels
+- page titles
+- widget titles
+- form labels
+- placeholders
+- status labels
+- priority labels
+- empty, loading, and error states
+- relative time labels
+
+The following values remain unchanged regardless of locale:
+
+- order numbers
+- VIN values
+- plate numbers
+- customer names
+- mechanic names
+- other record-derived business data
+
+---
+
 ## Core Entities
 
 The system operates around the following core entities:

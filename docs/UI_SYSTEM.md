@@ -60,8 +60,45 @@ Expected elements:
 
 - global search
 - page title
+- language switcher
 - optional status indicators
 - user menu
+
+### Language Switcher
+
+The top bar contains the primary language control for the application.
+
+Behavior:
+
+- supports only `EN` and `RU`
+- uses a direct two-state control such as a segmented switch
+- keeps the active language visible at all times
+- applies the selected locale immediately across the visible UI
+- persists the selected locale between sessions when practical
+- may use the browser locale on first load if it matches a supported locale
+
+The language switcher affects:
+
+- sidebar navigation labels
+- top bar labels and placeholders
+- page titles
+- widget titles
+- table headers
+- form labels
+- button labels
+- status and priority labels
+- empty, loading, and error messages
+- relative time text
+
+The following values should not be localized:
+
+- route paths
+- order IDs and order numbers
+- VIN values
+- plate numbers
+- customer names
+- mechanic names
+- raw record values returned from data sources
 
 ---
 
@@ -131,6 +168,8 @@ Columns:
 - change status
 - assign mechanic
 - flag order
+
+Status and priority values should be presented with localized labels while keeping stable underlying codes in the data layer.
 
 ### Filters
 
@@ -351,6 +390,18 @@ Each board card should display:
 ---
 
 # Shared UI Patterns
+
+## Localization
+
+All route-level and widget-level interface copy should be translation-driven rather than hardcoded inside page composition.
+
+Formatting rules:
+
+- dates continue to use browser locale behavior
+- number formatting keeps existing behavior
+- currency stays unchanged
+- relative time labels should be localized
+ 
 
 ## Tables
 

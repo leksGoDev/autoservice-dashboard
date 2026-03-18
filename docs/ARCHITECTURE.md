@@ -63,6 +63,7 @@ Contains:
 - providers
 - router setup
 - query client setup
+- locale provider
 - app shell layout
 - global styles
 - PWA registration
@@ -85,6 +86,7 @@ Contains:
 - base form components
 - shared types
 - shared API client
+- shared i18n resources and helpers
 
 This layer must not depend on product domains.
 
@@ -228,6 +230,54 @@ src/
   pages/
   mocks/
 ```
+
+Localization resources should live in the shared layer:
+
+```txt
+shared/
+  i18n/
+    config.ts
+    provider.tsx
+    use-i18n.ts
+    messages/
+      en.ts
+      ru.ts
+```
+
+---
+
+## Localization Architecture
+
+Localization is a global UI concern and should be handled at the application level.
+
+Rules:
+
+- support only `en` and `ru`
+- default locale is `en`
+- the browser locale may be used on first load when it matches a supported locale
+- the selected locale should persist locally when practical
+- locale changes should update the UI immediately
+- locale state should live in an app-level provider/context rather than in server-state tooling
+- translation resources should live in `shared/i18n`
+- components should consume translations through shared i18n utilities instead of hardcoded labels
+
+Data ownership rules:
+
+- API and mocks return canonical business values and stable enum codes
+- entity and API layers keep those stable values unchanged
+- localized labels are derived in presentation-oriented frontend code
+- shared dictionaries should own common UI labels such as statuses, priorities, and relative time copy
+
+Translation key naming should stay hierarchical and predictable.
+
+Recommended examples:
+
+- `nav.dashboard`
+- `topbar.searchPlaceholder`
+- `dashboard.kpi.activeOrders`
+- `order.status.in_progress`
+- `order.priority.high`
+- `common.justNow`
 
 ---
 

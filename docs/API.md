@@ -38,6 +38,7 @@ The data layer should:
 - Zustand must not store server-derived data
 - API response shapes may be mapped into frontend-friendly models when useful
 - MSW must mirror the same endpoint contracts used by the frontend
+- API and mocks must not return translated interface labels
 
 ---
 
@@ -253,6 +254,14 @@ UI components should consume query hooks or feature-level mutation hooks instead
 Mutation logic should not be defined inline inside page or widget components.
 
 Direct cache manipulation should be limited to mutation handlers and data-layer utilities.
+
+Localization rules:
+
+- request and response contracts should use stable canonical values
+- enum values such as statuses and priorities must remain locale-independent
+- user-facing labels for those values should be produced in presentation-oriented frontend code
+- mock handlers must follow the same locale-independent contract as a real backend
+- relative time copy may be localized in the UI layer after data retrieval
 
 ---
 

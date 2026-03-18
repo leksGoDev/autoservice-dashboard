@@ -164,6 +164,13 @@ Small Meta Text
 
 Text should prioritize readability in dense data interfaces.
 
+Localization requirements:
+
+- the primary type choice must support both Latin and Cyrillic text cleanly
+- translated Russian labels must remain readable in dense dashboard layouts
+- components should account for longer Russian strings without breaking hierarchy
+- truncation should be deliberate and used only where layout pressure requires it
+
 ---
 
 # Spacing System
@@ -193,6 +200,8 @@ Main Content Area
 
 The layout should support large data tables and analytical views.
 
+The top navigation bar should include a visible `EN` / `RU` language switcher.
+
 ---
 
 # Sidebar
@@ -217,6 +226,8 @@ Vehicles
 Mechanics
 Analytics
 Work Board
+
+Sidebar item sizing and spacing should tolerate longer localized labels, especially in Russian.
 
 ---
 
@@ -257,6 +268,18 @@ Row hover background:
 #20283A
 
 ---
+
+# Localization UI Behavior
+
+Localization should feel native to the interface rather than added on top of it.
+
+Guidelines:
+
+- keep the active language visibly selected in the top bar
+- prefer a direct two-option switch over a hidden dropdown for the current language scope
+- ensure translated headings, status chips, and control labels remain visually balanced
+- avoid layouts that rely on short English-only labels
+- verify that widgets, tables, and toolbars remain aligned with longer Russian copy
 
 # Status Badges
 
