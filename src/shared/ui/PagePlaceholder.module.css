@@ -1,60 +1,6 @@
-.root {
-  display: grid;
-  gap: 20px;
-}
-
 .hero,
 .card {
   background: rgba(27, 33, 48, 0.9);
   border: 1px solid var(--color-border);
   border-radius: 16px;
-}
-
-.hero {
-  padding: 28px;
-}
-
-.eyebrow {
-  color: var(--color-accent-light-blue);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.title {
-  margin: 10px 0 8px;
-  font-size: 32px;
-  line-height: 1.1;
-}
-
-.description {
-  max-width: 760px;
-  color: var(--color-text-secondary);
-}
-
-.grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.card {
-  padding: 20px;
-}
-
-.cardTitle {
-  margin: 0 0 8px;
-  font-size: 16px;
-}
-
-.cardText {
-  margin: 0;
-  color: var(--color-text-secondary);
-}
-
-@media (max-width: 960px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
 }

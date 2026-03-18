@@ -7,9 +7,9 @@ type PlaceholderCardProps = {
 
 export function PlaceholderCard({ title, text }: PlaceholderCardProps) {
   return (
-    <article className={styles.card}>
-      <h2 className={styles.cardTitle}>{title}</h2>
-      <p className={styles.cardText}>{text}</p>
+    <article className={`${styles.card} p-5`}>
+      <h2 className="mb-2 text-base">{title}</h2>
+      <p className="m-0 text-[var(--color-text-secondary)]">{text}</p>
     </article>
   );
 }

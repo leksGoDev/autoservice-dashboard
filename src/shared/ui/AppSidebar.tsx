@@ -17,19 +17,29 @@ export function AppSidebar() {
   const { t } = useI18n();
 
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.brand}>
-        <span className={styles.eyebrow}>{t("sidebar.eyebrow")}</span>
-        <span className={styles.title}>{t("sidebar.title")}</span>
+    <aside
+      className={`${styles.sidebarSurface} flex flex-col gap-6 border-b border-[var(--color-border)] px-4 py-6 max-[960px]:gap-4 md:border-r md:border-b-0`}
+    >
+      <div className="flex flex-col gap-1">
+        <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
+          {t("sidebar.eyebrow")}
+        </span>
+        <span className="text-lg font-bold">{t("sidebar.title")}</span>
       </div>
 
-      <nav className={styles.nav} aria-label={t("sidebar.navAria")}>
+      <nav
+        className="grid gap-2 max-[960px]:grid-cols-2"
+        aria-label={t("sidebar.navAria")}
+      >
         {navigation.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
-              isActive ? `${styles.link} ${styles.linkActive}` : styles.link
+              [
+                "rounded-xl border border-transparent px-3.5 py-3 text-[var(--color-text-secondary)] transition-colors duration-150 hover:bg-white/[0.03] hover:text-[var(--color-text-primary)]",
+                isActive ? styles.linkActive : "",
+              ].join(" ").trim()
             }
           >
             {t(item.labelKey)}

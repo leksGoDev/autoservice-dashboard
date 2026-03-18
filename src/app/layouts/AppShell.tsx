@@ -16,11 +16,11 @@ export function AppShell() {
   const title = t(titleKey);
 
   return (
-    <div className="app-shell">
+    <div className="grid min-h-screen grid-cols-[248px_1fr] max-[960px]:grid-cols-1">
       <AppSidebar />
-      <div className="app-shell__content">
+      <div className="flex min-w-0 flex-col">
         <AppTopbar title={title} />
-        <main className="app-shell__main">
+        <main className="p-6">
           <Outlet />
         </main>
       </div>
