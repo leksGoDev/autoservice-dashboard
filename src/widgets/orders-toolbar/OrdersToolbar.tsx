@@ -25,23 +25,30 @@ export const OrdersToolbar: FC<OrdersToolbarProps> = ({ filters, mechanics, onCh
     };
 
   return (
-    <section className="orders-toolbar" aria-label={t("pages.orders.toolbar.aria") as string}>
-      <div className="orders-toolbar__grid">
-        <label className="orders-toolbar__field">
-          <span className="orders-toolbar__label">{t("pages.orders.toolbar.search")}</span>
+    <section
+      className="grid gap-3 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4"
+      aria-label={t("pages.orders.toolbar.aria") as string}
+    >
+      <div className="grid gap-3 min-[1241px]:grid-cols-6 max-[1240px]:grid-cols-3 max-[767px]:grid-cols-1">
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
+            {t("pages.orders.toolbar.search")}
+          </span>
           <input
             type="search"
-            className="orders-toolbar__input"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
             value={filters.search}
             onChange={handleSearchChange}
             placeholder={t("pages.orders.toolbar.searchPlaceholder") as string}
           />
         </label>
 
-        <label className="orders-toolbar__field">
-          <span className="orders-toolbar__label">{t("pages.orders.toolbar.status")}</span>
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
+            {t("pages.orders.toolbar.status")}
+          </span>
           <select
-            className="orders-toolbar__select"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
             value={filters.status}
             onChange={handleSelectChange("status")}
           >
@@ -54,10 +61,12 @@ export const OrdersToolbar: FC<OrdersToolbarProps> = ({ filters, mechanics, onCh
           </select>
         </label>
 
-        <label className="orders-toolbar__field">
-          <span className="orders-toolbar__label">{t("pages.orders.toolbar.priority")}</span>
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
+            {t("pages.orders.toolbar.priority")}
+          </span>
           <select
-            className="orders-toolbar__select"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
             value={filters.priority}
             onChange={handleSelectChange("priority")}
           >
@@ -70,10 +79,12 @@ export const OrdersToolbar: FC<OrdersToolbarProps> = ({ filters, mechanics, onCh
           </select>
         </label>
 
-        <label className="orders-toolbar__field">
-          <span className="orders-toolbar__label">{t("pages.orders.toolbar.mechanic")}</span>
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
+            {t("pages.orders.toolbar.mechanic")}
+          </span>
           <select
-            className="orders-toolbar__select"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
             value={filters.mechanic}
             onChange={handleSelectChange("mechanic")}
           >
@@ -86,29 +97,37 @@ export const OrdersToolbar: FC<OrdersToolbarProps> = ({ filters, mechanics, onCh
           </select>
         </label>
 
-        <label className="orders-toolbar__field">
-          <span className="orders-toolbar__label">{t("pages.orders.toolbar.createdFrom")}</span>
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
+            {t("pages.orders.toolbar.createdFrom")}
+          </span>
           <input
             type="date"
-            className="orders-toolbar__input"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
             value={filters.createdFrom}
             onChange={handleSelectChange("createdFrom")}
           />
         </label>
 
-        <label className="orders-toolbar__field">
-          <span className="orders-toolbar__label">{t("pages.orders.toolbar.createdTo")}</span>
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
+            {t("pages.orders.toolbar.createdTo")}
+          </span>
           <input
             type="date"
-            className="orders-toolbar__input"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
             value={filters.createdTo}
             onChange={handleSelectChange("createdTo")}
           />
         </label>
       </div>
 
-      <div className="orders-toolbar__actions">
-        <button type="button" className="orders-toolbar__reset" onClick={onReset}>
+      <div className="flex justify-end">
+        <button
+          type="button"
+          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-[var(--color-text-primary)]"
+          onClick={onReset}
+        >
           {t("pages.orders.toolbar.reset")}
         </button>
       </div>

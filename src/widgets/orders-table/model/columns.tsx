@@ -4,6 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 import type { TFunction } from "i18next";
 
+import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
 import type { OrdersTableRow } from "@/widgets/orders-shared/model/types";
 import { formatOrderCurrency, formatOrderDate, getOrderStatusChipModifier } from "./presentation";
 
@@ -31,7 +32,12 @@ export function createOrdersTableColumns(
       cell: (info) => {
         const status = info.getValue() as OrdersTableRow["status"];
         return (
-          <span className={`status-chip status-chip--${getOrderStatusChipModifier(status)}`}>
+          <span
+            className={[
+              "inline-flex items-center justify-center rounded-full px-2 py-1 text-xs font-semibold",
+              getStatusBadgeClass(getOrderStatusChipModifier(status)),
+            ].join(" ").trim()}
+          >
             {t(`order.status.${status}`)}
           </span>
         );
@@ -42,7 +48,16 @@ export function createOrdersTableColumns(
       header: t("pages.orders.table.headers.priority"),
       cell: (info) => {
         const priority = info.getValue() as OrdersTableRow["priority"];
-        return <span className={`priority-chip priority-chip--${priority}`}>{t(`order.priority.${priority}`)}</span>;
+        return (
+          <span
+            className={[
+              "inline-flex items-center justify-center rounded-full px-2 py-1 text-xs font-semibold",
+              getPriorityBadgeClass(priority),
+            ].join(" ").trim()}
+          >
+            {t(`order.priority.${priority}`)}
+          </span>
+        );
       },
     },
     {
@@ -70,7 +85,10 @@ export function createOrdersTableColumns(
         renderRowActions ? (
           renderRowActions(info.row.original)
         ) : (
-          <button type="button" className="orders-table__action-button">
+          <button
+            type="button"
+            className="cursor-pointer rounded-lg border border-[var(--color-border)] bg-[rgba(15,17,21,0.56)] px-2.5 py-1.5 text-[var(--color-text-primary)]"
+          >
             {t("pages.orders.table.actions.placeholder")}
           </button>
         ),

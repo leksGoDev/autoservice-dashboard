@@ -9,6 +9,7 @@ import {
   getStatusChipModifier,
 } from "@/entities/dashboard/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
 
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
@@ -42,12 +43,22 @@ export const DashboardRecentOrders: FC<DashboardRecentOrdersProps> = ({ orders }
                 <td>{order.customerName}</td>
                 <td>{order.vehicleLabel}</td>
                 <td>
-                  <span className={`status-chip status-chip--${getStatusChipModifier(order.status)}`}>
+                  <span
+                    className={[
+                      "inline-flex items-center justify-center rounded-full px-2 py-1 text-xs font-semibold",
+                      getStatusBadgeClass(getStatusChipModifier(order.status)),
+                    ].join(" ").trim()}
+                  >
                     {t(getOrderStatusKey(order.status))}
                   </span>
                 </td>
                 <td>
-                  <span className={`priority-chip priority-chip--${order.priority}`}>
+                  <span
+                    className={[
+                      "inline-flex items-center justify-center rounded-full px-2 py-1 text-xs font-semibold",
+                      getPriorityBadgeClass(order.priority),
+                    ].join(" ").trim()}
+                  >
                     {t(getOrderPriorityKey(order.priority))}
                   </span>
                 </td>

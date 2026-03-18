@@ -1,0 +1,48 @@
+.statusChip {
+  border: 1px solid transparent;
+}
+
+.statusScheduled {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.16);
+}
+
+.statusInProgress {
+  color: #e6eaf2;
+  background: rgba(107, 164, 255, 0.2);
+}
+
+.statusWaitingParts {
+  color: #fde68a;
+  background: rgba(245, 158, 11, 0.2);
+}
+
+.statusCompleted {
+  color: #bbf7d0;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.statusCancelled {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.priorityLow {
+  color: #cbd5e1;
+  background: rgba(148, 163, 184, 0.22);
+}
+
+.priorityMedium {
+  color: #bfdbfe;
+  background: rgba(59, 130, 246, 0.18);
+}
+
+.priorityHigh {
+  color: #93c5fd;
+  background: rgba(0, 58, 143, 0.28);
+}
+
+.priorityUrgent {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.24);
+}

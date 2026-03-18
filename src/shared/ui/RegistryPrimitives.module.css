@@ -1,0 +1,12 @@
+.dataState {
+  border: 1px dashed rgba(154, 164, 178, 0.35);
+}
+
+.dataStateError {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fecaca;
+}
+
+.paginationBorder {
+  border-top: 1px solid rgba(154, 164, 178, 0.12);
+}

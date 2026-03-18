@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { PaginationShell } from "@/shared/ui/PaginationShell";
 import type { OrdersTableRow } from "@/widgets/orders-shared/model/types";
 import { createOrdersTableColumns } from "./model/columns";
 
@@ -39,14 +40,17 @@ export const OrdersTable: FC<OrdersTableProps> = ({
   const canGoNext = page < totalPages;
 
   return (
-    <section className="orders-table-card">
-      <div className="orders-table-wrap">
-        <table className="orders-table">
+    <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[14px] pb-3">
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[1040px] border-collapse text-[13px]">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
+                  <th
+                    key={header.id}
+                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left align-middle text-xs font-semibold text-[var(--color-text-secondary)]"
+                  >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
                 ))}
@@ -55,9 +59,14 @@ export const OrdersTable: FC<OrdersTableProps> = ({
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
+              <tr key={row.id} className="hover:bg-[#20283a]">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                  <td
+                    key={cell.id}
+                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left align-middle"
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
                 ))}
               </tr>
             ))}
@@ -65,34 +74,16 @@ export const OrdersTable: FC<OrdersTableProps> = ({
         </table>
       </div>
 
-      <footer className="orders-table__footer">
-        <span className="orders-table__meta">
-          {t("pages.orders.table.pagination.total", { total })}
-          {isFetching ? ` · ${t("pages.orders.table.pagination.updating")}` : ""}
-        </span>
-
-        <div className="orders-table__pagination">
-          <button
-            type="button"
-            className="orders-table__page-button"
-            onClick={() => onPageChange(page - 1)}
-            disabled={!canGoPrev}
-          >
-            {t("pages.orders.table.pagination.prev")}
-          </button>
-          <span className="orders-table__page-label">
-            {t("pages.orders.table.pagination.page", { page, totalPages })}
-          </span>
-          <button
-            type="button"
-            className="orders-table__page-button"
-            onClick={() => onPageChange(page + 1)}
-            disabled={!canGoNext}
-          >
-            {t("pages.orders.table.pagination.next")}
-          </button>
-        </div>
-      </footer>
+      <PaginationShell
+        summary={`${t("pages.orders.table.pagination.total", { total })}${isFetching ? ` · ${t("pages.orders.table.pagination.updating")}` : ""}`}
+        pageLabel={t("pages.orders.table.pagination.page", { page, totalPages })}
+        prevLabel={t("pages.orders.table.pagination.prev")}
+        nextLabel={t("pages.orders.table.pagination.next")}
+        canGoPrev={canGoPrev}
+        canGoNext={canGoNext}
+        onPrev={() => onPageChange(page - 1)}
+        onNext={() => onPageChange(page + 1)}
+      />
     </section>
   );
 };
