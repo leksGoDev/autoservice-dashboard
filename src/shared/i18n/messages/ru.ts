@@ -44,6 +44,33 @@ export const ruMessages = {
     error: "Не удалось загрузить данные дашборда.",
     empty: "Нет данных дашборда для выбранного периода.",
   },
+  customersRegistry: {
+    title: "Реестр клиентов",
+    description: "Поиск клиентов, таблица реестра и визуальная основа для перехода в карточку клиента.",
+    searchPlaceholder: "Поиск по имени, телефону или email",
+    searchAria: "Поиск клиентов",
+    detailsLink: "Карточка клиента",
+    states: {
+      loading: "Загрузка клиентов...",
+      error: "Не удалось загрузить клиентов.",
+      empty: "Клиенты не найдены.",
+    },
+    table: {
+      name: "Имя",
+      phone: "Телефон",
+      email: "Email",
+      vehiclesCount: "Автомобили",
+      ordersCount: "Заказы",
+      lastVisit: "Последний визит",
+    },
+    pagination: {
+      empty: "Нет записей",
+      summary: "Показано {{start}}-{{end}} из {{total}}",
+      pageOf: "Страница {{page}} из {{totalPages}}",
+      previous: "Назад",
+      next: "Дальше",
+    },
+  },
   dashboard: {
     kpi: {
       active: "Активные заказы",
