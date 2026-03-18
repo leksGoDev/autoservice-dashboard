@@ -1,14 +1,15 @@
-import { getRevenueFixtureByRange } from "@/mocks/fixtures/dashboard";
-
 async function getJson(url: string) {
   const response = await fetch(url);
   return response.json();
 }
 
 describe("dashboardHandlers", () => {
-  it("falls back to default range for invalid range", async () => {
+  it("returns INVALID_RANGE for invalid range", async () => {
     const data = await getJson("/api/dashboard/revenue?range=invalid");
 
-    expect(data).toEqual(getRevenueFixtureByRange("30d"));
+    expect(data).toEqual({
+      code: "INVALID_RANGE",
+      message: "range must be one of: 7d, 30d, 90d",
+    });
   });
 });
