@@ -1,16 +1,25 @@
-import { PagePlaceholder } from "../../shared/ui/PagePlaceholder";
-import { PlaceholderCard } from "../../shared/ui/PlaceholderCard";
+import { useI18n } from "@/shared/i18n/use-i18n";
+import { PagePlaceholder } from "@/shared/ui/PagePlaceholder";
+import { PlaceholderCard } from "@/shared/ui/PlaceholderCard";
 
 export function MechanicsPage() {
+  const { t } = useI18n();
+
   return (
     <PagePlaceholder
-      eyebrow="Operations"
-      title="Mechanics registry"
-      description="This screen will hold mechanic status, specialization, active jobs, and workload-related operational context."
+      eyebrow={t("pages.mechanics.eyebrow")}
+      title={t("pages.mechanics.title")}
+      description={t("pages.mechanics.description")}
     >
-      <PlaceholderCard title="Registry" text="The mechanics table will support search and operational status tracking." />
-      <PlaceholderCard title="Availability" text="Mechanic workload data will be shared with dashboard and analytics widgets." />
-      <PlaceholderCard title="Assignments" text="Features for assigning mechanics will compose with order and service job flows." />
+      <PlaceholderCard title={t("pages.mechanics.cards.registryTitle")} text={t("pages.mechanics.cards.registryText")} />
+      <PlaceholderCard
+        title={t("pages.mechanics.cards.availabilityTitle")}
+        text={t("pages.mechanics.cards.availabilityText")}
+      />
+      <PlaceholderCard
+        title={t("pages.mechanics.cards.assignmentsTitle")}
+        text={t("pages.mechanics.cards.assignmentsText")}
+      />
     </PagePlaceholder>
   );
 }

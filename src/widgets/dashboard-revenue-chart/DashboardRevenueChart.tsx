@@ -2,6 +2,7 @@ import type { FC } from "react";
 
 import type { DashboardRevenuePoint } from "@/entities/dashboard/model/types";
 import { formatCurrency, formatDashboardChartDate } from "@/entities/dashboard/model/presentation";
+import { useI18n } from "@/shared/i18n/use-i18n";
 
 import {
   Area,
@@ -20,10 +21,12 @@ interface DashboardRevenueChartProps {
 }
 
 export const DashboardRevenueChart: FC<DashboardRevenueChartProps> = ({ data }) => {
+  const { t, locale } = useI18n();
+
   return (
     <WidgetCard
-      title="Revenue Chart"
-      description="Daily revenue for the latest operational window"
+      title={t("dashboard.revenueChart.title")}
+      description={t("dashboard.revenueChart.description")}
       className="dashboard-chart-card"
     >
       <div className="dashboard-chart">
@@ -41,7 +44,7 @@ export const DashboardRevenueChart: FC<DashboardRevenueChartProps> = ({ data }) 
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value: string) => formatDashboardChartDate(value)}
+              tickFormatter={(value: string) => formatDashboardChartDate(value, locale)}
             />
             <YAxis
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
@@ -59,7 +62,7 @@ export const DashboardRevenueChart: FC<DashboardRevenueChartProps> = ({ data }) 
               formatter={(value) => {
                 const amount = typeof value === "number" ? value : Number(value ?? 0);
 
-                return [formatCurrency(amount), "Revenue"];
+                return [formatCurrency(amount, locale), t("dashboard.revenueChart.tooltipRevenue")];
               }}
             />
             <Area

@@ -2,6 +2,7 @@ import type { FC } from "react";
 
 import type { DashboardOrdersTrendPoint } from "@/entities/dashboard/model/types";
 import { formatDashboardChartDate } from "@/entities/dashboard/model/presentation";
+import { useI18n } from "@/shared/i18n/use-i18n";
 
 import {
   Bar,
@@ -21,10 +22,12 @@ interface DashboardOrdersTrendProps {
 }
 
 export const DashboardOrdersTrend: FC<DashboardOrdersTrendProps> = ({ data }) => {
+  const { t, locale } = useI18n();
+
   return (
     <WidgetCard
-      title="Orders Trend"
-      description="Created and completed orders by day"
+      title={t("dashboard.ordersTrend.title")}
+      description={t("dashboard.ordersTrend.description")}
       className="dashboard-chart-card"
     >
       <div className="dashboard-chart">
@@ -36,7 +39,7 @@ export const DashboardOrdersTrend: FC<DashboardOrdersTrendProps> = ({ data }) =>
               tick={{ fill: "#9aa4b2", fontSize: 12 }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value: string) => formatDashboardChartDate(value)}
+              tickFormatter={(value: string) => formatDashboardChartDate(value, locale)}
             />
             <YAxis tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
             <Tooltip
@@ -48,8 +51,13 @@ export const DashboardOrdersTrend: FC<DashboardOrdersTrendProps> = ({ data }) =>
               }}
             />
             <Legend wrapperStyle={{ fontSize: 12 }} />
-            <Bar dataKey="total" name="Total" fill="#6ba4ff" radius={[6, 6, 0, 0]} />
-            <Bar dataKey="completed" name="Completed" fill="#22c55e" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="total" name={t("dashboard.ordersTrend.total")} fill="#6ba4ff" radius={[6, 6, 0, 0]} />
+            <Bar
+              dataKey="completed"
+              name={t("dashboard.ordersTrend.completed")}
+              fill="#22c55e"
+              radius={[6, 6, 0, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>

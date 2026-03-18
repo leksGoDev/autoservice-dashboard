@@ -4,10 +4,11 @@ import type { RecentOrderItem } from "@/entities/dashboard/model/types";
 import {
   formatCurrency,
   formatDashboardDate,
-  formatOrderPriority,
-  formatOrderStatus,
+  getOrderPriorityKey,
+  getOrderStatusKey,
   getStatusChipModifier,
 } from "@/entities/dashboard/model/presentation";
+import { useI18n } from "@/shared/i18n/use-i18n";
 
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
@@ -16,20 +17,22 @@ interface DashboardRecentOrdersProps {
 }
 
 export const DashboardRecentOrders: FC<DashboardRecentOrdersProps> = ({ orders }) => {
+  const { t, locale } = useI18n();
+
   return (
-    <WidgetCard title="Recent Orders" description="Latest service orders across all statuses">
+    <WidgetCard title={t("dashboard.recentOrders.title")} description={t("dashboard.recentOrders.description")}>
       <div className="dashboard-table-wrap">
         <table className="dashboard-table">
           <thead>
             <tr>
-              <th>Order</th>
-              <th>Customer</th>
-              <th>Vehicle</th>
-              <th>Status</th>
-              <th>Priority</th>
-              <th>Mechanic</th>
-              <th>Total</th>
-              <th>Created</th>
+              <th>{t("dashboard.recentOrders.headers.order")}</th>
+              <th>{t("dashboard.recentOrders.headers.customer")}</th>
+              <th>{t("dashboard.recentOrders.headers.vehicle")}</th>
+              <th>{t("dashboard.recentOrders.headers.status")}</th>
+              <th>{t("dashboard.recentOrders.headers.priority")}</th>
+              <th>{t("dashboard.recentOrders.headers.mechanic")}</th>
+              <th>{t("dashboard.recentOrders.headers.total")}</th>
+              <th>{t("dashboard.recentOrders.headers.created")}</th>
             </tr>
           </thead>
           <tbody>
@@ -40,17 +43,17 @@ export const DashboardRecentOrders: FC<DashboardRecentOrdersProps> = ({ orders }
                 <td>{order.vehicleLabel}</td>
                 <td>
                   <span className={`status-chip status-chip--${getStatusChipModifier(order.status)}`}>
-                    {formatOrderStatus(order.status)}
+                    {t(getOrderStatusKey(order.status))}
                   </span>
                 </td>
                 <td>
                   <span className={`priority-chip priority-chip--${order.priority}`}>
-                    {formatOrderPriority(order.priority)}
+                    {t(getOrderPriorityKey(order.priority))}
                   </span>
                 </td>
                 <td>{order.assignedMechanic}</td>
-                <td>{formatCurrency(order.totalCost)}</td>
-                <td>{formatDashboardDate(order.createdAt)}</td>
+                <td>{formatCurrency(order.totalCost, locale)}</td>
+                <td>{formatDashboardDate(order.createdAt, locale)}</td>
               </tr>
             ))}
           </tbody>
