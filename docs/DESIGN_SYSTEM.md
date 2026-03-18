@@ -35,14 +35,24 @@ The UI must prioritize **clarity of information over visual effects**.
 
 # Styling Approach
 
-The project uses Tailwind CSS.
+The project uses Tailwind CSS together with CSS Modules.
 
 Guidelines:
 
-- prefer utility classes over custom CSS
-- avoid inline styles
-- map design tokens to Tailwind config
+- use Tailwind for utility-first composition such as layout, spacing, alignment, sizing, and common visual primitives
+- use co-located `*.module.css` files when custom component styling needs local scope and isolation
+- keep global styles limited to resets, tokens, base typography, and truly app-wide layout primitives
+- avoid adding new feature-specific selectors to the global stylesheet
+- avoid inline styles unless a dynamic value cannot be expressed cleanly through class switching
 - keep visual decisions consistent across widgets, pages, and shared UI primitives
+
+CSS ownership rules:
+
+- `global.css` is for reset, CSS variables, and application-wide structural rules only
+- component-specific custom CSS should live next to the component that owns the markup
+- page-specific custom CSS should live inside the page module rather than in shared global styles
+- reusable visual patterns may have shared CSS Modules when they are intentionally cross-page primitives
+- CSS Modules complement Tailwind utilities rather than replace them
 
 ---
 
@@ -65,7 +75,7 @@ Recommended token naming:
 - `--color-danger`
 - `--color-info`
 
-These tokens should be reflected in Tailwind theme configuration.
+These tokens should be reflected in shared CSS variables and reused consistently across CSS Modules.
 
 ---
 
