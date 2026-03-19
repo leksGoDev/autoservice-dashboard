@@ -1,32 +1,45 @@
-import type { FC } from "react";
-
 import type { RecentActivityItem } from "@/entities/dashboard/model/types";
 import { formatRelativeTime, getActivityTone } from "@/entities/dashboard/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-interface DashboardRecentActivityProps {
+type DashboardRecentActivityProps = {
   items: RecentActivityItem[];
-}
+};
 
-export const DashboardRecentActivity: FC<DashboardRecentActivityProps> = ({ items }) => {
+const toneClassMap: Record<string, string> = {
+  neutral: "bg-[var(--color-info)]",
+  success: "bg-[var(--color-success)]",
+  warning: "bg-[var(--color-warning)]",
+  danger: "bg-[var(--color-danger)]",
+};
+
+export const DashboardRecentActivity = ({ items }: DashboardRecentActivityProps) => {
   const { t, locale } = useI18n();
 
   return (
     <WidgetCard title={t("dashboard.recentActivity.title")} description={t("dashboard.recentActivity.description")}>
-      <ul className="activity-feed">
+      <ul className="m-0 grid list-none gap-3 p-0">
         {items.map((item) => (
-          <li key={item.id} className="activity-feed__item">
+          <li
+            key={item.id}
+            className="grid grid-cols-[12px_minmax(0,1fr)_auto] items-start gap-[10px] border-b border-[rgba(154,164,178,0.12)] py-2.5 last:border-b-0"
+          >
             <span
-              className={`activity-feed__dot activity-feed__dot--${getActivityTone(item.type)}`}
+              className={[
+                "mt-1 h-[10px] w-[10px] rounded-full",
+                toneClassMap[getActivityTone(item.type)] ?? toneClassMap.neutral,
+              ].join(" ")}
               aria-hidden="true"
             />
-            <div className="activity-feed__content">
-              <p className="activity-feed__title">{item.message}</p>
-              <p className="activity-feed__details">{item.orderId}</p>
+            <div className="grid gap-1">
+              <p className="m-0 text-sm">{item.message}</p>
+              <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">{item.orderId}</p>
             </div>
-            <time className="activity-feed__time">{formatRelativeTime(item.createdAt, locale)}</time>
+            <time className="whitespace-nowrap text-xs text-[var(--color-text-muted)]">
+              {formatRelativeTime(item.createdAt, locale)}
+            </time>
           </li>
         ))}
       </ul>

@@ -1,11 +1,10 @@
-import "./dashboard.css";
-
 import { useState } from "react";
 
 import type { DashboardRange } from "@/entities/dashboard/model/types";
 import { useDashboardOverviewQuery } from "@/entities/dashboard/api/queries";
 import { DASHBOARD_RANGES, DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { DataState } from "@/shared/ui/DataState";
 import { DashboardKpiCards } from "@/widgets/dashboard-kpi-cards/DashboardKpiCards";
 import { DashboardMechanicWorkload } from "@/widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
 import { DashboardRevenueChart } from "@/widgets/dashboard-revenue-chart/DashboardRevenueChart";
@@ -13,7 +12,7 @@ import { DashboardOrdersTrend } from "@/widgets/dashboard-orders-trend/Dashboard
 import { DashboardRecentOrders } from "@/widgets/dashboard-recent-orders/DashboardRecentOrders";
 import { DashboardRecentActivity } from "@/widgets/dashboard-recent-activity/DashboardRecentActivity";
 
-export function DashboardPage() {
+export const DashboardPage = () => {
   const { t } = useI18n();
   const [range, setRange] = useState<DashboardRange>(DEFAULT_DASHBOARD_RANGE);
   const overviewQuery = useDashboardOverviewQuery(range);
@@ -22,18 +21,25 @@ export function DashboardPage() {
   const isError = overviewQuery.isError;
   const data = overviewQuery.data;
 
+  const rangeButtonClass =
+    "cursor-pointer rounded-full border border-[var(--color-border)] bg-[rgba(15,17,21,0.45)] px-2.5 py-1.5 text-xs font-bold tracking-[0.04em] text-[var(--color-text-secondary)] transition-colors";
+  const activeRangeButtonClass =
+    "border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.2)] text-[var(--color-text-primary)]";
+
   return (
-    <section className="dashboard-page">
-      <header className="dashboard-page__hero">
-        <span className="dashboard-page__eyebrow">{t("dashboardPage.eyebrow")}</span>
-        <h1 className="dashboard-page__title">{t("dashboardPage.title")}</h1>
-        <p className="dashboard-page__description">{t("dashboardPage.description")}</p>
-        <div className="dashboard-page__range">
+    <section className="grid gap-5">
+      <header className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-6">
+        <span className="text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
+          {t("dashboardPage.eyebrow")}
+        </span>
+        <h1 className="mb-2 mt-2.5 text-[28px] leading-[1.15]">{t("dashboardPage.title")}</h1>
+        <p className="m-0 text-[var(--color-text-secondary)]">{t("dashboardPage.description")}</p>
+        <div className="mt-[14px] flex gap-2">
           {DASHBOARD_RANGES.map((value) => (
             <button
               key={value}
               type="button"
-              className={`dashboard-page__range-button${value === range ? " dashboard-page__range-button--active" : ""}`}
+              className={[rangeButtonClass, value === range ? activeRangeButtonClass : ""].join(" ").trim()}
               onClick={() => setRange(value)}
             >
               {value.toUpperCase()}
@@ -42,31 +48,36 @@ export function DashboardPage() {
         </div>
       </header>
 
-      {isLoading ? (
-        <section className="dashboard-state">{t("dashboardPage.loading")}</section>
-      ) : null}
+      {isLoading ? <DataState message={t("dashboardPage.loading")} /> : null}
 
       {isError ? (
-        <section className="dashboard-state dashboard-state--error">
-          {t("dashboardPage.error")}
-          <button type="button" className="dashboard-state__retry" onClick={() => overviewQuery.refetch()}>
-            {t("common.retry")}
-          </button>
-        </section>
+        <DataState
+          tone="error"
+          message={t("dashboardPage.error")}
+          action={
+            <button
+              type="button"
+              className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
+              onClick={() => overviewQuery.refetch()}
+            >
+              {t("common.retry")}
+            </button>
+          }
+        />
       ) : null}
 
       {!isLoading && !isError && data ? (
         <>
           <DashboardKpiCards metrics={data.metrics} />
 
-          <div className="dashboard-page__charts">
+          <div className="grid gap-4 md:grid-cols-2">
             <DashboardRevenueChart data={data.revenue} />
             <DashboardOrdersTrend data={data.ordersTrend} />
           </div>
 
-          <div className="dashboard-page__bottom">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)]">
             <DashboardRecentOrders orders={data.recentOrders} />
-            <div className="dashboard-page__side">
+            <div className="grid content-start gap-4">
               <DashboardMechanicWorkload items={data.mechanicWorkload} />
               <DashboardRecentActivity items={data.recentActivity} />
             </div>
@@ -74,11 +85,7 @@ export function DashboardPage() {
         </>
       ) : null}
 
-      {!isLoading && !isError && !data ? (
-        <section className="dashboard-state">
-          {t("dashboardPage.empty")}
-        </section>
-      ) : null}
+      {!isLoading && !isError && !data ? <DataState message={t("dashboardPage.empty")} /> : null}
     </section>
   );
-}
+};

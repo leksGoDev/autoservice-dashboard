@@ -1,5 +1,3 @@
-import type { FC } from "react";
-
 import type { DashboardRevenuePoint } from "@/entities/dashboard/model/types";
 import { formatCurrency, formatDashboardChartDate } from "@/entities/dashboard/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
@@ -16,20 +14,27 @@ import {
 
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
-interface DashboardRevenueChartProps {
+type DashboardRevenueChartProps = {
   data: DashboardRevenuePoint[];
-}
+};
 
-export const DashboardRevenueChart: FC<DashboardRevenueChartProps> = ({ data }) => {
+const chartTooltipStyle = {
+  border: "1px solid #2a3142",
+  borderRadius: "12px",
+  background: "#151922",
+  color: "#e6eaf2",
+};
+
+export const DashboardRevenueChart = ({ data }: DashboardRevenueChartProps) => {
   const { t, locale } = useI18n();
 
   return (
     <WidgetCard
       title={t("dashboard.revenueChart.title")}
       description={t("dashboard.revenueChart.description")}
-      className="dashboard-chart-card"
+      className="min-h-[320px]"
     >
-      <div className="dashboard-chart">
+      <div className="h-[240px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <defs>
@@ -53,12 +58,7 @@ export const DashboardRevenueChart: FC<DashboardRevenueChartProps> = ({ data }) 
               tickFormatter={(value: number) => `$${Math.round(value / 1000)}k`}
             />
             <Tooltip
-              contentStyle={{
-                border: "1px solid #2a3142",
-                borderRadius: "12px",
-                background: "#151922",
-                color: "#e6eaf2",
-              }}
+              contentStyle={chartTooltipStyle}
               formatter={(value) => {
                 const amount = typeof value === "number" ? value : Number(value ?? 0);
 
