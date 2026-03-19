@@ -36,6 +36,12 @@ export const enMessages = {
     unknown: "Unknown",
     active: "active",
   },
+  pwa: {
+    updateTitle: "Update available",
+    updateBody: "A newer dashboard build is ready. Reload to switch to the latest version.",
+    dismiss: "Later",
+    reload: "Reload now",
+  },
   dashboardPage: {
     eyebrow: "Overview",
     title: "Operations Dashboard",

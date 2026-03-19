@@ -36,6 +36,12 @@ export const ruMessages = {
     unknown: "Неизвестно",
     active: "активно",
   },
+  pwa: {
+    updateTitle: "Доступно обновление",
+    updateBody: "Готова новая версия дашборда. Перезагрузите приложение, чтобы перейти на актуальную сборку.",
+    dismiss: "Позже",
+    reload: "Перезагрузить",
+  },
   dashboardPage: {
     eyebrow: "Обзор",
     title: "Операционный дашборд",
