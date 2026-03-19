@@ -2,7 +2,7 @@ import { useI18n } from "@/shared/i18n/use-i18n";
 import { PagePlaceholder } from "@/shared/ui/PagePlaceholder";
 import { PlaceholderCard } from "@/shared/ui/PlaceholderCard";
 
-export function WorkBoardPage() {
+export const WorkBoardPage = () => {
   const { t } = useI18n();
 
   return (
@@ -19,4 +19,4 @@ export function WorkBoardPage() {
       />
     </PagePlaceholder>
   );
-}
+};

@@ -1,17 +1,17 @@
-import type { ChangeEvent, FC } from "react";
+import type { ChangeEvent } from "react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { ORDER_PRIORITIES, ORDER_STATUSES } from "@/widgets/orders-shared/model/options";
 import type { OrdersToolbarFilters } from "@/widgets/orders-shared/model/types";
 
-interface OrdersToolbarProps {
+type OrdersToolbarProps = {
   filters: OrdersToolbarFilters;
   mechanics: string[];
   onChange: (next: Partial<OrdersToolbarFilters>) => void;
   onReset: () => void;
-}
+};
 
-export const OrdersToolbar: FC<OrdersToolbarProps> = ({ filters, mechanics, onChange, onReset }) => {
+export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersToolbarProps) => {
   const { t } = useI18n();
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {

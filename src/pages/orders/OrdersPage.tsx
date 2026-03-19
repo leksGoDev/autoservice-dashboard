@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
@@ -6,9 +6,7 @@ import { OrdersTable } from "@/widgets/orders-table/OrdersTable";
 import { OrdersToolbar } from "@/widgets/orders-toolbar/OrdersToolbar";
 import { useOrdersPageModel } from "./model/use-orders-page-model";
 
-interface OrdersPageProps {}
-
-export const OrdersPage: FC<OrdersPageProps> = () => {
+export const OrdersPage = () => {
   const { t } = useI18n();
   const {
     filters,

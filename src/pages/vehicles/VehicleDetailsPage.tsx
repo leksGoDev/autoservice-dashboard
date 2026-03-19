@@ -1,8 +1,7 @@
-import type { FC } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useI18n } from "@/shared/i18n/use-i18n";
 
-export const VehicleDetailsPage: FC = () => {
+export const VehicleDetailsPage = () => {
   const { t } = useI18n();
   const { vehicleId } = useParams();
 

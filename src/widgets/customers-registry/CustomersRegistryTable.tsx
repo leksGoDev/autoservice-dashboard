@@ -1,10 +1,8 @@
-import type { FC } from "react";
-
 import type { AppLocale } from "@/shared/i18n/config";
 
 import { formatCustomersRegistryDate, type CustomerRegistryRow } from "./model";
 
-interface CustomersRegistryTableProps {
+type CustomersRegistryTableProps = {
   rows: CustomerRegistryRow[];
   locale: AppLocale;
   unknownLabel: string;
@@ -17,15 +15,15 @@ interface CustomersRegistryTableProps {
     ordersCount: string;
     lastVisit: string;
   };
-}
+};
 
-export const CustomersRegistryTable: FC<CustomersRegistryTableProps> = ({
+export const CustomersRegistryTable = ({
   rows,
   locale,
   unknownLabel,
   detailsLabel,
   headers,
-}) => {
+}: CustomersRegistryTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-[760px] w-full border-collapse text-left text-[13px]">

@@ -1,13 +1,13 @@
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./RegistryPrimitives.module.css";
 
-interface DataStateProps {
+type DataStateProps = {
   message: string;
   tone?: "default" | "error";
   action?: ReactNode;
-}
+};
 
-export const DataState: FC<DataStateProps> = ({ message, tone = "default", action }) => {
+export const DataState = ({ message, tone = "default", action }: DataStateProps) => {
   return (
     <section
       className={[

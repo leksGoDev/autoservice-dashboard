@@ -1,7 +1,5 @@
-import type { FC } from "react";
-
 import { VehiclesRegistry } from "@/widgets/vehicles-registry/VehiclesRegistry";
 
-export const VehiclesPage: FC = () => {
+export const VehiclesPage = () => {
   return <VehiclesRegistry />;
 };

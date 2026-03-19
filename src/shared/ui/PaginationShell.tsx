@@ -1,7 +1,6 @@
-import type { FC } from "react";
 import styles from "./RegistryPrimitives.module.css";
 
-interface PaginationShellProps {
+type PaginationShellProps = {
   summary: string;
   pageLabel: string;
   prevLabel: string;
@@ -10,9 +9,9 @@ interface PaginationShellProps {
   canGoNext: boolean;
   onPrev: () => void;
   onNext: () => void;
-}
+};
 
-export const PaginationShell: FC<PaginationShellProps> = ({
+export const PaginationShell = ({
   summary,
   pageLabel,
   prevLabel,
@@ -21,7 +20,7 @@ export const PaginationShell: FC<PaginationShellProps> = ({
   canGoNext,
   onPrev,
   onNext,
-}) => {
+}: PaginationShellProps) => {
   return (
     <footer
       className={`${styles.paginationBorder} flex items-center justify-between gap-[10px] pt-3 max-[960px]:flex-col max-[960px]:items-stretch`}

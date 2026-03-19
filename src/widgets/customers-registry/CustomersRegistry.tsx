@@ -1,4 +1,4 @@
-import { useMemo, useState, type FC } from "react";
+import { useMemo, useState } from "react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
@@ -9,7 +9,7 @@ import { CustomersRegistrySearch } from "./CustomersRegistrySearch";
 import { CustomersRegistryTable } from "./CustomersRegistryTable";
 import { useCustomersRegistryQuery } from "./useCustomersRegistryQuery";
 
-export const CustomersRegistry: FC = () => {
+export const CustomersRegistry = () => {
   const { t, locale } = useI18n();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);

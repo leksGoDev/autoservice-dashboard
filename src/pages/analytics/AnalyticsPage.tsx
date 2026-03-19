@@ -2,7 +2,7 @@ import { useI18n } from "@/shared/i18n/use-i18n";
 import { PagePlaceholder } from "@/shared/ui/PagePlaceholder";
 import { PlaceholderCard } from "@/shared/ui/PlaceholderCard";
 
-export function AnalyticsPage() {
+export const AnalyticsPage = () => {
   const { t } = useI18n();
 
   return (
@@ -19,4 +19,4 @@ export function AnalyticsPage() {
       <PlaceholderCard title={t("pages.analytics.cards.dataTitle")} text={t("pages.analytics.cards.dataText")} />
     </PagePlaceholder>
   );
-}
+};

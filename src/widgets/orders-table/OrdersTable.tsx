@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useMemo } from "react";
 
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
@@ -8,7 +8,7 @@ import { PaginationShell } from "@/shared/ui/PaginationShell";
 import type { OrdersTableRow } from "@/widgets/orders-shared/model/types";
 import { createOrdersTableColumns } from "./model/columns";
 
-interface OrdersTableProps {
+type OrdersTableProps = {
   items: OrdersTableRow[];
   page: number;
   totalPages: number;
@@ -16,9 +16,9 @@ interface OrdersTableProps {
   isFetching?: boolean;
   onPageChange: (page: number) => void;
   renderRowActions?: (order: OrdersTableRow) => ReactNode;
-}
+};
 
-export const OrdersTable: FC<OrdersTableProps> = ({
+export const OrdersTable = ({
   items,
   page,
   totalPages,
@@ -26,7 +26,7 @@ export const OrdersTable: FC<OrdersTableProps> = ({
   isFetching,
   onPageChange,
   renderRowActions,
-}) => {
+}: OrdersTableProps) => {
   const { t } = useI18n();
   const columns = useMemo(() => createOrdersTableColumns(t, renderRowActions), [renderRowActions, t]);
 

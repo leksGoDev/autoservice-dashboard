@@ -1,5 +1,5 @@
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import type { FC, FormEvent } from "react";
+import type { FormEvent } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -11,21 +11,21 @@ import { PaginationShell } from "@/shared/ui/PaginationShell";
 
 const PAGE_SIZE = 10;
 
-interface VehiclesToolbarProps {
+type VehiclesToolbarProps = {
   hasActiveSearch: boolean;
   searchInput: string;
   onSearchInputChange: (value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   onClearSearch: () => void;
-}
+};
 
-const VehiclesToolbar: FC<VehiclesToolbarProps> = ({
+const VehiclesToolbar = ({
   hasActiveSearch,
   searchInput,
   onSearchInputChange,
   onSubmit,
   onClearSearch,
-}) => {
+}: VehiclesToolbarProps) => {
   const { t } = useI18n();
 
   return (
@@ -59,7 +59,7 @@ const VehiclesToolbar: FC<VehiclesToolbarProps> = ({
   );
 };
 
-const VehiclesLoadingState: FC = () => {
+const VehiclesLoadingState = () => {
   const { t } = useI18n();
 
   return (
@@ -79,11 +79,11 @@ const VehiclesLoadingState: FC = () => {
   );
 };
 
-interface VehiclesErrorStateProps {
+type VehiclesErrorStateProps = {
   onRetry: () => void;
-}
+};
 
-const VehiclesErrorState: FC<VehiclesErrorStateProps> = ({ onRetry }) => {
+const VehiclesErrorState = ({ onRetry }: VehiclesErrorStateProps) => {
   const { t } = useI18n();
 
   return (
@@ -103,11 +103,11 @@ const VehiclesErrorState: FC<VehiclesErrorStateProps> = ({ onRetry }) => {
   );
 };
 
-interface VehiclesEmptyStateProps {
+type VehiclesEmptyStateProps = {
   hasActiveSearch: boolean;
-}
+};
 
-const VehiclesEmptyState: FC<VehiclesEmptyStateProps> = ({ hasActiveSearch }) => {
+const VehiclesEmptyState = ({ hasActiveSearch }: VehiclesEmptyStateProps) => {
   const { t } = useI18n();
 
   return (
@@ -121,7 +121,7 @@ const VehiclesEmptyState: FC<VehiclesEmptyStateProps> = ({ hasActiveSearch }) =>
   );
 };
 
-interface VehiclesTableProps {
+type VehiclesTableProps = {
   data: VehicleListItem[];
   summary: string;
   page: number;
@@ -130,9 +130,9 @@ interface VehiclesTableProps {
   canNext: boolean;
   onPrev: () => void;
   onNext: () => void;
-}
+};
 
-const VehiclesTable: FC<VehiclesTableProps> = ({
+const VehiclesTable = ({
   data,
   summary,
   page,
@@ -141,7 +141,7 @@ const VehiclesTable: FC<VehiclesTableProps> = ({
   canNext,
   onPrev,
   onNext,
-}) => {
+}: VehiclesTableProps) => {
   const { t } = useI18n();
 
   const columns = useMemo(() => {
@@ -242,7 +242,7 @@ const VehiclesTable: FC<VehiclesTableProps> = ({
   );
 };
 
-export const VehiclesRegistry: FC = () => {
+export const VehiclesRegistry = () => {
   const { t } = useI18n();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");

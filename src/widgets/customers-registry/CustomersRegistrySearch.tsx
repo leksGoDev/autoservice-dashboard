@@ -1,18 +1,18 @@
-import type { ChangeEventHandler, FC } from "react";
+import type { ChangeEventHandler } from "react";
 
-interface CustomersRegistrySearchProps {
+type CustomersRegistrySearchProps = {
   value: string;
   placeholder: string;
   ariaLabel: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-}
+};
 
-export const CustomersRegistrySearch: FC<CustomersRegistrySearchProps> = ({
+export const CustomersRegistrySearch = ({
   value,
   placeholder,
   ariaLabel,
   onChange,
-}) => {
+}: CustomersRegistrySearchProps) => {
   return (
     <div className="flex items-center justify-between gap-3">
       <input
