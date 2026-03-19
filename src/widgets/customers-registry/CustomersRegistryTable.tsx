@@ -1,11 +1,12 @@
 import type { FC } from "react";
 
+import type { CustomerListItem } from "@/entities/customer/model/types";
 import type { AppLocale } from "@/shared/i18n/config";
 
-import { formatCustomersRegistryDate, type CustomerRegistryRow } from "./model";
+import { formatCustomersRegistryDate } from "./model";
 
 interface CustomersRegistryTableProps {
-  rows: CustomerRegistryRow[];
+  rows: CustomerListItem[];
   locale: AppLocale;
   unknownLabel: string;
   detailsLabel: string;

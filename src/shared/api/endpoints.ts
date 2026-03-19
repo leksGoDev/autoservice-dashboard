@@ -12,6 +12,9 @@ export const apiEndpoints = {
   orders: {
     list: "/orders",
   },
+  customers: {
+    list: "/customers",
+  },
   vehicles: {
     list: "/vehicles",
   },

@@ -14,6 +14,12 @@ export interface OrdersListParamsKey {
   status?: string;
 }
 
+export interface CustomersListParamsKey {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+}
+
 export interface VehiclesListParamsKey {
   page?: number;
   pageSize?: number;
