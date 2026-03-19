@@ -268,64 +268,15 @@ Data ownership rules:
 - localized labels are derived in presentation-oriented frontend code
 - shared dictionaries should own common UI labels such as statuses, priorities, and relative time copy
 
-Translation key naming should stay hierarchical and predictable.
-
-Recommended examples:
-
-- `nav.dashboard`
-- `topbar.searchPlaceholder`
-- `dashboard.kpi.activeOrders`
-- `order.status.in_progress`
-- `order.priority.high`
-- `common.justNow`
-
 ---
 
-## Frontend Conventions
+## Code Conventions
 
-The codebase should follow a consistent React and styling approach during refactors and new feature work.
+Macro architecture and dependency rules are defined in this document.
 
-### Styling
+File-level implementation conventions are defined separately in `CODE.md`.
 
-Styling rules:
-
-- use Tailwind and CSS Modules together based on responsibility
-- use Tailwind for utility composition and common layout primitives
-- use CSS Modules for scoped custom styling when a component or page needs isolated CSS
-- keep `app`-level global styles limited to reset, theme tokens, and app-wide layout concerns
-- co-locate `*.module.css` with the React module that owns the markup
-- avoid leaking page-specific selectors into shared global styles
-
-### React Components
-
-Component rules:
-
-- prefer arrow function components for consistency across the codebase
-- define props through explicit `type` or `interface`
-- do not use `FC` as a default component style
-- use `FC` only when it provides real value, such as an intentional `children` contract already aligned with the surrounding code
-- keep route pages thin and move substantial UI composition into widgets
-
-### Control Flow In Components
-
-Rendering rules:
-
-- allow only simple ternary expressions in JSX
-- avoid nested or hard-to-read ternary operators inside component JSX
-- prefer early returns for mutually exclusive screen states such as loading, error, and empty
-- when markup branches become large, extract a helper component or dedicated rendering block
-- keep JSX declarative and easy to scan
-
-### Custom Hooks
-
-Hook rules:
-
-- extract custom hooks when a component accumulates non-trivial state orchestration, derived view-model logic, or event coordination
-- use custom hooks to separate page orchestration from presentational rendering
-- prefer hooks for reusable stateful behavior over inline ad hoc logic duplicated across screens
-- keep hooks focused on one concern and return a clear view model for the component layer
-
-These conventions should guide ongoing refactoring work in `pages`, `widgets`, `features`, and `shared`.
+Use `CODE.md` as the source of truth for file-level coding preferences and micro-level implementation rules.
 
 ---
 

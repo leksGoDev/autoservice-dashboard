@@ -18,6 +18,7 @@ Use the following documents as the source of truth:
 - `UI_SYSTEM.md` — screens, pages, and UI structure
 - `DESIGN_SYSTEM.md` — visual rules and styling system
 - `ARCHITECTURE.md` — code organization and module structure
+- `CODE.md` — file-level coding conventions and micro-level frontend rules
 - `API.md` — API, TanStack Query, and MSW
 - `PWA.md` — PWA behavior and constraints
 
