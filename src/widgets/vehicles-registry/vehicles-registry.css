@@ -187,6 +187,51 @@
   cursor: pointer;
 }
 
+.vehicle-details-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.vehicle-details-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.vehicle-details-card__title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.vehicle-details-info {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.vehicle-details-info div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.vehicle-details-info dt {
+  margin: 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #64748b;
+}
+
+.vehicle-details-info dd {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
 .vehicles-skeleton {
   display: grid;
   gap: 8px;

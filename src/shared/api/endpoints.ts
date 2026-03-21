@@ -17,6 +17,8 @@ export const apiEndpoints = {
   },
   vehicles: {
     list: "/vehicles",
+    detail: (vehicleId: string) => `/vehicles/${vehicleId}`,
+    serviceHistory: (vehicleId: string) => `/vehicles/${vehicleId}/service-history`,
   },
 } as const;
 

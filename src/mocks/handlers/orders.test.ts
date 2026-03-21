@@ -33,4 +33,20 @@ describe("ordersHandlers", () => {
     expect(data.pageSize).toBe(1);
     expect(data.items).toHaveLength(1);
   });
+
+  it("applies priority, mechanic and created date filters", async () => {
+    const data = await getJson(
+      "/api/orders?priority=high&assignedMechanic=Ivan%20Petrov&createdFrom=2026-03-01&createdTo=2026-03-31&page=1&pageSize=50",
+    );
+
+    expect(
+      data.items.every(
+        (item: { priority: string; assignedMechanic: string; createdAt: string }) =>
+          item.priority === "high" &&
+          item.assignedMechanic === "Ivan Petrov" &&
+          new Date(item.createdAt).getTime() >= new Date("2026-03-01T00:00:00.000Z").getTime() &&
+          new Date(item.createdAt).getTime() <= new Date("2026-03-31T23:59:59.999Z").getTime(),
+      ),
+    ).toBe(true);
+  });
 });

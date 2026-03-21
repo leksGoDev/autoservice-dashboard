@@ -35,4 +35,31 @@ describe("vehiclesHandlers", () => {
     expect(data.pageSize).toBe(1);
     expect(data.items).toHaveLength(1);
   });
+
+  it("returns vehicle details by id", async () => {
+    const data = await getJson("/api/vehicles/veh_001");
+
+    expect(data).toEqual(
+      expect.objectContaining({
+        id: "veh_001",
+        owner: expect.any(String),
+        ordersCount: expect.any(Number),
+      }),
+    );
+  });
+
+  it("returns service history by vehicle id", async () => {
+    const data = await getJson("/api/vehicles/veh_001/service-history");
+
+    expect(Array.isArray(data)).toBe(true);
+    expect(data[0]).toEqual(
+      expect.objectContaining({
+        orderId: expect.any(String),
+        orderNumber: expect.any(String),
+        status: expect.any(String),
+        totalAmount: expect.any(Number),
+        updatedAt: expect.any(String),
+      }),
+    );
+  });
 });

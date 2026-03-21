@@ -14,6 +14,10 @@ function normalizeOrdersParams(params: OrdersListParamsKey = {}) {
     sortBy: params.sortBy ?? DEFAULT_ORDERS_SORT_BY,
     sortDirection: params.sortDirection ?? DEFAULT_ORDERS_SORT_DIRECTION,
     status: params.status ?? "",
+    priority: params.priority ?? "",
+    assignedMechanic: params.assignedMechanic ?? "",
+    createdFrom: params.createdFrom ?? "",
+    createdTo: params.createdTo ?? "",
   };
 }
 

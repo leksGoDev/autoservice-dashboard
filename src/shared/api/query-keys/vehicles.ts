@@ -12,4 +12,6 @@ function normalizeVehiclesParams(params: VehiclesListParamsKey = {}) {
 export const vehiclesQueryKeys = {
   root: ["vehicles"] as const,
   list: (params: VehiclesListParamsKey = {}) => ["vehicles", "list", normalizeVehiclesParams(params)] as const,
+  detail: (vehicleId: string) => ["vehicles", "detail", vehicleId] as const,
+  serviceHistory: (vehicleId: string) => ["vehicles", "service-history", vehicleId] as const,
 } as const;

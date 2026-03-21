@@ -1,6 +1,4 @@
-import type { OrderStatus } from "@/entities/order/model/types";
-
-export type UiOrderPriority = "low" | "medium" | "high";
+import type { OrderPriority, OrderStatus } from "@/entities/order/model/types";
 
 export interface OrdersTableRow {
   id: string;
@@ -8,7 +6,7 @@ export interface OrdersTableRow {
   customerName: string;
   vehicleLabel: string;
   status: OrderStatus;
-  priority: UiOrderPriority;
+  priority: OrderPriority;
   assignedMechanic: string;
   jobsCount: number;
   totalAmount: number;
@@ -18,7 +16,7 @@ export interface OrdersTableRow {
 export interface OrdersToolbarFilters {
   search: string;
   status: "" | OrderStatus;
-  priority: "" | UiOrderPriority;
+  priority: "" | OrderPriority;
   mechanic: string;
   createdFrom: string;
   createdTo: string;
