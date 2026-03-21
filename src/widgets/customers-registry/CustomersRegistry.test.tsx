@@ -28,7 +28,7 @@ describe("CustomersRegistry", () => {
 
     expect(await screen.findByText("Name")).toBeInTheDocument();
     expect(screen.getByText("Customers registry")).toBeInTheDocument();
-    expect(screen.getByText(/Showing 1-4 of/)).toBeInTheDocument();
+    expect(screen.getByText(/Showing 1-5 of/)).toBeInTheDocument();
   });
 
   it("shows empty state for unknown search", async () => {

@@ -49,9 +49,9 @@ export function useOrdersPageModel() {
   }, [mechanicsQuery.data?.items]);
 
   const rows = listQuery.data?.items ?? [];
-  const safePage = listQuery.data?.page ?? page;
   const total = listQuery.data?.total ?? 0;
   const totalPages = listQuery.data?.totalPages ?? 1;
+  const safePage = Math.min(listQuery.data?.page ?? page, totalPages);
 
   const updateSearchParams = (next: Record<string, string>) => {
     const params = new URLSearchParams(searchParams);
