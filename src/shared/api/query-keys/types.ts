@@ -12,6 +12,16 @@ export interface OrdersListParamsKey {
   sortBy?: string;
   sortDirection?: string;
   status?: string;
+  priority?: string;
+  assignedMechanic?: string;
+  createdFrom?: string;
+  createdTo?: string;
+}
+
+export interface CustomersListParamsKey {
+  page?: number;
+  pageSize?: number;
+  search?: string;
 }
 
 export interface VehiclesListParamsKey {

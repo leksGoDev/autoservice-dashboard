@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 
-import { useVehiclesListQuery } from "./queries";
+import { useVehicleDetailsQuery, useVehicleServiceHistoryQuery, useVehiclesListQuery } from "./queries";
 
 function createWrapper() {
   const queryClient = new QueryClient({
@@ -43,5 +43,29 @@ describe("useVehiclesListQuery", () => {
 
     const makes = result.current.data?.items.map((item) => item.make.toLowerCase()) ?? [];
     expect(makes.every((make) => make.includes("tesla"))).toBe(true);
+  });
+
+  it("loads vehicle details", async () => {
+    const { result } = renderHook(() => useVehicleDetailsQuery("veh_001"), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
+
+    expect(result.current.data?.id).toBe("veh_001");
+  });
+
+  it("loads vehicle service history", async () => {
+    const { result } = renderHook(() => useVehicleServiceHistoryQuery("veh_001"), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
+
+    expect(result.current.data?.length).toBeGreaterThan(0);
   });
 });

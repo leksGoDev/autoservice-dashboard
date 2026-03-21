@@ -1,6 +1,8 @@
 import type { OrderListItem } from "@/entities/order/model/types";
 
-export const ordersFixture: OrderListItem[] = [
+export type OrderFixtureItem = Omit<OrderListItem, "priority" | "assignedMechanic" | "jobsCount">;
+
+export const ordersFixture: OrderFixtureItem[] = [
   {
     id: "ord_001",
     number: "ORD-1001",

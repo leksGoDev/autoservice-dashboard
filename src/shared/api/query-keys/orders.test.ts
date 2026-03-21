@@ -10,6 +10,10 @@ describe("ordersQueryKeys", () => {
       sortBy: "createdAt",
       sortDirection: "desc",
       status: "",
+      priority: "",
+      assignedMechanic: "",
+      createdFrom: "",
+      createdTo: "",
     });
 
     expect(keyA).toEqual(keyB);
@@ -23,6 +27,10 @@ describe("ordersQueryKeys", () => {
       sortBy: "updatedAt",
       sortDirection: "asc",
       status: "waiting_parts",
+      priority: "high",
+      assignedMechanic: "Ivan Petrov",
+      createdFrom: "2026-03-01",
+      createdTo: "2026-03-31",
     });
 
     expect(key).toEqual([
@@ -35,6 +43,10 @@ describe("ordersQueryKeys", () => {
         sortBy: "updatedAt",
         sortDirection: "asc",
         status: "waiting_parts",
+        priority: "high",
+        assignedMechanic: "Ivan Petrov",
+        createdFrom: "2026-03-01",
+        createdTo: "2026-03-31",
       },
     ]);
   });

@@ -1,9 +1,10 @@
+import type { CustomerListItem } from "@/entities/customer/model/types";
 import type { AppLocale } from "@/shared/i18n/config";
 
-import { formatCustomersRegistryDate, type CustomerRegistryRow } from "./model";
+import { formatCustomersRegistryDate } from "./model";
 
 type CustomersRegistryTableProps = {
-  rows: CustomerRegistryRow[];
+  rows: CustomerListItem[];
   locale: AppLocale;
   unknownLabel: string;
   detailsLabel: string;

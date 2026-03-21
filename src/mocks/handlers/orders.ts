@@ -1,7 +1,7 @@
 import { delay, http, HttpResponse } from "msw";
 
-import type { OrderListItem } from "@/entities/order/model/types";
-import { ordersFixture } from "@/mocks/fixtures/orders";
+import type { OrderListItem, OrderPriority } from "@/entities/order/model/types";
+import { ordersFixture, type OrderFixtureItem } from "@/mocks/fixtures/orders";
 import {
   DEFAULT_LIST_PAGE,
   DEFAULT_LIST_PAGE_SIZE,
@@ -27,6 +27,53 @@ function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: strin
   return list;
 }
 
+const MECHANICS = ["Ivan Petrov", "Nikolai Volkov", "Sergey Morozov", "Andrey Sokolov"] as const;
+
+function getPriority(totalAmount: number): OrderPriority {
+  if (totalAmount >= 900) {
+    return "high";
+  }
+  if (totalAmount >= 500) {
+    return "medium";
+  }
+  return "low";
+}
+
+function toOrderListItem(item: OrderFixtureItem): OrderListItem {
+  const mechanicIndex = Number(item.id.replace(/\D/g, "")) % MECHANICS.length;
+
+  return {
+    ...item,
+    priority: getPriority(item.totalAmount),
+    assignedMechanic: MECHANICS[mechanicIndex],
+    jobsCount: Math.max(1, Math.round(item.totalAmount / 260)),
+  };
+}
+
+function isInsideDateRange(itemDateIso: string, from: string, to: string) {
+  const timestamp = new Date(itemDateIso).getTime();
+
+  if (from) {
+    const fromDate = new Date(from);
+    fromDate.setHours(0, 0, 0, 0);
+
+    if (timestamp < fromDate.getTime()) {
+      return false;
+    }
+  }
+
+  if (to) {
+    const toDate = new Date(to);
+    toDate.setHours(23, 59, 59, 999);
+
+    if (timestamp > toDate.getTime()) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export const ordersHandlers = [
   http.get(toMswPath(apiEndpoints.orders.list), async ({ request }) => {
     await delay(350);
@@ -36,18 +83,35 @@ export const ordersHandlers = [
     const pageSize = Number(url.searchParams.get("pageSize") ?? String(DEFAULT_LIST_PAGE_SIZE));
     const search = (url.searchParams.get("search") ?? "").toLowerCase().trim();
     const status = url.searchParams.get("status");
+    const priority = url.searchParams.get("priority");
+    const assignedMechanic = url.searchParams.get("assignedMechanic");
+    const createdFrom = url.searchParams.get("createdFrom") ?? "";
+    const createdTo = url.searchParams.get("createdTo") ?? "";
     const sortBy = url.searchParams.get("sortBy") ?? DEFAULT_ORDERS_SORT_BY;
     const sortDirection = url.searchParams.get("sortDirection") ?? DEFAULT_ORDERS_SORT_DIRECTION;
 
-    let filtered = [...ordersFixture];
+    let filtered = ordersFixture.map(toOrderListItem);
 
     if (status) {
       filtered = filtered.filter((order) => order.status === status);
     }
 
+    if (priority) {
+      filtered = filtered.filter((order) => order.priority === priority);
+    }
+
+    if (assignedMechanic) {
+      filtered = filtered.filter((order) => order.assignedMechanic === assignedMechanic);
+    }
+
+    if (createdFrom || createdTo) {
+      filtered = filtered.filter((order) => isInsideDateRange(order.createdAt, createdFrom, createdTo));
+    }
+
     if (search) {
       filtered = filtered.filter((order) => {
-        const haystack = `${order.number} ${order.customerName} ${order.vehicleLabel}`.toLowerCase();
+        const haystack =
+          `${order.number} ${order.customerName} ${order.vehicleLabel} ${order.assignedMechanic}`.toLowerCase();
         return haystack.includes(search);
       });
     }

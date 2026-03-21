@@ -245,6 +245,31 @@ export const enMessages = {
         "This route is ready for detailed vehicle information, service history timeline, and related orders.",
       vehicleId: "Vehicle ID: {{vehicleId}}",
       back: "Back to vehicles",
+      sections: {
+        info: "Vehicle information",
+        history: "Service history",
+      },
+      labels: {
+        vehicleId: "Vehicle ID",
+        plateNumber: "Plate Number",
+        vin: "VIN",
+        makeModel: "Make / Model",
+        year: "Year",
+        owner: "Owner",
+        ordersCount: "Orders Count",
+      },
+      history: {
+        order: "Order",
+        status: "Status",
+        total: "Total",
+        updated: "Updated",
+      },
+      states: {
+        loading: "Loading vehicle details...",
+        error: "Failed to load vehicle details.",
+        empty: "Vehicle was not found.",
+        emptyHistory: "No service history records yet.",
+      },
     },
     mechanics: {
       eyebrow: "Operations",

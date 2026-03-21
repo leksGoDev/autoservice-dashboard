@@ -18,3 +18,13 @@ export interface VehiclesListParams {
   pageSize?: number;
   search?: string;
 }
+
+export interface VehicleDetails extends VehicleListItem {}
+
+export interface VehicleServiceHistoryItem {
+  orderId: string;
+  orderNumber: string;
+  status: "scheduled" | "in_progress" | "waiting_parts" | "completed" | "cancelled";
+  totalAmount: number;
+  updatedAt: string;
+}

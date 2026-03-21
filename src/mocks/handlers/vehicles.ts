@@ -1,6 +1,6 @@
 import { delay, http, HttpResponse } from "msw";
 
-import type { VehicleListItem } from "@/entities/vehicle/model/types";
+import type { VehicleDetails, VehicleListItem, VehicleServiceHistoryItem } from "@/entities/vehicle/model/types";
 import { customersFixture } from "@/mocks/fixtures/customers";
 import { ordersFixture } from "@/mocks/fixtures/orders";
 import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
@@ -18,6 +18,23 @@ function buildVehiclesRegistry(): VehicleListItem[] {
       ordersCount,
     };
   });
+}
+
+function findVehicleDetails(vehicleId: string): VehicleDetails | undefined {
+  return buildVehiclesRegistry().find((vehicle) => vehicle.id === vehicleId);
+}
+
+function buildVehicleServiceHistory(vehicleId: string): VehicleServiceHistoryItem[] {
+  return ordersFixture
+    .filter((order) => order.vehicleId === vehicleId)
+    .map((order) => ({
+      orderId: order.id,
+      orderNumber: order.number,
+      status: order.status,
+      totalAmount: order.totalAmount,
+      updatedAt: order.updatedAt,
+    }))
+    .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());
 }
 
 export const vehiclesHandlers = [
@@ -53,5 +70,29 @@ export const vehiclesHandlers = [
       total,
       totalPages,
     });
+  }),
+  http.get(toMswPath(apiEndpoints.vehicles.detail(":vehicleId")), async ({ params }) => {
+    await delay(250);
+
+    const vehicleId = String(params.vehicleId);
+    const vehicle = findVehicleDetails(vehicleId);
+
+    if (!vehicle) {
+      return HttpResponse.json({ message: "Vehicle not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(vehicle);
+  }),
+  http.get(toMswPath(apiEndpoints.vehicles.serviceHistory(":vehicleId")), async ({ params }) => {
+    await delay(250);
+
+    const vehicleId = String(params.vehicleId);
+    const vehicle = findVehicleDetails(vehicleId);
+
+    if (!vehicle) {
+      return HttpResponse.json({ message: "Vehicle not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(buildVehicleServiceHistory(vehicleId));
   }),
 ];

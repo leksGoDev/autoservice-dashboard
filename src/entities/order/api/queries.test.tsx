@@ -47,4 +47,22 @@ describe("useOrdersListQuery", () => {
     const statuses = result.current.data?.items.map((item) => item.status) ?? [];
     expect(statuses.every((status) => status === "waiting_parts")).toBe(true);
   });
+
+  it("returns api-provided presentation fields", async () => {
+    const { result } = renderHook(() => useOrdersListQuery({ page: 1, pageSize: 1 }), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
+
+    expect(result.current.data?.items[0]).toEqual(
+      expect.objectContaining({
+        priority: expect.any(String),
+        assignedMechanic: expect.any(String),
+        jobsCount: expect.any(Number),
+      }),
+    );
+  });
 });

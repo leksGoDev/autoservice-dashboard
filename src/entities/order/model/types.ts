@@ -7,14 +7,19 @@ export type OrderStatus =
   | "completed"
   | "cancelled";
 
+export type OrderPriority = "low" | "medium" | "high";
+
 export interface OrderListItem {
   id: string;
   number: string;
   status: OrderStatus;
+  priority: OrderPriority;
   customerId: string;
   customerName: string;
   vehicleId: string;
   vehicleLabel: string;
+  assignedMechanic: string;
+  jobsCount: number;
   totalAmount: number;
   createdAt: string;
   updatedAt: string;
@@ -25,6 +30,10 @@ export interface OrdersListParams {
   pageSize?: number;
   search?: string;
   status?: OrderStatus;
+  priority?: OrderPriority;
+  assignedMechanic?: string;
+  createdFrom?: string;
+  createdTo?: string;
   sortBy?: "createdAt" | "updatedAt" | "totalAmount";
   sortDirection?: SortDirection;
 }

@@ -1,6 +1,4 @@
-import type { OrderStatus } from "@/entities/order/model/types";
-
-import type { UiOrderPriority } from "./types";
+import type { OrderPriority, OrderStatus } from "@/entities/order/model/types";
 
 export const ORDER_STATUSES: OrderStatus[] = [
   "scheduled",
@@ -10,4 +8,4 @@ export const ORDER_STATUSES: OrderStatus[] = [
   "cancelled",
 ];
 
-export const ORDER_PRIORITIES: UiOrderPriority[] = ["low", "medium", "high"];
+export const ORDER_PRIORITIES: OrderPriority[] = ["low", "medium", "high"];

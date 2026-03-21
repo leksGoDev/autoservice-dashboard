@@ -29,4 +29,9 @@ describe("vehiclesQueryKeys", () => {
       },
     ]);
   });
+
+  it("builds detail and service history keys", () => {
+    expect(vehiclesQueryKeys.detail("veh_001")).toEqual(["vehicles", "detail", "veh_001"]);
+    expect(vehiclesQueryKeys.serviceHistory("veh_001")).toEqual(["vehicles", "service-history", "veh_001"]);
+  });
 });
