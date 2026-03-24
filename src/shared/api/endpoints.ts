@@ -14,6 +14,9 @@ export const apiEndpoints = {
     detail: (orderId: string) => `/orders/${orderId}`,
     activity: (orderId: string) => `/orders/${orderId}/activity`,
   },
+  workBoard: {
+    board: "/work-board",
+  },
   customers: {
     list: "/customers",
     detail: (customerId: string) => `/customers/${customerId}`,

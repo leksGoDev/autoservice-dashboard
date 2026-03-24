@@ -441,19 +441,31 @@ export const enMessages = {
       },
     },
     workBoard: {
-      eyebrow: "Core Feature",
-      title: "Work board scaffold",
+      eyebrow: "Core Operations",
+      title: "Work board",
       description:
-        "The work board will become a kanban-style operational screen for moving orders through service statuses.",
-      cards: {
-        columnsTitle: "Columns",
-        columnsText:
-          "Scheduled, In Progress, Waiting Parts, and Completed columns will map to order statuses.",
-        cardsTitle: "Cards",
-        cardsText:
-          "Each card will show order number, vehicle, priority, assigned mechanic, and quick actions.",
-        interactionsTitle: "Interactions",
-        interactionsText: "Drag and drop and quick status updates will be implemented in the next stage.",
+        "Kanban operational board for active order flow. Orders are grouped by service status for quick dispatch actions.",
+      boardAria: "Work board columns",
+      emptyColumn: "No orders in this column",
+      summary: {
+        totalOrders: "Orders on board: {{count}}",
+        columns: "Active columns: {{count}}",
+      },
+      states: {
+        loading: "Loading work board...",
+        error: "Failed to load work board.",
+        empty: "No operational orders on the board yet.",
+      },
+      card: {
+        mechanic: "Mechanic: {{name}}",
+        jobs: "Jobs: {{count}}",
+        updated: "Updated: {{time}}",
+      },
+      quickActions: {
+        start_work: "Start",
+        wait_parts: "Wait parts",
+        complete: "Complete",
+        reschedule: "Reschedule",
       },
     },
   },
