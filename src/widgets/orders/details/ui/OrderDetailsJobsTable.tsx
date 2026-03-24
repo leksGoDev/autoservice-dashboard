@@ -2,7 +2,7 @@ import type { OrderServiceJob } from "@/entities/order/model/types";
 import { formatOrderCurrency } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getStatusBadgeClass } from "@/shared/ui/status-badges";
-import { formatOrderHours, getJobStatusBadgeModifier } from "./model/presentation";
+import { formatOrderHours, getJobStatusBadgeModifier } from "../model/presentation";
 
 type OrderDetailsJobsTableProps = {
   jobs: OrderServiceJob[];

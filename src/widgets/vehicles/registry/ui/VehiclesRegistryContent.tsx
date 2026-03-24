@@ -1,9 +1,9 @@
-import type { useVehiclesRegistryModel } from "../model/use-vehicles-registry-model";
+import type { VehiclesRegistryModel } from "../model/use-vehicles-registry-model";
 import { VehiclesEmptyState, VehiclesErrorState, VehiclesLoadingState } from "./VehiclesRegistryStates";
 import { VehiclesRegistryTable } from "./VehiclesRegistryTable";
 
 type VehiclesRegistryContentProps = {
-  model: ReturnType<typeof useVehiclesRegistryModel>;
+  model: VehiclesRegistryModel;
 };
 
 export const VehiclesRegistryContent = ({ model }: VehiclesRegistryContentProps) => {

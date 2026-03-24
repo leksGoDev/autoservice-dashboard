@@ -1,10 +1,10 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { useVehicleDetailsViewModel } from "../model/use-vehicle-details-view-model";
+import type { VehicleDetailsViewModel } from "../model/use-vehicle-details-view-model";
 import { VehicleDetailsHistoryCard } from "./VehicleDetailsHistoryCard";
 import { VehicleDetailsInfoCard } from "./VehicleDetailsInfoCard";
 
 type VehicleDetailsContentProps = {
-  model: ReturnType<typeof useVehicleDetailsViewModel>;
+  model: VehicleDetailsViewModel;
 };
 
 export const VehicleDetailsContent = ({ model }: VehicleDetailsContentProps) => {

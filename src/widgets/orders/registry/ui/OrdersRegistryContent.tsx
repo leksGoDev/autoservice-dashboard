@@ -1,10 +1,10 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
 import { OrdersTable } from "@/widgets/orders/table/OrdersTable";
-import type { useOrdersRegistryModel } from "../model/use-orders-registry-model";
+import type { OrdersRegistryModel } from "../model/use-orders-registry-model";
 
 type OrdersRegistryContentProps = {
-  model: ReturnType<typeof useOrdersRegistryModel>;
+  model: OrdersRegistryModel;
 };
 
 export const OrdersRegistryContent = ({ model }: OrdersRegistryContentProps) => {

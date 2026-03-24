@@ -1,16 +1,16 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import type { useOrderDetailsOverviewModel } from "../model/use-order-details-overview-model";
-import { OrderDetailsContent } from "../OrderDetailsContent";
-import { OrderDetailsHeader } from "../OrderDetailsHeader";
+import { useOrderDetailsOverviewModel } from "../model/use-order-details-overview-model";
+import { OrderDetailsContent } from "./OrderDetailsContent";
+import { OrderDetailsHeader } from "./OrderDetailsHeader";
 
 type OrderDetailsOverviewContentProps = {
   orderId: string | undefined;
-  model: ReturnType<typeof useOrderDetailsOverviewModel>;
 };
 
-export const OrderDetailsOverviewContent = ({ orderId, model }: OrderDetailsOverviewContentProps) => {
+export const OrderDetailsOverviewContent = ({ orderId }: OrderDetailsOverviewContentProps) => {
   const { t } = useI18n();
+  const model = useOrderDetailsOverviewModel(orderId);
 
   if (model.isLoading) {
     return <DataState message={t("pages.orderDetails.states.loading")} />;

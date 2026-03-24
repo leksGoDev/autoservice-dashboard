@@ -4,11 +4,11 @@ import { AnalyticsJobsByCategoryChart } from "@/widgets/analytics/jobs-by-catego
 import { DashboardMechanicWorkload } from "@/widgets/dashboard/mechanic-workload/DashboardMechanicWorkload";
 import { DashboardOrdersTrend } from "@/widgets/dashboard/orders-trend/DashboardOrdersTrend";
 import { DashboardRevenueChart } from "@/widgets/dashboard/revenue-chart/DashboardRevenueChart";
-import type { useAnalyticsOverviewModel } from "../model/use-analytics-overview-model";
+import type { AnalyticsOverviewModel } from "../model/use-analytics-overview-model";
 import { AnalyticsMetricsSection } from "./AnalyticsMetricsSection";
 
 type AnalyticsOverviewContentProps = {
-  model: ReturnType<typeof useAnalyticsOverviewModel>;
+  model: AnalyticsOverviewModel;
 };
 
 export const AnalyticsOverviewContent = ({ model }: AnalyticsOverviewContentProps) => {

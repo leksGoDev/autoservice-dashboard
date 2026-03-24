@@ -1,13 +1,13 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { useVehiclesRegistryModel } from "../model/use-vehicles-registry-model";
+import type { VehiclesRegistryModel } from "../model/use-vehicles-registry-model";
 import { VehiclesRegistryToolbar } from "./VehiclesRegistryToolbar";
 
 type VehiclesRegistryHeaderProps = {
-  hasActiveSearch: ReturnType<typeof useVehiclesRegistryModel>["hasActiveSearch"];
-  searchInput: ReturnType<typeof useVehiclesRegistryModel>["searchInput"];
-  onSearchInputChange: ReturnType<typeof useVehiclesRegistryModel>["setSearchInput"];
-  onSubmit: ReturnType<typeof useVehiclesRegistryModel>["handleSearchSubmit"];
-  onClearSearch: ReturnType<typeof useVehiclesRegistryModel>["handleClearSearch"];
+  hasActiveSearch: VehiclesRegistryModel["hasActiveSearch"];
+  searchInput: VehiclesRegistryModel["searchInput"];
+  onSearchInputChange: VehiclesRegistryModel["setSearchInput"];
+  onSubmit: VehiclesRegistryModel["handleSearchSubmit"];
+  onClearSearch: VehiclesRegistryModel["handleClearSearch"];
 };
 
 export const VehiclesRegistryHeader = ({

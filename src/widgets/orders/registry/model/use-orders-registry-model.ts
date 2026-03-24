@@ -1,20 +1,35 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import type { ListResponse } from "@/shared/api/types";
 import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { useOrdersListQuery } from "@/entities/order/api/queries";
-import type { OrderStatus } from "@/entities/order/model/types";
+import type { OrderListItem, OrderStatus } from "@/entities/order/model/types";
 import { DEFAULT_LIST_PAGE, DEFAULT_LIST_PAGE_SIZE } from "@/shared/api/constants";
-import type { OrdersToolbarFilters } from "@/widgets/orders/shared/model/types";
+import type { UseQueryResult } from "@tanstack/react-query";
+import type { OrdersToolbarFilters, OrdersTableRow } from "@/widgets/orders/model/types";
 
 const PAGE_SIZE = DEFAULT_LIST_PAGE_SIZE;
+
+export type OrdersRegistryModel = {
+  filters: OrdersToolbarFilters;
+  listQuery: UseQueryResult<ListResponse<OrderListItem>, Error>;
+  mechanics: string[];
+  rows: OrdersTableRow[];
+  page: number;
+  total: number;
+  totalPages: number;
+  onToolbarChange: (next: Partial<OrdersToolbarFilters>) => void;
+  onResetFilters: () => void;
+  onPageChange: (nextPage: number) => void;
+};
 
 function readPositiveNumber(value: string | null, fallback: number) {
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
 
-export function useOrdersRegistryModel() {
+export function useOrdersRegistryModel(): OrdersRegistryModel {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = readPositiveNumber(searchParams.get("page"), DEFAULT_LIST_PAGE);

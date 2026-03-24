@@ -1,11 +1,24 @@
 import { useOrderActivityQuery, useOrderDetailsQuery } from "@/entities/order/api/queries";
+import type { OrderActivityItem, OrderDetails } from "@/entities/order/model/types";
 import { isApiError } from "@/shared/api/api-error";
 
 function hasNotFoundError(error: unknown) {
   return isApiError(error) && error.status === 404;
 }
 
-export const useOrderDetailsOverviewModel = (orderId: string | undefined) => {
+export type OrderDetailsOverviewModel = {
+  order: OrderDetails | undefined;
+  activity: OrderActivityItem[];
+  isLoading: boolean;
+  isError: boolean;
+  isNotFound: boolean;
+  isActivityLoading: boolean;
+  isActivityError: boolean;
+  refetchAll: () => void;
+  refetchActivity: () => void;
+};
+
+export const useOrderDetailsOverviewModel = (orderId: string | undefined): OrderDetailsOverviewModel => {
   const detailsQuery = useOrderDetailsQuery(orderId);
   const activityQuery = useOrderActivityQuery(orderId);
 

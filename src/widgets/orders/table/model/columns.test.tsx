@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
-import type { OrdersTableRow } from "@/widgets/orders/shared/model/types";
+import type { OrdersTableRow } from "@/widgets/orders/model/types";
 import { createOrdersTableColumns } from "./columns";
 
 const t = (key: string) => key;

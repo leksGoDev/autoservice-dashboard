@@ -1,6 +1,6 @@
 import type { OrderActivityItem } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { formatOrderActivityTimestamp } from "./model/presentation";
+import { formatOrderActivityTimestamp } from "../model/presentation";
 
 type OrderDetailsActivityTimelineProps = {
   items: OrderActivityItem[];

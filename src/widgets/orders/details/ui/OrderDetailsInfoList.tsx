@@ -1,4 +1,4 @@
-import type { OrderDetailsInfoListItem } from "./model/types";
+import type { OrderDetailsInfoListItem } from "../model/types";
 
 type OrderDetailsInfoListProps = {
   items: OrderDetailsInfoListItem[];

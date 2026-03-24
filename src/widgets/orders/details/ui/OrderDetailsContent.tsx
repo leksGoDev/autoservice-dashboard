@@ -7,8 +7,8 @@ import { OrderDetailsInfoList } from "./OrderDetailsInfoList";
 import { OrderDetailsJobsTable } from "./OrderDetailsJobsTable";
 import { OrderDetailsPartsTable } from "./OrderDetailsPartsTable";
 import { OrderDetailsSection } from "./OrderDetailsSection";
-import { getLoyaltyTierBadgeClass } from "./model/presentation";
-import type { OrderDetailsInfoListItem } from "./model/types";
+import { getLoyaltyTierBadgeClass } from "../model/presentation";
+import type { OrderDetailsInfoListItem } from "../model/types";
 
 type OrderDetailsContentProps = {
   order: OrderDetails;

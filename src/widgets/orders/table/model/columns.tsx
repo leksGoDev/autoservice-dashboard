@@ -6,7 +6,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import type { TFunction } from "i18next";
 
 import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
-import type { OrdersTableRow } from "@/widgets/orders/shared/model/types";
+import type { OrdersTableRow } from "@/widgets/orders/model/types";
 import { formatOrderCurrency, formatOrderDate, getOrderStatusChipModifier } from "./presentation";
 
 export function createOrdersTableColumns(

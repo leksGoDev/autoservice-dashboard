@@ -1,11 +1,28 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 import { useVehiclesListQuery } from "@/entities/vehicle/api/queries";
+import type { VehicleListItem } from "@/entities/vehicle/model/types";
+import type { ListResponse } from "@/shared/api/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 
 const PAGE_SIZE = 10;
 
-export function useVehiclesRegistryModel() {
+export type VehiclesRegistryModel = {
+  query: UseQueryResult<ListResponse<VehicleListItem>, Error>;
+  data: ListResponse<VehicleListItem> | undefined;
+  hasActiveSearch: boolean;
+  hasRows: boolean;
+  summary: string;
+  searchInput: string;
+  setSearchInput: Dispatch<SetStateAction<string>>;
+  handleSearchSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  handleClearSearch: () => void;
+  setPage: Dispatch<SetStateAction<number>>;
+};
+
+export function useVehiclesRegistryModel(): VehiclesRegistryModel {
   const { t } = useI18n();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");

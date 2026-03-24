@@ -1,12 +1,12 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import type { useCustomerDetailsOverviewModel } from "../model/use-customer-details-overview-model";
+import type { CustomerDetailsOverviewModel } from "../model/use-customer-details-overview-model";
 import { CustomerInfoCard } from "./CustomerInfoCard";
 import { CustomerOrdersTable } from "./CustomerOrdersTable";
 import { CustomerVehiclesTable } from "./CustomerVehiclesTable";
 
 type CustomerDetailsOverviewContentProps = {
-  model: ReturnType<typeof useCustomerDetailsOverviewModel>;
+  model: CustomerDetailsOverviewModel;
 };
 
 export const CustomerDetailsOverviewContent = ({ model }: CustomerDetailsOverviewContentProps) => {
