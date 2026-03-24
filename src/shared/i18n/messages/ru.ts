@@ -133,6 +133,13 @@ export const ruMessages = {
       high: "Высокий",
     },
   },
+  customer: {
+    loyaltyTier: {
+      standard: "Стандарт",
+      silver: "Серебро",
+      gold: "Золото",
+    },
+  },
   pages: {
     orders: {
       eyebrow: "Реестр",
@@ -292,6 +299,48 @@ export const ruMessages = {
         tableText: "Колонки включат контакты, количество автомобилей, заказов и дату последнего визита.",
         detailsTitle: "Поток деталей",
         detailsText: "Карточка клиента, список автомобилей и история заказов появятся на отдельных маршрутах.",
+      },
+    },
+    customerDetails: {
+      eyebrow: "Детали клиента",
+      title: "Рабочее пространство профиля клиента",
+      description: "Информация о клиенте, список автомобилей и история заказов в одном операционном экране.",
+      customerId: "ID клиента: {{customerId}}",
+      back: "Назад к реестру клиентов",
+      sections: {
+        info: "Информация о клиенте",
+        vehicles: "Список автомобилей",
+        orders: "История заказов",
+      },
+      labels: {
+        fullName: "Полное имя",
+        phone: "Телефон",
+        email: "Email",
+        loyaltyTier: "Уровень лояльности",
+        vehiclesCount: "Количество автомобилей",
+        ordersCount: "Количество заказов",
+        lastVisit: "Последний визит",
+      },
+      vehicles: {
+        plateNumber: "Номер",
+        vin: "VIN",
+        make: "Марка",
+        model: "Модель",
+        year: "Год",
+      },
+      orders: {
+        order: "Заказ #",
+        vehicle: "Автомобиль",
+        status: "Статус",
+        total: "Сумма",
+        updated: "Обновлен",
+      },
+      states: {
+        loading: "Загрузка деталей клиента...",
+        error: "Не удалось загрузить детали клиента.",
+        empty: "Клиент не найден.",
+        emptyVehicles: "У этого клиента пока нет автомобилей.",
+        emptyOrders: "У этого клиента пока нет истории заказов.",
       },
     },
     vehicles: {

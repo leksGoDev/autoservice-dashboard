@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { AppShell } from "./layouts/AppShell";
 import { AnalyticsPage } from "../pages/analytics/AnalyticsPage";
+import { CustomerDetailsPage } from "../pages/customers/CustomerDetailsPage";
 import { CustomersPage } from "../pages/customers/CustomersPage";
 import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { MechanicsPage } from "../pages/mechanics/MechanicsPage";
@@ -38,6 +39,11 @@ export const appRoutes = [
       {
         path: "customers",
         element: <CustomersPage />,
+        handle: { titleKey: "routes.customers" },
+      },
+      {
+        path: "customers/:customerId",
+        element: <CustomerDetailsPage />,
         handle: { titleKey: "routes.customers" },
       },
       {

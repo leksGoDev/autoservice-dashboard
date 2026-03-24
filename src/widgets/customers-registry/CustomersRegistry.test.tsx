@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MemoryRouter } from "react-router-dom";
 
 import { I18nProvider } from "@/shared/i18n/provider";
 import { CustomersRegistry } from "./CustomersRegistry";
@@ -15,9 +16,11 @@ function renderRegistry() {
 
   render(
     <QueryClientProvider client={queryClient}>
-      <I18nProvider>
-        <CustomersRegistry />
-      </I18nProvider>
+      <MemoryRouter>
+        <I18nProvider>
+          <CustomersRegistry />
+        </I18nProvider>
+      </MemoryRouter>
     </QueryClientProvider>,
   );
 }
@@ -42,5 +45,14 @@ describe("CustomersRegistry", () => {
     await waitFor(() => {
       expect(screen.getByText("No customers found.")).toBeInTheDocument();
     });
+  });
+
+  it("renders entry point link to customer details", async () => {
+    renderRegistry();
+
+    const detailsLinks = await screen.findAllByRole("link", { name: "Customer profile" });
+
+    expect(detailsLinks.length).toBeGreaterThan(0);
+    expect(detailsLinks[0]).toHaveAttribute("href", "/customers/cust_001");
   });
 });

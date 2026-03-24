@@ -29,4 +29,8 @@ describe("customersQueryKeys", () => {
       },
     ]);
   });
+
+  it("builds detail key", () => {
+    expect(customersQueryKeys.detail("cust_001")).toEqual(["customers", "detail", "cust_001"]);
+  });
 });
