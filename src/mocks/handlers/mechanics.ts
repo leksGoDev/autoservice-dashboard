@@ -4,12 +4,11 @@ import type { MechanicsRange } from "@/entities/mechanic/model/types";
 import {
   DASHBOARD_RANGES,
   DEFAULT_DASHBOARD_RANGE,
-  DEFAULT_LIST_PAGE,
-  DEFAULT_LIST_PAGE_SIZE,
 } from "@/shared/api/constants";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 import { getMechanicsWorkloadFixtureByRange, mechanicsRegistryFixture } from "@/mocks/fixtures/mechanics";
 import { INVALID_DASHBOARD_RANGE_MESSAGE } from "@/shared/api/messages";
+import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
 
 function parseDashboardRange(input: string | null): MechanicsRange | null {
   if (input === null) {
@@ -38,9 +37,7 @@ export const mechanicsHandlers = [
     await delay(300);
 
     const url = new URL(request.url);
-    const page = Number(url.searchParams.get("page") ?? String(DEFAULT_LIST_PAGE));
-    const pageSize = Number(url.searchParams.get("pageSize") ?? String(DEFAULT_LIST_PAGE_SIZE));
-    const search = (url.searchParams.get("search") ?? "").toLowerCase().trim();
+    const { page, pageSize, search } = parseListQueryParams(url);
 
     let filtered = mechanicsRegistryFixture;
 
@@ -51,20 +48,7 @@ export const mechanicsHandlers = [
       });
     }
 
-    const safePage = Math.max(1, page);
-    const safePageSize = Math.max(1, pageSize);
-    const total = filtered.length;
-    const totalPages = Math.max(1, Math.ceil(total / safePageSize));
-    const start = (safePage - 1) * safePageSize;
-    const items = filtered.slice(start, start + safePageSize);
-
-    return HttpResponse.json({
-      items,
-      page: safePage,
-      pageSize: safePageSize,
-      total,
-      totalPages,
-    });
+    return HttpResponse.json(paginateItems(filtered, page, pageSize));
   }),
 
   http.get(toMswPath(apiEndpoints.mechanics.workload), async ({ request }) => {

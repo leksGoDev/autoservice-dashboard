@@ -4,7 +4,7 @@ import type { CustomerDetailsResponse, CustomerListItem } from "@/entities/custo
 import { customersFixture } from "@/mocks/fixtures/customers";
 import { ordersFixture } from "@/mocks/fixtures/orders";
 import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
-import { DEFAULT_LIST_PAGE, DEFAULT_LIST_PAGE_SIZE } from "@/shared/api/constants";
+import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 
 function buildCustomersRegistry(): CustomerListItem[] {
@@ -71,9 +71,7 @@ export const customersHandlers = [
     await delay(350);
 
     const url = new URL(request.url);
-    const page = Number(url.searchParams.get("page") ?? String(DEFAULT_LIST_PAGE));
-    const pageSize = Number(url.searchParams.get("pageSize") ?? String(DEFAULT_LIST_PAGE_SIZE));
-    const search = (url.searchParams.get("search") ?? "").toLowerCase().trim();
+    const { page, pageSize, search } = parseListQueryParams(url);
 
     let filtered = buildCustomersRegistry();
 
@@ -84,20 +82,7 @@ export const customersHandlers = [
       });
     }
 
-    const safePage = Math.max(1, page);
-    const safePageSize = Math.max(1, pageSize);
-    const total = filtered.length;
-    const totalPages = Math.max(1, Math.ceil(total / safePageSize));
-    const start = (safePage - 1) * safePageSize;
-    const items = filtered.slice(start, start + safePageSize);
-
-    return HttpResponse.json({
-      items,
-      page: safePage,
-      pageSize: safePageSize,
-      total,
-      totalPages,
-    });
+    return HttpResponse.json(paginateItems(filtered, page, pageSize));
   }),
   http.get(toMswPath(apiEndpoints.customers.detail(":customerId")), async ({ params }) => {
     await delay(250);

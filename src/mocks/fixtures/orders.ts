@@ -1,6 +1,41 @@
 import type { OrderListItem } from "@/entities/order/model/types";
 
 export type OrderFixtureItem = Omit<OrderListItem, "priority" | "assignedMechanic" | "jobsCount">;
+export type OrderJobCatalogItem = {
+  name: string;
+  category: string;
+  estimatedHours: number;
+  laborRate: number;
+};
+
+export type OrderPartCatalogItem = {
+  name: string;
+  unitPrice: number;
+};
+
+export const orderMechanicsFixture = [
+  "Ivan Petrov",
+  "Nikolai Volkov",
+  "Sergey Morozov",
+  "Andrey Sokolov",
+] as const;
+
+export const orderJobCatalogFixture: OrderJobCatalogItem[] = [
+  { name: "Initial inspection", category: "Diagnostics", estimatedHours: 1.2, laborRate: 95 },
+  { name: "Brake system service", category: "Repair", estimatedHours: 2.4, laborRate: 120 },
+  { name: "Suspension adjustment", category: "Repair", estimatedHours: 2.1, laborRate: 110 },
+  { name: "Engine tune-up", category: "Maintenance", estimatedHours: 1.8, laborRate: 105 },
+  { name: "Electrical diagnostics", category: "Electrical", estimatedHours: 1.5, laborRate: 115 },
+];
+
+export const orderPartCatalogFixture: OrderPartCatalogItem[] = [
+  { name: "Brake pads set", unitPrice: 140 },
+  { name: "Oil filter", unitPrice: 18 },
+  { name: "Spark plug", unitPrice: 24 },
+  { name: "Cabin air filter", unitPrice: 22 },
+  { name: "Wheel speed sensor", unitPrice: 86 },
+  { name: "Transmission fluid", unitPrice: 34 },
+];
 
 export const ordersFixture: OrderFixtureItem[] = [
   {

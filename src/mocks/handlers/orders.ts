@@ -11,46 +11,17 @@ import type {
   ServiceJobStatus,
 } from "@/entities/order/model/types";
 import { customersFixture } from "@/mocks/fixtures/customers";
-import { ordersFixture, type OrderFixtureItem } from "@/mocks/fixtures/orders";
-import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
 import {
-  DEFAULT_LIST_PAGE,
-  DEFAULT_LIST_PAGE_SIZE,
-  DEFAULT_ORDERS_SORT_BY,
-  DEFAULT_ORDERS_SORT_DIRECTION,
-} from "@/shared/api/constants";
+  orderJobCatalogFixture,
+  orderMechanicsFixture,
+  orderPartCatalogFixture,
+  ordersFixture,
+  type OrderFixtureItem,
+} from "@/mocks/fixtures/orders";
+import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
+import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
+import { DEFAULT_ORDERS_SORT_BY, DEFAULT_ORDERS_SORT_DIRECTION } from "@/shared/api/constants";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
-
-type JobCatalogItem = {
-  name: string;
-  category: string;
-  estimatedHours: number;
-  laborRate: number;
-};
-
-type PartCatalogItem = {
-  name: string;
-  unitPrice: number;
-};
-
-const MECHANICS = ["Ivan Petrov", "Nikolai Volkov", "Sergey Morozov", "Andrey Sokolov"] as const;
-
-const JOB_CATALOG: JobCatalogItem[] = [
-  { name: "Initial inspection", category: "Diagnostics", estimatedHours: 1.2, laborRate: 95 },
-  { name: "Brake system service", category: "Repair", estimatedHours: 2.4, laborRate: 120 },
-  { name: "Suspension adjustment", category: "Repair", estimatedHours: 2.1, laborRate: 110 },
-  { name: "Engine tune-up", category: "Maintenance", estimatedHours: 1.8, laborRate: 105 },
-  { name: "Electrical diagnostics", category: "Electrical", estimatedHours: 1.5, laborRate: 115 },
-];
-
-const PART_CATALOG: PartCatalogItem[] = [
-  { name: "Brake pads set", unitPrice: 140 },
-  { name: "Oil filter", unitPrice: 18 },
-  { name: "Spark plug", unitPrice: 24 },
-  { name: "Cabin air filter", unitPrice: 22 },
-  { name: "Wheel speed sensor", unitPrice: 86 },
-  { name: "Transmission fluid", unitPrice: 34 },
-];
 
 function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: string) {
   const direction = sortDirection === "asc" ? 1 : -1;
@@ -80,12 +51,12 @@ function getPriority(totalAmount: number): OrderPriority {
 }
 
 function toOrderListItem(item: OrderFixtureItem): OrderListItem {
-  const mechanicIndex = Number(item.id.replace(/\D/g, "")) % MECHANICS.length;
+  const mechanicIndex = Number(item.id.replace(/\D/g, "")) % orderMechanicsFixture.length;
 
   return {
     ...item,
     priority: getPriority(item.totalAmount),
-    assignedMechanic: MECHANICS[mechanicIndex],
+    assignedMechanic: orderMechanicsFixture[mechanicIndex],
     jobsCount: Math.max(1, Math.round(item.totalAmount / 260)),
   };
 }
@@ -136,7 +107,8 @@ function getServiceJobStatus(orderStatus: OrderStatus, index: number, jobsCount:
 
 function buildOrderJobs(order: OrderListItem): OrderServiceJob[] {
   return Array.from({ length: order.jobsCount }, (_, index) => {
-    const catalogItem = JOB_CATALOG[(Number(order.id.replace(/\D/g, "")) + index) % JOB_CATALOG.length];
+    const catalogItem =
+      orderJobCatalogFixture[(Number(order.id.replace(/\D/g, "")) + index) % orderJobCatalogFixture.length];
     const status = getServiceJobStatus(order.status, index, order.jobsCount);
     const estimatedHours = Number((catalogItem.estimatedHours + index * 0.4).toFixed(1));
     const actualHours =
@@ -163,7 +135,8 @@ function buildOrderParts(order: OrderListItem, jobs: OrderServiceJob[]): OrderPa
   const targetPartsCount = Math.max(1, Math.min(jobs.length + (order.priority === "high" ? 1 : 0), 4));
 
   return Array.from({ length: targetPartsCount }, (_, index) => {
-    const catalogItem = PART_CATALOG[(Number(order.id.replace(/\D/g, "")) + index) % PART_CATALOG.length];
+    const catalogItem =
+      orderPartCatalogFixture[(Number(order.id.replace(/\D/g, "")) + index) % orderPartCatalogFixture.length];
     const quantity = (index % 2) + 1;
     const job = jobs[index % jobs.length];
 
@@ -282,9 +255,7 @@ export const ordersHandlers = [
     await delay(350);
 
     const url = new URL(request.url);
-    const page = Number(url.searchParams.get("page") ?? String(DEFAULT_LIST_PAGE));
-    const pageSize = Number(url.searchParams.get("pageSize") ?? String(DEFAULT_LIST_PAGE_SIZE));
-    const search = (url.searchParams.get("search") ?? "").toLowerCase().trim();
+    const { page, pageSize, search } = parseListQueryParams(url);
     const status = url.searchParams.get("status");
     const priority = url.searchParams.get("priority");
     const assignedMechanic = url.searchParams.get("assignedMechanic");
@@ -321,20 +292,7 @@ export const ordersHandlers = [
 
     filtered = sortOrders(filtered, sortBy, sortDirection);
 
-    const safePage = Math.max(1, page);
-    const safePageSize = Math.max(1, pageSize);
-    const total = filtered.length;
-    const totalPages = Math.max(1, Math.ceil(total / safePageSize));
-    const start = (safePage - 1) * safePageSize;
-    const items = filtered.slice(start, start + safePageSize);
-
-    return HttpResponse.json({
-      items,
-      page: safePage,
-      pageSize: safePageSize,
-      total,
-      totalPages,
-    });
+    return HttpResponse.json(paginateItems(filtered, page, pageSize));
   }),
   http.get(toMswPath(apiEndpoints.orders.detail(":orderId")), async ({ params }) => {
     await delay(250);
