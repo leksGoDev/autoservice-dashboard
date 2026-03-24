@@ -2,7 +2,7 @@ import type { AnalyticsRange } from "@/entities/analytics/model/types";
 import { DASHBOARD_RANGES } from "@/shared/api/constants";
 import { useI18n } from "@/shared/i18n/use-i18n";
 
-type AnalyticsOverviewHeaderProps = {
+type AnalyticsHeaderProps = {
   range: AnalyticsRange;
   onRangeChange: (value: AnalyticsRange) => void;
 };
@@ -12,7 +12,7 @@ const rangeButtonClass =
 const activeRangeButtonClass =
   "border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.2)] text-[var(--color-text-primary)]";
 
-export const AnalyticsOverviewHeader = ({ range, onRangeChange }: AnalyticsOverviewHeaderProps) => {
+export const AnalyticsHeader = ({ range, onRangeChange }: AnalyticsHeaderProps) => {
   const { t } = useI18n();
 
   return (

@@ -1,70 +1,17 @@
-import { DataState } from "@/shared/ui/DataState";
-import { DashboardMechanicWorkload } from "@/widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
-import { DashboardOrdersTrend } from "@/widgets/dashboard-orders-trend/DashboardOrdersTrend";
-import { DashboardRevenueChart } from "@/widgets/dashboard-revenue-chart/DashboardRevenueChart";
-import { AnalyticsJobsByCategoryChart } from "@/widgets/analytics-jobs-by-category/AnalyticsJobsByCategoryChart";
-import { AnalyticsMetricsSection, AnalyticsOverviewHeader } from "@/widgets/analytics-overview";
-import { useI18n } from "@/shared/i18n/use-i18n";
 import { useAnalyticsPageModel } from "./model/use-analytics-page-model";
+import { AnalyticsOverview } from "@/widgets/analytics-overview";
 
 export const AnalyticsPage = () => {
-  const { t } = useI18n();
   const model = useAnalyticsPageModel();
-  const header = <AnalyticsOverviewHeader range={model.range} onRangeChange={model.setRange} />;
-
-  if (model.isLoading) {
-    return (
-      <section className="grid gap-5">
-        {header}
-        <DataState message={t("pages.analytics.states.loading")} />
-      </section>
-    );
-  }
-
-  if (model.isError) {
-    return (
-      <section className="grid gap-5">
-        {header}
-        <DataState
-          tone="error"
-          message={t("pages.analytics.states.error")}
-          action={
-            <button
-              type="button"
-              className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
-              onClick={() => model.query.refetch()}
-            >
-              {t("common.retry")}
-            </button>
-          }
-        />
-      </section>
-    );
-  }
-
-  if (!model.data) {
-    return (
-      <section className="grid gap-5">
-        {header}
-        <DataState message={t("pages.analytics.states.empty")} />
-      </section>
-    );
-  }
 
   return (
-    <section className="grid gap-5">
-      {header}
-      <AnalyticsMetricsSection metrics={model.data.metrics} />
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <DashboardRevenueChart data={model.data.revenue} />
-        <DashboardOrdersTrend data={model.data.ordersPerDay} />
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)]">
-        <AnalyticsJobsByCategoryChart data={model.data.jobsByCategory} />
-        <DashboardMechanicWorkload items={model.data.mechanicWorkload} />
-      </div>
-    </section>
+    <AnalyticsOverview
+      range={model.range}
+      onRangeChange={model.setRange}
+      isLoading={model.isLoading}
+      isError={model.isError}
+      data={model.data}
+      onRetry={() => model.query.refetch()}
+    />
   );
 };

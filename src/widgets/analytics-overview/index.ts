@@ -1,2 +1,1 @@
-export { AnalyticsOverviewHeader } from "./ui/AnalyticsOverviewHeader";
-export { AnalyticsMetricsSection } from "./ui/AnalyticsMetricsSection";
+export { AnalyticsOverview } from "./AnalyticsOverview";
