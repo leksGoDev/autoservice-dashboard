@@ -1,4 +1,5 @@
 import type { RecentActivityType, RecentOrderItem } from "./types";
+import { formatDate, formatUsd, toStatusModifier } from "@/shared/lib/presentation";
 
 type ActivityTone = "neutral" | "success" | "warning" | "danger";
 type WorkloadTone = "normal" | "warning" | "danger";
@@ -34,15 +35,15 @@ export const KPI_CARD_CONFIG = [
 ] as const;
 
 export function formatCurrency(value: number, locale?: string) {
-  return `$${value.toLocaleString(locale)}`;
+  return formatUsd(value, locale);
 }
 
 export function formatDashboardChartDate(dateIso: string, locale?: string) {
-  return new Date(dateIso).toLocaleDateString(locale, { month: "short", day: "numeric" });
+  return formatDate(dateIso, locale, { month: "short", day: "numeric" });
 }
 
 export function formatDashboardDate(dateIso: string, locale?: string) {
-  return new Date(dateIso).toLocaleDateString(locale);
+  return formatDate(dateIso, locale);
 }
 
 export function formatRelativeTime(dateIso: string, locale?: string) {
@@ -83,7 +84,7 @@ export function getOrderPriorityKey(priority: RecentOrderItem["priority"]) {
 }
 
 export function getStatusChipModifier(status: RecentOrderItem["status"]) {
-  return status.replace("_", "-");
+  return toStatusModifier(status);
 }
 
 export function getWorkloadTone(utilization: number): WorkloadTone {

@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { I18nProvider } from "@/shared/i18n/provider";
-import { AnalyticsOverview } from "./AnalyticsOverview";
+import { AnalyticsPage } from "@/pages/analytics/AnalyticsPage";
 
 vi.mock("@/widgets/dashboard-revenue-chart/DashboardRevenueChart", () => ({
   DashboardRevenueChart: () => <div>Revenue Chart</div>,
@@ -32,13 +32,13 @@ function renderWidget() {
   render(
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-        <AnalyticsOverview />
+        <AnalyticsPage />
       </I18nProvider>
     </QueryClientProvider>,
   );
 }
 
-describe("AnalyticsOverview", () => {
+describe("AnalyticsPage", () => {
   it("renders metrics and chart sections", async () => {
     renderWidget();
 

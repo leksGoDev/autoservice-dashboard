@@ -1,15 +1,16 @@
 import type { WorkBoardQuickAction, WorkBoardStatus } from "@/entities/work-board/model/types";
+import { formatTime, formatUsd, toStatusModifier } from "@/shared/lib/presentation";
 
 export function getWorkBoardStatusModifier(status: WorkBoardStatus) {
-  return status.replace("_", "-");
+  return toStatusModifier(status);
 }
 
 export function formatWorkBoardCurrency(value: number) {
-  return `$${value.toLocaleString()}`;
+  return formatUsd(value);
 }
 
 export function formatWorkBoardUpdatedAt(dateIso: string) {
-  return new Date(dateIso).toLocaleTimeString([], {
+  return formatTime(dateIso, undefined, {
     hour: "2-digit",
     minute: "2-digit",
   });

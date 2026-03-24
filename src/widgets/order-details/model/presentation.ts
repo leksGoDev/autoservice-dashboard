@@ -1,11 +1,12 @@
 import type { OrderCustomerSnapshot, ServiceJobStatus } from "@/entities/order/model/types";
+import { formatDateTime, toStatusModifier } from "@/shared/lib/presentation";
 
 export function getJobStatusBadgeModifier(status: ServiceJobStatus) {
   if (status === "pending") {
     return "scheduled";
   }
 
-  return status.replace("_", "-");
+  return toStatusModifier(status);
 }
 
 export function getLoyaltyTierBadgeClass(loyaltyTier: OrderCustomerSnapshot["loyaltyTier"]) {
@@ -23,5 +24,5 @@ export function formatOrderHours(value: number) {
 }
 
 export function formatOrderActivityTimestamp(value: string) {
-  return new Date(value).toLocaleString();
+  return formatDateTime(value);
 }

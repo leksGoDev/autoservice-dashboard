@@ -1,6 +1,8 @@
+import type { UseQueryResult } from "@tanstack/react-query";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { useWorkBoardQuery } from "@/entities/work-board/api/queries";
+import type { WorkBoardData } from "@/entities/work-board/model/types";
 import { I18nProvider } from "@/shared/i18n/provider";
 import { WorkBoardPage } from "./WorkBoardPage";
 
@@ -14,7 +16,9 @@ vi.mock("@/widgets/work-board-columns/WorkBoardColumns", () => ({
 
 const mockedUseWorkBoardQuery = vi.mocked(useWorkBoardQuery);
 
-function buildQuery(overrides: Record<string, unknown> = {}) {
+function buildQuery(
+  overrides: Partial<UseQueryResult<WorkBoardData, Error>> = {},
+): UseQueryResult<WorkBoardData, Error> {
   const baseQuery = {
     isLoading: false,
     isError: false,
@@ -50,7 +54,7 @@ function buildQuery(overrides: Record<string, unknown> = {}) {
   return {
     ...baseQuery,
     ...overrides,
-  };
+  } as unknown as UseQueryResult<WorkBoardData, Error>;
 }
 
 function renderPage() {
@@ -71,7 +75,7 @@ describe("WorkBoardPage", () => {
       buildQuery({
         isLoading: true,
         data: undefined,
-      }) as ReturnType<typeof useWorkBoardQuery>,
+      }),
     );
 
     renderPage();
@@ -86,7 +90,7 @@ describe("WorkBoardPage", () => {
         isError: true,
         data: undefined,
         refetch,
-      }) as ReturnType<typeof useWorkBoardQuery>,
+      }),
     );
 
     renderPage();
@@ -103,7 +107,7 @@ describe("WorkBoardPage", () => {
           totalCards: 0,
           updatedAt: "2026-03-21T10:00:00.000Z",
         },
-      }) as ReturnType<typeof useWorkBoardQuery>,
+      }),
     );
 
     renderPage();
@@ -112,7 +116,7 @@ describe("WorkBoardPage", () => {
   });
 
   it("renders board columns in success state", () => {
-    mockedUseWorkBoardQuery.mockReturnValue(buildQuery() as ReturnType<typeof useWorkBoardQuery>);
+    mockedUseWorkBoardQuery.mockReturnValue(buildQuery());
 
     renderPage();
 
