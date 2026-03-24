@@ -77,9 +77,10 @@ Hook rules:
 - use custom hooks to separate page orchestration from presentational rendering
 - prefer hooks for reusable stateful behavior over inline ad hoc logic duplicated across screens
 - keep hooks focused on one concern and return a clear view model for the component layer
-- place a hook in `pages/model` when it is tied to route concerns such as params, search params, or page-level URL synchronization
-- place a hook in `widgets/*/model` when it describes the behavior of a page-ready widget rather than the route itself
-- avoid splitting one ownership boundary across both `pages/model` and `widgets/*/model` without a clear route-versus-widget distinction
+- for details routes, keep `pages/model` hooks focused on reading route params only
+- place query orchestration and view-model shaping in `widgets/*/model`, even when the widget is used by a single page
+- use `pages/model` for route concerns such as params, search params, and URL synchronization only
+- avoid passing large prop bundles from pages to widgets; prefer a route id plus widget-owned model logic
 
 Good candidates for custom hooks:
 

@@ -192,7 +192,8 @@ Pages should stay thin and avoid containing reusable low-level logic.
 Page rules:
 
 - pages should primarily compose widgets and route-level concerns
-- page-specific hooks may live in `pages/model` when they depend on route params, search params, or other route orchestration
+- page hooks in `pages/model` should stay route-focused and prefer params or URL concerns only
+- page-ready data orchestration should live in `widgets/*/model`, even for single-route widgets
 - page-ready visual blocks should live in `widgets`, not in `pages/ui`
 - avoid turning `pages` into a second UI layer parallel to `widgets`
 
