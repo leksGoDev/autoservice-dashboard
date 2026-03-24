@@ -16,18 +16,7 @@ import {
   getRevenueFixtureByRange,
 } from "@/mocks/fixtures/dashboard";
 import { INVALID_DASHBOARD_LIMIT_MESSAGE, INVALID_DASHBOARD_RANGE_MESSAGE } from "@/shared/api/messages";
-
-function parseDashboardRange(input: string | null): DashboardRange | null {
-  if (input === null) {
-    return DEFAULT_DASHBOARD_RANGE;
-  }
-
-  if (DASHBOARD_RANGES.includes(input as DashboardRange)) {
-    return input as DashboardRange;
-  }
-
-  return null;
-}
+import { invalidRangeResponse, parseRangeParam } from "@/mocks/lib/range";
 
 function parseLimit(input: string | null): number | null {
   if (input === null) {
@@ -41,16 +30,6 @@ function parseLimit(input: string | null): number | null {
   }
 
   return value;
-}
-
-function invalidRangeResponse() {
-  return HttpResponse.json(
-    {
-      code: "INVALID_RANGE",
-      message: INVALID_DASHBOARD_RANGE_MESSAGE,
-    },
-    { status: 400 },
-  );
 }
 
 function invalidLimitResponse() {
@@ -67,10 +46,13 @@ export const dashboardHandlers = [
   http.get(toMswPath(apiEndpoints.dashboard.metrics), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
-    const range = parseDashboardRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as DashboardRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getMetricsFixtureByRange(range));
@@ -79,10 +61,13 @@ export const dashboardHandlers = [
   http.get(toMswPath(apiEndpoints.dashboard.revenue), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
-    const range = parseDashboardRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as DashboardRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getRevenueFixtureByRange(range));
@@ -91,10 +76,13 @@ export const dashboardHandlers = [
   http.get(toMswPath(apiEndpoints.dashboard.ordersTrend), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
-    const range = parseDashboardRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as DashboardRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getOrdersTrendFixtureByRange(range));
@@ -103,10 +91,13 @@ export const dashboardHandlers = [
   http.get(toMswPath(apiEndpoints.dashboard.mechanicWorkload), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
-    const range = parseDashboardRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as DashboardRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getMechanicWorkloadFixtureByRange(range));
@@ -115,10 +106,13 @@ export const dashboardHandlers = [
   http.get(toMswPath(apiEndpoints.dashboard.recentActivity), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
-    const range = parseDashboardRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as DashboardRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getRecentActivityFixtureByRange(range));
@@ -127,11 +121,14 @@ export const dashboardHandlers = [
   http.get(toMswPath(apiEndpoints.dashboard.recentOrders), async ({ request }) => {
     await delay(250);
     const url = new URL(request.url);
-    const range = parseDashboardRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as DashboardRange | null;
     const limit = parseLimit(url.searchParams.get("limit"));
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     if (!limit) {

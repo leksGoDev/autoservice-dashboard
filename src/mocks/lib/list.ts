@@ -15,16 +15,21 @@ type PaginatedResult<TItem> = {
 };
 
 export function parseListQueryParams(url: URL): ListQueryParams {
+  const parsedPage = Number(url.searchParams.get("page") ?? String(DEFAULT_LIST_PAGE));
+  const parsedPageSize = Number(url.searchParams.get("pageSize") ?? String(DEFAULT_LIST_PAGE_SIZE));
+
   return {
-    page: Number(url.searchParams.get("page") ?? String(DEFAULT_LIST_PAGE)),
-    pageSize: Number(url.searchParams.get("pageSize") ?? String(DEFAULT_LIST_PAGE_SIZE)),
+    page: Number.isFinite(parsedPage) ? parsedPage : DEFAULT_LIST_PAGE,
+    pageSize: Number.isFinite(parsedPageSize) ? parsedPageSize : DEFAULT_LIST_PAGE_SIZE,
     search: (url.searchParams.get("search") ?? "").toLowerCase().trim(),
   };
 }
 
 export function paginateItems<TItem>(items: TItem[], page: number, pageSize: number): PaginatedResult<TItem> {
-  const safePage = Math.max(1, page);
-  const safePageSize = Math.max(1, pageSize);
+  const normalizedPage = Number.isFinite(page) ? page : DEFAULT_LIST_PAGE;
+  const normalizedPageSize = Number.isFinite(pageSize) ? pageSize : DEFAULT_LIST_PAGE_SIZE;
+  const safePage = Math.max(1, normalizedPage);
+  const safePageSize = Math.max(1, normalizedPageSize);
   const total = items.length;
   const totalPages = Math.max(1, Math.ceil(total / safePageSize));
   const start = (safePage - 1) * safePageSize;

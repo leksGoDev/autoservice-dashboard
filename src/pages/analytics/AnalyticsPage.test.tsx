@@ -1,8 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { I18nProvider } from "@/shared/i18n/provider";
 import { AnalyticsPage } from "@/pages/analytics/AnalyticsPage";
+import { I18nProvider } from "@/shared/i18n/provider";
 
 vi.mock("@/widgets/dashboard-revenue-chart/DashboardRevenueChart", () => ({
   DashboardRevenueChart: () => <div>Revenue Chart</div>,
@@ -20,7 +20,7 @@ vi.mock("@/widgets/analytics-jobs-by-category/AnalyticsJobsByCategoryChart", () 
   AnalyticsJobsByCategoryChart: () => <div>Jobs by Category</div>,
 }));
 
-function renderWidget() {
+function renderPage() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -40,7 +40,7 @@ function renderWidget() {
 
 describe("AnalyticsPage", () => {
   it("renders metrics and chart sections", async () => {
-    renderWidget();
+    renderPage();
 
     expect(await screen.findByText("Revenue Total")).toBeInTheDocument();
     expect(screen.getByText("Revenue Chart")).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe("AnalyticsPage", () => {
   });
 
   it("updates metrics when range changes", async () => {
-    renderWidget();
+    renderPage();
 
     expect(await screen.findByText("$21,940")).toBeInTheDocument();
 

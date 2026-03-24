@@ -11,37 +11,19 @@ import {
   getAnalyticsRevenueFixtureByRange,
 } from "@/mocks/fixtures/analytics";
 import { INVALID_DASHBOARD_RANGE_MESSAGE } from "@/shared/api/messages";
-
-function parseAnalyticsRange(input: string | null): AnalyticsRange | null {
-  if (input === null) {
-    return DEFAULT_DASHBOARD_RANGE;
-  }
-
-  if (DASHBOARD_RANGES.includes(input as AnalyticsRange)) {
-    return input as AnalyticsRange;
-  }
-
-  return null;
-}
-
-function invalidRangeResponse() {
-  return HttpResponse.json(
-    {
-      code: "INVALID_RANGE",
-      message: INVALID_DASHBOARD_RANGE_MESSAGE,
-    },
-    { status: 400 },
-  );
-}
+import { invalidRangeResponse, parseRangeParam } from "@/mocks/lib/range";
 
 export const analyticsHandlers = [
   http.get(toMswPath(apiEndpoints.analytics.metrics), async ({ request }) => {
     await delay(220);
     const url = new URL(request.url);
-    const range = parseAnalyticsRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as AnalyticsRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getAnalyticsMetricsFixtureByRange(range));
@@ -50,10 +32,13 @@ export const analyticsHandlers = [
   http.get(toMswPath(apiEndpoints.analytics.revenue), async ({ request }) => {
     await delay(220);
     const url = new URL(request.url);
-    const range = parseAnalyticsRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as AnalyticsRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getAnalyticsRevenueFixtureByRange(range));
@@ -62,10 +47,13 @@ export const analyticsHandlers = [
   http.get(toMswPath(apiEndpoints.analytics.ordersPerDay), async ({ request }) => {
     await delay(220);
     const url = new URL(request.url);
-    const range = parseAnalyticsRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as AnalyticsRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getAnalyticsOrdersPerDayFixtureByRange(range));
@@ -74,10 +62,13 @@ export const analyticsHandlers = [
   http.get(toMswPath(apiEndpoints.analytics.jobsByCategory), async ({ request }) => {
     await delay(220);
     const url = new URL(request.url);
-    const range = parseAnalyticsRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as AnalyticsRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getAnalyticsJobsByCategoryFixtureByRange(range));
@@ -86,10 +77,13 @@ export const analyticsHandlers = [
   http.get(toMswPath(apiEndpoints.analytics.mechanicWorkload), async ({ request }) => {
     await delay(220);
     const url = new URL(request.url);
-    const range = parseAnalyticsRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as AnalyticsRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getAnalyticsMechanicWorkloadFixtureByRange(range));

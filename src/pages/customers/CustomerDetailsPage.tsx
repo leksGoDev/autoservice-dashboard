@@ -4,7 +4,7 @@ import {
   formatCustomerDetailsCurrency,
   formatCustomerDetailsDate,
 } from "@/widgets/customer-details/model/formatters";
-import { useCustomerDetailsPageModel } from "@/widgets/customer-details/model/use-customer-details-page-model";
+import { useCustomerDetailsPageModel } from "@/pages/customers/model/use-customer-details-page-model";
 import { CustomerDetailsHeader } from "@/widgets/customer-details/ui/CustomerDetailsHeader";
 import { CustomerInfoCard } from "@/widgets/customer-details/ui/CustomerInfoCard";
 import { CustomerOrdersTable } from "@/widgets/customer-details/ui/CustomerOrdersTable";

@@ -9,28 +9,7 @@ import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 import { getMechanicsWorkloadFixtureByRange, mechanicsRegistryFixture } from "@/mocks/fixtures/mechanics";
 import { INVALID_DASHBOARD_RANGE_MESSAGE } from "@/shared/api/messages";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
-
-function parseDashboardRange(input: string | null): MechanicsRange | null {
-  if (input === null) {
-    return DEFAULT_DASHBOARD_RANGE;
-  }
-
-  if (DASHBOARD_RANGES.includes(input as MechanicsRange)) {
-    return input as MechanicsRange;
-  }
-
-  return null;
-}
-
-function invalidRangeResponse() {
-  return HttpResponse.json(
-    {
-      code: "INVALID_RANGE",
-      message: INVALID_DASHBOARD_RANGE_MESSAGE,
-    },
-    { status: 400 },
-  );
-}
+import { invalidRangeResponse, parseRangeParam } from "@/mocks/lib/range";
 
 export const mechanicsHandlers = [
   http.get(toMswPath(apiEndpoints.mechanics.registry), async ({ request }) => {
@@ -54,10 +33,13 @@ export const mechanicsHandlers = [
   http.get(toMswPath(apiEndpoints.mechanics.workload), async ({ request }) => {
     await delay(240);
     const url = new URL(request.url);
-    const range = parseDashboardRange(url.searchParams.get("range"));
+    const range = parseRangeParam(url.searchParams.get("range"), {
+      allowedRanges: DASHBOARD_RANGES,
+      defaultRange: DEFAULT_DASHBOARD_RANGE,
+    }) as MechanicsRange | null;
 
     if (!range) {
-      return invalidRangeResponse();
+      return invalidRangeResponse(INVALID_DASHBOARD_RANGE_MESSAGE);
     }
 
     return HttpResponse.json(getMechanicsWorkloadFixtureByRange(range));
