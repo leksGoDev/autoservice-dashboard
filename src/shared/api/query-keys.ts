@@ -2,12 +2,14 @@ import { customersQueryKeys } from "./query-keys/customers";
 import { dashboardQueryKeys } from "./query-keys/dashboard";
 import { ordersQueryKeys } from "./query-keys/orders";
 import { vehiclesQueryKeys } from "./query-keys/vehicles";
+import { workBoardQueryKeys } from "./query-keys/work-board";
 
 export const queryKeys = {
   customers: customersQueryKeys,
   dashboard: dashboardQueryKeys,
   orders: ordersQueryKeys,
   vehicles: vehiclesQueryKeys,
+  workBoard: workBoardQueryKeys,
 } as const;
 
 export type {
