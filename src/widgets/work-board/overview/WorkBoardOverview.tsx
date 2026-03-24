@@ -12,7 +12,7 @@ export const WorkBoardOverview = () => {
     <section className="grid gap-5">
       <WorkBoardOverviewHeader />
       <WorkBoardOverviewSummary totalCards={totalCards} totalColumns={columns.length} />
-      <WorkBoardOverviewContent boardQuery={boardQuery} columns={columns} totalCards={totalCards} />
+      <WorkBoardOverviewContent boardQuery={boardQuery} />
     </section>
   );
 };

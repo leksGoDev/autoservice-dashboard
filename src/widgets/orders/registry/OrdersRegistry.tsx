@@ -17,17 +17,7 @@ export const OrdersRegistry = () => {
         onReset={model.onResetFilters}
       />
 
-      <OrdersRegistryContent
-        rows={model.rows}
-        page={model.page}
-        total={model.total}
-        totalPages={model.totalPages}
-        isLoading={model.listQuery.isLoading}
-        isError={model.listQuery.isError}
-        isFetching={model.listQuery.isFetching}
-        onPageChange={model.onPageChange}
-        onRetry={() => model.listQuery.refetch()}
-      />
+      <OrdersRegistryContent model={model} />
     </section>
   );
 };

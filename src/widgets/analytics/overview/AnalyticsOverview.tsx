@@ -8,12 +8,7 @@ export const AnalyticsOverview = () => {
   return (
     <section className="grid gap-5">
       <AnalyticsHeader range={model.range} onRangeChange={model.setRange} />
-      <AnalyticsOverviewContent
-        isLoading={model.isLoading}
-        isError={model.isError}
-        data={model.data}
-        onRetry={() => model.query.refetch()}
-      />
+      <AnalyticsOverviewContent model={model} />
     </section>
   );
 };

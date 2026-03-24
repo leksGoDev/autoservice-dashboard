@@ -1,54 +1,38 @@
 import type { CustomerOrderHistoryItem } from "@/entities/customer/model/types";
+import { formatCustomerDetailsCurrency, formatCustomerDetailsDate } from "@/entities/customer/model/presentation";
+import { useI18n } from "@/shared/i18n/use-i18n";
 
 type CustomerOrdersTableProps = {
-  sectionTitle: string;
-  emptyLabel: string;
   rows: CustomerOrderHistoryItem[];
-  headers: {
-    order: string;
-    vehicle: string;
-    status: string;
-    total: string;
-    updated: string;
-  };
-  getOrderStatusLabel: (status: CustomerOrderHistoryItem["status"]) => string;
-  formatAmount: (amount: number) => string;
-  formatUpdatedAt: (updatedAt: string) => string;
 };
 
-export const CustomerOrdersTable = ({
-  sectionTitle,
-  emptyLabel,
-  rows,
-  headers,
-  getOrderStatusLabel,
-  formatAmount,
-  formatUpdatedAt,
-}: CustomerOrdersTableProps) => {
+export const CustomerOrdersTable = ({ rows }: CustomerOrdersTableProps) => {
+  const { t, locale } = useI18n();
+
   return (
     <article className="grid gap-4 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4">
-      <h2 className="m-0 text-base font-bold">{sectionTitle}</h2>
+      <h2 className="m-0 text-base font-bold">{t("pages.customerDetails.sections.orders")}</h2>
       {rows.length === 0 ? (
-        <p className="m-0 text-[var(--color-text-secondary)]">{emptyLabel}</p>
+        <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.customerDetails.states.emptyOrders")}</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-[860px] w-full border-collapse text-left text-[13px]">
             <thead>
               <tr>
                 <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-                  {headers.order}
+                  {t("pages.customerDetails.orders.order")}
                 </th>
                 <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-                  {headers.vehicle}
+                  {t("pages.customerDetails.orders.vehicle")}
                 </th>
                 <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-                  {headers.status}
+                  {t("pages.customerDetails.orders.status")}
                 </th>
                 <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-                  {headers.total}
+                  {t("pages.customerDetails.orders.total")}
                 </th>
                 <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-                  {headers.updated}
+                  {t("pages.customerDetails.orders.updated")}
                 </th>
               </tr>
             </thead>
@@ -60,13 +44,13 @@ export const CustomerOrdersTable = ({
                   </td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{order.vehicleLabel}</td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
-                    {getOrderStatusLabel(order.status)}
+                    {t(`order.status.${order.status}`)}
                   </td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
-                    {formatAmount(order.totalAmount)}
+                    {formatCustomerDetailsCurrency(order.totalAmount, locale)}
                   </td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
-                    {formatUpdatedAt(order.updatedAt)}
+                    {formatCustomerDetailsDate(order.updatedAt, locale, t("common.unknown"))}
                   </td>
                 </tr>
               ))}

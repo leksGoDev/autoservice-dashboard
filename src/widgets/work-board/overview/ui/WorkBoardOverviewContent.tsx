@@ -1,17 +1,16 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import type { WorkBoardData } from "@/entities/work-board/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
 import { WorkBoardColumns } from "@/widgets/work-board/columns/WorkBoardColumns";
+import type { useWorkBoardOverviewModel } from "../model/use-work-board-overview-model";
 
 type WorkBoardOverviewContentProps = {
-  boardQuery: UseQueryResult<WorkBoardData, Error>;
-  columns: WorkBoardData["columns"];
-  totalCards: number;
+  boardQuery: ReturnType<typeof useWorkBoardOverviewModel>["boardQuery"];
 };
 
-export const WorkBoardOverviewContent = ({ boardQuery, columns, totalCards }: WorkBoardOverviewContentProps) => {
+export const WorkBoardOverviewContent = ({ boardQuery }: WorkBoardOverviewContentProps) => {
   const { t } = useI18n();
+  const columns = boardQuery.data?.columns ?? [];
+  const totalCards = boardQuery.data?.totalCards ?? 0;
 
   if (boardQuery.isLoading) {
     return <DataState message={t("pages.workBoard.states.loading")} />;

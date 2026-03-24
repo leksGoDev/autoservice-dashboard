@@ -12,8 +12,5 @@ export const useAnalyticsOverviewModel = () => {
     range,
     setRange,
     query,
-    isLoading: query.isLoading,
-    isError: query.isError,
-    data: query.data,
   };
 };
