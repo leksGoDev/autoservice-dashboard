@@ -275,30 +275,73 @@ export const enMessages = {
       eyebrow: "Operations",
       title: "Mechanics registry",
       description:
-        "This screen will hold mechanic status, specialization, active jobs, and workload-related operational context.",
-      cards: {
-        registryTitle: "Registry",
-        registryText: "The mechanics table will support search and operational status tracking.",
-        availabilityTitle: "Availability",
-        availabilityText: "Mechanic workload data will be shared with dashboard and analytics widgets.",
-        assignmentsTitle: "Assignments",
-        assignmentsText:
-          "Features for assigning mechanics will compose with order and service job flows.",
+        "Search mechanics, monitor availability, and track assignment pressure from the current workload.",
+      searchLabel: "Search mechanics",
+      searchPlaceholder: "Mechanic name or specialization",
+      searchButton: "Search",
+      status: {
+        available: "Available",
+        busy: "Busy",
+        offShift: "Off shift",
+      },
+      states: {
+        loading: "Loading mechanics data...",
+        error: "Failed to load mechanics data.",
+        empty: "No mechanics match your search.",
+      },
+      table: {
+        title: "Mechanics table",
+        description: "Registry view of mechanics, specialization, active jobs, and current status.",
+        columns: {
+          name: "Name",
+          specialization: "Specialization",
+          activeJobs: "Active jobs",
+          status: "Status",
+          experienceYears: "Experience",
+        },
+        experienceYears: "{{years}} years",
+        summary: "Showing {{start}}-{{end}} of {{total}} mechanics",
+        summaryEmpty: "0 mechanics",
+        page: "Page {{page}} / {{totalPages}}",
+        prev: "Prev",
+        next: "Next",
+      },
+      availability: {
+        title: "Availability",
+        description: "Operational status distribution and average utilization for selected range.",
+        available: "Available: {{count}}",
+        busy: "Busy: {{count}}",
+        offShift: "Off shift: {{count}}",
+        utilization: "Average utilization: {{percent}}%",
+      },
+      assignments: {
+        title: "Assignments summary",
+        description: "Top mechanics by assigned orders in selected range.",
+        orders: "{{count}} orders · {{utilization}}%",
       },
     },
     analytics: {
       eyebrow: "Insights",
       title: "Analytics workspace",
       description:
-        "Analytics will aggregate revenue, orders per day, job categories, mechanic workload, and time-range filters.",
-      cards: {
-        chartTitle: "Chart Zone",
-        chartText:
-          "Line, bar, and stacked bar charts will use Recharts on top of prepared query view-models.",
-        filtersTitle: "Filters",
-        filtersText: "URL-driven time-range controls will keep the screen reproducible and shareable.",
-        dataTitle: "Prepared Data",
-        dataText: "Heavy chart transformations should stay outside the page layer.",
+        "Revenue, throughput, job mix, and mechanic utilization insights for a selected operational range.",
+      states: {
+        loading: "Loading analytics data...",
+        error: "Failed to load analytics data.",
+        empty: "No analytics data for selected range.",
+      },
+      metrics: {
+        totalRevenue: "Revenue Total",
+        averageOrderValue: "Avg Order Value",
+        completionRate: "Completion Rate",
+        activeMechanics: "Active Mechanics",
+      },
+      jobsByCategory: {
+        title: "Jobs by Category",
+        description: "Stacked distribution of scheduled, in progress, and completed jobs.",
+        scheduled: "Scheduled",
+        inProgress: "In Progress",
+        completed: "Completed",
       },
     },
     workBoard: {

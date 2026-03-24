@@ -9,6 +9,17 @@ export const apiEndpoints = {
     recentActivity: "/dashboard/recent-activity",
     recentOrders: "/dashboard/recent-orders",
   },
+  mechanics: {
+    registry: "/mechanics/registry",
+    workload: "/mechanics/workload",
+  },
+  analytics: {
+    metrics: "/analytics/metrics",
+    revenue: "/analytics/revenue",
+    ordersPerDay: "/analytics/orders-per-day",
+    jobsByCategory: "/analytics/jobs-by-category",
+    mechanicWorkload: "/analytics/mechanic-workload",
+  },
   orders: {
     list: "/orders",
   },

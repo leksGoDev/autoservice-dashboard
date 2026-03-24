@@ -49,4 +49,18 @@ describe("router smoke", () => {
     expect(screen.getByText("Vehicle ID: veh_001")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Back to vehicles" })).toBeInTheDocument();
   });
+
+  it("renders mechanics route content", async () => {
+    renderWithRoute("/mechanics");
+
+    expect(await screen.findByText("Mechanics table")).toBeInTheDocument();
+    expect(screen.getByText("Assignments summary")).toBeInTheDocument();
+  });
+
+  it("renders analytics route content", async () => {
+    renderWithRoute("/analytics");
+
+    expect(await screen.findByText("Revenue Total")).toBeInTheDocument();
+    expect(screen.getByText("Jobs by Category")).toBeInTheDocument();
+  });
 });
