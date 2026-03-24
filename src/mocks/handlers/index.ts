@@ -6,9 +6,6 @@ import { ordersHandlers } from "@/mocks/handlers/orders";
 import { vehiclesHandlers } from "@/mocks/handlers/vehicles";
 import { workBoardHandlers } from "@/mocks/handlers/work-board";
 
-<<<<<<< HEAD
-export const handlers = [...dashboardHandlers, ...ordersHandlers, ...workBoardHandlers, ...customersHandlers, ...vehiclesHandlers];
-=======
 export const handlers = [
   ...dashboardHandlers,
   ...ordersHandlers,
@@ -18,4 +15,3 @@ export const handlers = [
   ...mechanicsHandlers,
   ...analyticsHandlers,
 ];
->>>>>>> bca1a401e8d56c19ed2e8f50eeaddd774815ee36
