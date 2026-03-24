@@ -1,54 +1,39 @@
 import { Link } from "react-router-dom";
 
 import type { CustomerListItem } from "@/entities/customer/model/types";
-import type { AppLocale } from "@/shared/i18n/config";
+import { useI18n } from "@/shared/i18n/use-i18n";
 
 import { formatCustomersRegistryDate } from "./model";
 
 type CustomersRegistryTableProps = {
   rows: CustomerListItem[];
-  locale: AppLocale;
-  unknownLabel: string;
-  detailsLabel: string;
-  headers: {
-    name: string;
-    phone: string;
-    email: string;
-    vehiclesCount: string;
-    ordersCount: string;
-    lastVisit: string;
-  };
 };
 
-export const CustomersRegistryTable = ({
-  rows,
-  locale,
-  unknownLabel,
-  detailsLabel,
-  headers,
-}: CustomersRegistryTableProps) => {
+export const CustomersRegistryTable = ({ rows }: CustomersRegistryTableProps) => {
+  const { t, locale } = useI18n();
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-[760px] w-full border-collapse text-left text-[13px]">
         <thead>
           <tr>
             <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-              {headers.name}
+              {t("customersRegistry.table.name")}
             </th>
             <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-              {headers.phone}
+              {t("customersRegistry.table.phone")}
             </th>
             <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-              {headers.email}
+              {t("customersRegistry.table.email")}
             </th>
             <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-              {headers.vehiclesCount}
+              {t("customersRegistry.table.vehiclesCount")}
             </th>
             <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-              {headers.ordersCount}
+              {t("customersRegistry.table.ordersCount")}
             </th>
             <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]">
-              {headers.lastVisit}
+              {t("customersRegistry.table.lastVisit")}
             </th>
           </tr>
         </thead>
@@ -62,7 +47,7 @@ export const CustomersRegistryTable = ({
                     to={`/customers/${customer.id}`}
                     className="cursor-pointer border-0 bg-transparent p-0 text-left text-[12px] text-[var(--color-accent-light-blue)] transition-colors hover:text-[#9ac0ff]"
                   >
-                    {detailsLabel}
+                    {t("customersRegistry.detailsLink")}
                   </Link>
                 </div>
               </td>
@@ -73,7 +58,7 @@ export const CustomersRegistryTable = ({
               </td>
               <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{customer.ordersCount}</td>
               <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
-                {formatCustomersRegistryDate(customer.lastVisitAt, locale, unknownLabel)}
+                {formatCustomersRegistryDate(customer.lastVisitAt, locale, t("common.unknown"))}
               </td>
             </tr>
           ))}

@@ -9,7 +9,7 @@ type CustomersRegistryContentProps = {
 };
 
 export const CustomersRegistryContent = ({ model }: CustomersRegistryContentProps) => {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   if (model.isLoading) {
     return <DataState message={t("customersRegistry.states.loading")} />;
@@ -43,20 +43,7 @@ export const CustomersRegistryContent = ({ model }: CustomersRegistryContentProp
 
   return (
     <>
-      <CustomersRegistryTable
-        rows={model.data.items}
-        locale={locale}
-        unknownLabel={t("common.unknown")}
-        detailsLabel={t("customersRegistry.detailsLink")}
-        headers={{
-          name: t("customersRegistry.table.name"),
-          phone: t("customersRegistry.table.phone"),
-          email: t("customersRegistry.table.email"),
-          vehiclesCount: t("customersRegistry.table.vehiclesCount"),
-          ordersCount: t("customersRegistry.table.ordersCount"),
-          lastVisit: t("customersRegistry.table.lastVisit"),
-        }}
-      />
+      <CustomersRegistryTable rows={model.data.items} />
 
       <PaginationShell
         summary={model.summary}

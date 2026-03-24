@@ -16,8 +16,6 @@ export const CustomersRegistry = () => {
     >
       <CustomersRegistrySearch
         value={model.search}
-        placeholder={t("customersRegistry.searchPlaceholder")}
-        ariaLabel={t("customersRegistry.searchAria")}
         onChange={(event) => model.handleSearchChange(event.target.value)}
       />
       <CustomersRegistryContent model={model} />
