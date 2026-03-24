@@ -159,6 +159,16 @@ Widgets combine entities, features, and shared UI into page-level blocks.
 
 Widgets should stay reusable across route screens where possible.
 
+Widget structure rules:
+
+- a small widget may stay as a single `Widget.tsx` file
+- a composite widget should use an explicit internal structure such as `ui/` and `model/`
+- use `ui/` only when the widget has multiple private visual parts
+- use `model/` only when the widget has real orchestration, derived view-model logic, or state coordination
+- do not add `ui/` or `model/` preemptively
+- do not keep empty `ui/` or `model/` folders
+- avoid mixing flat private files and `ui/` or `model/` folders inside the same widget without a clear reason
+
 ---
 
 ### pages
@@ -178,6 +188,13 @@ Examples:
 Pages compose widgets and features into complete screens.
 
 Pages should stay thin and avoid containing reusable low-level logic.
+
+Page rules:
+
+- pages should primarily compose widgets and route-level concerns
+- page-specific hooks may live in `pages/model` when they depend on route params, search params, or other route orchestration
+- page-ready visual blocks should live in `widgets`, not in `pages/ui`
+- avoid turning `pages` into a second UI layer parallel to `widgets`
 
 ---
 
@@ -337,6 +354,12 @@ Guidelines:
 - widget should be a page-ready UI block
 - widget may combine shared primitives, entities, and features
 - widget should not become a replacement for pages
+- if the widget is small, keep it as a single `Widget.tsx` module
+- if the widget grows into multiple private parts, split it into `ui/` and optionally `model/`
+- `ui/` is appropriate for private subcomponents owned only by that widget
+- `model/` is appropriate for widget-local orchestration and derived logic
+- do not create `ui/` or `model/` folders unless they provide real clarity
+- remove empty internal folders after refactors
 
 ---
 

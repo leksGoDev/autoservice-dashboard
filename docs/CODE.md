@@ -55,12 +55,17 @@ Rendering rules:
 - prefer early returns for mutually exclusive screen states such as loading, error, and empty
 - when markup branches become large, extract a helper component or dedicated rendering block
 - keep JSX declarative and easy to scan
+- do not duplicate a shared layout shell only to force early returns
+- when loading, error, empty, and success states share the same page or widget shell, keep the shell once and extract the varying content into a dedicated component or rendering block
+- if early return would duplicate the same `section`, header, toolbar, or other shared wrapper, prefer decomposition over copy-paste
+- do not replace one readability problem with another: a huge ternary and duplicated early-return branches are both considered bad outcomes
 
 Preferred direction:
 
 - small conditional inline: acceptable
 - large conditional branch: use early return
 - repeated or bulky conditional markup: extract component or helper block
+- repeated state branches with a shared shell: extract a content component and keep the shell single
 
 ---
 
@@ -72,6 +77,9 @@ Hook rules:
 - use custom hooks to separate page orchestration from presentational rendering
 - prefer hooks for reusable stateful behavior over inline ad hoc logic duplicated across screens
 - keep hooks focused on one concern and return a clear view model for the component layer
+- place a hook in `pages/model` when it is tied to route concerns such as params, search params, or page-level URL synchronization
+- place a hook in `widgets/*/model` when it describes the behavior of a page-ready widget rather than the route itself
+- avoid splitting one ownership boundary across both `pages/model` and `widgets/*/model` without a clear route-versus-widget distinction
 
 Good candidates for custom hooks:
 
@@ -84,6 +92,21 @@ Avoid:
 
 - creating hooks only to wrap a couple of local constants
 - moving tiny one-off logic into a hook with no reuse or readability gain
+
+---
+
+## Widget Structure
+
+Widget structure should reflect the actual complexity of the module.
+
+Rules:
+
+- use a single file when the widget is still small and readable
+- introduce `ui/` only when the widget has multiple private subcomponents
+- introduce `model/` only when the widget has meaningful widget-local logic
+- keep the entry component easy to find, typically as `WidgetName.tsx`
+- avoid mixing several organizational styles inside one widget without a strong reason
+- clean up empty folders after moving files during refactors
 
 ---
 
