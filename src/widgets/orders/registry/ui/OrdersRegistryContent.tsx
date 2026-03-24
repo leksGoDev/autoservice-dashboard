@@ -1,7 +1,7 @@
-import type { OrdersTableRow } from "@/widgets/orders-shared/model/types";
+import type { OrdersTableRow } from "@/widgets/orders/shared/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import { OrdersTable } from "@/widgets/orders-table/OrdersTable";
+import { OrdersTable } from "@/widgets/orders/table/OrdersTable";
 
 type OrdersRegistryContentProps = {
   rows: OrdersTableRow[];

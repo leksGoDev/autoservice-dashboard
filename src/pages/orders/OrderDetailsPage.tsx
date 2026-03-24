@@ -1,4 +1,4 @@
-import { OrderDetailsOverview } from "@/widgets/order-details/OrderDetailsOverview";
+import { OrderDetailsOverview } from "@/widgets/orders/details/OrderDetailsOverview";
 import { useOrderDetailsPageModel } from "./model/use-order-details-page-model";
 
 export const OrderDetailsPage = () => {

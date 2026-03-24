@@ -1,5 +1,5 @@
 import { useOrdersPageModel } from "./model/use-orders-page-model";
-import { OrdersRegistry } from "@/widgets/orders-registry/OrdersRegistry";
+import { OrdersRegistry } from "@/widgets/orders/registry/OrdersRegistry";
 
 export const OrdersPage = () => {
   const model = useOrdersPageModel();

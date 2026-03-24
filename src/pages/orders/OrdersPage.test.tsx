@@ -8,11 +8,11 @@ vi.mock("./model/use-orders-page-model", () => ({
   useOrdersPageModel: vi.fn(),
 }));
 
-vi.mock("@/widgets/orders-table/OrdersTable", () => ({
+vi.mock("@/widgets/orders/table/OrdersTable", () => ({
   OrdersTable: () => <div data-testid="orders-table">Orders Table</div>,
 }));
 
-vi.mock("@/widgets/orders-toolbar/OrdersToolbar", () => ({
+vi.mock("@/widgets/orders/toolbar/OrdersToolbar", () => ({
   OrdersToolbar: () => <div data-testid="orders-toolbar">Orders Toolbar</div>,
 }));
 

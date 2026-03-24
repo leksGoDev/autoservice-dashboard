@@ -4,19 +4,19 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AnalyticsPage } from "@/pages/analytics/AnalyticsPage";
 import { I18nProvider } from "@/shared/i18n/provider";
 
-vi.mock("@/widgets/dashboard-revenue-chart/DashboardRevenueChart", () => ({
+vi.mock("@/widgets/dashboard/revenue-chart/DashboardRevenueChart", () => ({
   DashboardRevenueChart: () => <div>Revenue Chart</div>,
 }));
 
-vi.mock("@/widgets/dashboard-orders-trend/DashboardOrdersTrend", () => ({
+vi.mock("@/widgets/dashboard/orders-trend/DashboardOrdersTrend", () => ({
   DashboardOrdersTrend: () => <div>Orders Trend</div>,
 }));
 
-vi.mock("@/widgets/dashboard-mechanic-workload/DashboardMechanicWorkload", () => ({
+vi.mock("@/widgets/dashboard/mechanic-workload/DashboardMechanicWorkload", () => ({
   DashboardMechanicWorkload: () => <div>Mechanic Workload</div>,
 }));
 
-vi.mock("@/widgets/analytics-jobs-by-category/AnalyticsJobsByCategoryChart", () => ({
+vi.mock("@/widgets/analytics/jobs-by-category/AnalyticsJobsByCategoryChart", () => ({
   AnalyticsJobsByCategoryChart: () => <div>Jobs by Category</div>,
 }));
 

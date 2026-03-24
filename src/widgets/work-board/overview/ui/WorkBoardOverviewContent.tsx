@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import type { WorkBoardData } from "@/entities/work-board/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import { WorkBoardColumns } from "@/widgets/work-board-columns/WorkBoardColumns";
+import { WorkBoardColumns } from "@/widgets/work-board/columns/WorkBoardColumns";
 
 type WorkBoardOverviewContentProps = {
   boardQuery: UseQueryResult<WorkBoardData, Error>;

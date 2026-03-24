@@ -1,29 +1,17 @@
 import { Link } from "react-router-dom";
 
-import type { VehicleDetails, VehicleServiceHistoryItem } from "@/entities/vehicle/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { formatDate, formatUsd } from "@/shared/lib/presentation";
+import { useVehicleDetailsViewModel } from "./model/use-vehicle-details-view-model";
 
 type VehicleDetailsViewProps = {
   vehicleId: string | undefined;
-  details: VehicleDetails | undefined;
-  history: VehicleServiceHistoryItem[];
-  isLoading: boolean;
-  isError: boolean;
-  isEmpty: boolean;
-  onRetry: () => void;
 };
 
-export const VehicleDetailsView = ({
-  vehicleId,
-  details,
-  history,
-  isLoading,
-  isError,
-  isEmpty,
-  onRetry,
-}: VehicleDetailsViewProps) => {
+export const VehicleDetailsView = ({ vehicleId }: VehicleDetailsViewProps) => {
   const { t } = useI18n();
+  const model = useVehicleDetailsViewModel(vehicleId);
+
   const header = (
     <header className="grid gap-[10px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-6">
       <span className="text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
@@ -41,7 +29,7 @@ export const VehicleDetailsView = ({
     </header>
   );
 
-  if (isLoading) {
+  if (model.isLoading) {
     return (
       <section className="grid gap-5">
         {header}
@@ -52,7 +40,7 @@ export const VehicleDetailsView = ({
     );
   }
 
-  if (isError) {
+  if (model.isError) {
     return (
       <section className="grid gap-5">
         {header}
@@ -61,7 +49,7 @@ export const VehicleDetailsView = ({
           <button
             type="button"
             className="justify-self-start rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
-            onClick={onRetry}
+            onClick={model.refetchAll}
           >
             {t("common.retry")}
           </button>
@@ -70,7 +58,7 @@ export const VehicleDetailsView = ({
     );
   }
 
-  if (isEmpty) {
+  if (model.isEmpty) {
     return (
       <section className="grid gap-5">
         {header}
@@ -81,7 +69,7 @@ export const VehicleDetailsView = ({
     );
   }
 
-  if (!details) {
+  if (!model.details) {
     return null;
   }
 
@@ -96,50 +84,50 @@ export const VehicleDetailsView = ({
               <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
                 {t("pages.vehicleDetails.labels.vehicleId")}
               </dt>
-              <dd className="m-0">{details.id}</dd>
+              <dd className="m-0">{model.details.id}</dd>
             </div>
             <div className="grid gap-1">
               <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
                 {t("pages.vehicleDetails.labels.plateNumber")}
               </dt>
-              <dd className="m-0">{details.plateNumber}</dd>
+              <dd className="m-0">{model.details.plateNumber}</dd>
             </div>
             <div className="grid gap-1">
               <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
                 {t("pages.vehicleDetails.labels.vin")}
               </dt>
-              <dd className="m-0">{details.vin}</dd>
+              <dd className="m-0">{model.details.vin}</dd>
             </div>
             <div className="grid gap-1">
               <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
                 {t("pages.vehicleDetails.labels.makeModel")}
               </dt>
-              <dd className="m-0">{`${details.make} ${details.model}`}</dd>
+              <dd className="m-0">{`${model.details.make} ${model.details.model}`}</dd>
             </div>
             <div className="grid gap-1">
               <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
                 {t("pages.vehicleDetails.labels.year")}
               </dt>
-              <dd className="m-0">{details.year}</dd>
+              <dd className="m-0">{model.details.year}</dd>
             </div>
             <div className="grid gap-1">
               <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
                 {t("pages.vehicleDetails.labels.owner")}
               </dt>
-              <dd className="m-0">{details.owner}</dd>
+              <dd className="m-0">{model.details.owner}</dd>
             </div>
             <div className="grid gap-1">
               <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
                 {t("pages.vehicleDetails.labels.ordersCount")}
               </dt>
-              <dd className="m-0">{details.ordersCount}</dd>
+              <dd className="m-0">{model.details.ordersCount}</dd>
             </div>
           </dl>
         </article>
 
         <article className="grid gap-4 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4">
           <h2 className="m-0 text-base font-bold">{t("pages.vehicleDetails.sections.history")}</h2>
-          {history.length === 0 ? (
+          {model.history.length === 0 ? (
             <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.vehicleDetails.states.emptyHistory")}</p>
           ) : (
             <div className="overflow-x-auto">
@@ -153,7 +141,7 @@ export const VehicleDetailsView = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {history.map((item) => (
+                  {model.history.map((item) => (
                     <tr key={item.orderId} className="transition-colors hover:bg-[#20283a]">
                       <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle font-mono text-[13px] text-[#c9d1dd]">{item.orderNumber}</td>
                       <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{t(`order.status.${item.status}`)}</td>

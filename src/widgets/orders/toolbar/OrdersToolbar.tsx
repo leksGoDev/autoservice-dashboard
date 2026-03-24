@@ -1,8 +1,8 @@
 import type { ChangeEvent } from "react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { ORDER_PRIORITIES, ORDER_STATUSES } from "@/widgets/orders-shared/model/options";
-import type { OrdersToolbarFilters } from "@/widgets/orders-shared/model/types";
+import { ORDER_PRIORITIES, ORDER_STATUSES } from "@/widgets/orders/shared/model/options";
+import type { OrdersToolbarFilters } from "@/widgets/orders/shared/model/types";
 
 type OrdersToolbarProps = {
   filters: OrdersToolbarFilters;

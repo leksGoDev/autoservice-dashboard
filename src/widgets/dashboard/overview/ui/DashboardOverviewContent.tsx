@@ -1,11 +1,11 @@
 import { DataState } from "@/shared/ui/DataState";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { DashboardKpiCards } from "@/widgets/dashboard-kpi-cards/DashboardKpiCards";
-import { DashboardMechanicWorkload } from "@/widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
-import { DashboardOrdersTrend } from "@/widgets/dashboard-orders-trend/DashboardOrdersTrend";
-import { DashboardRecentActivity } from "@/widgets/dashboard-recent-activity/DashboardRecentActivity";
-import { DashboardRecentOrders } from "@/widgets/dashboard-recent-orders/DashboardRecentOrders";
-import { DashboardRevenueChart } from "@/widgets/dashboard-revenue-chart/DashboardRevenueChart";
+import { DashboardKpiCards } from "@/widgets/dashboard/kpi-cards/DashboardKpiCards";
+import { DashboardMechanicWorkload } from "@/widgets/dashboard/mechanic-workload/DashboardMechanicWorkload";
+import { DashboardOrdersTrend } from "@/widgets/dashboard/orders-trend/DashboardOrdersTrend";
+import { DashboardRecentActivity } from "@/widgets/dashboard/recent-activity/DashboardRecentActivity";
+import { DashboardRecentOrders } from "@/widgets/dashboard/recent-orders/DashboardRecentOrders";
+import { DashboardRevenueChart } from "@/widgets/dashboard/revenue-chart/DashboardRevenueChart";
 import type { useDashboardOverviewModel } from "../model/use-dashboard-overview-model";
 
 type DashboardOverviewContentProps = {

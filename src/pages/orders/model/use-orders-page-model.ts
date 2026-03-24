@@ -5,7 +5,7 @@ import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { useOrdersListQuery } from "@/entities/order/api/queries";
 import type { OrderStatus } from "@/entities/order/model/types";
 import { DEFAULT_LIST_PAGE, DEFAULT_LIST_PAGE_SIZE } from "@/shared/api/constants";
-import type { OrdersToolbarFilters } from "@/widgets/orders-shared/model/types";
+import type { OrdersToolbarFilters } from "@/widgets/orders/shared/model/types";
 
 const PAGE_SIZE = DEFAULT_LIST_PAGE_SIZE;
 

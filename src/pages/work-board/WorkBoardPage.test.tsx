@@ -10,7 +10,7 @@ vi.mock("@/entities/work-board/api/queries", () => ({
   useWorkBoardQuery: vi.fn(),
 }));
 
-vi.mock("@/widgets/work-board-columns/WorkBoardColumns", () => ({
+vi.mock("@/widgets/work-board/columns/WorkBoardColumns", () => ({
   WorkBoardColumns: () => <div data-testid="work-board-columns">Work Board Columns</div>,
 }));
 

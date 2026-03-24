@@ -9,7 +9,7 @@ vi.mock("./model/use-order-details-page-model", () => ({
   useOrderDetailsPageModel: vi.fn(),
 }));
 
-vi.mock("@/widgets/order-details/OrderDetailsOverview", () => ({
+vi.mock("@/widgets/orders/details/OrderDetailsOverview", () => ({
   OrderDetailsOverview: ({ orderId }: { orderId: string | undefined }) => (
     <div data-testid="order-details-overview">{orderId}</div>
   ),

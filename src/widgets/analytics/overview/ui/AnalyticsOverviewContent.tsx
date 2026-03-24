@@ -1,10 +1,10 @@
 import type { AnalyticsOverview } from "@/entities/analytics/model/types";
 import { DataState } from "@/shared/ui/DataState";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { AnalyticsJobsByCategoryChart } from "@/widgets/analytics-jobs-by-category/AnalyticsJobsByCategoryChart";
-import { DashboardMechanicWorkload } from "@/widgets/dashboard-mechanic-workload/DashboardMechanicWorkload";
-import { DashboardOrdersTrend } from "@/widgets/dashboard-orders-trend/DashboardOrdersTrend";
-import { DashboardRevenueChart } from "@/widgets/dashboard-revenue-chart/DashboardRevenueChart";
+import { AnalyticsJobsByCategoryChart } from "@/widgets/analytics/jobs-by-category/AnalyticsJobsByCategoryChart";
+import { DashboardMechanicWorkload } from "@/widgets/dashboard/mechanic-workload/DashboardMechanicWorkload";
+import { DashboardOrdersTrend } from "@/widgets/dashboard/orders-trend/DashboardOrdersTrend";
+import { DashboardRevenueChart } from "@/widgets/dashboard/revenue-chart/DashboardRevenueChart";
 import { AnalyticsMetricsSection } from "./AnalyticsMetricsSection";
 
 type AnalyticsOverviewContentProps = {

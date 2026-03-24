@@ -1,6 +1,6 @@
-import type { OrdersToolbarFilters } from "@/widgets/orders-shared/model/types";
-import type { OrdersTableRow } from "@/widgets/orders-shared/model/types";
-import { OrdersToolbar } from "@/widgets/orders-toolbar/OrdersToolbar";
+import type { OrdersToolbarFilters } from "@/widgets/orders/shared/model/types";
+import type { OrdersTableRow } from "@/widgets/orders/shared/model/types";
+import { OrdersToolbar } from "@/widgets/orders/toolbar/OrdersToolbar";
 import { OrdersRegistryContent } from "./ui/OrdersRegistryContent";
 import { OrdersRegistryHeader } from "./ui/OrdersRegistryHeader";
 

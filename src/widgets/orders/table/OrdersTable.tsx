@@ -5,7 +5,7 @@ import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-tabl
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { PaginationShell } from "@/shared/ui/PaginationShell";
-import type { OrdersTableRow } from "@/widgets/orders-shared/model/types";
+import type { OrdersTableRow } from "@/widgets/orders/shared/model/types";
 import { createOrdersTableColumns } from "./model/columns";
 
 type OrdersTableProps = {
