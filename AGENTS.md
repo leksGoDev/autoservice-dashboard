@@ -103,6 +103,20 @@ Out of scope:
 - Avoid speculative abstractions
 - Do not refactor unrelated parts of the codebase unless explicitly requested
 
+## Git Conventions
+
+- Prefer commit messages in the format `type(scope): message`
+- Use lowercase commit types such as `feat`, `fix`, `refactor`, `test`, `docs`, `chore`
+- Keep the scope short and specific to the affected area, for example `orders`, `customers`, `pwa`, `i18n`
+- Write the message in imperative style after the colon
+- Avoid mixed commit styles within the same line of work unless there is a strong reason
+
+Examples:
+
+- `feat(orders): add order details route`
+- `refactor(customers): align registry with entity api`
+- `test(router): add smoke coverage for details pages`
+
 ---
 
 ## Priority Rules
