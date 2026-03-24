@@ -1,6 +1,6 @@
 import type { OrderPartItem } from "@/entities/order/model/types";
+import { formatOrderCurrency } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { formatOrderCurrency } from "@/widgets/orders-table/model/presentation";
 
 type OrderDetailsPartsTableProps = {
   parts: OrderPartItem[];

@@ -1,9 +1,9 @@
-import { useI18n } from "@/shared/i18n/use-i18n";
-import { DataState } from "@/shared/ui/DataState";
 import {
   formatCustomerDetailsCurrency,
   formatCustomerDetailsDate,
-} from "@/widgets/customer-details/model/formatters";
+} from "@/entities/customer/model/presentation";
+import { useI18n } from "@/shared/i18n/use-i18n";
+import { DataState } from "@/shared/ui/DataState";
 import { useCustomerDetailsPageModel } from "@/pages/customers/model/use-customer-details-page-model";
 import { CustomerDetailsHeader } from "@/widgets/customer-details/ui/CustomerDetailsHeader";
 import { CustomerInfoCard } from "@/widgets/customer-details/ui/CustomerInfoCard";

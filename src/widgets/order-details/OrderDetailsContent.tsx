@@ -1,7 +1,7 @@
 import type { OrderActivityItem, OrderDetails } from "@/entities/order/model/types";
+import { formatOrderCurrency, formatOrderDate, getOrderStatusChipModifier } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
-import { formatOrderCurrency, formatOrderDate, getOrderStatusChipModifier } from "@/widgets/orders-table/model/presentation";
 import { OrderDetailsActivityTimeline } from "./OrderDetailsActivityTimeline";
 import { OrderDetailsInfoList } from "./OrderDetailsInfoList";
 import { OrderDetailsJobsTable } from "./OrderDetailsJobsTable";

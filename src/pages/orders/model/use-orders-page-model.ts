@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { useOrdersListQuery } from "@/entities/order/api/queries";
 import type { OrderStatus } from "@/entities/order/model/types";
 import { DEFAULT_LIST_PAGE, DEFAULT_LIST_PAGE_SIZE } from "@/shared/api/constants";
@@ -38,13 +39,13 @@ export function useOrdersPageModel() {
     createdTo: filters.createdTo || undefined,
   });
 
-  const mechanicsQuery = useOrdersListQuery({
+  const mechanicsQuery = useMechanicsRegistryQuery({
     page: 1,
     pageSize: 100,
   });
 
   const mechanics = useMemo(() => {
-    const uniqueMechanics = new Set((mechanicsQuery.data?.items ?? []).map((item) => item.assignedMechanic));
+    const uniqueMechanics = new Set((mechanicsQuery.data?.items ?? []).map((item) => item.name));
     return [...uniqueMechanics].sort((a, b) => a.localeCompare(b));
   }, [mechanicsQuery.data?.items]);
 

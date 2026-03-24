@@ -1,14 +1,15 @@
-import type { OrderStatus } from "@/entities/order/model/types";
-import { formatDate, formatUsd, toStatusModifier } from "@/shared/lib/presentation";
+import {
+  formatOrderCurrency as formatOrderCurrencyBase,
+  formatOrderDate as formatOrderDateBase,
+  getOrderStatusChipModifier as getOrderStatusChipModifierBase,
+} from "@/entities/order/model/presentation";
 
-export function getOrderStatusChipModifier(status: OrderStatus) {
-  return toStatusModifier(status);
-}
+export const getOrderStatusChipModifier = getOrderStatusChipModifierBase;
 
 export function formatOrderDate(dateIso: string) {
-  return formatDate(dateIso);
+  return formatOrderDateBase(dateIso);
 }
 
 export function formatOrderCurrency(value: number) {
-  return formatUsd(value);
+  return formatOrderCurrencyBase(value);
 }

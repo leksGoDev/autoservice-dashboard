@@ -1,15 +1,13 @@
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import type { FormEvent } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
-import { useVehiclesListQuery } from "@/entities/vehicle/api/queries";
 import type { VehicleListItem } from "@/entities/vehicle/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
 import { PaginationShell } from "@/shared/ui/PaginationShell";
-
-const PAGE_SIZE = 10;
+import { useVehiclesRegistryModel } from "./model/use-vehicles-registry-model";
 
 type VehiclesToolbarProps = {
   hasActiveSearch: boolean;
@@ -244,44 +242,7 @@ const VehiclesTable = ({
 
 export const VehiclesRegistry = () => {
   const { t } = useI18n();
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");
-
-  const vehiclesQuery = useVehiclesListQuery({ page, pageSize: PAGE_SIZE, search });
-  const data = vehiclesQuery.data;
-
-  useEffect(() => {
-    if (data && page > data.totalPages) {
-      setPage(data.totalPages);
-    }
-  }, [data, page]);
-
-  const hasActiveSearch = search.length > 0;
-  const hasRows = (data?.items.length ?? 0) > 0;
-
-  const summary = useMemo(() => {
-    if (!data || data.total === 0) {
-      return t("pages.vehicles.summaryEmpty");
-    }
-
-    const start = (data.page - 1) * data.pageSize + 1;
-    const end = start + data.items.length - 1;
-
-    return t("pages.vehicles.summary", { start, end, total: data.total });
-  }, [data, t]);
-
-  function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setPage(1);
-    setSearch(searchInput.trim());
-  }
-
-  function handleClearSearch() {
-    setSearchInput("");
-    setSearch("");
-    setPage(1);
-  }
+  const model = useVehiclesRegistryModel();
 
   return (
     <section className="grid gap-5">
@@ -293,32 +254,32 @@ export const VehiclesRegistry = () => {
         <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.vehicles.description")}</p>
 
         <VehiclesToolbar
-          hasActiveSearch={hasActiveSearch}
-          searchInput={searchInput}
-          onSearchInputChange={setSearchInput}
-          onSubmit={handleSearchSubmit}
-          onClearSearch={handleClearSearch}
+          hasActiveSearch={model.hasActiveSearch}
+          searchInput={model.searchInput}
+          onSearchInputChange={model.setSearchInput}
+          onSubmit={model.handleSearchSubmit}
+          onClearSearch={model.handleClearSearch}
         />
       </header>
 
-      {vehiclesQuery.isLoading ? <VehiclesLoadingState /> : null}
+      {model.query.isLoading ? <VehiclesLoadingState /> : null}
 
-      {vehiclesQuery.isError ? <VehiclesErrorState onRetry={() => vehiclesQuery.refetch()} /> : null}
+      {model.query.isError ? <VehiclesErrorState onRetry={() => model.query.refetch()} /> : null}
 
-      {!vehiclesQuery.isLoading && !vehiclesQuery.isError && !hasRows ? (
-        <VehiclesEmptyState hasActiveSearch={hasActiveSearch} />
+      {!model.query.isLoading && !model.query.isError && !model.hasRows ? (
+        <VehiclesEmptyState hasActiveSearch={model.hasActiveSearch} />
       ) : null}
 
-      {!vehiclesQuery.isLoading && !vehiclesQuery.isError && hasRows && data ? (
+      {!model.query.isLoading && !model.query.isError && model.hasRows && model.data ? (
         <VehiclesTable
-          data={data.items}
-          summary={summary}
-          page={data.page}
-          totalPages={data.totalPages}
-          canPrev={data.page > 1 && !vehiclesQuery.isFetching}
-          canNext={data.page < data.totalPages && !vehiclesQuery.isFetching}
-          onPrev={() => setPage((value) => Math.max(1, value - 1))}
-          onNext={() => setPage((value) => value + 1)}
+          data={model.data.items}
+          summary={model.summary}
+          page={model.data.page}
+          totalPages={model.data.totalPages}
+          canPrev={model.data.page > 1 && !model.query.isFetching}
+          canNext={model.data.page < model.data.totalPages && !model.query.isFetching}
+          onPrev={() => model.setPage((value) => Math.max(1, value - 1))}
+          onNext={() => model.setPage((value) => value + 1)}
         />
       ) : null}
     </section>
