@@ -5,6 +5,7 @@ import { AnalyticsPage } from "../pages/analytics/AnalyticsPage";
 import { CustomersPage } from "../pages/customers/CustomersPage";
 import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { MechanicsPage } from "../pages/mechanics/MechanicsPage";
+import { OrderDetailsPage } from "../pages/orders/OrderDetailsPage";
 import { OrdersPage } from "../pages/orders/OrdersPage";
 import { VehiclesPage } from "../pages/vehicles/VehiclesPage";
 import { VehicleDetailsPage } from "../pages/vehicles/VehicleDetailsPage";
@@ -27,6 +28,11 @@ export const appRoutes = [
       {
         path: "orders",
         element: <OrdersPage />,
+        handle: { titleKey: "routes.orders" },
+      },
+      {
+        path: "orders/:orderId",
+        element: <OrderDetailsPage />,
         handle: { titleKey: "routes.orders" },
       },
       {

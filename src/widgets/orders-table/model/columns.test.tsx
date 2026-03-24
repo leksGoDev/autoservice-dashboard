@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 
 import type { OrdersTableRow } from "@/widgets/orders-shared/model/types";
 import { createOrdersTableColumns } from "./columns";
@@ -71,15 +72,16 @@ describe("createOrdersTableColumns", () => {
     expect(screen.getByText("order.priority.high")).toBeInTheDocument();
   });
 
-  it("renders default action button when custom renderer is not provided", () => {
+  it("renders default details link when custom renderer is not provided", () => {
     const columns = createOrdersTableColumns(t as never);
 
     const actionCell = (columns.find((column) => column.id === "actions") as any).cell({
       row: { original: row },
     });
 
-    render(<>{actionCell}</>);
-    expect(screen.getByRole("button", { name: "pages.orders.table.actions.placeholder" })).toBeInTheDocument();
+    render(<MemoryRouter>{actionCell}</MemoryRouter>);
+
+    expect(screen.getByRole("link", { name: "pages.orders.table.actions.placeholder" })).toBeInTheDocument();
   });
 
   it("uses custom action renderer when provided", () => {

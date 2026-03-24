@@ -1,0 +1,110 @@
+import { renderHook } from "@testing-library/react";
+
+import { ApiError } from "@/shared/api/api-error";
+import { useOrderActivityQuery, useOrderDetailsQuery } from "@/entities/order/api/queries";
+import { useOrderDetailsPageModel } from "./use-order-details-page-model";
+
+vi.mock("react-router-dom", () => ({
+  useParams: () => ({ orderId: "ord_001" }),
+}));
+
+vi.mock("@/entities/order/api/queries", () => ({
+  useOrderDetailsQuery: vi.fn(),
+  useOrderActivityQuery: vi.fn(),
+}));
+
+const mockedUseOrderDetailsQuery = vi.mocked(useOrderDetailsQuery);
+const mockedUseOrderActivityQuery = vi.mocked(useOrderActivityQuery);
+
+function buildQueryState(overrides: Record<string, unknown> = {}) {
+  return {
+    data: undefined,
+    error: null,
+    isLoading: false,
+    isError: false,
+    refetch: vi.fn(),
+    ...overrides,
+  };
+}
+
+describe("useOrderDetailsPageModel", () => {
+  beforeEach(() => {
+    mockedUseOrderDetailsQuery.mockReset();
+    mockedUseOrderActivityQuery.mockReset();
+  });
+
+  it("treats 404 on details as not found", () => {
+    mockedUseOrderDetailsQuery.mockReturnValue(
+      buildQueryState({
+        isError: true,
+        error: new ApiError(404, "Order not found"),
+      }) as never,
+    );
+    mockedUseOrderActivityQuery.mockReturnValue(buildQueryState() as never);
+
+    const { result } = renderHook(() => useOrderDetailsPageModel());
+
+    expect(result.current.isNotFound).toBe(true);
+    expect(result.current.isError).toBe(false);
+  });
+
+  it("does not treat activity 404 as not found", () => {
+    mockedUseOrderDetailsQuery.mockReturnValue(
+      buildQueryState({
+        data: { id: "ord_001" },
+      }) as never,
+    );
+    mockedUseOrderActivityQuery.mockReturnValue(
+      buildQueryState({
+        isError: true,
+        error: new ApiError(404, "Activity not found"),
+      }) as never,
+    );
+
+    const { result } = renderHook(() => useOrderDetailsPageModel());
+
+    expect(result.current.isNotFound).toBe(false);
+    expect(result.current.isError).toBe(false);
+    expect(result.current.isActivityError).toBe(true);
+  });
+
+  it("reports page error for non-404 details failures", () => {
+    mockedUseOrderDetailsQuery.mockReturnValue(
+      buildQueryState({
+        isError: true,
+        error: new ApiError(500, "Request failed"),
+      }) as never,
+    );
+    mockedUseOrderActivityQuery.mockReturnValue(buildQueryState() as never);
+
+    const { result } = renderHook(() => useOrderDetailsPageModel());
+
+    expect(result.current.isError).toBe(true);
+    expect(result.current.isNotFound).toBe(false);
+  });
+
+  it("retries all queries and activity-only query", () => {
+    const detailsRefetch = vi.fn();
+    const activityRefetch = vi.fn();
+
+    mockedUseOrderDetailsQuery.mockReturnValue(
+      buildQueryState({
+        refetch: detailsRefetch,
+      }) as never,
+    );
+    mockedUseOrderActivityQuery.mockReturnValue(
+      buildQueryState({
+        refetch: activityRefetch,
+      }) as never,
+    );
+
+    const { result } = renderHook(() => useOrderDetailsPageModel());
+
+    result.current.refetchAll();
+    expect(detailsRefetch).toHaveBeenCalledTimes(1);
+    expect(activityRefetch).toHaveBeenCalledTimes(1);
+
+    result.current.refetchActivity();
+    expect(activityRefetch).toHaveBeenCalledTimes(2);
+  });
+});

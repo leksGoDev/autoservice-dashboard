@@ -49,4 +49,13 @@ describe("router smoke", () => {
     expect(screen.getByText("Vehicle ID: veh_001")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Back to vehicles" })).toBeInTheDocument();
   });
+
+  it("renders order details route content with param", async () => {
+    renderWithRoute("/orders/ord_001");
+
+    expect(await screen.findByText("Order details workspace")).toBeInTheDocument();
+    expect(screen.getByText("Order ID: ord_001")).toBeInTheDocument();
+    expect(screen.getByText("Order summary")).toBeInTheDocument();
+    expect(screen.getByText("Activity timeline")).toBeInTheDocument();
+  });
 });

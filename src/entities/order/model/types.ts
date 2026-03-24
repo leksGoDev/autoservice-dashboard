@@ -25,6 +25,71 @@ export interface OrderListItem {
   updatedAt: string;
 }
 
+export type ServiceJobStatus = "pending" | "in_progress" | "waiting_parts" | "completed";
+
+export type OrderActivityType =
+  | "order_created"
+  | "order_scheduled"
+  | "mechanic_assigned"
+  | "job_added"
+  | "part_added"
+  | "status_changed"
+  | "order_completed";
+
+export interface OrderCustomerSnapshot {
+  id: string;
+  fullName: string;
+  phone: string;
+  email: string;
+  loyaltyTier: "standard" | "silver" | "gold";
+}
+
+export interface OrderVehicleSnapshot {
+  id: string;
+  vin: string;
+  plateNumber: string;
+  make: string;
+  model: string;
+  year: number;
+}
+
+export interface OrderServiceJob {
+  id: string;
+  name: string;
+  category: string;
+  status: ServiceJobStatus;
+  assignedMechanic: string;
+  estimatedHours: number;
+  actualHours: number;
+  laborPrice: number;
+}
+
+export interface OrderPartItem {
+  id: string;
+  jobId: string;
+  jobName: string;
+  name: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}
+
+export interface OrderActivityItem {
+  id: string;
+  type: OrderActivityType;
+  timestamp: string;
+  actor: string;
+  description: string;
+}
+
+export interface OrderDetails extends OrderListItem {
+  flagged: boolean;
+  customer: OrderCustomerSnapshot;
+  vehicle: OrderVehicleSnapshot;
+  jobs: OrderServiceJob[];
+  parts: OrderPartItem[];
+}
+
 export interface OrdersListParams {
   page?: number;
   pageSize?: number;

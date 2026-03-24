@@ -18,4 +18,11 @@ describe("appRoutes", () => {
       expect(element.props.replace).toBe(true);
     }
   });
+
+  it("registers order details route", () => {
+    const root = appRoutes[0];
+    const orderDetailsRoute = root.children?.find((route) => "path" in route && route.path === "orders/:orderId");
+
+    expect(orderDetailsRoute).toBeDefined();
+  });
 });

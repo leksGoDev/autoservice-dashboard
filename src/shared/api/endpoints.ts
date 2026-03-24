@@ -11,6 +11,8 @@ export const apiEndpoints = {
   },
   orders: {
     list: "/orders",
+    detail: (orderId: string) => `/orders/${orderId}`,
+    activity: (orderId: string) => `/orders/${orderId}/activity`,
   },
   customers: {
     list: "/customers",

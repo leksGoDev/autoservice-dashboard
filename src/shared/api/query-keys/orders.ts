@@ -24,4 +24,6 @@ function normalizeOrdersParams(params: OrdersListParamsKey = {}) {
 export const ordersQueryKeys = {
   root: ["orders"] as const,
   list: (params: OrdersListParamsKey = {}) => ["orders", "list", normalizeOrdersParams(params)] as const,
+  detail: (orderId: string) => ["orders", "detail", orderId] as const,
+  activity: (orderId: string) => ["orders", "activity", orderId] as const,
 } as const;

@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 
-import { useOrdersListQuery } from "./queries";
+import { useOrderActivityQuery, useOrderDetailsQuery, useOrdersListQuery } from "./queries";
 
 function createWrapper() {
   const queryClient = new QueryClient({
@@ -62,6 +62,38 @@ describe("useOrdersListQuery", () => {
         priority: expect.any(String),
         assignedMechanic: expect.any(String),
         jobsCount: expect.any(Number),
+      }),
+    );
+  });
+
+  it("loads order details", async () => {
+    const { result } = renderHook(() => useOrderDetailsQuery("ord_001"), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
+
+    expect(result.current.data?.id).toBe("ord_001");
+    expect(result.current.data?.jobs.length).toBeGreaterThan(0);
+    expect(result.current.data?.parts.length).toBeGreaterThan(0);
+  });
+
+  it("loads order activity", async () => {
+    const { result } = renderHook(() => useOrderActivityQuery("ord_001"), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
+
+    expect(result.current.data?.length).toBeGreaterThan(0);
+    expect(result.current.data?.[0]).toEqual(
+      expect.objectContaining({
+        type: expect.any(String),
+        timestamp: expect.any(String),
       }),
     );
   });

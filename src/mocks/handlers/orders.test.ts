@@ -49,4 +49,35 @@ describe("ordersHandlers", () => {
       ),
     ).toBe(true);
   });
+
+  it("returns order details payload", async () => {
+    const data = await getJson("/api/orders/ord_001");
+
+    expect(data.id).toBe("ord_001");
+    expect(data.customer).toEqual(
+      expect.objectContaining({
+        id: "cust_001",
+        fullName: "Alex Turner",
+      }),
+    );
+    expect(data.vehicle).toEqual(
+      expect.objectContaining({
+        id: "veh_001",
+        plateNumber: expect.any(String),
+      }),
+    );
+    expect(data.jobs.length).toBeGreaterThan(0);
+    expect(data.parts.length).toBeGreaterThan(0);
+  });
+
+  it("returns chronological order activity", async () => {
+    const data = await getJson("/api/orders/ord_001/activity");
+
+    expect(data.length).toBeGreaterThan(0);
+
+    const timestamps = data.map((item: { timestamp: string }) => new Date(item.timestamp).getTime());
+    const sorted = [...timestamps].sort((left, right) => right - left);
+
+    expect(timestamps).toEqual(sorted);
+  });
 });

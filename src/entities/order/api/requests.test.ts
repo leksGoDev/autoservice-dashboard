@@ -1,5 +1,5 @@
 import { httpRequest } from "@/shared/api/http-client";
-import { getOrdersList } from "./requests";
+import { getOrderActivity, getOrderDetails, getOrdersList } from "./requests";
 
 vi.mock("@/shared/api/http-client", () => ({
   httpRequest: vi.fn(),
@@ -24,6 +24,10 @@ describe("order requests", () => {
         pageSize: undefined,
         search: undefined,
         status: undefined,
+        priority: undefined,
+        assignedMechanic: undefined,
+        createdFrom: undefined,
+        createdTo: undefined,
         sortBy: undefined,
         sortDirection: undefined,
       },
@@ -38,6 +42,10 @@ describe("order requests", () => {
       pageSize: 20,
       search: "ford",
       status: "waiting_parts",
+      priority: "high",
+      assignedMechanic: "Ivan Petrov",
+      createdFrom: "2026-03-01",
+      createdTo: "2026-03-31",
       sortBy: "updatedAt",
       sortDirection: "asc",
     });
@@ -49,9 +57,33 @@ describe("order requests", () => {
         pageSize: 20,
         search: "ford",
         status: "waiting_parts",
+        priority: "high",
+        assignedMechanic: "Ivan Petrov",
+        createdFrom: "2026-03-01",
+        createdTo: "2026-03-31",
         sortBy: "updatedAt",
         sortDirection: "asc",
       },
+    });
+  });
+
+  it("requests order details by id", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001" });
+
+    getOrderDetails("ord_001");
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001", {
+      method: "GET",
+    });
+  });
+
+  it("requests order activity by id", () => {
+    mockedHttpRequest.mockResolvedValueOnce([]);
+
+    getOrderActivity("ord_001");
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001/activity", {
+      method: "GET",
     });
   });
 });

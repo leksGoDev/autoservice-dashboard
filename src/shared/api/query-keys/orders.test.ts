@@ -50,4 +50,9 @@ describe("ordersQueryKeys", () => {
       },
     ]);
   });
+
+  it("creates detail and activity keys", () => {
+    expect(ordersQueryKeys.detail("ord_001")).toEqual(["orders", "detail", "ord_001"]);
+    expect(ordersQueryKeys.activity("ord_001")).toEqual(["orders", "activity", "ord_001"]);
+  });
 });

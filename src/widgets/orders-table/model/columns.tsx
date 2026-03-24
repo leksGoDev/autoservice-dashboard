@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 import type { ColumnDef } from "@tanstack/react-table";
 
@@ -85,12 +86,12 @@ export function createOrdersTableColumns(
         renderRowActions ? (
           renderRowActions(info.row.original)
         ) : (
-          <button
-            type="button"
-            className="cursor-pointer rounded-lg border border-[var(--color-border)] bg-[rgba(15,17,21,0.56)] px-2.5 py-1.5 text-[var(--color-text-primary)]"
+          <Link
+            to={`/orders/${info.row.original.id}`}
+            className="inline-flex rounded-lg border border-[var(--color-border)] bg-[rgba(15,17,21,0.56)] px-2.5 py-1.5 text-[var(--color-text-primary)] transition-colors hover:bg-[#20283a]"
           >
             {t("pages.orders.table.actions.placeholder")}
-          </button>
+          </Link>
         ),
     },
   ];

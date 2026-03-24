@@ -1,7 +1,18 @@
 import { delay, http, HttpResponse } from "msw";
 
-import type { OrderListItem, OrderPriority } from "@/entities/order/model/types";
+import type {
+  OrderActivityItem,
+  OrderDetails,
+  OrderListItem,
+  OrderPartItem,
+  OrderPriority,
+  OrderServiceJob,
+  OrderStatus,
+  ServiceJobStatus,
+} from "@/entities/order/model/types";
+import { customersFixture } from "@/mocks/fixtures/customers";
 import { ordersFixture, type OrderFixtureItem } from "@/mocks/fixtures/orders";
+import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
 import {
   DEFAULT_LIST_PAGE,
   DEFAULT_LIST_PAGE_SIZE,
@@ -9,6 +20,37 @@ import {
   DEFAULT_ORDERS_SORT_DIRECTION,
 } from "@/shared/api/constants";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
+
+type JobCatalogItem = {
+  name: string;
+  category: string;
+  estimatedHours: number;
+  laborRate: number;
+};
+
+type PartCatalogItem = {
+  name: string;
+  unitPrice: number;
+};
+
+const MECHANICS = ["Ivan Petrov", "Nikolai Volkov", "Sergey Morozov", "Andrey Sokolov"] as const;
+
+const JOB_CATALOG: JobCatalogItem[] = [
+  { name: "Initial inspection", category: "Diagnostics", estimatedHours: 1.2, laborRate: 95 },
+  { name: "Brake system service", category: "Repair", estimatedHours: 2.4, laborRate: 120 },
+  { name: "Suspension adjustment", category: "Repair", estimatedHours: 2.1, laborRate: 110 },
+  { name: "Engine tune-up", category: "Maintenance", estimatedHours: 1.8, laborRate: 105 },
+  { name: "Electrical diagnostics", category: "Electrical", estimatedHours: 1.5, laborRate: 115 },
+];
+
+const PART_CATALOG: PartCatalogItem[] = [
+  { name: "Brake pads set", unitPrice: 140 },
+  { name: "Oil filter", unitPrice: 18 },
+  { name: "Spark plug", unitPrice: 24 },
+  { name: "Cabin air filter", unitPrice: 22 },
+  { name: "Wheel speed sensor", unitPrice: 86 },
+  { name: "Transmission fluid", unitPrice: 34 },
+];
 
 function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: string) {
   const direction = sortDirection === "asc" ? 1 : -1;
@@ -26,8 +68,6 @@ function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: strin
 
   return list;
 }
-
-const MECHANICS = ["Ivan Petrov", "Nikolai Volkov", "Sergey Morozov", "Andrey Sokolov"] as const;
 
 function getPriority(totalAmount: number): OrderPriority {
   if (totalAmount >= 900) {
@@ -72,6 +112,169 @@ function isInsideDateRange(itemDateIso: string, from: string, to: string) {
   }
 
   return true;
+}
+
+function getServiceJobStatus(orderStatus: OrderStatus, index: number, jobsCount: number): ServiceJobStatus {
+  if (orderStatus === "scheduled") {
+    return "pending";
+  }
+
+  if (orderStatus === "completed") {
+    return "completed";
+  }
+
+  if (orderStatus === "cancelled") {
+    return index === 0 ? "completed" : "pending";
+  }
+
+  if (orderStatus === "waiting_parts") {
+    return index === jobsCount - 1 ? "waiting_parts" : "completed";
+  }
+
+  return index === jobsCount - 1 ? "in_progress" : "completed";
+}
+
+function buildOrderJobs(order: OrderListItem): OrderServiceJob[] {
+  return Array.from({ length: order.jobsCount }, (_, index) => {
+    const catalogItem = JOB_CATALOG[(Number(order.id.replace(/\D/g, "")) + index) % JOB_CATALOG.length];
+    const status = getServiceJobStatus(order.status, index, order.jobsCount);
+    const estimatedHours = Number((catalogItem.estimatedHours + index * 0.4).toFixed(1));
+    const actualHours =
+      status === "pending"
+        ? 0
+        : status === "in_progress"
+          ? Number(Math.max(0.5, estimatedHours - 0.4).toFixed(1))
+          : Number((estimatedHours + 0.3).toFixed(1));
+
+    return {
+      id: `${order.id}_job_${index + 1}`,
+      name: catalogItem.name,
+      category: catalogItem.category,
+      status,
+      assignedMechanic: order.assignedMechanic,
+      estimatedHours,
+      actualHours,
+      laborPrice: Math.round((estimatedHours + (status === "completed" ? 0.2 : 0)) * catalogItem.laborRate),
+    };
+  });
+}
+
+function buildOrderParts(order: OrderListItem, jobs: OrderServiceJob[]): OrderPartItem[] {
+  const targetPartsCount = Math.max(1, Math.min(jobs.length + (order.priority === "high" ? 1 : 0), 4));
+
+  return Array.from({ length: targetPartsCount }, (_, index) => {
+    const catalogItem = PART_CATALOG[(Number(order.id.replace(/\D/g, "")) + index) % PART_CATALOG.length];
+    const quantity = (index % 2) + 1;
+    const job = jobs[index % jobs.length];
+
+    return {
+      id: `${order.id}_part_${index + 1}`,
+      jobId: job.id,
+      jobName: job.name,
+      name: catalogItem.name,
+      quantity,
+      unitPrice: catalogItem.unitPrice,
+      totalPrice: catalogItem.unitPrice * quantity,
+    };
+  });
+}
+
+function buildOrderActivity(order: OrderListItem, jobs: OrderServiceJob[], parts: OrderPartItem[]): OrderActivityItem[] {
+  const createdAt = new Date(order.createdAt).getTime();
+  const updatedAt = new Date(order.updatedAt).getTime();
+  const betweenTimestamps = Math.max(60 * 60 * 1000, updatedAt - createdAt);
+  const baseEvents: OrderActivityItem[] = [
+    {
+      id: `${order.id}_activity_created`,
+      type: "order_created",
+      timestamp: new Date(createdAt).toISOString(),
+      actor: "Service Advisor",
+      description: `Work order ${order.number} was created for ${order.vehicleLabel}.`,
+    },
+    {
+      id: `${order.id}_activity_scheduled`,
+      type: "order_scheduled",
+      timestamp: new Date(createdAt + Math.round(betweenTimestamps * 0.18)).toISOString(),
+      actor: "Front Desk",
+      description: "Visit window confirmed and the bay slot reserved.",
+    },
+    {
+      id: `${order.id}_activity_assigned`,
+      type: "mechanic_assigned",
+      timestamp: new Date(createdAt + Math.round(betweenTimestamps * 0.34)).toISOString(),
+      actor: "Dispatcher",
+      description: `${order.assignedMechanic} was assigned to the order.`,
+    },
+    {
+      id: `${order.id}_activity_job`,
+      type: "job_added",
+      timestamp: new Date(createdAt + Math.round(betweenTimestamps * 0.48)).toISOString(),
+      actor: order.assignedMechanic,
+      description: `${jobs[0]?.name ?? "Service job"} was added to the work scope.`,
+    },
+    {
+      id: `${order.id}_activity_part`,
+      type: "part_added",
+      timestamp: new Date(createdAt + Math.round(betweenTimestamps * 0.65)).toISOString(),
+      actor: "Parts Desk",
+      description: `${parts[0]?.name ?? "Part"} was added to the order parts list.`,
+    },
+    {
+      id: `${order.id}_activity_status`,
+      type: "status_changed",
+      timestamp: new Date(createdAt + Math.round(betweenTimestamps * 0.82)).toISOString(),
+      actor: order.assignedMechanic,
+      description: `Order status updated to ${order.status.replace("_", " ")}.`,
+    },
+  ];
+
+  if (order.status === "completed") {
+    baseEvents.push({
+      id: `${order.id}_activity_completed`,
+      type: "order_completed",
+      timestamp: new Date(updatedAt).toISOString(),
+      actor: "Service Advisor",
+      description: "Order completed and ready for customer pickup.",
+    });
+  }
+
+  return baseEvents.sort((left, right) => new Date(right.timestamp).getTime() - new Date(left.timestamp).getTime());
+}
+
+function buildOrderDetailsRegistry(): OrderDetails[] {
+  return ordersFixture.map((orderFixture) => {
+    const order = toOrderListItem(orderFixture);
+    const customer = customersFixture.find((item) => item.id === order.customerId);
+    const vehicle = vehiclesFixture.find((item) => item.id === order.vehicleId);
+    const jobs = buildOrderJobs(order);
+    const parts = buildOrderParts(order, jobs);
+
+    return {
+      ...order,
+      flagged: order.priority === "high" || order.status === "waiting_parts",
+      customer: {
+        id: customer?.id ?? order.customerId,
+        fullName: customer?.fullName ?? order.customerName,
+        phone: customer?.phone ?? "Unknown",
+        email: customer?.email ?? "Unknown",
+        loyaltyTier: customer?.loyaltyTier ?? "standard",
+      },
+      vehicle: {
+        id: vehicle?.id ?? order.vehicleId,
+        vin: vehicle?.vin ?? "Unknown",
+        plateNumber: vehicle?.plateNumber ?? "Unknown",
+        make: vehicle?.make ?? "Unknown",
+        model: vehicle?.model ?? "Unknown",
+        year: vehicle?.year ?? 0,
+      },
+      jobs,
+      parts,
+    };
+  });
+}
+
+function findOrderDetails(orderId: string) {
+  return buildOrderDetailsRegistry().find((order) => order.id === orderId);
 }
 
 export const ordersHandlers = [
@@ -132,5 +335,29 @@ export const ordersHandlers = [
       total,
       totalPages,
     });
+  }),
+  http.get(toMswPath(apiEndpoints.orders.detail(":orderId")), async ({ params }) => {
+    await delay(250);
+
+    const orderId = String(params.orderId);
+    const order = findOrderDetails(orderId);
+
+    if (!order) {
+      return HttpResponse.json({ message: "Order not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(order);
+  }),
+  http.get(toMswPath(apiEndpoints.orders.activity(":orderId")), async ({ params }) => {
+    await delay(250);
+
+    const orderId = String(params.orderId);
+    const order = findOrderDetails(orderId);
+
+    if (!order) {
+      return HttpResponse.json({ message: "Order not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(buildOrderActivity(order, order.jobs, order.parts));
   }),
 ];
