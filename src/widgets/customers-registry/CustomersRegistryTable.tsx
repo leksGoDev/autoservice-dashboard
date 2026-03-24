@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import type { CustomerListItem } from "@/entities/customer/model/types";
 import type { AppLocale } from "@/shared/i18n/config";
 
@@ -56,12 +58,12 @@ export const CustomersRegistryTable = ({
               <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
                 <div className="grid gap-[3px]">
                   <span>{customer.fullName}</span>
-                  <button
-                    type="button"
+                  <Link
+                    to={`/customers/${customer.id}`}
                     className="cursor-pointer border-0 bg-transparent p-0 text-left text-[12px] text-[var(--color-accent-light-blue)] transition-colors hover:text-[#9ac0ff]"
                   >
                     {detailsLabel}
-                  </button>
+                  </Link>
                 </div>
               </td>
               <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{customer.phone}</td>

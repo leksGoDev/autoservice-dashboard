@@ -1,6 +1,6 @@
 import { delay, http, HttpResponse } from "msw";
 
-import type { CustomerListItem } from "@/entities/customer/model/types";
+import type { CustomerDetailsResponse, CustomerListItem } from "@/entities/customer/model/types";
 import { customersFixture } from "@/mocks/fixtures/customers";
 import { ordersFixture } from "@/mocks/fixtures/orders";
 import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
@@ -24,6 +24,46 @@ function buildCustomersRegistry(): CustomerListItem[] {
       lastVisitAt: typeof lastVisitAt === "number" ? new Date(lastVisitAt).toISOString() : null,
     };
   });
+}
+
+function buildCustomerDetails(customerId: string): CustomerDetailsResponse | undefined {
+  const customer = buildCustomersRegistry().find((item) => item.id === customerId);
+
+  if (!customer) {
+    return undefined;
+  }
+
+  const vehicles = vehiclesFixture
+    .filter((vehicle) => vehicle.customerId === customerId)
+    .map((vehicle) => ({
+      id: vehicle.id,
+      vin: vehicle.vin,
+      plateNumber: vehicle.plateNumber,
+      make: vehicle.make,
+      model: vehicle.model,
+      year: vehicle.year,
+    }))
+    .sort((left, right) => right.year - left.year);
+
+  const orders = ordersFixture
+    .filter((order) => order.customerId === customerId)
+    .map((order) => ({
+      id: order.id,
+      number: order.number,
+      status: order.status,
+      vehicleId: order.vehicleId,
+      vehicleLabel: order.vehicleLabel,
+      totalAmount: order.totalAmount,
+      createdAt: order.createdAt,
+      updatedAt: order.updatedAt,
+    }))
+    .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime());
+
+  return {
+    customer,
+    vehicles,
+    orders,
+  };
 }
 
 export const customersHandlers = [
@@ -58,5 +98,17 @@ export const customersHandlers = [
       total,
       totalPages,
     });
+  }),
+  http.get(toMswPath(apiEndpoints.customers.detail(":customerId")), async ({ params }) => {
+    await delay(250);
+
+    const customerId = String(params.customerId);
+    const details = buildCustomerDetails(customerId);
+
+    if (!details) {
+      return HttpResponse.json({ message: "Customer not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(details);
   }),
 ];

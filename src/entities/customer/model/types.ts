@@ -17,3 +17,36 @@ export interface CustomersListParams {
   pageSize?: number;
   search?: string;
 }
+
+export interface CustomerVehicleListItem {
+  id: string;
+  vin: string;
+  plateNumber: string;
+  make: string;
+  model: string;
+  year: number;
+}
+
+export type CustomerOrderHistoryStatus =
+  | "scheduled"
+  | "in_progress"
+  | "waiting_parts"
+  | "completed"
+  | "cancelled";
+
+export interface CustomerOrderHistoryItem {
+  id: string;
+  number: string;
+  status: CustomerOrderHistoryStatus;
+  vehicleId: string;
+  vehicleLabel: string;
+  totalAmount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CustomerDetailsResponse {
+  customer: CustomerListItem;
+  vehicles: CustomerVehicleListItem[];
+  orders: CustomerOrderHistoryItem[];
+}

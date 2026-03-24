@@ -35,4 +35,26 @@ describe("customersHandlers", () => {
     expect(data.pageSize).toBe(1);
     expect(data.items).toHaveLength(1);
   });
+
+  it("returns customer details by id", async () => {
+    const data = await getJson("/api/customers/cust_001");
+
+    expect(data).toEqual(
+      expect.objectContaining({
+        customer: expect.objectContaining({
+          id: "cust_001",
+          fullName: expect.any(String),
+        }),
+        vehicles: expect.any(Array),
+        orders: expect.any(Array),
+      }),
+    );
+  });
+
+  it("returns 404 for unknown customer id", async () => {
+    const response = await fetch("/api/customers/cust_unknown");
+
+    expect(response.status).toBe(404);
+    await expect(response.json()).resolves.toEqual({ message: "Customer not found" });
+  });
 });

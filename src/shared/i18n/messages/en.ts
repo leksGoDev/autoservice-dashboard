@@ -133,6 +133,13 @@ export const enMessages = {
       high: "High",
     },
   },
+  customer: {
+    loyaltyTier: {
+      standard: "Standard",
+      silver: "Silver",
+      gold: "Gold",
+    },
+  },
   pages: {
     orders: {
       eyebrow: "Registry",
@@ -204,6 +211,48 @@ export const enMessages = {
         detailsTitle: "Details Flow",
         detailsText:
           "Customer details, vehicles list, and order history will be added on dedicated routes.",
+      },
+    },
+    customerDetails: {
+      eyebrow: "Customer Details",
+      title: "Customer profile workspace",
+      description: "Customer information, linked vehicles, and order history in one operational view.",
+      customerId: "Customer ID: {{customerId}}",
+      back: "Back to customers",
+      sections: {
+        info: "Customer information",
+        vehicles: "Vehicles list",
+        orders: "Order history",
+      },
+      labels: {
+        fullName: "Full Name",
+        phone: "Phone",
+        email: "Email",
+        loyaltyTier: "Loyalty Tier",
+        vehiclesCount: "Vehicles Count",
+        ordersCount: "Orders Count",
+        lastVisit: "Last Visit",
+      },
+      vehicles: {
+        plateNumber: "Plate Number",
+        vin: "VIN",
+        make: "Make",
+        model: "Model",
+        year: "Year",
+      },
+      orders: {
+        order: "Order #",
+        vehicle: "Vehicle",
+        status: "Status",
+        total: "Total",
+        updated: "Updated",
+      },
+      states: {
+        loading: "Loading customer details...",
+        error: "Failed to load customer details.",
+        empty: "Customer was not found.",
+        emptyVehicles: "This customer has no vehicles yet.",
+        emptyOrders: "This customer has no order history yet.",
       },
     },
     vehicles: {

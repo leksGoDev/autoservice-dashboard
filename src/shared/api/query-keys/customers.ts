@@ -12,4 +12,5 @@ function normalizeCustomersParams(params: CustomersListParamsKey = {}) {
 export const customersQueryKeys = {
   root: ["customers"] as const,
   list: (params: CustomersListParamsKey = {}) => ["customers", "list", normalizeCustomersParams(params)] as const,
+  detail: (customerId: string) => ["customers", "detail", customerId] as const,
 } as const;
