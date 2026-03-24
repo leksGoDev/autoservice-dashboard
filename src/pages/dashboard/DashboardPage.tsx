@@ -49,53 +49,52 @@ const DashboardHeader = ({ range, onRangeChange }: DashboardHeaderProps) => {
 };
 
 export const DashboardPage = () => {
-  const { t } = useI18n();
   const [range, setRange] = useState<DashboardRange>(DEFAULT_DASHBOARD_RANGE);
   const overviewQuery = useDashboardOverviewQuery(range);
-  const header = <DashboardHeader range={range} onRangeChange={setRange} />;
+
+  return (
+    <section className="grid gap-5">
+      <DashboardHeader range={range} onRangeChange={setRange} />
+      <DashboardPageContent overviewQuery={overviewQuery} />
+    </section>
+  );
+};
+
+type DashboardPageContentProps = {
+  overviewQuery: ReturnType<typeof useDashboardOverviewQuery>;
+};
+
+const DashboardPageContent = ({ overviewQuery }: DashboardPageContentProps) => {
+  const { t } = useI18n();
 
   if (overviewQuery.isLoading) {
-    return (
-      <section className="grid gap-5">
-        {header}
-        <DataState message={t("dashboardPage.loading")} />
-      </section>
-    );
+    return <DataState message={t("dashboardPage.loading")} />;
   }
 
   if (overviewQuery.isError) {
     return (
-      <section className="grid gap-5">
-        {header}
-        <DataState
-          tone="error"
-          message={t("dashboardPage.error")}
-          action={
-            <button
-              type="button"
-              className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
-              onClick={() => overviewQuery.refetch()}
-            >
-              {t("common.retry")}
-            </button>
-          }
-        />
-      </section>
+      <DataState
+        tone="error"
+        message={t("dashboardPage.error")}
+        action={
+          <button
+            type="button"
+            className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
+            onClick={() => overviewQuery.refetch()}
+          >
+            {t("common.retry")}
+          </button>
+        }
+      />
     );
   }
 
   if (!overviewQuery.data) {
-    return (
-      <section className="grid gap-5">
-        {header}
-        <DataState message={t("dashboardPage.empty")} />
-      </section>
-    );
+    return <DataState message={t("dashboardPage.empty")} />;
   }
 
   return (
-    <section className="grid gap-5">
-      {header}
+    <>
       <DashboardKpiCards metrics={overviewQuery.data.metrics} />
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -110,6 +109,6 @@ export const DashboardPage = () => {
           <DashboardRecentActivity items={overviewQuery.data.recentActivity} />
         </div>
       </div>
-    </section>
+    </>
   );
 };
