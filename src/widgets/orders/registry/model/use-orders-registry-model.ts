@@ -14,7 +14,7 @@ function readPositiveNumber(value: string | null, fallback: number) {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
 
-export function useOrdersPageModel() {
+export function useOrdersRegistryModel() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = readPositiveNumber(searchParams.get("page"), DEFAULT_LIST_PAGE);

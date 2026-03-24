@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 
 import { useMechanicsRegistryQuery, useMechanicsWorkloadQuery } from "@/entities/mechanic/api/queries";
 import { DASHBOARD_RANGES, DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
+import { useI18n } from "@/shared/i18n/use-i18n";
 
 const PAGE_SIZE = 10;
 
@@ -13,6 +14,7 @@ type AvailabilityCounts = {
 };
 
 export const useMechanicsRegistryModel = () => {
+  const { t } = useI18n();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -53,6 +55,24 @@ export const useMechanicsRegistryModel = () => {
       .slice(0, 3);
   }, [workloadQuery.data]);
 
+  const summary = useMemo(() => {
+    if (!data || data.total === 0) {
+      return t("pages.mechanics.table.summaryEmpty");
+    }
+
+    const start = (data.page - 1) * data.pageSize + 1;
+    const end = start + data.items.length - 1;
+
+    return t("pages.mechanics.table.summary", {
+      start,
+      end,
+      total: data.total,
+    });
+  }, [data, t]);
+
+  const canGoPrev = Boolean(data && data.page > 1 && !registryQuery.isFetching);
+  const canGoNext = Boolean(data && data.page < data.totalPages && !registryQuery.isFetching);
+
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPage(1);
@@ -77,6 +97,9 @@ export const useMechanicsRegistryModel = () => {
     rows,
     availability,
     assignmentLeaders,
+    summary,
+    canGoPrev,
+    canGoNext,
     handleSearchSubmit,
     handleRetry,
   };

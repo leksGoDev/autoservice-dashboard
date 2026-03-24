@@ -3,7 +3,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { MemoryRouter } from "react-router-dom";
 
-import { useOrdersPageModel } from "./use-orders-page-model";
+import { useOrdersRegistryModel } from "./use-orders-registry-model";
 
 function createWrapper(initialEntry: string) {
   const queryClient = new QueryClient({
@@ -23,9 +23,9 @@ function createWrapper(initialEntry: string) {
   };
 }
 
-describe("useOrdersPageModel", () => {
+describe("useOrdersRegistryModel", () => {
   it("falls back to first page for invalid page param", async () => {
-    const { result } = renderHook(() => useOrdersPageModel(), {
+    const { result } = renderHook(() => useOrdersRegistryModel(), {
       wrapper: createWrapper("/orders?page=-4"),
     });
 
@@ -37,7 +37,7 @@ describe("useOrdersPageModel", () => {
   });
 
   it("clamps page to totalPages", async () => {
-    const { result } = renderHook(() => useOrdersPageModel(), {
+    const { result } = renderHook(() => useOrdersRegistryModel(), {
       wrapper: createWrapper("/orders?page=99&status=cancelled"),
     });
 
@@ -50,7 +50,7 @@ describe("useOrdersPageModel", () => {
   });
 
   it("resets page to 1 when toolbar filters change", async () => {
-    const { result } = renderHook(() => useOrdersPageModel(), {
+    const { result } = renderHook(() => useOrdersRegistryModel(), {
       wrapper: createWrapper("/orders?page=2"),
     });
 
@@ -74,7 +74,7 @@ describe("useOrdersPageModel", () => {
   });
 
   it("keeps existing filters when changing page", async () => {
-    const { result } = renderHook(() => useOrdersPageModel(), {
+    const { result } = renderHook(() => useOrdersRegistryModel(), {
       wrapper: createWrapper("/orders?page=1&search=ord"),
     });
 
@@ -94,7 +94,7 @@ describe("useOrdersPageModel", () => {
   });
 
   it("clears all filters on reset", async () => {
-    const { result } = renderHook(() => useOrdersPageModel(), {
+    const { result } = renderHook(() => useOrdersRegistryModel(), {
       wrapper: createWrapper("/orders?page=2&search=ord&status=scheduled&priority=high"),
     });
 
