@@ -26,6 +26,16 @@ export const apiEndpoints = {
     activity: (orderId: string) => `/orders/${orderId}/activity`,
     status: (orderId: string) => `/orders/${orderId}/status`,
     flag: (orderId: string) => `/orders/${orderId}/flag`,
+    jobs: (orderId: string) => `/orders/${orderId}/jobs`,
+  },
+  jobs: {
+    detail: (jobId: string) => `/jobs/${jobId}`,
+    status: (jobId: string) => `/jobs/${jobId}/status`,
+    assignMechanic: (jobId: string) => `/jobs/${jobId}/assign-mechanic`,
+    parts: (jobId: string) => `/jobs/${jobId}/parts`,
+  },
+  jobParts: {
+    detail: (jobPartId: string) => `/job-parts/${jobPartId}`,
   },
   workBoard: {
     board: "/work-board",

@@ -149,9 +149,73 @@ export const ruPages = {
         order_scheduled: "Заказ запланирован",
         mechanic_assigned: "Назначен механик",
         job_added: "Добавлена работа",
+        job_status_updated: "Обновлен статус работы",
+        job_mechanic_assigned: "Назначен механик на работу",
         part_added: "Добавлена запчасть",
+        part_quantity_updated: "Обновлено количество запчасти",
+        part_removed: "Запчасть удалена",
         status_changed: "Статус изменен",
         order_completed: "Заказ завершен",
+      },
+    },
+    controls: {
+      jobs: {
+        headers: {
+          actions: "Действия",
+        },
+        add: {
+          name: "Название работы",
+          category: "Категория",
+          estimated: "План, ч",
+          labor: "Стоимость работ",
+          mechanic: "Механик",
+        },
+        row: {
+          status: "Статус работы",
+          mechanic: "Механик работы",
+        },
+        actions: {
+          add: "Добавить работу",
+          addPending: "Добавление...",
+          status: "Обновить статус",
+          statusPending: "Обновление...",
+          mechanic: "Назначить механика",
+          mechanicPending: "Назначение...",
+        },
+      },
+      parts: {
+        headers: {
+          actions: "Действия",
+        },
+        add: {
+          name: "Название запчасти",
+          job: "Связанная работа",
+          quantity: "Количество",
+          unitPrice: "Цена за ед.",
+        },
+        row: {
+          quantity: "Количество запчасти",
+        },
+        actions: {
+          add: "Добавить запчасть",
+          addPending: "Добавление...",
+          quantity: "Обновить кол-во",
+          quantityPending: "Обновление...",
+          remove: "Удалить",
+          removePending: "Удаление...",
+        },
+      },
+      success: {
+        jobAdded: "Сервисная работа добавлена.",
+        jobStatusUpdated: "Статус работы обновлен.",
+        jobMechanicAssigned: "Назначение механика на работу обновлено.",
+        partAdded: "Запчасть добавлена к работе.",
+        partQuantityUpdated: "Количество запчасти обновлено.",
+        partRemoved: "Запчасть удалена из работы.",
+      },
+      errors: {
+        jobsFallback: "Не удалось обновить сервисные работы.",
+        partsFallback: "Не удалось обновить запчасти.",
       },
     },
     states: {

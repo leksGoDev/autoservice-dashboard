@@ -33,7 +33,11 @@ export type OrderActivityType =
   | "order_scheduled"
   | "mechanic_assigned"
   | "job_added"
+  | "job_status_updated"
+  | "job_mechanic_assigned"
   | "part_added"
+  | "part_quantity_updated"
+  | "part_removed"
   | "status_changed"
   | "order_completed";
 
@@ -113,4 +117,30 @@ export interface AssignOrderMechanicPayload {
 
 export interface SetOrderFlagPayload {
   flagged: boolean;
+}
+
+export interface AddServiceJobPayload {
+  name: string;
+  category: string;
+  estimatedHours: number;
+  laborPrice: number;
+  assignedMechanic?: string;
+}
+
+export interface UpdateServiceJobPayload {
+  status: ServiceJobStatus;
+}
+
+export interface AssignServiceJobMechanicPayload {
+  assignedMechanic: string;
+}
+
+export interface AddJobPartPayload {
+  name: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface UpdateJobPartPayload {
+  quantity: number;
 }

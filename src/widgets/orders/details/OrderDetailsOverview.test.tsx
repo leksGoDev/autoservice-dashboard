@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -59,7 +59,7 @@ describe("OrderDetailsOverview", () => {
       target: { value: nextMechanic },
     });
 
-    fireEvent.click(screen.getByRole("button", { name: "Assign mechanic" }));
+    fireEvent.click(screen.getAllByRole("button", { name: "Assign mechanic" })[0]);
 
     await waitFor(() => {
       expect(screen.getByText("Mechanic assignment updated.")).toBeInTheDocument();
@@ -75,6 +75,78 @@ describe("OrderDetailsOverview", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Order flagged.")).toBeInTheDocument();
+    });
+  });
+
+  it("runs service execution flow for jobs and parts", async () => {
+    renderOverview("ord_001");
+
+    await screen.findByText("Order summary");
+
+    fireEvent.change(screen.getByRole("textbox", { name: "Job name" }), {
+      target: { value: "Cooling system flush" },
+    });
+    fireEvent.change(screen.getByRole("textbox", { name: "Category" }), {
+      target: { value: "Maintenance" },
+    });
+    fireEvent.change(screen.getByRole("spinbutton", { name: "Estimated hours" }), {
+      target: { value: "1.5" },
+    });
+    fireEvent.change(screen.getByRole("spinbutton", { name: "Labor price" }), {
+      target: { value: "175" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Add job" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Service job added.")).toBeInTheDocument();
+    });
+
+    const jobStatusSelect = screen.getByRole("combobox", { name: "Job status Brake system service" });
+    fireEvent.change(jobStatusSelect, { target: { value: "pending" } });
+    fireEvent.click(within(jobStatusSelect.closest("tr") as HTMLElement).getByRole("button", { name: "Update status" }));
+
+    await waitFor(() => {
+      expect(screen.getAllByRole("row", { name: /Brake system service/i })[0]).toHaveTextContent("Pending");
+    });
+
+    const jobMechanicSelect = screen.getByRole("combobox", { name: "Job mechanic Brake system service" });
+    fireEvent.change(jobMechanicSelect, { target: { value: "Chris Nolan" } });
+    fireEvent.click(
+      within(jobMechanicSelect.closest("tr") as HTMLElement).getByRole("button", { name: "Assign mechanic" }),
+    );
+
+    await waitFor(() => {
+      expect(screen.getAllByRole("row", { name: /Brake system service/i })[0]).toHaveTextContent("Chris Nolan");
+    });
+
+    fireEvent.change(screen.getByRole("textbox", { name: "Part name" }), {
+      target: { value: "Coolant" },
+    });
+    fireEvent.change(screen.getByRole("spinbutton", { name: "Quantity" }), {
+      target: { value: "2" },
+    });
+    fireEvent.change(screen.getByRole("spinbutton", { name: "Unit price" }), {
+      target: { value: "26" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Add part" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Part added to job.")).toBeInTheDocument();
+    });
+
+    const coolantRow = await screen.findByRole("row", { name: /Coolant/i });
+    const coolantQuantityInput = within(coolantRow).getByRole("spinbutton", { name: /Part quantity Coolant/i });
+    fireEvent.change(coolantQuantityInput, { target: { value: "4" } });
+    fireEvent.click(within(coolantRow).getByRole("button", { name: "Update qty" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Part quantity updated.")).toBeInTheDocument();
+    });
+
+    fireEvent.click(within(coolantRow).getByRole("button", { name: "Remove" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Part removed from job.")).toBeInTheDocument();
     });
   });
 });

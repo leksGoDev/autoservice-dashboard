@@ -149,9 +149,73 @@ export const enPages = {
         order_scheduled: "Order scheduled",
         mechanic_assigned: "Mechanic assigned",
         job_added: "Job added",
+        job_status_updated: "Job status updated",
+        job_mechanic_assigned: "Job mechanic assigned",
         part_added: "Part added",
+        part_quantity_updated: "Part quantity updated",
+        part_removed: "Part removed",
         status_changed: "Status changed",
         order_completed: "Order completed",
+      },
+    },
+    controls: {
+      jobs: {
+        headers: {
+          actions: "Actions",
+        },
+        add: {
+          name: "Job name",
+          category: "Category",
+          estimated: "Estimated hours",
+          labor: "Labor price",
+          mechanic: "Mechanic",
+        },
+        row: {
+          status: "Job status",
+          mechanic: "Job mechanic",
+        },
+        actions: {
+          add: "Add job",
+          addPending: "Adding job...",
+          status: "Update status",
+          statusPending: "Updating...",
+          mechanic: "Assign mechanic",
+          mechanicPending: "Assigning...",
+        },
+      },
+      parts: {
+        headers: {
+          actions: "Actions",
+        },
+        add: {
+          name: "Part name",
+          job: "Related job",
+          quantity: "Quantity",
+          unitPrice: "Unit price",
+        },
+        row: {
+          quantity: "Part quantity",
+        },
+        actions: {
+          add: "Add part",
+          addPending: "Adding part...",
+          quantity: "Update qty",
+          quantityPending: "Updating...",
+          remove: "Remove",
+          removePending: "Removing...",
+        },
+      },
+      success: {
+        jobAdded: "Service job added.",
+        jobStatusUpdated: "Job status updated.",
+        jobMechanicAssigned: "Job mechanic assignment updated.",
+        partAdded: "Part added to job.",
+        partQuantityUpdated: "Part quantity updated.",
+        partRemoved: "Part removed from job.",
+      },
+      errors: {
+        jobsFallback: "Failed to update service jobs.",
+        partsFallback: "Failed to update parts.",
       },
     },
     states: {

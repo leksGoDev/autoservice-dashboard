@@ -1,10 +1,16 @@
 import { httpRequest } from "@/shared/api/http-client";
 import {
+  addPartToJob,
+  addServiceJob,
+  assignServiceJobMechanic,
   assignOrderMechanic,
   getOrderActivity,
   getOrderDetails,
   getOrdersList,
+  removeJobPart,
   setOrderFlag,
+  updateJobPartQuantity,
+  updateServiceJobStatus,
   updateOrderStatus,
 } from "./requests";
 
@@ -130,6 +136,97 @@ describe("order requests", () => {
       body: {
         flagged: true,
       },
+    });
+  });
+
+  it("adds service job for order", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001" });
+
+    addServiceJob("ord_001", {
+      name: "Cooling system flush",
+      category: "Maintenance",
+      estimatedHours: 1.4,
+      laborPrice: 154,
+      assignedMechanic: "Ivan Petrov",
+    });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001/jobs", {
+      method: "POST",
+      body: {
+        name: "Cooling system flush",
+        category: "Maintenance",
+        estimatedHours: 1.4,
+        laborPrice: 154,
+        assignedMechanic: "Ivan Petrov",
+      },
+    });
+  });
+
+  it("patches service job status", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001" });
+
+    updateServiceJobStatus("ord_001_job_1", { status: "completed" });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/jobs/ord_001_job_1/status", {
+      method: "PATCH",
+      body: {
+        status: "completed",
+      },
+    });
+  });
+
+  it("patches service job mechanic", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001" });
+
+    assignServiceJobMechanic("ord_001_job_1", { assignedMechanic: "Nikolai Volkov" });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/jobs/ord_001_job_1/assign-mechanic", {
+      method: "PATCH",
+      body: {
+        assignedMechanic: "Nikolai Volkov",
+      },
+    });
+  });
+
+  it("adds part to service job", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001" });
+
+    addPartToJob("ord_001_job_1", {
+      name: "Coolant",
+      quantity: 2,
+      unitPrice: 26,
+    });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/jobs/ord_001_job_1/parts", {
+      method: "POST",
+      body: {
+        name: "Coolant",
+        quantity: 2,
+        unitPrice: 26,
+      },
+    });
+  });
+
+  it("patches job part quantity", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001" });
+
+    updateJobPartQuantity("ord_001_part_1", { quantity: 3 });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/job-parts/ord_001_part_1", {
+      method: "PATCH",
+      body: {
+        quantity: 3,
+      },
+    });
+  });
+
+  it("deletes job part", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001" });
+
+    removeJobPart("ord_001_part_1");
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/job-parts/ord_001_part_1", {
+      method: "DELETE",
     });
   });
 });
