@@ -1,16 +1,38 @@
+import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { AppShell } from "./layouts/AppShell";
-import { AnalyticsPage } from "../pages/analytics/AnalyticsPage";
-import { CustomerDetailsPage } from "../pages/customers/CustomerDetailsPage";
-import { CustomersPage } from "../pages/customers/CustomersPage";
-import { DashboardPage } from "../pages/dashboard/DashboardPage";
-import { MechanicsPage } from "../pages/mechanics/MechanicsPage";
-import { OrderDetailsPage } from "../pages/orders/OrderDetailsPage";
-import { OrdersPage } from "../pages/orders/OrdersPage";
-import { VehiclesPage } from "../pages/vehicles/VehiclesPage";
-import { VehicleDetailsPage } from "../pages/vehicles/VehicleDetailsPage";
-import { WorkBoardPage } from "../pages/work-board/WorkBoardPage";
+
+const DashboardPage = lazy(() =>
+  import("../pages/dashboard/DashboardPage").then((module) => ({ default: module.DashboardPage })),
+);
+const OrdersPage = lazy(() =>
+  import("../pages/orders/OrdersPage").then((module) => ({ default: module.OrdersPage })),
+);
+const OrderDetailsPage = lazy(() =>
+  import("../pages/orders/OrderDetailsPage").then((module) => ({ default: module.OrderDetailsPage })),
+);
+const CustomersPage = lazy(() =>
+  import("../pages/customers/CustomersPage").then((module) => ({ default: module.CustomersPage })),
+);
+const CustomerDetailsPage = lazy(() =>
+  import("../pages/customers/CustomerDetailsPage").then((module) => ({ default: module.CustomerDetailsPage })),
+);
+const VehiclesPage = lazy(() =>
+  import("../pages/vehicles/VehiclesPage").then((module) => ({ default: module.VehiclesPage })),
+);
+const VehicleDetailsPage = lazy(() =>
+  import("../pages/vehicles/VehicleDetailsPage").then((module) => ({ default: module.VehicleDetailsPage })),
+);
+const MechanicsPage = lazy(() =>
+  import("../pages/mechanics/MechanicsPage").then((module) => ({ default: module.MechanicsPage })),
+);
+const AnalyticsPage = lazy(() =>
+  import("../pages/analytics/AnalyticsPage").then((module) => ({ default: module.AnalyticsPage })),
+);
+const WorkBoardPage = lazy(() =>
+  import("../pages/work-board/WorkBoardPage").then((module) => ({ default: module.WorkBoardPage })),
+);
 
 export const appRoutes = [
   {

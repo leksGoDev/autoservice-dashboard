@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Outlet, useMatches } from "react-router-dom";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
@@ -21,7 +22,15 @@ export function AppShell() {
       <div className="flex min-w-0 flex-col">
         <AppTopbar title={title} />
         <main className="p-6">
-          <Outlet />
+          <Suspense
+            fallback={
+              <div className="flex min-h-[220px] items-center justify-center text-sm text-[var(--color-text-secondary)]">
+                {t("common.pageLoading")}
+              </div>
+            }
+          >
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>

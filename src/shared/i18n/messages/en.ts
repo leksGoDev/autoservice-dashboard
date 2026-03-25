@@ -37,6 +37,7 @@ export const enMessages = {
     ru: "RU",
     unknown: "Unknown",
     active: "active",
+    pageLoading: "Loading page...",
   },
   pwa: {
     updateTitle: "Update available",

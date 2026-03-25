@@ -42,6 +42,19 @@ export default defineConfig({
       "@": new URL("./src", import.meta.url).pathname,
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-query-table": ["@tanstack/react-query", "@tanstack/react-table"],
+          "vendor-i18n": ["i18next", "react-i18next"],
+          "vendor-forms": ["react-hook-form", "@hookform/resolvers", "zod"],
+          "vendor-charts": ["recharts"],
+        },
+      },
+    },
+  },
   test: {
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],

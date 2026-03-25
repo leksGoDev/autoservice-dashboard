@@ -37,6 +37,7 @@ export const ruMessages = {
     ru: "RU",
     unknown: "Неизвестно",
     active: "активно",
+    pageLoading: "Загрузка страницы...",
   },
   pwa: {
     updateTitle: "Доступно обновление",
