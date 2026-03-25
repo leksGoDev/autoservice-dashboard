@@ -1,47 +1,41 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
-import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
-import { appRoutes } from "@/app/router";
 import { I18nProvider } from "@/shared/i18n/provider";
+import { CustomerDetailsPage } from "./CustomerDetailsPage";
+import { useCustomerDetailsPageModel } from "./model/use-customer-details-page-model";
 
-function renderWithRoute(initialEntry: string) {
-  const router = createMemoryRouter(appRoutes, {
-    initialEntries: [initialEntry],
-  });
+vi.mock("./model/use-customer-details-page-model", () => ({
+  useCustomerDetailsPageModel: vi.fn(),
+}));
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  });
+vi.mock("@/widgets/customers/details/CustomerDetailsOverview", () => ({
+  CustomerDetailsOverview: ({ customerId }: { customerId: string | undefined }) => (
+    <div data-testid="customer-details-overview">{customerId}</div>
+  ),
+}));
 
-  return render(
-    <QueryClientProvider client={queryClient}>
-      <I18nProvider>
-        <RouterProvider router={router} />
-      </I18nProvider>
-    </QueryClientProvider>,
+const mockedUseCustomerDetailsPageModel = vi.mocked(useCustomerDetailsPageModel);
+
+function renderPage() {
+  render(
+    <I18nProvider>
+      <CustomerDetailsPage />
+    </I18nProvider>,
   );
 }
 
 describe("CustomerDetailsPage", () => {
-  it("renders customer details sections", async () => {
-    renderWithRoute("/customers/cust_001");
-
-    expect(await screen.findByText("Customer information")).toBeInTheDocument();
-    expect(screen.getByText("Vehicles list")).toBeInTheDocument();
-    expect(screen.getByText("Order history")).toBeInTheDocument();
-    expect(screen.getByText("Alex Turner")).toBeInTheDocument();
-    expect(screen.getByText("ORD-1008")).toBeInTheDocument();
+  beforeEach(() => {
+    mockedUseCustomerDetailsPageModel.mockReset();
   });
 
-  it("renders error state for unknown customer", async () => {
-    renderWithRoute("/customers/cust_unknown");
+  it("passes customerId from page params hook into overview widget", () => {
+    mockedUseCustomerDetailsPageModel.mockReturnValue({
+      customerId: "cust_001",
+    });
 
-    expect(await screen.findByText("Failed to load customer details.")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
+    renderPage();
+
+    expect(screen.getByTestId("customer-details-overview")).toHaveTextContent("cust_001");
   });
 });
