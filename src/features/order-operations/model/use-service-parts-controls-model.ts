@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { OrderPartItem, OrderServiceJob } from "@/entities/order/model/types";
 import {
@@ -36,10 +36,13 @@ export const useServicePartsControlsModel = ({
   const removePartMutation = useRemoveJobPartMutation();
 
   useEffect(() => {
-    if (!partJobId && jobs.length > 0) {
-      setPartJobId(jobs[0].id);
+    if (jobs.length === 0) {
+      setPartJobId("");
+      return;
     }
-  }, [jobs, partJobId]);
+
+    setPartJobId((prev) => (jobs.some((job) => job.id === prev) ? prev : jobs[0].id));
+  }, [jobs]);
 
   useEffect(() => {
     const quantities: Record<string, string> = {};
@@ -48,7 +51,17 @@ export const useServicePartsControlsModel = ({
       quantities[part.id] = String(part.quantity);
     });
 
-    setPartQuantities(quantities);
+    setPartQuantities((prev) => {
+      if (Object.keys(prev).length === Object.keys(quantities).length) {
+        const isSame = Object.entries(quantities).every(([key, value]) => prev[key] === value);
+
+        if (isSame) {
+          return prev;
+        }
+      }
+
+      return quantities;
+    });
   }, [parts]);
 
   const jobOptions = useMemo(
@@ -60,14 +73,14 @@ export const useServicePartsControlsModel = ({
     [jobs],
   );
 
-  const resetFeedback = () => {
+  const resetFeedback = useCallback(() => {
     setLastSuccessKey(null);
     addPartMutation.reset();
     updatePartQuantityMutation.reset();
     removePartMutation.reset();
-  };
+  }, [addPartMutation, removePartMutation, updatePartQuantityMutation]);
 
-  const handleAddPart = async () => {
+  const handleAddPart = useCallback(async () => {
     resetFeedback();
 
     const name = partName.trim();
@@ -96,12 +109,10 @@ export const useServicePartsControlsModel = ({
     } catch {
       // Mutation error is handled by query state and rendered from model.
     }
-  };
+  }, [addPartMutation, orderId, partJobId, partName, partQuantity, partUnitPrice, resetFeedback]);
 
-  const handleUpdatePartQuantity = async (partId: string) => {
+  const handleUpdatePartQuantity = useCallback(async (partId: string, quantity: number) => {
     resetFeedback();
-
-    const quantity = Number(partQuantities[partId]);
 
     if (!Number.isInteger(quantity) || quantity <= 0) {
       return;
@@ -117,9 +128,9 @@ export const useServicePartsControlsModel = ({
     } catch {
       // Mutation error is handled by query state and rendered from model.
     }
-  };
+  }, [orderId, resetFeedback, updatePartQuantityMutation]);
 
-  const handleRemovePart = async (partId: string) => {
+  const handleRemovePart = useCallback(async (partId: string) => {
     resetFeedback();
 
     try {
@@ -131,7 +142,7 @@ export const useServicePartsControlsModel = ({
     } catch {
       // Mutation error is handled by query state and rendered from model.
     }
-  };
+  }, [orderId, removePartMutation, resetFeedback]);
 
   const isBusy = addPartMutation.isPending || updatePartQuantityMutation.isPending || removePartMutation.isPending;
   const currentError = addPartMutation.error ?? updatePartQuantityMutation.error ?? removePartMutation.error;

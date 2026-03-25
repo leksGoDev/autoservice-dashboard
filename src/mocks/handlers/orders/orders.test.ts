@@ -161,6 +161,49 @@ describe("ordersHandlers", () => {
     expect(response.body.message).toContain("Invalid");
   });
 
+  it("validates add service job payload", async () => {
+    const invalid = await postJson("/api/orders/ord_001/jobs", {
+      name: "",
+      category: "Maintenance",
+      estimatedHours: 0,
+      laborPrice: -10,
+    });
+
+    expect(invalid.status).toBe(400);
+    expect(invalid.body.message).toContain("Invalid service job payload");
+  });
+
+  it("validates job status payload", async () => {
+    const before = await getJson("/api/orders/ord_001");
+    const jobId = before.jobs[0].id as string;
+    const invalid = await patchJson(`/api/jobs/${jobId}/status`, { status: "done" });
+
+    expect(invalid.status).toBe(400);
+    expect(invalid.body.message).toContain("Invalid service job status");
+  });
+
+  it("validates add part payload", async () => {
+    const before = await getJson("/api/orders/ord_001");
+    const jobId = before.jobs[0].id as string;
+    const invalid = await postJson(`/api/jobs/${jobId}/parts`, {
+      name: "Coolant",
+      quantity: 0,
+      unitPrice: 26,
+    });
+
+    expect(invalid.status).toBe(400);
+    expect(invalid.body.message).toContain("Invalid job part payload");
+  });
+
+  it("validates update part quantity payload", async () => {
+    const before = await getJson("/api/orders/ord_001");
+    const partId = before.parts[0].id as string;
+    const invalid = await patchJson(`/api/job-parts/${partId}`, { quantity: 0 });
+
+    expect(invalid.status).toBe(400);
+    expect(invalid.body.message).toContain("quantity must be a positive integer");
+  });
+
   it("adds service job and updates details summary values", async () => {
     const before = await getJson("/api/orders/ord_001");
     const created = await postJson("/api/orders/ord_001/jobs", {

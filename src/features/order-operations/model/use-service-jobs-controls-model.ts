@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { OrderServiceJob, ServiceJobStatus } from "@/entities/order/model/types";
 import {
@@ -47,13 +47,38 @@ export const useServiceJobsControlsModel = ({
       assignedMechanics[job.id] = job.assignedMechanic;
     });
 
-    setJobStatuses(statuses);
-    setJobMechanics(assignedMechanics);
+    setJobStatuses((prev) => {
+      if (Object.keys(prev).length === Object.keys(statuses).length) {
+        const isSame = Object.entries(statuses).every(([key, value]) => prev[key] === value);
 
-    if (jobs.length > 0 && !jobMechanic.trim()) {
-      setJobMechanic(jobs[0].assignedMechanic);
+        if (isSame) {
+          return prev;
+        }
+      }
+
+      return statuses;
+    });
+
+    setJobMechanics((prev) => {
+      if (Object.keys(prev).length === Object.keys(assignedMechanics).length) {
+        const isSame = Object.entries(assignedMechanics).every(([key, value]) => prev[key] === value);
+
+        if (isSame) {
+          return prev;
+        }
+      }
+
+      return assignedMechanics;
+    });
+  }, [jobs]);
+
+  useEffect(() => {
+    if (jobs.length === 0) {
+      return;
     }
-  }, [jobs, jobMechanic]);
+
+    setJobMechanic((prev) => (prev.trim().length > 0 ? prev : jobs[0].assignedMechanic));
+  }, [jobs]);
 
   const availableMechanics = useMemo(() => {
     const normalized = new Set(mechanics.filter((item) => item.trim().length > 0));
@@ -67,14 +92,14 @@ export const useServiceJobsControlsModel = ({
     return [...normalized].sort((left, right) => left.localeCompare(right));
   }, [jobs, mechanics]);
 
-  const resetFeedback = () => {
+  const resetFeedback = useCallback(() => {
     setLastSuccessKey(null);
     addJobMutation.reset();
     updateJobStatusMutation.reset();
     assignJobMechanicMutation.reset();
-  };
+  }, [addJobMutation, assignJobMechanicMutation, updateJobStatusMutation]);
 
-  const handleAddJob = async () => {
+  const handleAddJob = useCallback(async () => {
     resetFeedback();
 
     const estimatedHours = Number(jobEstimatedHours);
@@ -107,25 +132,25 @@ export const useServiceJobsControlsModel = ({
     } catch {
       // Mutation error is handled by query state and rendered from model.
     }
-  };
+  }, [addJobMutation, jobCategory, jobEstimatedHours, jobLaborPrice, jobMechanic, jobName, orderId, resetFeedback]);
 
-  const handleUpdateJobStatus = async (jobId: string) => {
+  const handleUpdateJobStatus = useCallback(async (jobId: string, status: ServiceJobStatus) => {
     resetFeedback();
 
     try {
       await updateJobStatusMutation.mutateAsync({
         orderId,
         jobId,
-        status: jobStatuses[jobId],
+        status,
       });
       setLastSuccessKey("jobStatusUpdated");
     } catch {
       // Mutation error is handled by query state and rendered from model.
     }
-  };
+  }, [orderId, resetFeedback, updateJobStatusMutation]);
 
-  const handleAssignJobMechanic = async (jobId: string) => {
-    const nextMechanic = jobMechanics[jobId]?.trim();
+  const handleAssignJobMechanic = useCallback(async (jobId: string, assignedMechanic: string) => {
+    const nextMechanic = assignedMechanic.trim();
 
     if (!nextMechanic) {
       return;
@@ -143,7 +168,7 @@ export const useServiceJobsControlsModel = ({
     } catch {
       // Mutation error is handled by query state and rendered from model.
     }
-  };
+  }, [assignJobMechanicMutation, orderId, resetFeedback]);
 
   const isBusy = addJobMutation.isPending || updateJobStatusMutation.isPending || assignJobMechanicMutation.isPending;
   const currentError = addJobMutation.error ?? updateJobStatusMutation.error ?? assignJobMechanicMutation.error;
