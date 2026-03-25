@@ -1,12 +1,11 @@
 import { memo } from "react";
 
 import type { OrderServiceJob, ServiceJobStatus } from "@/entities/order/model/types";
+import { SERVICE_JOB_STATUSES } from "@/entities/order/model/options";
 import { formatOrderCurrency } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getStatusBadgeClass } from "@/shared/ui/status-badges";
 import { formatOrderHours, getJobStatusBadgeModifier } from "@/widgets/orders/details/model/presentation";
-
-const SERVICE_JOB_STATUSES: ServiceJobStatus[] = ["pending", "in_progress", "waiting_parts", "completed"];
 
 export type JobsTableRowProps = {
   job: OrderServiceJob;

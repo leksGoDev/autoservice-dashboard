@@ -1,5 +1,5 @@
 import { delay, http, HttpResponse } from "msw";
-import { ORDER_STATUSES } from "@/entities/order/model/options";
+import { ORDER_STATUSES, SERVICE_JOB_STATUSES } from "@/entities/order/model/options";
 import type { OrderStatus, ServiceJobStatus } from "@/entities/order/model/types";
 
 import {
@@ -15,8 +15,6 @@ import {
 } from "@/mocks/state/orders";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 import { buildOrderDetails } from "./shared";
-
-const SERVICE_JOB_STATUSES: ServiceJobStatus[] = ["pending", "in_progress", "waiting_parts", "completed"];
 
 function isValidStatus(value: string): value is OrderStatus {
   return ORDER_STATUSES.includes(value as OrderStatus);
