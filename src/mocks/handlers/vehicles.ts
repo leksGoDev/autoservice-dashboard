@@ -2,15 +2,17 @@ import { delay, http, HttpResponse } from "msw";
 
 import type { VehicleDetails, VehicleListItem, VehicleServiceHistoryItem } from "@/entities/vehicle/model/types";
 import { customersFixture } from "@/mocks/fixtures/customers";
-import { ordersFixture } from "@/mocks/fixtures/orders";
 import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
+import { getOrdersMockState } from "@/mocks/state/orders";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 
 function buildVehiclesRegistry(): VehicleListItem[] {
+  const orders = getOrdersMockState();
+
   return vehiclesFixture.map((vehicle) => {
     const customer = customersFixture.find((item) => item.id === vehicle.customerId);
-    const ordersCount = ordersFixture.filter((order) => order.vehicleId === vehicle.id).length;
+    const ordersCount = orders.filter((order) => order.vehicleId === vehicle.id).length;
 
     return {
       ...vehicle,
@@ -25,7 +27,7 @@ function findVehicleDetails(vehicleId: string): VehicleDetails | undefined {
 }
 
 function buildVehicleServiceHistory(vehicleId: string): VehicleServiceHistoryItem[] {
-  return ordersFixture
+  return getOrdersMockState()
     .filter((order) => order.vehicleId === vehicleId)
     .map((order) => ({
       orderId: order.id,

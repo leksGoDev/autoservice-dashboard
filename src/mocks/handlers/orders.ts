@@ -5,23 +5,31 @@ import type {
   OrderDetails,
   OrderListItem,
   OrderPartItem,
-  OrderPriority,
   OrderServiceJob,
   OrderStatus,
   ServiceJobStatus,
 } from "@/entities/order/model/types";
+import { ORDER_STATUSES } from "@/entities/order/model/options";
 import { customersFixture } from "@/mocks/fixtures/customers";
-import {
-  orderJobCatalogFixture,
-  orderMechanicsFixture,
-  orderPartCatalogFixture,
-  ordersFixture,
-  type OrderFixtureItem,
-} from "@/mocks/fixtures/orders";
+import { orderJobCatalogFixture, orderPartCatalogFixture } from "@/mocks/fixtures/orders";
 import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
+import {
+  assignOrderMechanicState,
+  getOrderMockState,
+  getOrdersMockState,
+  setOrderFlagState,
+  type MockOrderStateItem,
+  updateOrderStatusState,
+} from "@/mocks/state/orders";
 import { DEFAULT_ORDERS_SORT_BY, DEFAULT_ORDERS_SORT_DIRECTION } from "@/shared/api/constants";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
+
+function toOrderListItem(item: MockOrderStateItem): OrderListItem {
+  return {
+    ...item,
+  };
+}
 
 function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: string) {
   const direction = sortDirection === "asc" ? 1 : -1;
@@ -38,27 +46,6 @@ function sortOrders(items: OrderListItem[], sortBy: string, sortDirection: strin
   });
 
   return list;
-}
-
-function getPriority(totalAmount: number): OrderPriority {
-  if (totalAmount >= 900) {
-    return "high";
-  }
-  if (totalAmount >= 500) {
-    return "medium";
-  }
-  return "low";
-}
-
-function toOrderListItem(item: OrderFixtureItem): OrderListItem {
-  const mechanicIndex = Number(item.id.replace(/\D/g, "")) % orderMechanicsFixture.length;
-
-  return {
-    ...item,
-    priority: getPriority(item.totalAmount),
-    assignedMechanic: orderMechanicsFixture[mechanicIndex],
-    jobsCount: Math.max(1, Math.round(item.totalAmount / 260)),
-  };
 }
 
 function isInsideDateRange(itemDateIso: string, from: string, to: string) {
@@ -214,40 +201,42 @@ function buildOrderActivity(order: OrderListItem, jobs: OrderServiceJob[], parts
   return baseEvents.sort((left, right) => new Date(right.timestamp).getTime() - new Date(left.timestamp).getTime());
 }
 
-function buildOrderDetailsRegistry(): OrderDetails[] {
-  return ordersFixture.map((orderFixture) => {
-    const order = toOrderListItem(orderFixture);
-    const customer = customersFixture.find((item) => item.id === order.customerId);
-    const vehicle = vehiclesFixture.find((item) => item.id === order.vehicleId);
-    const jobs = buildOrderJobs(order);
-    const parts = buildOrderParts(order, jobs);
+function buildOrderDetails(orderState: MockOrderStateItem): OrderDetails {
+  const order = toOrderListItem(orderState);
+  const customer = customersFixture.find((item) => item.id === order.customerId);
+  const vehicle = vehiclesFixture.find((item) => item.id === order.vehicleId);
+  const jobs = buildOrderJobs(order);
+  const parts = buildOrderParts(order, jobs);
 
-    return {
-      ...order,
-      flagged: order.priority === "high" || order.status === "waiting_parts",
-      customer: {
-        id: customer?.id ?? order.customerId,
-        fullName: customer?.fullName ?? order.customerName,
-        phone: customer?.phone ?? "Unknown",
-        email: customer?.email ?? "Unknown",
-        loyaltyTier: customer?.loyaltyTier ?? "standard",
-      },
-      vehicle: {
-        id: vehicle?.id ?? order.vehicleId,
-        vin: vehicle?.vin ?? "Unknown",
-        plateNumber: vehicle?.plateNumber ?? "Unknown",
-        make: vehicle?.make ?? "Unknown",
-        model: vehicle?.model ?? "Unknown",
-        year: vehicle?.year ?? 0,
-      },
-      jobs,
-      parts,
-    };
-  });
+  return {
+    ...order,
+    customer: {
+      id: customer?.id ?? order.customerId,
+      fullName: customer?.fullName ?? order.customerName,
+      phone: customer?.phone ?? "Unknown",
+      email: customer?.email ?? "Unknown",
+      loyaltyTier: customer?.loyaltyTier ?? "standard",
+    },
+    vehicle: {
+      id: vehicle?.id ?? order.vehicleId,
+      vin: vehicle?.vin ?? "Unknown",
+      plateNumber: vehicle?.plateNumber ?? "Unknown",
+      make: vehicle?.make ?? "Unknown",
+      model: vehicle?.model ?? "Unknown",
+      year: vehicle?.year ?? 0,
+    },
+    jobs,
+    parts,
+  };
 }
 
 function findOrderDetails(orderId: string) {
-  return buildOrderDetailsRegistry().find((order) => order.id === orderId);
+  const order = getOrderMockState(orderId);
+  return order ? buildOrderDetails(order) : undefined;
+}
+
+function isValidStatus(value: string): value is OrderStatus {
+  return ORDER_STATUSES.includes(value as OrderStatus);
 }
 
 export const ordersHandlers = [
@@ -264,7 +253,7 @@ export const ordersHandlers = [
     const sortBy = url.searchParams.get("sortBy") ?? DEFAULT_ORDERS_SORT_BY;
     const sortDirection = url.searchParams.get("sortDirection") ?? DEFAULT_ORDERS_SORT_DIRECTION;
 
-    let filtered = ordersFixture.map(toOrderListItem);
+    let filtered = getOrdersMockState().map(toOrderListItem);
 
     if (status) {
       filtered = filtered.filter((order) => order.status === status);
@@ -317,5 +306,61 @@ export const ordersHandlers = [
     }
 
     return HttpResponse.json(buildOrderActivity(order, order.jobs, order.parts));
+  }),
+  http.patch(toMswPath(apiEndpoints.orders.status(":orderId")), async ({ params, request }) => {
+    await delay(250);
+
+    const orderId = String(params.orderId);
+    const body = (await request.json().catch(() => null)) as { status?: string } | null;
+    const status = body?.status;
+
+    if (!status || !isValidStatus(status)) {
+      return HttpResponse.json({ message: "Invalid order status" }, { status: 400 });
+    }
+
+    const nextOrder = updateOrderStatusState(orderId, status);
+
+    if (!nextOrder) {
+      return HttpResponse.json({ message: "Order not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(buildOrderDetails(nextOrder));
+  }),
+  http.patch(toMswPath(apiEndpoints.orders.detail(":orderId")), async ({ params, request }) => {
+    await delay(250);
+
+    const orderId = String(params.orderId);
+    const body = (await request.json().catch(() => null)) as { assignedMechanic?: string } | null;
+    const assignedMechanic = body?.assignedMechanic?.trim();
+
+    if (!assignedMechanic) {
+      return HttpResponse.json({ message: "assignedMechanic is required" }, { status: 400 });
+    }
+
+    const nextOrder = assignOrderMechanicState(orderId, assignedMechanic);
+
+    if (!nextOrder) {
+      return HttpResponse.json({ message: "Order not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(buildOrderDetails(nextOrder));
+  }),
+  http.patch(toMswPath(apiEndpoints.orders.flag(":orderId")), async ({ params, request }) => {
+    await delay(250);
+
+    const orderId = String(params.orderId);
+    const body = (await request.json().catch(() => null)) as { flagged?: boolean } | null;
+
+    if (typeof body?.flagged !== "boolean") {
+      return HttpResponse.json({ message: "flagged must be boolean" }, { status: 400 });
+    }
+
+    const nextOrder = setOrderFlagState(orderId, body.flagged);
+
+    if (!nextOrder) {
+      return HttpResponse.json({ message: "Order not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(buildOrderDetails(nextOrder));
   }),
 ];

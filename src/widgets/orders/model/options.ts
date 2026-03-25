@@ -1,11 +1,1 @@
-import type { OrderPriority, OrderStatus } from "@/entities/order/model/types";
-
-export const ORDER_STATUSES: OrderStatus[] = [
-  "scheduled",
-  "in_progress",
-  "waiting_parts",
-  "completed",
-  "cancelled",
-];
-
-export const ORDER_PRIORITIES: OrderPriority[] = ["low", "medium", "high"];
+export { ORDER_PRIORITIES, ORDER_STATUSES } from "@/entities/order/model/options";

@@ -1,6 +1,6 @@
 import type { OrderListItem } from "@/entities/order/model/types";
 
-export type OrderFixtureItem = Omit<OrderListItem, "priority" | "assignedMechanic" | "jobsCount">;
+export type OrderFixtureItem = Omit<OrderListItem, "priority" | "assignedMechanic" | "jobsCount" | "flagged">;
 export type OrderJobCatalogItem = {
   name: string;
   category: string;

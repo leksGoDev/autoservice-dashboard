@@ -45,6 +45,26 @@ export const enPages = {
       error: "Failed to load orders.",
       empty: "No orders found for selected filters.",
     },
+    operations: {
+      status: "Status",
+      mechanic: "Mechanic",
+      actions: {
+        status: "Update status",
+        statusPending: "Updating status...",
+        mechanic: "Assign mechanic",
+        mechanicPending: "Assigning mechanic...",
+        flag: "Flag order",
+        unflag: "Remove flag",
+        flagPending: "Updating flag...",
+      },
+      success: {
+        status: "Order status updated.",
+        mechanic: "Mechanic assignment updated.",
+        flagged: "Order flagged.",
+        unflagged: "Order unflagged.",
+      },
+      errorFallback: "Failed to update order.",
+    },
     cards: {
       filtersTitle: "Filters Toolbar",
       filtersText: "Status, priority, mechanic, and date range controls belong here.",

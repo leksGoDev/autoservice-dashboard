@@ -1,7 +1,15 @@
 import { apiEndpoints } from "@/shared/api/endpoints";
 import { httpRequest } from "@/shared/api/http-client";
 import type { ListResponse } from "@/shared/api/types";
-import type { OrderActivityItem, OrderDetails, OrderListItem, OrdersListParams } from "../model/types";
+import type {
+  AssignOrderMechanicPayload,
+  OrderActivityItem,
+  OrderDetails,
+  OrderListItem,
+  OrdersListParams,
+  SetOrderFlagPayload,
+  UpdateOrderStatusPayload,
+} from "../model/types";
 
 export function getOrdersList(params: OrdersListParams = {}) {
   return httpRequest<ListResponse<OrderListItem>>(apiEndpoints.orders.list, {
@@ -30,5 +38,26 @@ export function getOrderDetails(orderId: string) {
 export function getOrderActivity(orderId: string) {
   return httpRequest<OrderActivityItem[]>(apiEndpoints.orders.activity(orderId), {
     method: "GET",
+  });
+}
+
+export function updateOrderStatus(orderId: string, payload: UpdateOrderStatusPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.orders.status(orderId), {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function assignOrderMechanic(orderId: string, payload: AssignOrderMechanicPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.orders.detail(orderId), {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function setOrderFlag(orderId: string, payload: SetOrderFlagPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.orders.flag(orderId), {
+    method: "PATCH",
+    body: payload,
   });
 }

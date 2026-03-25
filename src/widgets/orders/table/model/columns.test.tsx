@@ -13,6 +13,7 @@ const row: OrdersTableRow = {
   vehicleLabel: "2019 Honda Accord",
   status: "waiting_parts",
   priority: "high",
+  flagged: true,
   assignedMechanic: "Ivan Petrov",
   jobsCount: 3,
   totalAmount: 1200,

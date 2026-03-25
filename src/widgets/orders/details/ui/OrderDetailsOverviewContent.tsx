@@ -48,6 +48,7 @@ export const OrderDetailsOverviewContent = ({ orderId }: OrderDetailsOverviewCon
       <OrderDetailsHeader orderId={model.order.id} />
       <OrderDetailsContent
         order={model.order}
+        mechanics={model.mechanics}
         activity={model.activity}
         isActivityLoading={model.isActivityLoading}
         isActivityError={model.isActivityError}

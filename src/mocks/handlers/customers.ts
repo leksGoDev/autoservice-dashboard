@@ -2,14 +2,16 @@ import { delay, http, HttpResponse } from "msw";
 
 import type { CustomerDetailsResponse, CustomerListItem } from "@/entities/customer/model/types";
 import { customersFixture } from "@/mocks/fixtures/customers";
-import { ordersFixture } from "@/mocks/fixtures/orders";
 import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
+import { getOrdersMockState } from "@/mocks/state/orders";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 
 function buildCustomersRegistry(): CustomerListItem[] {
+  const orders = getOrdersMockState();
+
   return customersFixture.map((customer) => {
-    const customerOrders = ordersFixture.filter((order) => order.customerId === customer.id);
+    const customerOrders = orders.filter((order) => order.customerId === customer.id);
     const vehiclesCount = vehiclesFixture.filter((vehicle) => vehicle.customerId === customer.id).length;
 
     const lastVisitAt = customerOrders
@@ -27,6 +29,7 @@ function buildCustomersRegistry(): CustomerListItem[] {
 }
 
 function buildCustomerDetails(customerId: string): CustomerDetailsResponse | undefined {
+  const orders = getOrdersMockState();
   const customer = buildCustomersRegistry().find((item) => item.id === customerId);
 
   if (!customer) {
@@ -45,7 +48,7 @@ function buildCustomerDetails(customerId: string): CustomerDetailsResponse | und
     }))
     .sort((left, right) => right.year - left.year);
 
-  const orders = ordersFixture
+  const customerOrders = orders
     .filter((order) => order.customerId === customerId)
     .map((order) => ({
       id: order.id,
@@ -62,7 +65,7 @@ function buildCustomerDetails(customerId: string): CustomerDetailsResponse | und
   return {
     customer,
     vehicles,
-    orders,
+    orders: customerOrders,
   };
 }
 

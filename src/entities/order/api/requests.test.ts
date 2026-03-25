@@ -1,5 +1,12 @@
 import { httpRequest } from "@/shared/api/http-client";
-import { getOrderActivity, getOrderDetails, getOrdersList } from "./requests";
+import {
+  assignOrderMechanic,
+  getOrderActivity,
+  getOrderDetails,
+  getOrdersList,
+  setOrderFlag,
+  updateOrderStatus,
+} from "./requests";
 
 vi.mock("@/shared/api/http-client", () => ({
   httpRequest: vi.fn(),
@@ -84,6 +91,45 @@ describe("order requests", () => {
 
     expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001/activity", {
       method: "GET",
+    });
+  });
+
+  it("patches order status by id", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001", status: "completed" });
+
+    updateOrderStatus("ord_001", { status: "completed" });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001/status", {
+      method: "PATCH",
+      body: {
+        status: "completed",
+      },
+    });
+  });
+
+  it("patches assigned mechanic by id", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001", assignedMechanic: "Nikolai Volkov" });
+
+    assignOrderMechanic("ord_001", { assignedMechanic: "Nikolai Volkov" });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001", {
+      method: "PATCH",
+      body: {
+        assignedMechanic: "Nikolai Volkov",
+      },
+    });
+  });
+
+  it("patches flagged state by id", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_001", flagged: true });
+
+    setOrderFlag("ord_001", { flagged: true });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001/flag", {
+      method: "PATCH",
+      body: {
+        flagged: true,
+      },
     });
   });
 });

@@ -1,4 +1,5 @@
 import type { OrderActivityItem, OrderDetails } from "@/entities/order/model/types";
+import { OrderOperationsControls } from "@/features/order-operations/ui/OrderOperationsControls";
 import { formatOrderCurrency, formatOrderDate, getOrderStatusChipModifier } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
@@ -12,6 +13,7 @@ import type { OrderDetailsInfoListItem } from "../model/types";
 
 type OrderDetailsContentProps = {
   order: OrderDetails;
+  mechanics: string[];
   activity: OrderActivityItem[];
   isActivityLoading?: boolean;
   isActivityError?: boolean;
@@ -20,6 +22,7 @@ type OrderDetailsContentProps = {
 
 export const OrderDetailsContent = ({
   order,
+  mechanics,
   activity,
   isActivityLoading,
   isActivityError,
@@ -97,7 +100,19 @@ export const OrderDetailsContent = ({
     <>
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
         <OrderDetailsSection title={t("pages.orderDetails.sections.summary")}>
-          <OrderDetailsInfoList items={summaryItems} />
+          <div className="grid gap-4">
+            <OrderDetailsInfoList items={summaryItems} />
+            <div className="rounded-xl border border-[rgba(154,164,178,0.12)] bg-[rgba(15,17,21,0.42)] p-3">
+              <OrderOperationsControls
+                orderId={order.id}
+                status={order.status}
+                assignedMechanic={order.assignedMechanic}
+                flagged={order.flagged}
+                mechanics={mechanics}
+                variant="details"
+              />
+            </div>
+          </div>
         </OrderDetailsSection>
 
         <div className="grid gap-4">
