@@ -17,7 +17,7 @@ export function createOrdersTableColumns(
     {
       accessorKey: "number",
       header: t("pages.orders.table.headers.number"),
-      cell: (info) => <span className="orders-table__mono">{info.getValue() as string}</span>,
+      cell: (info) => <span className="font-mono text-[13px] text-[#c9d1dd]">{info.getValue() as string}</span>,
     },
     {
       accessorKey: "customerName",
