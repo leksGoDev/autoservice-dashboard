@@ -1,49 +1,18 @@
-import type { MechanicRegistryItem, MechanicWorkloadItem } from "@/entities/mechanic/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
+import type { MechanicsRegistryModel } from "../model/use-mechanics-registry-model";
 import { MechanicsAssignmentsCard } from "./MechanicsAssignmentsCard";
 import { MechanicsAvailabilityCard } from "./MechanicsAvailabilityCard";
 import { MechanicsRegistryTable } from "./MechanicsRegistryTable";
 
 type MechanicsRegistryContentProps = {
-  isLoading: boolean;
-  isError: boolean;
-  rows: MechanicRegistryItem[];
-  page: number;
-  totalPages: number;
-  summary: string;
-  canGoPrev: boolean;
-  canGoNext: boolean;
-  availability: {
-    counts: {
-      available: number;
-      busy: number;
-      off_shift: number;
-    };
-    averageUtilization: number;
-  };
-  assignmentLeaders: MechanicWorkloadItem[];
-  onRetry: () => void;
-  onPrev: () => void;
-  onNext: () => void;
+  model: MechanicsRegistryModel;
 };
 
-export const MechanicsRegistryContent = ({
-  isLoading,
-  isError,
-  rows,
-  page,
-  totalPages,
-  summary,
-  canGoPrev,
-  canGoNext,
-  availability,
-  assignmentLeaders,
-  onRetry,
-  onPrev,
-  onNext,
-}: MechanicsRegistryContentProps) => {
+export const MechanicsRegistryContent = ({ model }: MechanicsRegistryContentProps) => {
   const { t } = useI18n();
+  const isLoading = model.registryQuery.isLoading || model.workloadQuery.isLoading;
+  const isError = model.registryQuery.isError || model.workloadQuery.isError;
 
   if (isLoading) {
     return <DataState message={t("pages.mechanics.states.loading")} />;
@@ -58,7 +27,7 @@ export const MechanicsRegistryContent = ({
           <button
             type="button"
             className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
-            onClick={onRetry}
+            onClick={model.handleRetry}
           >
             {t("common.retry")}
           </button>
@@ -67,29 +36,29 @@ export const MechanicsRegistryContent = ({
     );
   }
 
-  if (rows.length === 0) {
+  if (model.rows.length === 0) {
     return <DataState message={t("pages.mechanics.states.empty")} />;
   }
 
   return (
     <>
       <MechanicsRegistryTable
-        rows={rows}
-        page={page}
-        totalPages={totalPages}
-        summary={summary}
-        canGoPrev={canGoPrev}
-        canGoNext={canGoNext}
-        onPrev={onPrev}
-        onNext={onNext}
+        rows={model.rows}
+        page={model.data?.page ?? 1}
+        totalPages={model.data?.totalPages ?? 1}
+        summary={model.summary}
+        canGoPrev={model.canGoPrev}
+        canGoNext={model.canGoNext}
+        onPrev={() => model.setPage((value) => Math.max(1, value - 1))}
+        onNext={() => model.setPage((value) => value + 1)}
       />
 
       <div className="grid gap-4 lg:grid-cols-2">
         <MechanicsAvailabilityCard
-          counts={availability.counts}
-          averageUtilization={availability.averageUtilization}
+          counts={model.availability.counts}
+          averageUtilization={model.availability.averageUtilization}
         />
-        <MechanicsAssignmentsCard leaders={assignmentLeaders} />
+        <MechanicsAssignmentsCard leaders={model.assignmentLeaders} />
       </div>
     </>
   );

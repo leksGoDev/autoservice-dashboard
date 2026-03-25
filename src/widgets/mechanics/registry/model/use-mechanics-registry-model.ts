@@ -1,7 +1,10 @@
 import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 
+import type { ListResponse } from "@/shared/api/types";
+import type { UseQueryResult } from "@tanstack/react-query";
 import { useMechanicsRegistryQuery, useMechanicsWorkloadQuery } from "@/entities/mechanic/api/queries";
+import type { MechanicRegistryItem, MechanicWorkloadItem } from "@/entities/mechanic/model/types";
 import { DASHBOARD_RANGES, DEFAULT_DASHBOARD_RANGE } from "@/shared/api/constants";
 import { useI18n } from "@/shared/i18n/use-i18n";
 
@@ -13,7 +16,30 @@ type AvailabilityCounts = {
   off_shift: number;
 };
 
-export const useMechanicsRegistryModel = () => {
+export type MechanicsRegistryModel = {
+  range: typeof DASHBOARD_RANGES[number];
+  setRange: (next: typeof DASHBOARD_RANGES[number]) => void;
+  searchInput: string;
+  setSearchInput: (next: string) => void;
+  page: number;
+  setPage: (next: number | ((prev: number) => number)) => void;
+  registryQuery: UseQueryResult<ListResponse<MechanicRegistryItem>, Error>;
+  workloadQuery: UseQueryResult<MechanicWorkloadItem[], Error>;
+  data: ListResponse<MechanicRegistryItem> | undefined;
+  rows: MechanicRegistryItem[];
+  availability: {
+    counts: AvailabilityCounts;
+    averageUtilization: number;
+  };
+  assignmentLeaders: MechanicWorkloadItem[];
+  summary: string;
+  canGoPrev: boolean;
+  canGoNext: boolean;
+  handleSearchSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  handleRetry: () => void;
+};
+
+export const useMechanicsRegistryModel = (): MechanicsRegistryModel => {
   const { t } = useI18n();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");

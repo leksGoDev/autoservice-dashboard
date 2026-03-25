@@ -14,21 +14,7 @@ export const MechanicsRegistry = () => {
         onSearchInputChange={model.setSearchInput}
         onSearchSubmit={model.handleSearchSubmit}
       />
-      <MechanicsRegistryContent
-        isLoading={model.registryQuery.isLoading || model.workloadQuery.isLoading}
-        isError={model.registryQuery.isError || model.workloadQuery.isError}
-        rows={model.rows}
-        page={model.data?.page ?? 1}
-        totalPages={model.data?.totalPages ?? 1}
-        summary={model.summary}
-        canGoPrev={model.canGoPrev}
-        canGoNext={model.canGoNext}
-        availability={model.availability}
-        assignmentLeaders={model.assignmentLeaders}
-        onRetry={model.handleRetry}
-        onPrev={() => model.setPage((value) => Math.max(1, value - 1))}
-        onNext={() => model.setPage((value) => value + 1)}
-      />
+      <MechanicsRegistryContent model={model} />
     </section>
   );
 };
