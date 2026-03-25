@@ -5,6 +5,21 @@ async function getJson(url: string) {
   return response.json();
 }
 
+async function patchJson(url: string, body: unknown) {
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  return {
+    status: response.status,
+    body: await response.json(),
+  };
+}
+
 describe("ordersHandlers", () => {
   it("filters by status, applies search, and paginates", async () => {
     const data = await getJson("/api/orders?status=in_progress&search=ORD-10&page=1&pageSize=2");
@@ -79,5 +94,44 @@ describe("ordersHandlers", () => {
     const sorted = [...timestamps].sort((left, right) => right - left);
 
     expect(timestamps).toEqual(sorted);
+  });
+
+  it("updates order status and returns updated details/list snapshots", async () => {
+    const patchResponse = await patchJson("/api/orders/ord_002/status", { status: "in_progress" });
+    const details = await getJson("/api/orders/ord_002");
+    const list = await getJson("/api/orders?search=ORD-1002&page=1&pageSize=1");
+
+    expect(patchResponse.status).toBe(200);
+    expect(patchResponse.body.status).toBe("in_progress");
+    expect(details.status).toBe("in_progress");
+    expect(list.items[0].status).toBe("in_progress");
+  });
+
+  it("updates assigned mechanic and keeps data consistent in details and work board cards", async () => {
+    const patchResponse = await patchJson("/api/orders/ord_001", { assignedMechanic: "Nikolai Volkov" });
+    const details = await getJson("/api/orders/ord_001");
+    const workBoard = await getJson("/api/work-board");
+    const boardCard = workBoard.columns
+      .flatMap((column: { cards: { orderId: string; assignedMechanic: string }[] }) => column.cards)
+      .find((card: { orderId: string }) => card.orderId === "ord_001");
+
+    expect(patchResponse.status).toBe(200);
+    expect(details.assignedMechanic).toBe("Nikolai Volkov");
+    expect(boardCard?.assignedMechanic).toBe("Nikolai Volkov");
+  });
+
+  it("updates flag state via dedicated endpoint", async () => {
+    const patchResponse = await patchJson("/api/orders/ord_003/flag", { flagged: false });
+    const details = await getJson("/api/orders/ord_003");
+
+    expect(patchResponse.status).toBe(200);
+    expect(details.flagged).toBe(false);
+  });
+
+  it("returns validation errors for invalid mutation payload", async () => {
+    const response = await patchJson("/api/orders/ord_001/status", { status: "invalid_status" });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toContain("Invalid");
   });
 });

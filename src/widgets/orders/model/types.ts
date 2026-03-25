@@ -7,6 +7,7 @@ export interface OrdersTableRow {
   vehicleLabel: string;
   status: OrderStatus;
   priority: OrderPriority;
+  flagged: boolean;
   assignedMechanic: string;
   jobsCount: number;
   totalAmount: number;

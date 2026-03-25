@@ -1,5 +1,6 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
+import { OrderOperationsControls } from "@/features/order-operations/ui/OrderOperationsControls";
 import { OrdersTable } from "@/widgets/orders/table/OrdersTable";
 import type { OrdersRegistryModel } from "../model/use-orders-registry-model";
 
@@ -44,6 +45,16 @@ export const OrdersRegistryContent = ({ model }: OrdersRegistryContentProps) => 
       total={model.total}
       isFetching={model.listQuery.isFetching}
       onPageChange={model.onPageChange}
+      renderRowActions={(order) => (
+        <OrderOperationsControls
+          orderId={order.id}
+          status={order.status}
+          assignedMechanic={order.assignedMechanic}
+          flagged={order.flagged}
+          mechanics={model.mechanics}
+          variant="table"
+        />
+      )}
     />
   );
 };

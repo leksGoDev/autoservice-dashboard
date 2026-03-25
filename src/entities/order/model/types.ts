@@ -14,6 +14,7 @@ export interface OrderListItem {
   number: string;
   status: OrderStatus;
   priority: OrderPriority;
+  flagged: boolean;
   customerId: string;
   customerName: string;
   vehicleId: string;
@@ -83,7 +84,6 @@ export interface OrderActivityItem {
 }
 
 export interface OrderDetails extends OrderListItem {
-  flagged: boolean;
   customer: OrderCustomerSnapshot;
   vehicle: OrderVehicleSnapshot;
   jobs: OrderServiceJob[];
@@ -101,4 +101,16 @@ export interface OrdersListParams {
   createdTo?: string;
   sortBy?: "createdAt" | "updatedAt" | "totalAmount";
   sortDirection?: SortDirection;
+}
+
+export interface UpdateOrderStatusPayload {
+  status: OrderStatus;
+}
+
+export interface AssignOrderMechanicPayload {
+  assignedMechanic: string;
+}
+
+export interface SetOrderFlagPayload {
+  flagged: boolean;
 }

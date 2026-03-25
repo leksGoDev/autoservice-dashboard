@@ -1,3 +1,4 @@
+import { ORDER_STATUSES } from "@/entities/order/model/options";
 import type { OrderPriority } from "@/entities/order/model/types";
 import type {
   WorkBoardCard,
@@ -9,7 +10,9 @@ import { ordersFixture } from "@/mocks/fixtures/orders";
 
 const MECHANICS = ["Ivan Petrov", "Nikolai Volkov", "Sergey Morozov", "Andrey Sokolov"] as const;
 
-const BOARD_STATUSES: WorkBoardStatus[] = ["scheduled", "in_progress", "waiting_parts", "completed"];
+const BOARD_STATUSES: WorkBoardStatus[] = ORDER_STATUSES.filter(
+  (status): status is WorkBoardStatus => status !== "cancelled",
+);
 
 function getPriority(totalAmount: number): OrderPriority {
   if (totalAmount >= 900) {

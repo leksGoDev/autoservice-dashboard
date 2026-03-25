@@ -24,6 +24,8 @@ export const apiEndpoints = {
     list: "/orders",
     detail: (orderId: string) => `/orders/${orderId}`,
     activity: (orderId: string) => `/orders/${orderId}/activity`,
+    status: (orderId: string) => `/orders/${orderId}/status`,
+    flag: (orderId: string) => `/orders/${orderId}/flag`,
   },
   workBoard: {
     board: "/work-board",

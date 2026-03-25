@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 
 import { ApiError } from "@/shared/api/api-error";
+import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { useOrderActivityQuery, useOrderDetailsQuery } from "@/entities/order/api/queries";
 import { useOrderDetailsOverviewModel } from "./use-order-details-overview-model";
 
@@ -8,9 +9,13 @@ vi.mock("@/entities/order/api/queries", () => ({
   useOrderDetailsQuery: vi.fn(),
   useOrderActivityQuery: vi.fn(),
 }));
+vi.mock("@/entities/mechanic/api/queries", () => ({
+  useMechanicsRegistryQuery: vi.fn(),
+}));
 
 const mockedUseOrderDetailsQuery = vi.mocked(useOrderDetailsQuery);
 const mockedUseOrderActivityQuery = vi.mocked(useOrderActivityQuery);
+const mockedUseMechanicsRegistryQuery = vi.mocked(useMechanicsRegistryQuery);
 
 function buildQueryState(overrides: Record<string, unknown> = {}) {
   return {
@@ -27,6 +32,14 @@ describe("useOrderDetailsOverviewModel", () => {
   beforeEach(() => {
     mockedUseOrderDetailsQuery.mockReset();
     mockedUseOrderActivityQuery.mockReset();
+    mockedUseMechanicsRegistryQuery.mockReset();
+    mockedUseMechanicsRegistryQuery.mockReturnValue(
+      buildQueryState({
+        data: {
+          items: [{ name: "Ivan Petrov" }, { name: "Nikolai Volkov" }],
+        },
+      }) as never,
+    );
   });
 
   it("treats 404 on details as not found", () => {
@@ -42,6 +55,7 @@ describe("useOrderDetailsOverviewModel", () => {
 
     expect(result.current.isNotFound).toBe(true);
     expect(result.current.isError).toBe(false);
+    expect(result.current.mechanics).toEqual(["Ivan Petrov", "Nikolai Volkov"]);
   });
 
   it("does not treat activity 404 as not found", () => {
