@@ -127,11 +127,11 @@ export const OrderDetailsContent = ({
       </div>
 
       <OrderDetailsSection title={t("pages.orderDetails.sections.jobs")}>
-        <OrderDetailsJobsTable jobs={order.jobs} />
+        <OrderDetailsJobsTable orderId={order.id} jobs={order.jobs} mechanics={mechanics} />
       </OrderDetailsSection>
 
       <OrderDetailsSection title={t("pages.orderDetails.sections.parts")}>
-        <OrderDetailsPartsTable parts={order.parts} />
+        <OrderDetailsPartsTable orderId={order.id} jobs={order.jobs} parts={order.parts} />
       </OrderDetailsSection>
 
       <OrderDetailsSection title={t("pages.orderDetails.sections.activity")}>

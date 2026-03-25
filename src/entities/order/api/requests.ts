@@ -2,12 +2,17 @@ import { apiEndpoints } from "@/shared/api/endpoints";
 import { httpRequest } from "@/shared/api/http-client";
 import type { ListResponse } from "@/shared/api/types";
 import type {
+  AddJobPartPayload,
+  AddServiceJobPayload,
+  AssignServiceJobMechanicPayload,
   AssignOrderMechanicPayload,
   OrderActivityItem,
   OrderDetails,
   OrderListItem,
   OrdersListParams,
   SetOrderFlagPayload,
+  UpdateJobPartPayload,
+  UpdateServiceJobPayload,
   UpdateOrderStatusPayload,
 } from "../model/types";
 
@@ -59,5 +64,46 @@ export function setOrderFlag(orderId: string, payload: SetOrderFlagPayload) {
   return httpRequest<OrderDetails>(apiEndpoints.orders.flag(orderId), {
     method: "PATCH",
     body: payload,
+  });
+}
+
+export function addServiceJob(orderId: string, payload: AddServiceJobPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.orders.jobs(orderId), {
+    method: "POST",
+    body: payload,
+  });
+}
+
+export function updateServiceJobStatus(jobId: string, payload: UpdateServiceJobPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.jobs.status(jobId), {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function assignServiceJobMechanic(jobId: string, payload: AssignServiceJobMechanicPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.jobs.assignMechanic(jobId), {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function addPartToJob(jobId: string, payload: AddJobPartPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.jobs.parts(jobId), {
+    method: "POST",
+    body: payload,
+  });
+}
+
+export function updateJobPartQuantity(jobPartId: string, payload: UpdateJobPartPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.jobParts.detail(jobPartId), {
+    method: "PATCH",
+    body: payload,
+  });
+}
+
+export function removeJobPart(jobPartId: string) {
+  return httpRequest<OrderDetails>(apiEndpoints.jobParts.detail(jobPartId), {
+    method: "DELETE",
   });
 }
