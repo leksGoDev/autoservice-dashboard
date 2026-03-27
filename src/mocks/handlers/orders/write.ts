@@ -109,9 +109,17 @@ function isCreateVehiclePayload(
   const plateNumber = typeof value.plateNumber === "string" ? value.plateNumber.trim() : "";
   const make = typeof value.make === "string" ? value.make.trim() : "";
   const model = typeof value.model === "string" ? value.model.trim() : "";
-  const year = value.year;
+  const year = typeof value.year === "number" ? value.year : Number.NaN;
 
-  return Boolean(vin) && Boolean(plateNumber) && Boolean(make) && Boolean(model) && Number.isInteger(year);
+  return (
+    Boolean(vin) &&
+    Boolean(plateNumber) &&
+    Boolean(make) &&
+    Boolean(model) &&
+    Number.isInteger(year) &&
+    year >= 1980 &&
+    year <= 2100
+  );
 }
 
 async function readJsonBody(request: Request): Promise<Record<string, unknown> | null> {

@@ -2,6 +2,16 @@ import { z } from "zod";
 
 import { ORDER_PRIORITIES, ORDER_STATUSES } from "@/entities/order/model/options";
 
+const customerEmailSchema = z.string().email();
+
+function requireWhen<T extends Record<string, unknown>>(
+  predicate: (values: T) => boolean,
+  field: keyof T,
+  message: string,
+) {
+  return (values: T) => !predicate(values) || Boolean(values[field]);
+}
+
 const initialServiceJobSchema = z.object({
   name: z.string().trim().min(1, "Job name is required"),
   category: z.string().trim().min(1, "Category is required"),
@@ -41,15 +51,15 @@ export const createOrderFormSchema = z
     path: ["existingCustomerId"],
     message: "Select a customer",
   })
-  .refine((values) => values.customerMode !== "new" || Boolean(values.newCustomerFullName), {
+  .refine(requireWhen((values) => values.customerMode === "new", "newCustomerFullName", "Customer full name is required"), {
     path: ["newCustomerFullName"],
     message: "Customer full name is required",
   })
-  .refine((values) => values.customerMode !== "new" || Boolean(values.newCustomerPhone), {
+  .refine(requireWhen((values) => values.customerMode === "new", "newCustomerPhone", "Customer phone is required"), {
     path: ["newCustomerPhone"],
     message: "Customer phone is required",
   })
-  .refine((values) => values.customerMode !== "new" || z.string().email().safeParse(values.newCustomerEmail).success, {
+  .refine((values) => values.customerMode !== "new" || customerEmailSchema.safeParse(values.newCustomerEmail).success, {
     path: ["newCustomerEmail"],
     message: "Valid customer email is required",
   })
@@ -57,23 +67,23 @@ export const createOrderFormSchema = z
     path: ["vehicleMode"],
     message: "New customer requires creating a new vehicle",
   })
-  .refine((values) => values.vehicleMode !== "existing" || Boolean(values.existingVehicleId), {
+  .refine(requireWhen((values) => values.vehicleMode === "existing", "existingVehicleId", "Select a vehicle"), {
     path: ["existingVehicleId"],
     message: "Select a vehicle",
   })
-  .refine((values) => values.vehicleMode !== "new" || Boolean(values.newVehicleVin), {
+  .refine(requireWhen((values) => values.vehicleMode === "new", "newVehicleVin", "VIN is required"), {
     path: ["newVehicleVin"],
     message: "VIN is required",
   })
-  .refine((values) => values.vehicleMode !== "new" || Boolean(values.newVehiclePlateNumber), {
+  .refine(requireWhen((values) => values.vehicleMode === "new", "newVehiclePlateNumber", "Plate number is required"), {
     path: ["newVehiclePlateNumber"],
     message: "Plate number is required",
   })
-  .refine((values) => values.vehicleMode !== "new" || Boolean(values.newVehicleMake), {
+  .refine(requireWhen((values) => values.vehicleMode === "new", "newVehicleMake", "Make is required"), {
     path: ["newVehicleMake"],
     message: "Make is required",
   })
-  .refine((values) => values.vehicleMode !== "new" || Boolean(values.newVehicleModel), {
+  .refine(requireWhen((values) => values.vehicleMode === "new", "newVehicleModel", "Model is required"), {
     path: ["newVehicleModel"],
     message: "Model is required",
   });

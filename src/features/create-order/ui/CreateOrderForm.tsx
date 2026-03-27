@@ -38,7 +38,13 @@ export const CreateOrderForm = () => {
   return (
     <form className="grid gap-5" onSubmit={model.submit}>
       <CustomerSection form={model.form} mode={model.customerMode} customers={model.customers} />
-      <VehicleSection form={model.form} mode={model.vehicleMode} vehicles={model.vehicles} />
+      <VehicleSection
+        form={model.form}
+        mode={model.vehicleMode}
+        vehicles={model.vehicles}
+        canSelectExistingVehicle={model.canSelectExistingVehicle}
+        isLoading={model.isVehiclesLoading}
+      />
       <ScheduleSection form={model.form} />
       <MetaSection form={model.form} mechanics={model.mechanics} />
       <InitialJobsSection form={model.form} mechanics={model.mechanics} jobsFieldArray={model.jobsFieldArray} />

@@ -8,9 +8,11 @@ type VehicleSectionProps = {
   form: CreateOrderFormHandle;
   mode: "existing" | "new";
   vehicles: VehicleListItem[];
+  canSelectExistingVehicle: boolean;
+  isLoading: boolean;
 };
 
-export const VehicleSection = ({ form, mode, vehicles }: VehicleSectionProps) => {
+export const VehicleSection = ({ form, mode, vehicles, canSelectExistingVehicle, isLoading }: VehicleSectionProps) => {
   const { t } = useI18n();
   const {
     register,
@@ -34,7 +36,7 @@ export const VehicleSection = ({ form, mode, vehicles }: VehicleSectionProps) =>
         {mode === "existing" ? (
           <label className={fieldLabelClassName}>
             <span className={fieldTitleClassName}>{t("pages.ordersCreate.vehicle.select")}</span>
-            <select className={inputClassName} {...register("existingVehicleId")}>
+            <select className={inputClassName} disabled={!canSelectExistingVehicle || isLoading} {...register("existingVehicleId")}>
               <option value="">{t("pages.ordersCreate.common.selectPlaceholder")}</option>
               {vehicles.map((vehicle) => (
                 <option key={vehicle.id} value={vehicle.id}>

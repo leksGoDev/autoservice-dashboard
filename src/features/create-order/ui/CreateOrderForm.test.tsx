@@ -6,67 +6,37 @@ import { CreateOrderForm } from "./CreateOrderForm";
 
 const mutateAsyncMock = vi.fn();
 
-vi.mock("@/entities/customer/api/queries", () => ({
-  useCustomersListQuery: () => ({
-    data: {
-      items: [
-        {
-          id: "cust_001",
-          fullName: "Alex Turner",
-          phone: "+1-555-0100",
-          email: "alex.turner@example.com",
-          loyaltyTier: "gold",
-          vehiclesCount: 1,
-          ordersCount: 2,
-          lastVisitAt: "2026-03-18T09:10:00.000Z",
-        },
-      ],
-    },
+vi.mock("../api/queries", () => ({
+  useCreateOrderBootstrapQuery: () => ({
+    customers: [
+      {
+        id: "cust_001",
+        fullName: "Alex Turner",
+        phone: "+1-555-0100",
+        email: "alex.turner@example.com",
+        loyaltyTier: "gold",
+        vehiclesCount: 1,
+        ordersCount: 2,
+        lastVisitAt: "2026-03-18T09:10:00.000Z",
+      },
+    ],
+    vehicles: [
+      {
+        id: "veh_001",
+        customerId: "cust_001",
+        vin: "1HGCM82633A123001",
+        plateNumber: "TX-1842",
+        make: "Honda",
+        model: "Accord",
+        year: 2019,
+        owner: "Alex Turner",
+        ordersCount: 2,
+      },
+    ],
+    mechanics: ["Ivan Petrov"],
     isLoading: false,
-    isError: false,
-    refetch: vi.fn(),
-  }),
-}));
-
-vi.mock("@/entities/vehicle/api/queries", () => ({
-  useVehiclesListQuery: () => ({
-    data: {
-      items: [
-        {
-          id: "veh_001",
-          customerId: "cust_001",
-          vin: "1HGCM82633A123001",
-          plateNumber: "TX-1842",
-          make: "Honda",
-          model: "Accord",
-          year: 2019,
-          owner: "Alex Turner",
-          ordersCount: 2,
-        },
-      ],
-    },
-    isLoading: false,
-    isError: false,
-    refetch: vi.fn(),
-  }),
-}));
-
-vi.mock("@/entities/mechanic/api/queries", () => ({
-  useMechanicsRegistryQuery: () => ({
-    data: {
-      items: [
-        {
-          id: "mech_001",
-          name: "Ivan Petrov",
-          specialization: "Diagnostics",
-          status: "available",
-          activeJobs: 2,
-          experienceYears: 7,
-        },
-      ],
-    },
-    isLoading: false,
-    isError: false,
+    isVehiclesLoading: false,
+    hasError: false,
     refetch: vi.fn(),
   }),
 }));
