@@ -1,23 +1,158 @@
 import type {
   AddJobPartPayload,
   AddServiceJobPayload,
+  CreateOrderPayload,
   OrderPartItem,
   OrderServiceJob,
   OrderStatus,
   ServiceJobStatus,
 } from "@/entities/order/model/types";
+import { createCustomerState, getCustomerMockState } from "@/mocks/state/customers";
+import { createVehicleState, getVehicleMockState } from "@/mocks/state/vehicles";
 import { getActualHours, normalizeMoney } from "./initial";
 import {
   addActivity,
+  appendOrder,
   findOrderAndJobIndex,
   findOrderAndPartIndex,
   findOrderIndex,
   getMutableOrderByIndex,
+  getNextOrderSequence,
   setUpdated,
   syncDerivedOrderFields,
   toOrderSnapshot,
 } from "./store";
 import type { MockOrderStateItem } from "./types";
+
+function buildOrderId(sequence: number) {
+  return `ord_${String(sequence).padStart(3, "0")}`;
+}
+
+function buildOrderNumber(sequence: number) {
+  return `ORD-${1000 + sequence}`;
+}
+
+function toInitialJob(orderId: string, sequence: number, assignedMechanic: string, payload: CreateOrderPayload["initialJobs"][number]) {
+  return {
+    id: `${orderId}_job_${sequence}`,
+    name: payload.name,
+    category: payload.category,
+    status: "pending" as const,
+    assignedMechanic: payload.assignedMechanic ?? assignedMechanic,
+    estimatedHours: Number(payload.estimatedHours.toFixed(1)),
+    actualHours: 0,
+    laborPrice: normalizeMoney(payload.laborPrice),
+  };
+}
+
+function getOrderTotalAmount(jobs: OrderServiceJob[]) {
+  return normalizeMoney(jobs.reduce((sum, job) => sum + job.laborPrice, 0));
+}
+
+export function createOrderState(payload: CreateOrderPayload): MockOrderStateItem | undefined {
+  const hasCustomerId = typeof payload.customerId === "string" && Boolean(payload.customerId);
+  const hasInlineCustomer = Boolean(payload.customer);
+  const hasVehicleId = typeof payload.vehicleId === "string" && Boolean(payload.vehicleId);
+  const hasInlineVehicle = Boolean(payload.vehicle);
+
+  if ((!hasCustomerId && !hasInlineCustomer) || (!hasVehicleId && !hasInlineVehicle)) {
+    return undefined;
+  }
+
+  let customer = hasCustomerId ? getCustomerMockState(payload.customerId as string) : undefined;
+  let vehicle = hasVehicleId ? getVehicleMockState(payload.vehicleId as string) : undefined;
+
+  if (hasVehicleId && !vehicle) {
+    return undefined;
+  }
+
+  if (hasCustomerId && !customer) {
+    return undefined;
+  }
+
+  if (!hasCustomerId && hasVehicleId) {
+    return undefined;
+  }
+
+  if (customer && vehicle && vehicle.customerId !== customer.id) {
+    return undefined;
+  }
+
+  if (!customer && payload.customer) {
+    customer = createCustomerState(payload.customer);
+  }
+
+  if (!customer) {
+    return undefined;
+  }
+
+  if (!vehicle && payload.vehicle) {
+    vehicle = createVehicleState({
+      customerId: customer.id,
+      vin: payload.vehicle.vin,
+      plateNumber: payload.vehicle.plateNumber,
+      make: payload.vehicle.make,
+      model: payload.vehicle.model,
+      year: payload.vehicle.year,
+    });
+  }
+
+  if (!vehicle || vehicle.customerId !== customer.id) {
+    return undefined;
+  }
+
+  const sequence = getNextOrderSequence();
+  const orderId = buildOrderId(sequence);
+  const createdAt = new Date().toISOString();
+  const initialJobs = payload.initialJobs.map((job, index) =>
+    toInitialJob(orderId, index + 1, payload.assignedMechanic, job),
+  );
+  const totalAmount = getOrderTotalAmount(initialJobs);
+  const nextOrder: MockOrderStateItem = {
+    id: orderId,
+    number: buildOrderNumber(sequence),
+    customerId: customer.id,
+    customerName: customer.fullName,
+    vehicleId: vehicle.id,
+    vehicleLabel: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
+    status: payload.status,
+    priority: payload.priority,
+    flagged: payload.priority === "high",
+    assignedMechanic: payload.assignedMechanic,
+    jobsCount: initialJobs.length,
+    totalAmount,
+    createdAt,
+    updatedAt: createdAt,
+    scheduledFor: payload.scheduledFor,
+    complaint: payload.complaint,
+    notes: payload.notes?.trim() ? payload.notes.trim() : "",
+    jobs: initialJobs,
+    parts: [],
+    activity: [],
+    nextJobSequence: initialJobs.length + 1,
+    nextPartSequence: 1,
+    nextActivitySequence: 1,
+  };
+
+  addActivity(
+    nextOrder,
+    "order_created",
+    "Service Advisor",
+    `Work order ${nextOrder.number} was created for ${nextOrder.vehicleLabel}.`,
+  );
+  addActivity(
+    nextOrder,
+    "order_scheduled",
+    "Front Desk",
+    `Visit scheduled for ${new Date(payload.scheduledFor).toLocaleString()}.`,
+  );
+  nextOrder.jobs.forEach((job) => {
+    addActivity(nextOrder, "job_added", job.assignedMechanic, `${job.name} was added to the work scope.`);
+  });
+
+  appendOrder(nextOrder);
+  return toOrderSnapshot(nextOrder);
+}
 
 export function updateOrderStatusState(orderId: string, status: OrderStatus): MockOrderStateItem | undefined {
   const index = findOrderIndex(orderId);

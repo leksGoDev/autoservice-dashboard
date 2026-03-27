@@ -35,6 +35,13 @@ describe("router smoke", () => {
     expect(screen.getByRole("region", { name: "Orders filters toolbar" })).toBeInTheDocument();
   });
 
+  it("renders create order route content", async () => {
+    renderWithRoute("/orders/new");
+
+    expect(await screen.findByText("Create order")).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Create order" })).toBeInTheDocument();
+  });
+
   it("renders customers route content", async () => {
     renderWithRoute("/customers");
 

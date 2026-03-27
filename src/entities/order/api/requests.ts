@@ -6,6 +6,7 @@ import type {
   AddServiceJobPayload,
   AssignServiceJobMechanicPayload,
   AssignOrderMechanicPayload,
+  CreateOrderPayload,
   OrderActivityItem,
   OrderDetails,
   OrderListItem,
@@ -37,6 +38,13 @@ export function getOrdersList(params: OrdersListParams = {}) {
 export function getOrderDetails(orderId: string) {
   return httpRequest<OrderDetails>(apiEndpoints.orders.detail(orderId), {
     method: "GET",
+  });
+}
+
+export function createOrder(payload: CreateOrderPayload) {
+  return httpRequest<OrderDetails>(apiEndpoints.orders.list, {
+    method: "POST",
+    body: payload,
   });
 }
 

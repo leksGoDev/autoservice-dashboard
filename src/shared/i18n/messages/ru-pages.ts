@@ -15,6 +15,7 @@ export const ruPages = {
       createdTo: "Создан по",
       all: "Все",
       reset: "Сбросить фильтры",
+      create: "Создать заказ",
     },
     table: {
       headers: {
@@ -73,6 +74,70 @@ export const ruPages = {
       actionsTitle: "Действия по строке",
       actionsText:
         "Здесь запускаются смена статуса, назначение механика, флаги и переход в детали заказа.",
+    },
+  },
+  ordersCreate: {
+    eyebrow: "Создание",
+    title: "Создать заказ",
+    description: "Сформируйте новый сервисный заказ: клиент, автомобиль, время визита и стартовые работы.",
+    sections: {
+      customer: "Клиент",
+      vehicle: "Автомобиль",
+      schedule: "Запись и комментарии",
+      meta: "Приоритет и статус",
+      jobs: "Стартовые работы",
+    },
+    common: {
+      selectPlaceholder: "Выберите значение",
+    },
+    customer: {
+      existing: "Выбрать существующего клиента",
+      new: "Создать клиента в форме",
+      select: "Клиент",
+      fullName: "ФИО",
+      phone: "Телефон",
+      email: "Email",
+      loyalty: "Уровень лояльности",
+    },
+    vehicle: {
+      existing: "Выбрать существующий автомобиль",
+      new: "Создать автомобиль в форме",
+      select: "Автомобиль",
+      vin: "VIN",
+      plate: "Госномер",
+      make: "Марка",
+      model: "Модель",
+      year: "Год",
+    },
+    schedule: {
+      scheduledFor: "Время визита",
+      complaint: "Жалоба/проблема",
+      notes: "Комментарий",
+    },
+    meta: {
+      priority: "Приоритет",
+      status: "Статус",
+      mechanic: "Назначенный механик",
+    },
+    jobs: {
+      job: "Работа",
+      add: "Добавить работу",
+      remove: "Удалить",
+      name: "Название работы",
+      category: "Категория",
+      estimatedHours: "План, ч",
+      laborPrice: "Стоимость работ",
+      mechanic: "Механик работы",
+    },
+    actions: {
+      cancel: "Отмена",
+      submit: "Создать заказ",
+      submitting: "Создание заказа...",
+    },
+    states: {
+      loading: "Загрузка данных формы...",
+      error: "Не удалось загрузить данные для создания заказа.",
+      success: "Заказ создан. Открываем детали...",
     },
   },
   orderDetails: {

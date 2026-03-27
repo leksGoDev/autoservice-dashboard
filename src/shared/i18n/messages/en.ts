@@ -13,6 +13,7 @@ export const enMessages = {
   routes: {
     dashboard: "Dashboard",
     orders: "Orders",
+    ordersCreate: "Create Order",
     customers: "Customers",
     vehicles: "Vehicles",
     mechanics: "Mechanics",

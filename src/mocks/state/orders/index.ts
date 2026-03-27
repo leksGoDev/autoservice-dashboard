@@ -2,6 +2,7 @@ export type { MockOrderStateItem } from "./types";
 export { getOrderMockState, getOrdersMockState, resetOrdersMockState } from "./store";
 export {
   addJobPartState,
+  createOrderState,
   addServiceJobState,
   assignOrderMechanicState,
   assignServiceJobMechanicState,

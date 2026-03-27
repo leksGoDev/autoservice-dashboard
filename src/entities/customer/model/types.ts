@@ -6,6 +6,13 @@ export interface Customer {
   loyaltyTier: "standard" | "silver" | "gold";
 }
 
+export interface CreateCustomerPayload {
+  fullName: string;
+  phone: string;
+  email: string;
+  loyaltyTier?: Customer["loyaltyTier"];
+}
+
 export interface CustomerListItem extends Customer {
   vehiclesCount: number;
   ordersCount: number;

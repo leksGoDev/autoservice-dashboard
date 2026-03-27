@@ -5,6 +5,21 @@ async function getJson(url: string) {
   return response.json();
 }
 
+async function postJson(url: string, body: unknown) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  return {
+    status: response.status,
+    body: await response.json(),
+  };
+}
+
 describe("customersHandlers", () => {
   it("applies search and paginates", async () => {
     const data = await getJson("/api/customers?search=alex&page=1&pageSize=1");
@@ -56,5 +71,20 @@ describe("customersHandlers", () => {
 
     expect(response.status).toBe(404);
     await expect(response.json()).resolves.toEqual({ message: "Customer not found" });
+  });
+
+  it("creates customer inline", async () => {
+    const before = await getJson("/api/customers?page=1&pageSize=50");
+    const created = await postJson("/api/customers", {
+      fullName: "Riley Stone",
+      phone: "+1-555-0199",
+      email: "riley.stone@example.com",
+      loyaltyTier: "silver",
+    });
+    const after = await getJson("/api/customers?page=1&pageSize=50");
+
+    expect(created.status).toBe(201);
+    expect(created.body.fullName).toBe("Riley Stone");
+    expect(after.total).toBe(before.total + 1);
   });
 });

@@ -25,4 +25,11 @@ describe("appRoutes", () => {
 
     expect(orderDetailsRoute).toBeDefined();
   });
+
+  it("registers create order route", () => {
+    const root = appRoutes[0];
+    const createOrderRoute = root.children?.find((route) => "path" in route && route.path === "orders/new");
+
+    expect(createOrderRoute).toBeDefined();
+  });
 });

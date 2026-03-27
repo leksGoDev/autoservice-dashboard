@@ -12,6 +12,9 @@ const OrdersPage = lazy(() =>
 const OrderDetailsPage = lazy(() =>
   import("../pages/orders/OrderDetailsPage").then((module) => ({ default: module.OrderDetailsPage })),
 );
+const CreateOrderPage = lazy(() =>
+  import("../pages/orders/CreateOrderPage").then((module) => ({ default: module.CreateOrderPage })),
+);
 const CustomersPage = lazy(() =>
   import("../pages/customers/CustomersPage").then((module) => ({ default: module.CustomersPage })),
 );
@@ -52,6 +55,11 @@ export const appRoutes = [
         path: "orders",
         element: <OrdersPage />,
         handle: { titleKey: "routes.orders" },
+      },
+      {
+        path: "orders/new",
+        element: <CreateOrderPage />,
+        handle: { titleKey: "routes.ordersCreate" },
       },
       {
         path: "orders/:orderId",

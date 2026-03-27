@@ -15,6 +15,7 @@ export const enPages = {
       createdTo: "Created to",
       all: "All",
       reset: "Reset filters",
+      create: "Create order",
     },
     table: {
       headers: {
@@ -73,6 +74,70 @@ export const enPages = {
       actionsTitle: "Row Actions",
       actionsText:
         "Status updates, mechanic assignment, flagging, and details navigation start from this area.",
+    },
+  },
+  ordersCreate: {
+    eyebrow: "Create",
+    title: "Create order",
+    description: "Build a new service order with customer, vehicle, scheduling, and initial jobs.",
+    sections: {
+      customer: "Customer",
+      vehicle: "Vehicle",
+      schedule: "Appointment and notes",
+      meta: "Priority and status",
+      jobs: "Initial service jobs",
+    },
+    common: {
+      selectPlaceholder: "Select option",
+    },
+    customer: {
+      existing: "Use existing customer",
+      new: "Create customer inline",
+      select: "Customer",
+      fullName: "Full name",
+      phone: "Phone",
+      email: "Email",
+      loyalty: "Loyalty tier",
+    },
+    vehicle: {
+      existing: "Use existing vehicle",
+      new: "Create vehicle inline",
+      select: "Vehicle",
+      vin: "VIN",
+      plate: "Plate number",
+      make: "Make",
+      model: "Model",
+      year: "Year",
+    },
+    schedule: {
+      scheduledFor: "Scheduled time",
+      complaint: "Complaint",
+      notes: "Notes",
+    },
+    meta: {
+      priority: "Priority",
+      status: "Status",
+      mechanic: "Assigned mechanic",
+    },
+    jobs: {
+      job: "Job",
+      add: "Add initial job",
+      remove: "Remove",
+      name: "Job name",
+      category: "Category",
+      estimatedHours: "Estimated hours",
+      laborPrice: "Labor price",
+      mechanic: "Job mechanic",
+    },
+    actions: {
+      cancel: "Cancel",
+      submit: "Create order",
+      submitting: "Creating order...",
+    },
+    states: {
+      loading: "Loading form data...",
+      error: "Failed to load data for order creation.",
+      success: "Order created. Opening details...",
     },
   },
   orderDetails: {

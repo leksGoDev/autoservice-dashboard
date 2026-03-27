@@ -1,5 +1,5 @@
 import { httpRequest } from "@/shared/api/http-client";
-import { getVehiclesList } from "./requests";
+import { createVehicle, getVehiclesList } from "./requests";
 
 vi.mock("@/shared/api/http-client", () => ({
   httpRequest: vi.fn(),
@@ -42,6 +42,31 @@ describe("vehicle requests", () => {
         page: 2,
         pageSize: 5,
         search: "tesla",
+      },
+    });
+  });
+
+  it("creates vehicle with POST payload", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "veh_006" });
+
+    createVehicle({
+      customerId: "cust_001",
+      vin: "1HGCM82633A123099",
+      plateNumber: "TX-9001",
+      make: "Honda",
+      model: "Civic",
+      year: 2023,
+    });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/vehicles", {
+      method: "POST",
+      body: {
+        customerId: "cust_001",
+        vin: "1HGCM82633A123099",
+        plateNumber: "TX-9001",
+        make: "Honda",
+        model: "Civic",
+        year: 2023,
       },
     });
   });

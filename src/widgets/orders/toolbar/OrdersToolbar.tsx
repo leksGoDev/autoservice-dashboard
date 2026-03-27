@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react";
+import { Link } from "react-router-dom";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { ORDER_PRIORITIES, ORDER_STATUSES } from "@/widgets/orders/model/options";
@@ -123,13 +124,21 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
       </div>
 
       <div className="flex justify-end">
-        <button
-          type="button"
-          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-[var(--color-text-primary)]"
-          onClick={onReset}
-        >
-          {t("pages.orders.toolbar.reset")}
-        </button>
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <button
+            type="button"
+            className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-[var(--color-text-primary)]"
+            onClick={onReset}
+          >
+            {t("pages.orders.toolbar.reset")}
+          </button>
+          <Link
+            to="/orders/new"
+            className="rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.25)] px-3 py-2 text-[var(--color-text-primary)]"
+          >
+            {t("pages.orders.toolbar.create")}
+          </Link>
+        </div>
       </div>
     </section>
   );

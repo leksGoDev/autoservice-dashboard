@@ -1,4 +1,5 @@
 import type { SortDirection } from "@/shared/api/types";
+import type { CreateCustomerPayload } from "@/entities/customer/model/types";
 
 export type OrderStatus =
   | "scheduled"
@@ -88,6 +89,9 @@ export interface OrderActivityItem {
 }
 
 export interface OrderDetails extends OrderListItem {
+  scheduledFor?: string | null;
+  complaint?: string;
+  notes?: string;
   customer: OrderCustomerSnapshot;
   vehicle: OrderVehicleSnapshot;
   jobs: OrderServiceJob[];
@@ -143,4 +147,32 @@ export interface AddJobPartPayload {
 
 export interface UpdateJobPartPayload {
   quantity: number;
+}
+
+export interface CreateOrderInitialJobPayload {
+  name: string;
+  category: string;
+  estimatedHours: number;
+  laborPrice: number;
+  assignedMechanic?: string;
+}
+
+export interface CreateOrderPayload {
+  customerId?: string;
+  customer?: CreateCustomerPayload;
+  vehicleId?: string;
+  vehicle?: {
+    vin: string;
+    plateNumber: string;
+    make: string;
+    model: string;
+    year: number;
+  };
+  scheduledFor: string;
+  complaint: string;
+  notes?: string;
+  priority: OrderPriority;
+  status: OrderStatus;
+  assignedMechanic: string;
+  initialJobs: CreateOrderInitialJobPayload[];
 }
