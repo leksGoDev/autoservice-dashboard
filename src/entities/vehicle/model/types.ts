@@ -8,6 +8,15 @@ export interface Vehicle {
   year: number;
 }
 
+export interface CreateVehiclePayload {
+  customerId: string;
+  vin: string;
+  plateNumber: string;
+  make: string;
+  model: string;
+  year: number;
+}
+
 export interface VehicleListItem extends Vehicle {
   owner: string;
   ordersCount: number;

@@ -267,4 +267,36 @@ describe("ordersHandlers", () => {
     expect(activity.some((item: { type: string }) => item.type === "part_quantity_updated")).toBe(true);
     expect(activity.some((item: { type: string }) => item.type === "part_removed")).toBe(true);
   });
+
+  it("creates order and returns it in list and details endpoints", async () => {
+    const created = await postJson("/api/orders", {
+      customerId: "cust_001",
+      vehicleId: "veh_001",
+      scheduledFor: "2026-03-25T09:30:00.000Z",
+      complaint: "Rattle noise while idling",
+      notes: "Please inspect suspension first",
+      priority: "high",
+      status: "scheduled",
+      assignedMechanic: "Ivan Petrov",
+      initialJobs: [
+        {
+          name: "Initial diagnostics",
+          category: "Diagnostics",
+          estimatedHours: 1.5,
+          laborPrice: 160,
+        },
+      ],
+    });
+
+    const list = await getJson("/api/orders?page=1&pageSize=50");
+    const details = await getJson(`/api/orders/${created.body.id}`);
+    const activity = await getJson(`/api/orders/${created.body.id}/activity`);
+
+    expect(created.status).toBe(201);
+    expect(created.body.id).toContain("ord_");
+    expect(list.items.some((item: { id: string }) => item.id === created.body.id)).toBe(true);
+    expect(details.complaint).toBe("Rattle noise while idling");
+    expect(details.jobs.length).toBe(1);
+    expect(activity.some((item: { type: string }) => item.type === "order_created")).toBe(true);
+  });
 });

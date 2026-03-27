@@ -2,9 +2,9 @@ import type {
   OrderDetails,
   OrderListItem,
 } from "@/entities/order/model/types";
-import { customersFixture } from "@/mocks/fixtures/customers";
-import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
+import { getCustomerMockState } from "@/mocks/state/customers";
 import type { MockOrderStateItem } from "@/mocks/state/orders";
+import { getVehicleMockState } from "@/mocks/state/vehicles";
 
 export function toOrderListItem(item: MockOrderStateItem): OrderListItem {
   return {
@@ -27,11 +27,14 @@ export function toOrderListItem(item: MockOrderStateItem): OrderListItem {
 
 export function buildOrderDetails(orderState: MockOrderStateItem): OrderDetails {
   const order = toOrderListItem(orderState);
-  const customer = customersFixture.find((item) => item.id === order.customerId);
-  const vehicle = vehiclesFixture.find((item) => item.id === order.vehicleId);
+  const customer = getCustomerMockState(order.customerId);
+  const vehicle = getVehicleMockState(order.vehicleId);
 
   return {
     ...order,
+    scheduledFor: orderState.scheduledFor ?? null,
+    complaint: orderState.complaint ?? "",
+    notes: orderState.notes ?? "",
     customer: {
       id: customer?.id ?? order.customerId,
       fullName: customer?.fullName ?? order.customerName,

@@ -1,18 +1,20 @@
 import { delay, http, HttpResponse } from "msw";
 
 import type { CustomerDetailsResponse, CustomerListItem } from "@/entities/customer/model/types";
-import { customersFixture } from "@/mocks/fixtures/customers";
-import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
+import { createCustomerState, getCustomersMockState } from "@/mocks/state/customers";
 import { getOrdersMockState } from "@/mocks/state/orders";
+import { getVehiclesMockState } from "@/mocks/state/vehicles";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 
 function buildCustomersRegistry(): CustomerListItem[] {
   const orders = getOrdersMockState();
+  const customers = getCustomersMockState();
+  const vehicles = getVehiclesMockState();
 
-  return customersFixture.map((customer) => {
+  return customers.map((customer) => {
     const customerOrders = orders.filter((order) => order.customerId === customer.id);
-    const vehiclesCount = vehiclesFixture.filter((vehicle) => vehicle.customerId === customer.id).length;
+    const vehiclesCount = vehicles.filter((vehicle) => vehicle.customerId === customer.id).length;
 
     const lastVisitAt = customerOrders
       .map((order) => new Date(order.updatedAt).getTime())
@@ -36,7 +38,7 @@ function buildCustomerDetails(customerId: string): CustomerDetailsResponse | und
     return undefined;
   }
 
-  const vehicles = vehiclesFixture
+  const vehicles = getVehiclesMockState()
     .filter((vehicle) => vehicle.customerId === customerId)
     .map((vehicle) => ({
       id: vehicle.id,
@@ -98,5 +100,45 @@ export const customersHandlers = [
     }
 
     return HttpResponse.json(details);
+  }),
+  http.post(toMswPath(apiEndpoints.customers.list), async ({ request }) => {
+    await delay(250);
+
+    const body = (await request.json().catch(() => null)) as Partial<{
+      fullName: string;
+      phone: string;
+      email: string;
+      loyaltyTier: "standard" | "silver" | "gold";
+    }> | null;
+
+    const fullName = typeof body?.fullName === "string" ? body.fullName.trim() : "";
+    const phone = typeof body?.phone === "string" ? body.phone.trim() : "";
+    const email = typeof body?.email === "string" ? body.email.trim() : "";
+    const loyaltyTier = body?.loyaltyTier ?? "standard";
+
+    if (!fullName || !phone || !email) {
+      return HttpResponse.json({ message: "Invalid customer payload" }, { status: 400 });
+    }
+
+    if (!["standard", "silver", "gold"].includes(loyaltyTier)) {
+      return HttpResponse.json({ message: "Invalid customer payload" }, { status: 400 });
+    }
+
+    const created = createCustomerState({
+      fullName,
+      phone,
+      email,
+      loyaltyTier,
+    });
+
+    return HttpResponse.json(
+      {
+        ...created,
+        vehiclesCount: 0,
+        ordersCount: 0,
+        lastVisitAt: null,
+      },
+      { status: 201 },
+    );
   }),
 ];

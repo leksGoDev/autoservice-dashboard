@@ -5,6 +5,21 @@ async function getJson(url: string) {
   return response.json();
 }
 
+async function postJson(url: string, body: unknown) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  return {
+    status: response.status,
+    body: await response.json(),
+  };
+}
+
 describe("vehiclesHandlers", () => {
   it("applies search and paginates", async () => {
     const data = await getJson("/api/vehicles?search=ford&page=1&pageSize=1");
@@ -61,5 +76,22 @@ describe("vehiclesHandlers", () => {
         updatedAt: expect.any(String),
       }),
     );
+  });
+
+  it("creates vehicle inline", async () => {
+    const before = await getJson("/api/vehicles?page=1&pageSize=50");
+    const created = await postJson("/api/vehicles", {
+      customerId: "cust_001",
+      vin: "1HGCM82633A123099",
+      plateNumber: "TX-9001",
+      make: "Honda",
+      model: "Civic",
+      year: 2023,
+    });
+    const after = await getJson("/api/vehicles?page=1&pageSize=50");
+
+    expect(created.status).toBe(201);
+    expect(created.body.owner).toBe("Alex Turner");
+    expect(after.total).toBe(before.total + 1);
   });
 });

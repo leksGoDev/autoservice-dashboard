@@ -98,6 +98,19 @@ export function getMutableOrderByIndex(index: number) {
   return ordersState[index];
 }
 
+export function appendOrder(order: MockOrderStateItem) {
+  ordersState.unshift(order);
+}
+
+export function getNextOrderSequence() {
+  return (
+    ordersState.reduce((max, order) => {
+      const sequence = Number(order.id.replace(/\D/g, ""));
+      return Number.isFinite(sequence) ? Math.max(max, sequence) : max;
+    }, 0) + 1
+  );
+}
+
 export function toOrderSnapshot(order: MockOrderStateItem): MockOrderStateItem {
   return cloneOrderStateItem(order);
 }

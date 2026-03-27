@@ -1,7 +1,7 @@
 import { apiEndpoints } from "@/shared/api/endpoints";
 import { httpRequest } from "@/shared/api/http-client";
 import type { ListResponse } from "@/shared/api/types";
-import type { CustomerDetailsResponse, CustomerListItem, CustomersListParams } from "../model/types";
+import type { CreateCustomerPayload, CustomerDetailsResponse, CustomerListItem, CustomersListParams } from "../model/types";
 
 export function getCustomersList(params: CustomersListParams = {}) {
   return httpRequest<ListResponse<CustomerListItem>>(apiEndpoints.customers.list, {
@@ -17,5 +17,12 @@ export function getCustomersList(params: CustomersListParams = {}) {
 export function getCustomerDetails(customerId: string) {
   return httpRequest<CustomerDetailsResponse>(apiEndpoints.customers.detail(customerId), {
     method: "GET",
+  });
+}
+
+export function createCustomer(payload: CreateCustomerPayload) {
+  return httpRequest<CustomerListItem>(apiEndpoints.customers.list, {
+    method: "POST",
+    body: payload,
   });
 }

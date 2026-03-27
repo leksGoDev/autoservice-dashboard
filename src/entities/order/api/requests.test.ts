@@ -4,6 +4,7 @@ import {
   addServiceJob,
   assignServiceJobMechanic,
   assignOrderMechanic,
+  createOrder,
   getOrderActivity,
   getOrderDetails,
   getOrdersList,
@@ -97,6 +98,38 @@ describe("order requests", () => {
 
     expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001/activity", {
       method: "GET",
+    });
+  });
+
+  it("creates order with POST payload", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "ord_013" });
+
+    createOrder({
+      customerId: "cust_001",
+      vehicleId: "veh_001",
+      scheduledFor: "2026-03-25T09:30:00.000Z",
+      complaint: "Engine noise",
+      notes: "Check after long trip",
+      priority: "high",
+      status: "scheduled",
+      assignedMechanic: "Ivan Petrov",
+      initialJobs: [
+        {
+          name: "Initial inspection",
+          category: "Diagnostics",
+          estimatedHours: 1.2,
+          laborPrice: 120,
+        },
+      ],
+    });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/orders", {
+      method: "POST",
+      body: expect.objectContaining({
+        customerId: "cust_001",
+        vehicleId: "veh_001",
+        complaint: "Engine noise",
+      }),
     });
   });
 

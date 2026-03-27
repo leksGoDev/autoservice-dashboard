@@ -13,6 +13,7 @@ export const ruMessages = {
   routes: {
     dashboard: "Дашборд",
     orders: "Заказы",
+    ordersCreate: "Новый заказ",
     customers: "Клиенты",
     vehicles: "Автомобили",
     mechanics: "Механики",
