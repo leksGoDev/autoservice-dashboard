@@ -6,6 +6,7 @@ import type { AppointmentListItem } from "@/entities/appointment/model/types";
 import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { DEFAULT_LIST_PAGE, DEFAULT_LIST_PAGE_SIZE } from "@/shared/api/constants";
 import type { ListResponse } from "@/shared/api/types";
+import { applySearchParamsPatch, readPositiveNumberParam } from "@/shared/lib/search-params";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { isAppointmentsFilterStatus } from "@/widgets/appointments/model/options";
 import type {
@@ -28,11 +29,6 @@ export type AppointmentsSchedulingModel = {
   onResetFilters: () => void;
   onPageChange: (nextPage: number) => void;
 };
-
-function readPositiveNumber(value: string | null, fallback: number) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
-}
 
 function getGroupKey(item: AppointmentListItem): AppointmentGroupKey {
   if (item.status === "cancelled") {
@@ -78,7 +74,7 @@ function groupAppointments(items: AppointmentListItem[]): AppointmentsGroup[] {
 export function useAppointmentsSchedulingModel(): AppointmentsSchedulingModel {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = readPositiveNumber(searchParams.get("page"), DEFAULT_LIST_PAGE);
+  const page = readPositiveNumberParam(searchParams.get("page"), DEFAULT_LIST_PAGE);
   const statusParam = searchParams.get("status") ?? "";
   const filters: AppointmentsToolbarFilters = {
     search: searchParams.get("search") ?? "",
@@ -115,18 +111,7 @@ export function useAppointmentsSchedulingModel(): AppointmentsSchedulingModel {
   const safePage = Math.min(listQuery.data?.page ?? page, totalPages);
 
   const updateSearchParams = (next: Record<string, string>) => {
-    const params = new URLSearchParams(searchParams);
-
-    Object.entries(next).forEach(([key, value]) => {
-      if (!value) {
-        params.delete(key);
-        return;
-      }
-
-      params.set(key, value);
-    });
-
-    setSearchParams(params);
+    setSearchParams(applySearchParamsPatch(searchParams, next));
   };
 
   const handleToolbarChange = (next: Partial<AppointmentsToolbarFilters>) => {

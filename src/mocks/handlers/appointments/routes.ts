@@ -1,31 +1,14 @@
 import { delay, http, HttpResponse } from "msw";
 
 import {
-  APPOINTMENT_MUTABLE_STATUSES,
-} from "@/entities/appointment/model/options";
-import type { UpdateAppointmentPayload } from "@/entities/appointment/model/types";
-import { isInsideDateRange } from "@/mocks/lib/date-range";
-import {
   convertAppointmentToOrderState,
   getAppointmentMockState,
-  getAppointmentsMockState,
   updateAppointmentState,
 } from "@/mocks/state/appointments";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
-
-function isValidMutableStatus(value: string): value is NonNullable<UpdateAppointmentPayload["status"]> {
-  return APPOINTMENT_MUTABLE_STATUSES.includes(value as NonNullable<UpdateAppointmentPayload["status"]>);
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
-
-async function readJsonBody(request: Request): Promise<Record<string, unknown> | null> {
-  const body = (await request.json().catch(() => null)) as unknown;
-  return isRecord(body) ? body : null;
-}
+import { selectAppointmentsForList } from "./builders";
+import { isValidMutableAppointmentStatus, readJsonBody } from "./validators";
 
 export const appointmentsHandlers = [
   http.get(toMswPath(apiEndpoints.appointments.list), async ({ request }) => {
@@ -38,34 +21,16 @@ export const appointmentsHandlers = [
     const scheduledFrom = url.searchParams.get("scheduledFrom") ?? "";
     const scheduledTo = url.searchParams.get("scheduledTo") ?? "";
     const sortBy = url.searchParams.get("sortBy") ?? "scheduledFor";
-    const sortDirection = url.searchParams.get("sortDirection") === "desc" ? -1 : 1;
+    const sortDirection = url.searchParams.get("sortDirection") === "desc" ? "desc" : "asc";
 
-    let filtered = getAppointmentsMockState();
-
-    if (status) {
-      filtered = filtered.filter((item) => item.status === status);
-    }
-
-    if (assignedMechanic) {
-      filtered = filtered.filter((item) => item.assignedMechanic === assignedMechanic);
-    }
-
-    if (scheduledFrom || scheduledTo) {
-      filtered = filtered.filter((item) => isInsideDateRange(item.scheduledFor, scheduledFrom, scheduledTo));
-    }
-
-    if (search) {
-      filtered = filtered.filter((item) => {
-        const haystack =
-          `${item.number} ${item.customerName} ${item.vehicleLabel} ${item.serviceLabel} ${item.assignedMechanic}`.toLowerCase();
-        return haystack.includes(search);
-      });
-    }
-
-    filtered = filtered.sort((left, right) => {
-      const leftTarget = sortBy === "createdAt" ? left.createdAt : left.scheduledFor;
-      const rightTarget = sortBy === "createdAt" ? right.createdAt : right.scheduledFor;
-      return (new Date(leftTarget).getTime() - new Date(rightTarget).getTime()) * sortDirection;
+    const filtered = selectAppointmentsForList({
+      search,
+      status,
+      assignedMechanic,
+      scheduledFrom,
+      scheduledTo,
+      sortBy,
+      sortDirection,
     });
 
     return HttpResponse.json(paginateItems(filtered, page, pageSize));
@@ -99,7 +64,7 @@ export const appointmentsHandlers = [
     const assignedMechanic =
       typeof body.assignedMechanic === "string" ? body.assignedMechanic.trim() : undefined;
 
-    if (statusValue && !isValidMutableStatus(statusValue)) {
+    if (statusValue && !isValidMutableAppointmentStatus(statusValue)) {
       return HttpResponse.json({ message: "Invalid appointment status" }, { status: 400 });
     }
 
@@ -115,7 +80,7 @@ export const appointmentsHandlers = [
       return HttpResponse.json({ message: "No fields to update" }, { status: 400 });
     }
 
-    const nextStatus = statusValue && isValidMutableStatus(statusValue) ? statusValue : undefined;
+    const nextStatus = statusValue && isValidMutableAppointmentStatus(statusValue) ? statusValue : undefined;
 
     const next = updateAppointmentState(appointmentId, {
       status: nextStatus,

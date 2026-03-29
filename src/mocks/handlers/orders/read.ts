@@ -5,7 +5,7 @@ import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
 import { getOrderMockState, getOrdersMockState } from "@/mocks/state/orders";
 import { DEFAULT_ORDERS_SORT_BY, DEFAULT_ORDERS_SORT_DIRECTION } from "@/shared/api/constants";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
-import { buildOrderDetails, toOrderListItem } from "./shared";
+import { buildOrderDetails, toOrderListItem } from "./builders";
 
 function sortOrders(items: ReturnType<typeof toOrderListItem>[], sortBy: string, sortDirection: string) {
   const direction = sortDirection === "asc" ? 1 : -1;

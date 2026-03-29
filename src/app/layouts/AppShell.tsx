@@ -3,8 +3,8 @@ import { Outlet, useMatches } from "react-router-dom";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { GlobalSearchTopbar } from "@/widgets/global-search/topbar/GlobalSearchTopbar";
-import { AppSidebar } from "../../shared/ui/AppSidebar";
-import { AppTopbar } from "../../shared/ui/AppTopbar";
+import { AppSidebar } from "./ui/AppSidebar";
+import { AppTopbar } from "./ui/AppTopbar";
 
 type RouteHandle = {
   titleKey?: string;
