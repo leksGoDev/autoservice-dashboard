@@ -10,7 +10,9 @@ const t = (key: string) => key;
 const row: OrdersTableRow = {
   id: "ord_001",
   number: "ORD-1001",
+  customerId: "cust_001",
   customerName: "Alex Turner",
+  vehicleId: "veh_001",
   vehicleLabel: "2019 Honda Accord",
   status: "waiting_parts",
   priority: "high",
@@ -97,6 +99,14 @@ describe("createOrdersTableColumns", () => {
   it("renders default details link when custom renderer is not provided", () => {
     const columns = createOrdersTableColumns(t as never);
 
+    const customerCell = findAccessorCell(columns, "customerName")({
+      getValue: () => row.customerName,
+      row: { original: row },
+    });
+    const vehicleCell = findAccessorCell(columns, "vehicleLabel")({
+      getValue: () => row.vehicleLabel,
+      row: { original: row },
+    });
     const numberCell = findAccessorCell(columns, "number")({
       getValue: () => row.number,
       row: { original: row },
@@ -109,11 +119,15 @@ describe("createOrdersTableColumns", () => {
 
     render(
       <MemoryRouter>
+        {customerCell}
+        {vehicleCell}
         {numberCell}
         {actionCell}
       </MemoryRouter>,
     );
 
+    expect(screen.getByRole("link", { name: "Alex Turner" })).toHaveAttribute("href", "/customers/cust_001");
+    expect(screen.getByRole("link", { name: "2019 Honda Accord" })).toHaveAttribute("href", "/vehicles/veh_001");
     expect(screen.getByRole("link", { name: "ORD-1001" })).toHaveAttribute("href", "/orders/ord_001");
     expect(screen.getByRole("link", { name: "pages.orders.table.actions.placeholder" })).toBeInTheDocument();
   });

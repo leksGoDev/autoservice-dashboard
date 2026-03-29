@@ -1,5 +1,6 @@
 import type { CustomerVehicleListItem } from "@/entities/customer/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { Link } from "react-router-dom";
 
 type CustomerVehiclesTableProps = {
   rows: CustomerVehicleListItem[];
@@ -38,7 +39,14 @@ export const CustomerVehiclesTable = ({ rows }: CustomerVehiclesTableProps) => {
             <tbody>
               {rows.map((vehicle) => (
                 <tr key={vehicle.id} className="transition-colors hover:bg-[#20283a]">
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{vehicle.plateNumber}</td>
+                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                    <Link
+                      to={`/vehicles/${vehicle.id}`}
+                      className="inline-flex rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 font-mono text-[12px] font-semibold tracking-[0.02em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+                    >
+                      {vehicle.plateNumber}
+                    </Link>
+                  </td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{vehicle.vin}</td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{vehicle.make}</td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{vehicle.model}</td>

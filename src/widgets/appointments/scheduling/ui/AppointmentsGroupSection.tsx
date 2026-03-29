@@ -3,10 +3,13 @@ import { AppointmentOperationsControls } from "@/features/appointment-operations
 import { formatDateTime } from "@/shared/lib/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getStatusBadgeClass } from "@/shared/ui/status-badges";
+import { Link } from "react-router-dom";
 
 const thClassName =
   "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]";
 const tdClassName = "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5";
+const relationLinkClass =
+  "inline-flex rounded px-1 py-0.5 text-[var(--color-accent-light-blue)] underline decoration-transparent underline-offset-2 transition-colors hover:text-[#9ac0ff] hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]";
 
 const APPOINTMENTS_TABLE_HEADERS = [
   "number",
@@ -64,8 +67,16 @@ export const AppointmentsGroupSection = ({
               {items.map((item) => (
                 <tr key={item.id} className="align-top hover:bg-[#20283a]">
                   <td className={`${tdClassName} font-semibold`}>{item.number}</td>
-                  <td className={tdClassName}>{item.customerName}</td>
-                  <td className={tdClassName}>{item.vehicleLabel}</td>
+                  <td className={tdClassName}>
+                    <Link to={`/customers/${item.customerId}`} className={relationLinkClass}>
+                      {item.customerName}
+                    </Link>
+                  </td>
+                  <td className={tdClassName}>
+                    <Link to={`/vehicles/${item.vehicleId}`} className={relationLinkClass}>
+                      {item.vehicleLabel}
+                    </Link>
+                  </td>
                   <td className={tdClassName}>{item.serviceLabel}</td>
                   <td className={tdClassName}>
                     <span

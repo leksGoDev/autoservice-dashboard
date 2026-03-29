@@ -41,15 +41,12 @@ export const CustomersRegistryTable = ({ rows }: CustomersRegistryTableProps) =>
           {rows.map((customer) => (
             <tr key={customer.id} className="transition-colors hover:bg-[#20283a]">
               <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
-                <div className="grid gap-[3px]">
-                  <span>{customer.fullName}</span>
-                  <Link
-                    to={`/customers/${customer.id}`}
-                    className="cursor-pointer border-0 bg-transparent p-0 text-left text-[12px] text-[var(--color-accent-light-blue)] transition-colors hover:text-[#9ac0ff]"
-                  >
-                    {t("customersRegistry.detailsLink")}
-                  </Link>
-                </div>
+                <Link
+                  to={`/customers/${customer.id}`}
+                  className="inline-flex rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 text-[12px] font-semibold tracking-[0.01em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+                >
+                  {customer.fullName}
+                </Link>
               </td>
               <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{customer.phone}</td>
               <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{customer.email}</td>

@@ -1,6 +1,7 @@
 import type { CustomerOrderHistoryItem } from "@/entities/customer/model/types";
 import { formatCustomerDetailsCurrency, formatCustomerDetailsDate } from "@/entities/customer/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { Link } from "react-router-dom";
 
 type CustomerOrdersTableProps = {
   rows: CustomerOrderHistoryItem[];
@@ -39,8 +40,13 @@ export const CustomerOrdersTable = ({ rows }: CustomerOrdersTableProps) => {
             <tbody>
               {rows.map((order) => (
                 <tr key={order.id} className="transition-colors hover:bg-[#20283a]">
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle font-mono text-[13px] text-[#c9d1dd]">
-                    {order.number}
+                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                    <Link
+                      to={`/orders/${order.id}`}
+                      className="inline-flex rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 font-mono text-[12px] font-semibold tracking-[0.02em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+                    >
+                      {order.number}
+                    </Link>
                   </td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{order.vehicleLabel}</td>
                   <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">

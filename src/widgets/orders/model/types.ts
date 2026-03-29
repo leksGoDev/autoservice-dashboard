@@ -3,7 +3,9 @@ import type { OrderPriority, OrderStatus } from "@/entities/order/model/types";
 export interface OrdersTableRow {
   id: string;
   number: string;
+  customerId: string;
   customerName: string;
+  vehicleId: string;
   vehicleLabel: string;
   status: OrderStatus;
   priority: OrderPriority;

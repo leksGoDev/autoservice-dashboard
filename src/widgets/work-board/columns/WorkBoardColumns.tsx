@@ -1,6 +1,7 @@
 import type { WorkBoardColumn, WorkBoardQuickAction } from "@/entities/work-board/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
+import { Link } from "react-router-dom";
 import {
   formatWorkBoardCurrency,
   formatWorkBoardUpdatedAt,
@@ -46,7 +47,14 @@ export const WorkBoardColumns = ({ columns }: WorkBoardColumnsProps) => {
                   <article key={card.id} className={styles.card} data-board-card={card.id} data-order-id={card.orderId}>
                     <header className={styles.cardHeader}>
                       <div>
-                        <h3 className={styles.orderNumber}>{card.orderNumber}</h3>
+                        <h3 className={styles.orderNumber}>
+                          <Link
+                            to={`/orders/${card.orderId}`}
+                            className="inline-flex rounded px-1 py-0.5 text-inherit underline decoration-transparent underline-offset-2 transition-colors hover:text-[#9ac0ff] hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+                          >
+                            {card.orderNumber}
+                          </Link>
+                        </h3>
                         <p className={styles.customerName}>{card.customerName}</p>
                       </div>
 

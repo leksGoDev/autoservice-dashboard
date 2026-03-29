@@ -35,10 +35,26 @@ export function createOrdersTableColumns(
     {
       accessorKey: "customerName",
       header: t("pages.orders.table.headers.customer"),
+      cell: (info) => (
+        <Link
+          to={`/customers/${info.row.original.customerId}`}
+          className="inline-flex rounded px-1 py-0.5 text-[var(--color-accent-light-blue)] underline decoration-transparent underline-offset-2 transition-colors hover:text-[#9ac0ff] hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+        >
+          {info.getValue() as string}
+        </Link>
+      ),
     },
     {
       accessorKey: "vehicleLabel",
       header: t("pages.orders.table.headers.vehicle"),
+      cell: (info) => (
+        <Link
+          to={`/vehicles/${info.row.original.vehicleId}`}
+          className="inline-flex rounded px-1 py-0.5 text-[var(--color-accent-light-blue)] underline decoration-transparent underline-offset-2 transition-colors hover:text-[#9ac0ff] hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+        >
+          {info.getValue() as string}
+        </Link>
+      ),
     },
     {
       accessorKey: "status",

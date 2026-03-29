@@ -50,9 +50,7 @@ describe("CustomersRegistry", () => {
   it("renders entry point link to customer details", async () => {
     renderRegistry();
 
-    const detailsLinks = await screen.findAllByRole("link", { name: "Customer profile" });
-
-    expect(detailsLinks.length).toBeGreaterThan(0);
-    expect(detailsLinks[0]).toHaveAttribute("href", "/customers/cust_001");
+    const customerLink = await screen.findByRole("link", { name: "Alex Turner" });
+    expect(customerLink).toHaveAttribute("href", "/customers/cust_001");
   });
 });

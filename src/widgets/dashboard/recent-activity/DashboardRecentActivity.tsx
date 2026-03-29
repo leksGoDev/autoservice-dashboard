@@ -1,6 +1,7 @@
 import type { RecentActivityItem } from "@/entities/dashboard/model/types";
 import { formatRelativeTime, getActivityTone } from "@/entities/dashboard/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { Link } from "react-router-dom";
 
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
@@ -35,7 +36,14 @@ export const DashboardRecentActivity = ({ items }: DashboardRecentActivityProps)
             />
             <div className="grid gap-1">
               <p className="m-0 text-sm">{item.message}</p>
-              <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">{item.orderId}</p>
+              <p className="m-0 text-[13px]">
+                <Link
+                  to={`/orders/${item.orderId}`}
+                  className="inline-flex rounded px-1 py-0.5 text-[var(--color-text-secondary)] underline decoration-transparent underline-offset-2 transition-colors hover:text-[#9ac0ff] hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+                >
+                  {item.orderId}
+                </Link>
+              </p>
             </div>
             <time className="whitespace-nowrap text-xs text-[var(--color-text-muted)]">
               {formatRelativeTime(item.createdAt, locale)}

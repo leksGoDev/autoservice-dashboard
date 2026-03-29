@@ -8,6 +8,7 @@ import {
 } from "@/entities/dashboard/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
+import { Link } from "react-router-dom";
 
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
@@ -41,7 +42,14 @@ export const DashboardRecentOrders = ({ orders }: DashboardRecentOrdersProps) =>
           <tbody>
             {orders.map((order) => (
               <tr key={order.id} className="transition-colors hover:bg-[#20283a]">
-                <td className={`${bodyCellClass} font-mono text-[#c9d1dd]`}>{order.number}</td>
+                <td className={bodyCellClass}>
+                  <Link
+                    to={`/orders/${order.id}`}
+                    className="inline-flex rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 font-mono text-[12px] font-semibold tracking-[0.02em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+                  >
+                    {order.number}
+                  </Link>
+                </td>
                 <td className={bodyCellClass}>{order.customerName}</td>
                 <td className={bodyCellClass}>{order.vehicleLabel}</td>
                 <td className={bodyCellClass}>
