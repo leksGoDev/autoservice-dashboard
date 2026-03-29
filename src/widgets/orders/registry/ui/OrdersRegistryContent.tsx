@@ -1,6 +1,8 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import { OrderOperationsControls } from "@/features/order-operations/ui/OrderOperationsControls";
+import { OrderRowFlagControl } from "@/features/order-operations/ui/OrderRowFlagControl";
+import { OrderRowMechanicControl } from "@/features/order-operations/ui/OrderRowMechanicControl";
+import { OrderRowStatusControl } from "@/features/order-operations/ui/OrderRowStatusControl";
 import { OrdersTable } from "@/widgets/orders/table/OrdersTable";
 import type { OrdersRegistryModel } from "../hooks/use-orders-registry-model";
 
@@ -45,16 +47,17 @@ export const OrdersRegistryContent = ({ model }: OrdersRegistryContentProps) => 
       total={model.total}
       isFetching={model.listQuery.isFetching}
       onPageChange={model.onPageChange}
-      renderRowActions={(order) => (
-        <OrderOperationsControls
+      renderStatusCell={(order) => (
+        <OrderRowStatusControl orderId={order.id} status={order.status} />
+      )}
+      renderMechanicCell={(order) => (
+        <OrderRowMechanicControl
           orderId={order.id}
-          status={order.status}
           assignedMechanic={order.assignedMechanic}
-          flagged={order.flagged}
           mechanics={model.mechanics}
-          variant="table"
         />
       )}
+      renderRowActions={(order) => <OrderRowFlagControl orderId={order.id} flagged={order.flagged} />}
     />
   );
 };

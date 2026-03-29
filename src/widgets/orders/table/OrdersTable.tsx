@@ -15,6 +15,8 @@ type OrdersTableProps = {
   total: number;
   isFetching?: boolean;
   onPageChange: (page: number) => void;
+  renderStatusCell?: (order: OrdersTableRow) => ReactNode;
+  renderMechanicCell?: (order: OrdersTableRow) => ReactNode;
   renderRowActions?: (order: OrdersTableRow) => ReactNode;
 };
 
@@ -25,10 +27,20 @@ export const OrdersTable = ({
   total,
   isFetching,
   onPageChange,
+  renderStatusCell,
+  renderMechanicCell,
   renderRowActions,
 }: OrdersTableProps) => {
   const { t } = useI18n();
-  const columns = useMemo(() => createOrdersTableColumns(t, renderRowActions), [renderRowActions, t]);
+  const columns = useMemo(
+    () =>
+      createOrdersTableColumns(t, {
+        renderStatusCell,
+        renderMechanicCell,
+        renderRowActions,
+      }),
+    [renderMechanicCell, renderRowActions, renderStatusCell, t],
+  );
 
   const table = useReactTable({
     data: items,

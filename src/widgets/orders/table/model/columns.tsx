@@ -9,15 +9,28 @@ import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-b
 import type { OrdersTableRow } from "@/widgets/orders/model/types";
 import { formatOrderCurrency, formatOrderDate, getOrderStatusChipModifier } from "./presentation";
 
+type CreateOrdersTableColumnsOptions = {
+  renderStatusCell?: (order: OrdersTableRow) => ReactNode;
+  renderMechanicCell?: (order: OrdersTableRow) => ReactNode;
+  renderRowActions?: (order: OrdersTableRow) => ReactNode;
+};
+
 export function createOrdersTableColumns(
   t: TFunction,
-  renderRowActions?: (order: OrdersTableRow) => ReactNode,
+  options?: CreateOrdersTableColumnsOptions,
 ): ColumnDef<OrdersTableRow>[] {
   return [
     {
       accessorKey: "number",
       header: t("pages.orders.table.headers.number"),
-      cell: (info) => <span className="font-mono text-[13px] text-[#c9d1dd]">{info.getValue() as string}</span>,
+      cell: (info) => (
+        <Link
+          to={`/orders/${info.row.original.id}`}
+          className="font-mono text-[13px] text-[#9fc3ff] underline decoration-transparent decoration-1 underline-offset-2 transition-colors hover:text-[#cfe1ff] hover:decoration-current"
+        >
+          {info.getValue() as string}
+        </Link>
+      ),
     },
     {
       accessorKey: "customerName",
@@ -31,6 +44,10 @@ export function createOrdersTableColumns(
       accessorKey: "status",
       header: t("pages.orders.table.headers.status"),
       cell: (info) => {
+        if (options?.renderStatusCell) {
+          return options.renderStatusCell(info.row.original);
+        }
+
         const status = info.getValue() as OrdersTableRow["status"];
         return (
           <span
@@ -64,6 +81,8 @@ export function createOrdersTableColumns(
     {
       accessorKey: "assignedMechanic",
       header: t("pages.orders.table.headers.mechanic"),
+      cell: (info) =>
+        options?.renderMechanicCell ? options.renderMechanicCell(info.row.original) : (info.getValue() as string),
     },
     {
       accessorKey: "jobsCount",
@@ -83,8 +102,8 @@ export function createOrdersTableColumns(
       id: "actions",
       header: t("pages.orders.table.headers.actions"),
       cell: (info) =>
-        renderRowActions ? (
-          renderRowActions(info.row.original)
+        options?.renderRowActions ? (
+          options.renderRowActions(info.row.original)
         ) : (
           <Link
             to={`/orders/${info.row.original.id}`}

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
@@ -19,6 +20,32 @@ const row: OrdersTableRow = {
   totalAmount: 1200,
   createdAt: "2026-03-18T09:35:00.000Z",
 };
+
+type TableColumn = {
+  id?: string;
+  accessorKey?: string;
+  cell?: (context: { getValue: () => unknown; row: { original: OrdersTableRow } }) => ReactNode;
+};
+
+function findAccessorCell(columns: ReturnType<typeof createOrdersTableColumns>, accessorKey: string) {
+  const column = columns.find((item) => (item as TableColumn).accessorKey === accessorKey) as TableColumn | undefined;
+
+  if (!column?.cell) {
+    throw new Error(`Cell renderer for accessor "${accessorKey}" was not found.`);
+  }
+
+  return column.cell;
+}
+
+function findIdCell(columns: ReturnType<typeof createOrdersTableColumns>, id: string) {
+  const column = columns.find((item) => (item as TableColumn).id === id) as TableColumn | undefined;
+
+  if (!column?.cell) {
+    throw new Error(`Cell renderer for id "${id}" was not found.`);
+  }
+
+  return column.cell;
+}
 
 describe("createOrdersTableColumns", () => {
   it("creates expected columns list", () => {
@@ -47,19 +74,13 @@ describe("createOrdersTableColumns", () => {
   it("renders status and priority cells via translation keys", () => {
     const columns = createOrdersTableColumns(t as never);
 
-    const statusCell = (
-      columns.find(
-        (column) => (column as { accessorKey?: string }).accessorKey === "status",
-      ) as any
-    ).cell({
+    const statusCell = findAccessorCell(columns, "status")({
       getValue: () => row.status,
+      row: { original: row },
     });
-    const priorityCell = (
-      columns.find(
-        (column) => (column as { accessorKey?: string }).accessorKey === "priority",
-      ) as any
-    ).cell({
+    const priorityCell = findAccessorCell(columns, "priority")({
       getValue: () => row.priority,
+      row: { original: row },
     });
 
     render(
@@ -76,23 +97,57 @@ describe("createOrdersTableColumns", () => {
   it("renders default details link when custom renderer is not provided", () => {
     const columns = createOrdersTableColumns(t as never);
 
-    const actionCell = (columns.find((column) => column.id === "actions") as any).cell({
+    const numberCell = findAccessorCell(columns, "number")({
+      getValue: () => row.number,
       row: { original: row },
     });
 
-    render(<MemoryRouter>{actionCell}</MemoryRouter>);
+    const actionCell = findIdCell(columns, "actions")({
+      getValue: () => "",
+      row: { original: row },
+    });
 
+    render(
+      <MemoryRouter>
+        {numberCell}
+        {actionCell}
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("link", { name: "ORD-1001" })).toHaveAttribute("href", "/orders/ord_001");
     expect(screen.getByRole("link", { name: "pages.orders.table.actions.placeholder" })).toBeInTheDocument();
   });
 
-  it("uses custom action renderer when provided", () => {
-    const columns = createOrdersTableColumns(t as never, (item) => <span>{item.id}</span>);
+  it("uses custom cell renderers when provided", () => {
+    const columns = createOrdersTableColumns(t as never, {
+      renderStatusCell: (item) => <span>{`status-${item.id}`}</span>,
+      renderMechanicCell: (item) => <span>{`mechanic-${item.id}`}</span>,
+      renderRowActions: (item) => <span>{`actions-${item.id}`}</span>,
+    });
 
-    const actionCell = (columns.find((column) => column.id === "actions") as any).cell({
+    const statusCell = findAccessorCell(columns, "status")({
+      getValue: () => row.status,
+      row: { original: row },
+    });
+    const mechanicCell = findAccessorCell(columns, "assignedMechanic")({
+      getValue: () => row.assignedMechanic,
       row: { original: row },
     });
 
-    render(<>{actionCell}</>);
-    expect(screen.getByText("ord_001")).toBeInTheDocument();
+    const actionCell = findIdCell(columns, "actions")({
+      getValue: () => "",
+      row: { original: row },
+    });
+
+    render(
+      <>
+        {statusCell}
+        {mechanicCell}
+        {actionCell}
+      </>,
+    );
+    expect(screen.getByText("status-ord_001")).toBeInTheDocument();
+    expect(screen.getByText("mechanic-ord_001")).toBeInTheDocument();
+    expect(screen.getByText("actions-ord_001")).toBeInTheDocument();
   });
 });

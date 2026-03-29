@@ -74,16 +74,26 @@ export const JobsTableRow = memo(
                 ))}
               </select>
 
-              <button
-                type="button"
-                className="cursor-pointer rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-2 py-1.5 text-xs text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
-                onClick={() => onUpdateJobStatus(job.id, selectedStatus)}
-                disabled={isBusy || selectedStatus === job.status}
-              >
-                {isUpdateStatusPending
-                  ? t("pages.orderDetails.controls.jobs.actions.statusPending")
-                  : t("pages.orderDetails.controls.jobs.actions.status")}
-              </button>
+              {selectedStatus !== job.status ? (
+                <button
+                  type="button"
+                  className="grid h-7 w-7 cursor-pointer place-items-center rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] text-[13px] font-semibold text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+                  onClick={() => onUpdateJobStatus(job.id, selectedStatus)}
+                  disabled={isBusy}
+                  aria-label={
+                    isUpdateStatusPending
+                      ? String(t("pages.orderDetails.controls.jobs.actions.statusPending"))
+                      : String(t("pages.orderDetails.controls.jobs.actions.status"))
+                  }
+                  title={
+                    isUpdateStatusPending
+                      ? String(t("pages.orderDetails.controls.jobs.actions.statusPending"))
+                      : String(t("pages.orderDetails.controls.jobs.actions.status"))
+                  }
+                >
+                  <span aria-hidden="true">✓</span>
+                </button>
+              ) : null}
             </div>
 
             <div className="grid gap-1 sm:grid-cols-[1fr_auto]">
@@ -101,16 +111,26 @@ export const JobsTableRow = memo(
                 ))}
               </select>
 
-              <button
-                type="button"
-                className="cursor-pointer rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-2 py-1.5 text-xs text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
-                onClick={() => onAssignJobMechanic(job.id, selectedMechanic)}
-                disabled={isBusy || selectedMechanic === job.assignedMechanic}
-              >
-                {isAssignMechanicPending
-                  ? t("pages.orderDetails.controls.jobs.actions.mechanicPending")
-                  : t("pages.orderDetails.controls.jobs.actions.mechanic")}
-              </button>
+              {selectedMechanic !== job.assignedMechanic ? (
+                <button
+                  type="button"
+                  className="grid h-7 w-7 cursor-pointer place-items-center rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] text-[13px] font-semibold text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+                  onClick={() => onAssignJobMechanic(job.id, selectedMechanic)}
+                  disabled={isBusy}
+                  aria-label={
+                    isAssignMechanicPending
+                      ? String(t("pages.orderDetails.controls.jobs.actions.mechanicPending"))
+                      : String(t("pages.orderDetails.controls.jobs.actions.mechanic"))
+                  }
+                  title={
+                    isAssignMechanicPending
+                      ? String(t("pages.orderDetails.controls.jobs.actions.mechanicPending"))
+                      : String(t("pages.orderDetails.controls.jobs.actions.mechanic"))
+                  }
+                >
+                  <span aria-hidden="true">✓</span>
+                </button>
+              ) : null}
             </div>
           </div>
         </td>
