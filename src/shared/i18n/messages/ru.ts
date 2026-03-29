@@ -45,7 +45,7 @@ export const ruMessages = {
       },
       keyboardHint: "Стрелки для навигации, Enter для перехода, Esc для закрытия.",
     },
-    mockReady: "Моки готовы к офлайн-режиму",
+    mockReady: "Офлайн-режим",
     languageLabel: "Язык",
   },
   common: {
@@ -144,8 +144,8 @@ export const ruMessages = {
       scheduled: "Запланирован",
       in_progress: "В работе",
       waiting_parts: "Ожидание запчастей",
-      completed: "Завершен",
-      cancelled: "Отменен",
+      completed: "Завершён",
+      cancelled: "Отменён",
     },
     priority: {
       low: "Низкий",
@@ -155,10 +155,10 @@ export const ruMessages = {
   },
   appointment: {
     status: {
-      pending: "Ожидает",
+      pending: "В ожидании",
       confirmed: "Подтверждена",
       cancelled: "Отменена",
-      converted: "Преобразована",
+      converted: "Преобразована в заказ",
     },
   },
   customer: {
