@@ -38,6 +38,7 @@ Primary navigation items:
 
 - Dashboard
 - Orders
+- Appointments
 - Customers
 - Vehicles
 - Mechanics
@@ -254,6 +255,60 @@ Examples:
 
 ---
 
+## Create Order Page
+
+Route-level flow for creating a new service order.
+
+### Main sections
+
+- customer section
+- vehicle section
+- schedule and notes
+- priority and status
+- initial service jobs
+
+### Capabilities
+
+- select existing customer
+- create customer inline
+- select existing vehicle
+- create vehicle inline
+- define initial order metadata
+- submit and open created order details
+
+---
+
+## Appointments Page
+
+Scheduling and pre-service operations screen.
+
+### Main sections
+
+- filters toolbar
+- grouped appointments list
+- pagination
+
+### Main actions
+
+- confirm appointment
+- reschedule appointment
+- cancel appointment
+- convert appointment to order
+
+### Appointment table
+
+Columns:
+
+- appointment number
+- customer
+- vehicle
+- service
+- status
+- assigned mechanic
+- scheduled time
+
+---
+
 ## Customers Page
 
 Customer registry.
@@ -387,6 +442,8 @@ Each board card should display:
 - open order details
 - quick flag action
 
+Drag-and-drop is not required for the current implementation.
+
 ---
 
 # Shared UI Patterns
@@ -423,7 +480,6 @@ Expected table behavior:
 Forms are used for:
 
 - creating orders
-- editing customers
 - adding service jobs
 - adding parts
 

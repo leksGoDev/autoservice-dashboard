@@ -163,9 +163,12 @@ It represents orders as columns by status (kanban-style).
 
 Capabilities:
 
-- drag and drop orders between statuses
 - quick status updates
 - visual workload overview
+
+Drag-and-drop is not required for the current project scope.
+
+The board should support clear operational status transitions and fast navigation without relying on DnD.
 
 ---
 
@@ -194,6 +197,22 @@ The system should support global search across:
 
 ---
 
+## Appointments
+
+The system includes a separate Appointments workflow.
+
+Appointments represent scheduled service visits before they become active work orders.
+
+Capabilities:
+
+- appointment registry
+- confirm appointment
+- reschedule appointment
+- cancel appointment
+- convert appointment into order
+
+---
+
 ## Key Workflows
 
 ### Create Order
@@ -201,6 +220,14 @@ The system should support global search across:
 - create new order
 - assign customer and vehicle
 - set initial status
+- add initial service jobs
+- schedule the visit
+
+The flow may use:
+
+- existing customer and vehicle records
+- inline customer creation
+- inline vehicle creation
 
 ---
 
@@ -234,6 +261,8 @@ The system should support global search across:
 - move orders between statuses
 - reflect real-time state changes
 
+The current product scope does not require drag-and-drop.
+
 ---
 
 ## Main Screens
@@ -242,14 +271,12 @@ The application includes:
 
 - Dashboard
 - Orders (registry)
+- Create Order
 - Order Details
+- Appointments
 - Work Board
 - Customers
 - Vehicles
-
-No separate Appointments page is included.
-
-Appointments are represented as orders with a pre-service status.
 
 ---
 
