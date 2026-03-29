@@ -182,14 +182,6 @@ Small Meta Text
 
 Text should prioritize readability in dense data interfaces.
 
-Baseline type scale for operational screens:
-
-- Page Title: 28px / 32px
-- Section Title: 16px / 24px
-- Table Header: 12px / 16px
-- Body Text: 14px / 20px
-- Small Meta Text: 12px / 18px
-
 Approved typography scale:
 
 - `text-[11px]` for compact meta text, dense inline row controls, and micro helper labels only
