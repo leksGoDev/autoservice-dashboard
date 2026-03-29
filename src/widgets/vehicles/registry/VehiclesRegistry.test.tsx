@@ -38,7 +38,7 @@ describe("VehiclesRegistry", () => {
 
     await screen.findByText("Plate Number");
 
-    fireEvent.change(screen.getByPlaceholderText("Plate, VIN, make, model, owner"), {
+    fireEvent.change(screen.getByLabelText("Search vehicles"), {
       target: { value: "tesla" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Search" }));

@@ -35,7 +35,7 @@ describe("MechanicsRegistry", () => {
 
     await screen.findByText("Mechanics table");
 
-    fireEvent.change(screen.getByPlaceholderText("Mechanic name or specialization"), {
+    fireEvent.change(screen.getByLabelText("Search mechanics"), {
       target: { value: "brake" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Search" }));

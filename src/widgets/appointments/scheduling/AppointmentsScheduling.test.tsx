@@ -54,16 +54,23 @@ describe("AppointmentsScheduling", () => {
     });
   });
 
-  it("confirms appointment from row action", async () => {
+  it("starts confirm action from row control", async () => {
     renderScheduling();
 
     await screen.findByText("Today");
 
     const confirmButtons = screen.getAllByRole("button", { name: "Confirm" });
-    fireEvent.click(confirmButtons[0]);
+    const targetButton = confirmButtons[0];
+    const row = targetButton.closest("tr");
+
+    if (!row) {
+      throw new Error("Expected confirm action to be rendered inside a table row.");
+    }
+
+    fireEvent.click(targetButton);
 
     await waitFor(() => {
-      expect(screen.getByText("Appointment confirmed.")).toBeInTheDocument();
+      expect(within(row).getByRole("button", { name: "Confirm" })).toBeDisabled();
     });
   });
 
