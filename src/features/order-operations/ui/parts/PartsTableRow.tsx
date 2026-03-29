@@ -50,16 +50,26 @@ export const PartsTableRow = memo(
               className="w-18 rounded-[8px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2 py-1.5 text-xs text-[var(--color-text-primary)]"
             />
 
-            <button
-              type="button"
-              className="cursor-pointer rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-2 py-1.5 text-xs text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
-              onClick={() => onUpdatePartQuantity(part.id, Number(quantityValue))}
-              disabled={isBusy || quantityValue === String(part.quantity)}
-            >
-              {isUpdateQuantityPending
-                ? t("pages.orderDetails.controls.parts.actions.quantityPending")
-                : t("pages.orderDetails.controls.parts.actions.quantity")}
-            </button>
+            {quantityValue !== String(part.quantity) ? (
+              <button
+                type="button"
+                className="grid h-7 w-7 cursor-pointer place-items-center rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] text-[13px] font-semibold text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+                onClick={() => onUpdatePartQuantity(part.id, Number(quantityValue))}
+                disabled={isBusy}
+                aria-label={
+                  isUpdateQuantityPending
+                    ? String(t("pages.orderDetails.controls.parts.actions.quantityPending"))
+                    : String(t("pages.orderDetails.controls.parts.actions.quantity"))
+                }
+                title={
+                  isUpdateQuantityPending
+                    ? String(t("pages.orderDetails.controls.parts.actions.quantityPending"))
+                    : String(t("pages.orderDetails.controls.parts.actions.quantity"))
+                }
+              >
+                <span aria-hidden="true">✓</span>
+              </button>
+            ) : null}
 
             <button
               type="button"
