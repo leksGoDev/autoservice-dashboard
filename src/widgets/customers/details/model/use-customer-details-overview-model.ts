@@ -16,7 +16,10 @@ export const useCustomerDetailsOverviewModel = (
   customerId: string | undefined,
 ): CustomerDetailsOverviewModel => {
   const query = useCustomerDetailsQuery(customerId);
-  const details = query.data;
+  const details =
+    query.data && typeof query.data === "object" && query.data.customer
+      ? query.data
+      : undefined;
   const isLoading = query.isLoading;
   const isError = query.isError;
   const isEmpty = !isLoading && !isError && !details;

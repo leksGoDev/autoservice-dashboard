@@ -22,11 +22,14 @@ export type MechanicsRegistryModel = {
   searchInput: string;
   setSearchInput: (next: string) => void;
   page: number;
-  setPage: (next: number | ((prev: number) => number)) => void;
-  registryQuery: UseQueryResult<ListResponse<MechanicRegistryItem>, Error>;
+  listQuery: UseQueryResult<ListResponse<MechanicRegistryItem>, Error>;
   workloadQuery: UseQueryResult<MechanicWorkloadItem[], Error>;
-  data: ListResponse<MechanicRegistryItem> | undefined;
+  listData: ListResponse<MechanicRegistryItem> | undefined;
   rows: MechanicRegistryItem[];
+  workloadItems: MechanicWorkloadItem[];
+  isLoading: boolean;
+  isError: boolean;
+  isEmpty: boolean;
   availability: {
     counts: AvailabilityCounts;
     averageUtilization: number;
@@ -36,6 +39,8 @@ export type MechanicsRegistryModel = {
   canGoPrev: boolean;
   canGoNext: boolean;
   handleSearchSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
   handleRetry: () => void;
 };
 
@@ -46,11 +51,15 @@ export const useMechanicsRegistryModel = (): MechanicsRegistryModel => {
   const [searchInput, setSearchInput] = useState("");
   const [range, setRange] = useState<typeof DASHBOARD_RANGES[number]>(DEFAULT_DASHBOARD_RANGE);
 
-  const registryQuery = useMechanicsRegistryQuery({ page, pageSize: PAGE_SIZE, search });
+  const listQuery = useMechanicsRegistryQuery({ page, pageSize: PAGE_SIZE, search });
   const workloadQuery = useMechanicsWorkloadQuery(range);
 
-  const data = registryQuery.data;
-  const rows = data?.items ?? [];
+  const listData = listQuery.data;
+  const rows = listData?.items ?? [];
+  const workloadItems = workloadQuery.data ?? [];
+  const isLoading = listQuery.isLoading || workloadQuery.isLoading;
+  const isError = listQuery.isError || workloadQuery.isError;
+  const isEmpty = !isLoading && !isError && rows.length === 0;
 
   const availability = useMemo(() => {
     const counts = rows.reduce<AvailabilityCounts>(
@@ -61,43 +70,40 @@ export const useMechanicsRegistryModel = (): MechanicsRegistryModel => {
       { available: 0, busy: 0, off_shift: 0 },
     );
 
-    const workload = workloadQuery.data ?? [];
     const averageUtilization =
-      workload.length > 0
-        ? Math.round(workload.reduce((sum, item) => sum + item.utilization, 0) / workload.length)
+      workloadItems.length > 0
+        ? Math.round(workloadItems.reduce((sum, item) => sum + item.utilization, 0) / workloadItems.length)
         : 0;
 
     return {
       counts,
       averageUtilization,
     };
-  }, [rows, workloadQuery.data]);
+  }, [rows, workloadItems]);
 
   const assignmentLeaders = useMemo(() => {
-    const workload = workloadQuery.data ?? [];
-
-    return [...workload]
+    return [...workloadItems]
       .sort((left, right) => right.assignedOrders - left.assignedOrders)
       .slice(0, 3);
-  }, [workloadQuery.data]);
+  }, [workloadItems]);
 
   const summary = useMemo(() => {
-    if (!data || data.total === 0) {
+    if (!listData || listData.total === 0) {
       return t("pages.mechanics.table.summaryEmpty");
     }
 
-    const start = (data.page - 1) * data.pageSize + 1;
-    const end = start + data.items.length - 1;
+    const start = (listData.page - 1) * listData.pageSize + 1;
+    const end = start + listData.items.length - 1;
 
     return t("pages.mechanics.table.summary", {
       start,
       end,
-      total: data.total,
+      total: listData.total,
     });
-  }, [data, t]);
+  }, [listData, t]);
 
-  const canGoPrev = Boolean(data && data.page > 1 && !registryQuery.isFetching);
-  const canGoNext = Boolean(data && data.page < data.totalPages && !registryQuery.isFetching);
+  const canGoPrev = Boolean(listData && listData.page > 1 && !listQuery.isFetching);
+  const canGoNext = Boolean(listData && listData.page < listData.totalPages && !listQuery.isFetching);
 
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -105,8 +111,16 @@ export const useMechanicsRegistryModel = (): MechanicsRegistryModel => {
     setSearch(searchInput.trim());
   }
 
+  function handlePrevPage() {
+    setPage((value) => Math.max(1, value - 1));
+  }
+
+  function handleNextPage() {
+    setPage((value) => value + 1);
+  }
+
   function handleRetry() {
-    void registryQuery.refetch();
+    void listQuery.refetch();
     void workloadQuery.refetch();
   }
 
@@ -116,17 +130,22 @@ export const useMechanicsRegistryModel = (): MechanicsRegistryModel => {
     searchInput,
     setSearchInput,
     page,
-    setPage,
-    registryQuery,
+    listQuery,
     workloadQuery,
-    data,
+    listData,
     rows,
+    workloadItems,
+    isLoading,
+    isError,
+    isEmpty,
     availability,
     assignmentLeaders,
     summary,
     canGoPrev,
     canGoNext,
     handleSearchSubmit,
+    handlePrevPage,
+    handleNextPage,
     handleRetry,
   };
 };

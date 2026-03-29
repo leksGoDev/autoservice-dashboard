@@ -11,14 +11,12 @@ type MechanicsRegistryContentProps = {
 
 export const MechanicsRegistryContent = ({ model }: MechanicsRegistryContentProps) => {
   const { t } = useI18n();
-  const isLoading = model.registryQuery.isLoading || model.workloadQuery.isLoading;
-  const isError = model.registryQuery.isError || model.workloadQuery.isError;
 
-  if (isLoading) {
+  if (model.isLoading) {
     return <DataState message={t("pages.mechanics.states.loading")} />;
   }
 
-  if (isError) {
+  if (model.isError) {
     return (
       <DataState
         tone="error"
@@ -36,7 +34,7 @@ export const MechanicsRegistryContent = ({ model }: MechanicsRegistryContentProp
     );
   }
 
-  if (model.rows.length === 0) {
+  if (model.isEmpty || !model.listData) {
     return <DataState message={t("pages.mechanics.states.empty")} />;
   }
 
@@ -44,13 +42,13 @@ export const MechanicsRegistryContent = ({ model }: MechanicsRegistryContentProp
     <>
       <MechanicsRegistryTable
         rows={model.rows}
-        page={model.data?.page ?? 1}
-        totalPages={model.data?.totalPages ?? 1}
+        page={model.listData.page}
+        totalPages={model.listData.totalPages}
         summary={model.summary}
         canGoPrev={model.canGoPrev}
         canGoNext={model.canGoNext}
-        onPrev={() => model.setPage((value) => Math.max(1, value - 1))}
-        onNext={() => model.setPage((value) => value + 1)}
+        onPrev={model.handlePrevPage}
+        onNext={model.handleNextPage}
       />
 
       <div className="grid gap-4 lg:grid-cols-2">

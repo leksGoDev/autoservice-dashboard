@@ -33,12 +33,8 @@ export const CustomersRegistryContent = ({ model }: CustomersRegistryContentProp
     );
   }
 
-  if (model.isEmpty) {
+  if (model.isEmpty || !model.data) {
     return <DataState message={t("customersRegistry.states.empty")} />;
-  }
-
-  if (!model.data) {
-    return null;
   }
 
   return (
