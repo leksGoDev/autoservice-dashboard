@@ -372,7 +372,7 @@ export const enPages = {
   },
   customers: {
     eyebrow: "Registry",
-    title: "Customers registry",
+    title: "Customers workspace",
     description:
       "The customers screen will contain search, a paginated table, and drill-down access to customer details.",
     cards: {

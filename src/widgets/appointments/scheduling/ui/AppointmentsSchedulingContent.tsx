@@ -43,7 +43,7 @@ export const AppointmentsSchedulingContent = ({ model }: AppointmentsSchedulingC
   const canGoNext = model.page < model.totalPages;
 
   return (
-    <section className="grid gap-4">
+    <section className="grid min-w-0 gap-4">
       {model.groups.map((group) => (
         <AppointmentsGroupSection
           key={group.key}

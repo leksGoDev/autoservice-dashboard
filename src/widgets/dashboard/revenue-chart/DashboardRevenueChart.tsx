@@ -34,7 +34,7 @@ export const DashboardRevenueChart = ({ data }: DashboardRevenueChartProps) => {
       description={t("dashboard.revenueChart.description")}
       className="min-h-[320px]"
     >
-      <div className="h-[240px]">
+      <div className="h-[240px] min-w-0 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <defs>

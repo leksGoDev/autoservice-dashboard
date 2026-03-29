@@ -33,7 +33,7 @@ export const AnalyticsJobsByCategoryChart = ({ data }: AnalyticsJobsByCategoryCh
       description={t("pages.analytics.jobsByCategory.description")}
       className="min-h-[320px]"
     >
-      <div className="h-[240px]">
+      <div className="h-[240px] min-w-0 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid stroke="rgba(154, 164, 178, 0.12)" strokeDasharray="3 3" />

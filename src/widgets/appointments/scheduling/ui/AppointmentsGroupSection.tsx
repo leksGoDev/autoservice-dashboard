@@ -6,8 +6,8 @@ import { getStatusBadgeClass } from "@/shared/ui/status-badges";
 import { Link } from "react-router-dom";
 
 const thClassName =
-  "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]";
-const tdClassName = "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5";
+  "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs leading-4 font-semibold text-[var(--color-text-secondary)]";
+const tdClassName = "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 leading-5";
 const relationLinkClass =
   "inline-flex rounded px-1 py-0.5 text-[var(--color-accent-light-blue)] underline decoration-transparent underline-offset-2 transition-colors hover:text-[#9ac0ff] hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]";
 
@@ -38,7 +38,7 @@ export const AppointmentsGroupSection = ({
   const { locale, t } = useI18n();
 
   return (
-    <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[14px] pb-3">
+    <section className="min-w-0 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[14px] pb-3">
       <header className="mb-3 flex items-center justify-between gap-3 border-b border-[rgba(154,164,178,0.12)] pb-2.5">
         <h2 className="m-0 text-base font-semibold">{title}</h2>
         <span className="text-xs text-[var(--color-text-secondary)]">
@@ -51,8 +51,8 @@ export const AppointmentsGroupSection = ({
           {emptyLabel}
         </p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[980px] border-collapse text-[13px]">
+        <div className="w-full max-w-full overflow-x-auto overscroll-x-contain">
+          <table className="w-full min-w-[860px] border-collapse text-[13px] leading-5 md:min-w-[980px]">
             <thead>
               <tr>
                 {APPOINTMENTS_TABLE_HEADERS.map((header) => (
@@ -66,7 +66,7 @@ export const AppointmentsGroupSection = ({
             <tbody>
               {items.map((item) => (
                 <tr key={item.id} className="align-top hover:bg-[#20283a]">
-                  <td className={`${tdClassName} font-semibold`}>{item.number}</td>
+                  <td className={`${tdClassName} whitespace-nowrap font-semibold`}>{item.number}</td>
                   <td className={tdClassName}>
                     <Link to={`/customers/${item.customerId}`} className={relationLinkClass}>
                       {item.customerName}
@@ -92,7 +92,7 @@ export const AppointmentsGroupSection = ({
                       timeStyle: "short",
                     })}
                   </td>
-                  <td className={tdClassName}>
+                  <td className={`${tdClassName} min-w-[220px]`}>
                     <AppointmentOperationsControls
                       appointmentId={item.id}
                       status={item.status}
