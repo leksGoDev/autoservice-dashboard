@@ -156,6 +156,13 @@ Rules:
 - keep `app`-level global styles limited to reset, theme tokens, and app-wide layout concerns
 - co-locate `*.module.css` with the React module that owns the markup
 - avoid adding feature-specific UI styling to `global.css`
+- prefer Tailwind's default spacing, radius, and typography utilities before reaching for arbitrary values
+- use arbitrary Tailwind values only when they match the approved design scale documented in `DESIGN_SYSTEM.md`
+- avoid introducing new one-off values such as `text-[15px]`, `rounded-[11px]`, or `px-[18px]` unless there is a repeated visual need that cannot be represented by the approved scale
+- when a dense dashboard pattern already uses an approved exception like `text-[11px]`, `text-[13px]`, or `rounded-[10px]`, keep it consistent instead of inventing a nearby variation
+- prefer `text-xs` over `text-[12px]` for the same visual size
+- treat `text-[13px]` as a deliberate dense-table exception, not as a replacement for all small body text
+- prefer `rounded-[10px]` as the default compact control radius; do not introduce `rounded-[9px]` as a new pattern
 
 Use CSS Modules when:
 

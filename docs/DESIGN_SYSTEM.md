@@ -46,6 +46,14 @@ Guidelines:
 - avoid inline styles unless a dynamic value cannot be expressed cleanly through class switching
 - keep visual decisions consistent across widgets, pages, and shared UI primitives
 
+Tailwind baseline:
+
+- the project currently uses Tailwind v4 through `@tailwindcss/vite`
+- there is no custom `tailwind.config` scale in the repository at the moment
+- default Tailwind spacing, radius, and typography utilities are the primary source of truth
+- arbitrary values such as `text-[13px]` or `rounded-[10px]` are allowed only for the documented dense-dashboard exceptions below
+- do not introduce new arbitrary sizes casually; if a new size repeats across the app, either align it to the approved set or document the reason first
+
 CSS ownership rules:
 
 - `global.css` is for reset, CSS variables, and application-wide structural rules only
@@ -174,6 +182,24 @@ Small Meta Text
 
 Text should prioritize readability in dense data interfaces.
 
+Approved typography scale:
+
+- `text-[11px]` for compact meta text, dense inline row controls, and micro helper labels only
+- `text-xs` (`12px`) for field labels, table headers, chips, compact buttons, and small secondary metadata
+- `text-[13px]` for dense table body content and compact dashboard list rows
+- `text-sm` (`14px`) for standard body copy, inputs, and descriptive text
+- `text-[28px]` for page titles
+- `text-[30px]` for KPI values
+- `text-[32px]` only for large placeholder or hero-style headings
+
+Typography rules:
+
+- prefer default Tailwind text sizes first
+- use `text-[11px]` and `text-[13px]` intentionally for dense data-heavy UI, not as general-purpose body sizes
+- do not use `text-[12px]` when `text-xs` expresses the same size
+- avoid inventing nearby one-off values such as `12.5px`, `15px`, `27px`, or `29px`
+- when a screen does not need dense compaction, prefer `text-xs` and `text-sm` over arbitrary text sizes
+
 Localization requirements:
 
 - the primary type choice must support both Latin and Cyrillic text cleanly
@@ -197,6 +223,33 @@ Recommended spacing values:
 - 32px
 
 Prefer an 8px-based spacing rhythm for layout, cards, forms, and table toolbars.
+
+Approved Tailwind spacing usage:
+
+- `gap-1`, `gap-2`, `gap-3`, `gap-4` for most local composition
+- `px-2`, `px-2.5`, `px-3`, `px-4` for controls and compact table actions
+- `py-1`, `py-1.5`, `py-2`, `py-2.5`, `py-3` for controls, badges, and table rows
+- `p-3`, `p-4`, `p-6` for cards and larger sections
+
+Spacing rules:
+
+- prefer Tailwind default spacing steps first
+- `2.5`, `3.5`, and similar half-steps are acceptable when they are already part of Tailwind's scale and improve dense dashboard fit
+- avoid arbitrary spacing values unless they are tied to a repeated visual pattern already used in shared UI
+- dense row actions and table controls should stay in the compact range rather than using large form spacing by default
+
+Approved radius usage:
+
+- `rounded-lg` and `rounded-xl` for most compact containers
+- `rounded-2xl` for page-level cards and large shells
+- `rounded-full` for chips and pills
+- `rounded-[10px]` is the preferred dashboard-specific control radius
+- `rounded-[8px]` may remain only for very small inline controls where `10px` feels oversized
+- `rounded-[9px]` should not be introduced as an ongoing pattern
+
+Radius rule:
+
+- do not introduce new one-off radii such as `9px`, `11px`, `14px`, or `18px` without a clear repeated pattern
 
 ---
 
@@ -273,6 +326,14 @@ Table characteristics:
 - sortable columns
 - status badges
 - priority indicators
+
+Table sizing rules:
+
+- table body content should typically use `text-[13px]`
+- table headers should typically use `text-xs`
+- compact inline row controls may use `text-[11px]`
+- default row padding should stay in the compact range around `px-3 py-2` or `px-3 py-2.5`
+- avoid placing large form-style controls inside registry rows unless the table is intentionally acting as a workspace
 
 Row hover background:
 #20283A
@@ -384,6 +445,14 @@ Active
 Disabled
 
 Interactions should be subtle and avoid heavy animations.
+
+Control sizing rules:
+
+- default compact button and input pattern should stay around `rounded-[10px] px-3 py-2`
+- larger form actions may use `px-4 py-2.5`
+- tiny inline confirmation or row action controls may use `h-7 w-7` or similarly compact dimensions
+- avoid mixing `text-xs`, `text-[12px]`, and `text-[13px]` in one control family without a reason; pick one level for the pattern and repeat it
+- if a control starts needing much larger padding or height, treat it as a deliberate prominent action rather than the default baseline
 
 ---
 
