@@ -9,16 +9,26 @@ export const CustomersRegistry = () => {
   const model = useCustomersRegistryModel();
 
   return (
-    <WidgetCard
-      title={t("customersRegistry.title")}
-      description={t("customersRegistry.description")}
-      className="grid gap-4"
-    >
-      <CustomersRegistrySearch
-        value={model.search}
-        onChange={(event) => model.handleSearchChange(event.target.value)}
-      />
-      <CustomersRegistryContent model={model} />
-    </WidgetCard>
+    <section className="grid gap-5">
+      <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[18px]">
+        <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
+          {t("pages.customers.eyebrow")}
+        </span>
+        <h1 className="m-0 mt-2.5 text-[28px] leading-[1.15]">{t("pages.customers.title")}</h1>
+        <p className="m-0 text-base leading-6 text-[var(--color-text-secondary)]">{t("pages.customers.description")}</p>
+      </section>
+
+      <WidgetCard
+        title={t("customersRegistry.title")}
+        description={t("customersRegistry.description")}
+        className="grid gap-4"
+      >
+        <CustomersRegistrySearch
+          value={model.search}
+          onChange={(event) => model.handleSearchChange(event.target.value)}
+        />
+        <CustomersRegistryContent model={model} />
+      </WidgetCard>
+    </section>
   );
 };

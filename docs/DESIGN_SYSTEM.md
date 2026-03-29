@@ -182,6 +182,14 @@ Small Meta Text
 
 Text should prioritize readability in dense data interfaces.
 
+Baseline type scale for operational screens:
+
+- Page Title: 28px / 32px
+- Section Title: 16px / 24px
+- Table Header: 12px / 16px
+- Body Text: 14px / 20px
+- Small Meta Text: 12px / 18px
+
 Approved typography scale:
 
 - `text-[11px]` for compact meta text, dense inline row controls, and micro helper labels only
@@ -199,6 +207,12 @@ Typography rules:
 - do not use `text-[12px]` when `text-xs` expresses the same size
 - avoid inventing nearby one-off values such as `12.5px`, `15px`, `27px`, or `29px`
 - when a screen does not need dense compaction, prefer `text-xs` and `text-sm` over arbitrary text sizes
+
+Consistency rules:
+
+- the same page-level role should use the same size and line-height across all pages
+- registry pages must not visually downgrade the title hierarchy compared to other registry pages
+- table header typography should remain consistent between registries
 
 Localization requirements:
 

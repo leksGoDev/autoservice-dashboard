@@ -7,7 +7,7 @@ export const AppointmentsScheduling = () => {
   const model = useAppointmentsSchedulingModel();
 
   return (
-    <section className="grid gap-5">
+    <section className="grid min-w-0 gap-5">
       <AppointmentsSchedulingHeader />
 
       <AppointmentsSchedulingToolbar

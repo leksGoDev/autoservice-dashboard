@@ -46,7 +46,7 @@ export const VehicleDetailsContent = ({ model }: VehicleDetailsContentProps) => 
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-[minmax(320px,1fr)_minmax(320px,1fr)]">
+    <div className="grid items-start gap-4 md:grid-cols-[minmax(320px,1fr)_minmax(320px,1fr)]">
       <VehicleDetailsInfoCard details={model.details} />
       <VehicleDetailsHistoryCard history={model.history} />
     </div>
