@@ -11,33 +11,33 @@ export const JobsCreateForm = ({ model }: JobsCreateFormProps) => {
   return (
   <div className="grid gap-2 rounded-xl border border-[rgba(154,164,178,0.12)] bg-[rgba(15,17,21,0.38)] p-3 sm:grid-cols-2 xl:grid-cols-6">
     <label className="grid gap-1">
-      <span className="text-xs font-semibold text-[color:var(--color-text-secondary)]">
+      <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
         {t("pages.orderDetails.controls.jobs.add.name")}
       </span>
       <input
         value={model.jobName}
         onChange={(event) => model.setJobName(event.target.value)}
         disabled={model.isBusy}
-        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[color:var(--color-text-primary)]"
+        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[var(--color-text-primary)]"
         aria-label={t("pages.orderDetails.controls.jobs.add.name")}
       />
     </label>
 
     <label className="grid gap-1">
-      <span className="text-xs font-semibold text-[color:var(--color-text-secondary)]">
+      <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
         {t("pages.orderDetails.controls.jobs.add.category")}
       </span>
       <input
         value={model.jobCategory}
         onChange={(event) => model.setJobCategory(event.target.value)}
         disabled={model.isBusy}
-        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[color:var(--color-text-primary)]"
+        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[var(--color-text-primary)]"
         aria-label={t("pages.orderDetails.controls.jobs.add.category")}
       />
     </label>
 
     <label className="grid gap-1">
-      <span className="text-xs font-semibold text-[color:var(--color-text-secondary)]">
+      <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
         {t("pages.orderDetails.controls.jobs.add.estimated")}
       </span>
       <input
@@ -47,13 +47,13 @@ export const JobsCreateForm = ({ model }: JobsCreateFormProps) => {
         value={model.jobEstimatedHours}
         onChange={(event) => model.setJobEstimatedHours(event.target.value)}
         disabled={model.isBusy}
-        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[color:var(--color-text-primary)]"
+        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[var(--color-text-primary)]"
         aria-label={t("pages.orderDetails.controls.jobs.add.estimated")}
       />
     </label>
 
     <label className="grid gap-1">
-      <span className="text-xs font-semibold text-[color:var(--color-text-secondary)]">
+      <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
         {t("pages.orderDetails.controls.jobs.add.labor")}
       </span>
       <input
@@ -63,20 +63,20 @@ export const JobsCreateForm = ({ model }: JobsCreateFormProps) => {
         value={model.jobLaborPrice}
         onChange={(event) => model.setJobLaborPrice(event.target.value)}
         disabled={model.isBusy}
-        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[color:var(--color-text-primary)]"
+        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[var(--color-text-primary)]"
         aria-label={t("pages.orderDetails.controls.jobs.add.labor")}
       />
     </label>
 
     <label className="grid gap-1">
-      <span className="text-xs font-semibold text-[color:var(--color-text-secondary)]">
+      <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
         {t("pages.orderDetails.controls.jobs.add.mechanic")}
       </span>
       <select
         value={model.jobMechanic}
         onChange={(event) => model.setJobMechanic(event.target.value)}
         disabled={model.isBusy}
-        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[color:var(--color-text-primary)]"
+        className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-sm leading-5 text-[var(--color-text-primary)]"
         aria-label={t("pages.orderDetails.controls.jobs.add.mechanic")}
       >
         {model.availableMechanics.map((mechanic) => (
@@ -89,7 +89,7 @@ export const JobsCreateForm = ({ model }: JobsCreateFormProps) => {
 
     <button
       type="button"
-      className="mt-auto cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-1.5 text-xs leading-4 font-medium text-[color:var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+      className="mt-auto cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-1.5 text-xs leading-4 font-medium text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
       onClick={model.handleAddJob}
       disabled={model.isBusy}
     >

@@ -112,7 +112,7 @@ export const AppointmentsSchedulingToolbar = ({
       <div className="flex justify-end">
         <button
           type="button"
-          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
+          className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
           onClick={onReset}
         >
           {t("pages.appointments.toolbar.reset")}

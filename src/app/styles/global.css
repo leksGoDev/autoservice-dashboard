@@ -42,7 +42,7 @@ body {
 
 button,
 input {
-  font: inherit;
+  font-family: inherit;
 }
 
 a {

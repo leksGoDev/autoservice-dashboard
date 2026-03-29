@@ -49,7 +49,7 @@ export const MechanicsRegistryHeader = ({
         />
         <button
           type="submit"
-          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-3 py-2.5 text-[13px] font-semibold text-xs font-semibold text-[var(--color-text-primary)]"
+          className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
         >
           {t("pages.mechanics.searchButton")}
         </button>

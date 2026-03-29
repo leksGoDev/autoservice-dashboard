@@ -32,9 +32,9 @@ export const LabeledSelectControl = <T extends string>({
   onChange,
   onAction,
 }: LabeledSelectControlProps<T>) => {
-  const labelClassName = "text-xs leading-[18px] font-semibold text-[color:var(--color-text-secondary)]";
-  const controlTextClassName = "text-sm leading-5 text-[color:var(--color-text-primary)]";
-  const actionTextClassName = "text-xs leading-4 font-medium text-[color:var(--color-text-primary)]";
+  const labelClassName = "text-xs leading-[18px] font-semibold text-[var(--color-text-secondary)]";
+  const controlTextClassName = "text-sm leading-5 text-[var(--color-text-primary)]";
+  const actionTextClassName = "text-xs leading-4 font-medium text-[var(--color-text-primary)]";
 
   return (
     <div className="grid gap-2 sm:grid-cols-[1fr_auto]">

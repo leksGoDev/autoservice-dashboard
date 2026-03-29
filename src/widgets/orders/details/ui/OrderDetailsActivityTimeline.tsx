@@ -29,7 +29,7 @@ export const OrderDetailsActivityTimeline = ({
         <p className="m-0 text-sm text-[#fecaca]">{t("pages.orderDetails.states.activityError")}</p>
         <button
           type="button"
-          className="justify-self-start cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
+          className="justify-self-start inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
           onClick={onRetry}
         >
           {t("common.retry")}

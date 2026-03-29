@@ -24,7 +24,7 @@ export const CustomerDetailsOverviewContent = ({ model }: CustomerDetailsOvervie
         action={
           <button
             type="button"
-            className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
+            className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
             onClick={() => model.query.refetch()}
           >
             {t("common.retry")}

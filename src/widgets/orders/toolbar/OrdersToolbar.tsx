@@ -14,6 +14,9 @@ type OrdersToolbarProps = {
 
 export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersToolbarProps) => {
   const { t } = useI18n();
+  const fieldTextClassName = "text-xs font-semibold text-[var(--color-text-primary)]";
+  const actionBaseClassName =
+    "inline-flex h-9 w-full items-center justify-center rounded-[10px] border px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]";
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange({ search: event.target.value });
@@ -37,7 +40,7 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
           </span>
           <input
             type="search"
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 ${fieldTextClassName}`}
             value={filters.search}
             onChange={handleSearchChange}
             placeholder={t("pages.orders.toolbar.searchPlaceholder") as string}
@@ -49,7 +52,7 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
             {t("pages.orders.toolbar.status")}
           </span>
           <select
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 ${fieldTextClassName}`}
             value={filters.status}
             onChange={handleSelectChange("status")}
           >
@@ -67,7 +70,7 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
             {t("pages.orders.toolbar.priority")}
           </span>
           <select
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 ${fieldTextClassName}`}
             value={filters.priority}
             onChange={handleSelectChange("priority")}
           >
@@ -85,7 +88,7 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
             {t("pages.orders.toolbar.mechanic")}
           </span>
           <select
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 ${fieldTextClassName}`}
             value={filters.mechanic}
             onChange={handleSelectChange("mechanic")}
           >
@@ -104,7 +107,7 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
           </span>
           <input
             type="date"
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 ${fieldTextClassName}`}
             value={filters.createdFrom}
             onChange={handleSelectChange("createdFrom")}
           />
@@ -116,7 +119,7 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
           </span>
           <input
             type="date"
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 ${fieldTextClassName}`}
             value={filters.createdTo}
             onChange={handleSelectChange("createdTo")}
           />
@@ -124,17 +127,17 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
       </div>
 
       <div className="flex justify-end">
-        <div className="flex flex-wrap items-center justify-end gap-2">
+        <div className="grid w-full max-w-[360px] gap-2 sm:grid-cols-2">
           <button
             type="button"
-            className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`${actionBaseClassName} cursor-pointer border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)]`}
             onClick={onReset}
           >
             {t("pages.orders.toolbar.reset")}
           </button>
           <Link
             to="/orders/new"
-            className="rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.25)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
+            className={`${actionBaseClassName} cursor-pointer border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)]`}
           >
             {t("pages.orders.toolbar.create")}
           </Link>

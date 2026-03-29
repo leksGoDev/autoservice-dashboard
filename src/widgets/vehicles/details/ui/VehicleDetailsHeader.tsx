@@ -11,15 +11,15 @@ export const VehicleDetailsHeader = ({ vehicleId }: VehicleDetailsHeaderProps) =
 
   return (
     <header className="grid gap-2.5 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-6">
-      <span className="text-xs font-bold uppercase tracking-[0.12em] text-[color:var(--color-accent-light-blue)]">
+      <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
         {t("pages.vehicleDetails.eyebrow")}
       </span>
       <h1 className="m-0 text-[28px] leading-[1.15]">{t("pages.vehicleDetails.title")}</h1>
-      <p className="m-0 text-[color:var(--color-text-secondary)]">{t("pages.vehicleDetails.description")}</p>
-      <p className="m-0 text-[color:var(--color-text-secondary)]">{t("pages.vehicleDetails.vehicleId", { vehicleId })}</p>
+      <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.vehicleDetails.description")}</p>
+      <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.vehicleDetails.vehicleId", { vehicleId })}</p>
       <Link
         to="/vehicles"
-        className="inline-flex w-fit rounded-full border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-2.5 py-1.5 text-xs font-semibold text-[color:var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
+        className="inline-flex w-fit rounded-full border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-2.5 py-1.5 text-xs font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
       >
         {t("pages.vehicleDetails.back")}
       </Link>
