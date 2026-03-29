@@ -1,4 +1,4 @@
-import { useVehicleDetailsViewModel } from "./hooks/use-vehicle-details-view-model";
+import { useVehicleDetailsViewModel } from "./hooks/use-vehicle-details-model";
 import { VehicleDetailsContent } from "./ui/VehicleDetailsContent";
 import { VehicleDetailsHeader } from "./ui/VehicleDetailsHeader";
 

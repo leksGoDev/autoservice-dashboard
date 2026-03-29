@@ -1,7 +1,7 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
 import { WorkBoardColumns } from "@/widgets/work-board/columns/WorkBoardColumns";
-import type { WorkBoardOverviewModel } from "../hooks/use-work-board-overview-model";
+import type { WorkBoardOverviewModel } from "../hooks/use-work-board-model";
 
 type WorkBoardOverviewContentProps = {
   boardQuery: WorkBoardOverviewModel["boardQuery"];

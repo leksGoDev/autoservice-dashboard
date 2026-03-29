@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import type { OrderServiceJob, ServiceJobStatus } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { ServiceJobsControlsModel } from "../../model/use-service-jobs-controls-model";
+import type { ServiceJobsControlsModel } from "../../model/use-service-jobs-model";
 import { JobsTableRow } from "./JobsTableRow";
 
 type JobsTableProps = {

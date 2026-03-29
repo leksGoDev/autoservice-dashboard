@@ -1,6 +1,6 @@
 import type { GlobalSearchResult } from "@/entities/search/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { GlobalSearchDropdownStatus } from "../hooks/use-global-search-topbar-model";
+import type { GlobalSearchDropdownStatus } from "../hooks/use-global-search-model";
 import { GlobalSearchResults } from "./GlobalSearchResults";
 
 type GlobalSearchDropdownProps = {

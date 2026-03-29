@@ -1,6 +1,6 @@
 import type { OrderServiceJob } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { useServiceJobsControlsModel } from "../model/use-service-jobs-controls-model";
+import { useServiceJobsControlsModel } from "../model/use-service-jobs-model";
 import { JobsCreateForm } from "./jobs/JobsCreateForm";
 import { JobsTable } from "./jobs/JobsTable";
 

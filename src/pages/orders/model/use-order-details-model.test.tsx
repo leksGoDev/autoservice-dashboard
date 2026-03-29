@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { useParams } from "react-router-dom";
 
-import { useOrderDetailsPageModel } from "./use-order-details-page-model";
+import { useOrderDetailsPageModel } from "./use-order-details-model";
 
 vi.mock("react-router-dom", () => ({
   useParams: vi.fn(),

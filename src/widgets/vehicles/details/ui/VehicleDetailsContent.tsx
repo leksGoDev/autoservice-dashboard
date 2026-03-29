@@ -1,5 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { VehicleDetailsViewModel } from "../hooks/use-vehicle-details-view-model";
+import type { VehicleDetailsViewModel } from "../hooks/use-vehicle-details-model";
 import { VehicleDetailsHistoryCard } from "./VehicleDetailsHistoryCard";
 import { VehicleDetailsInfoCard } from "./VehicleDetailsInfoCard";
 

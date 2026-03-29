@@ -1,6 +1,6 @@
 import type { OrderPartItem, OrderServiceJob } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { useServicePartsControlsModel } from "../model/use-service-parts-controls-model";
+import { useServicePartsControlsModel } from "../model/use-service-parts-model";
 import { PartsCreateForm } from "./parts/PartsCreateForm";
 import { PartsTable } from "./parts/PartsTable";
 

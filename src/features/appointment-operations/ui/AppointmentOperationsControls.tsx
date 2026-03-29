@@ -1,6 +1,6 @@
 import type { AppointmentStatus } from "@/entities/appointment/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { useAppointmentOperationsModel } from "../model/use-appointment-operations-model";
+import { useAppointmentOperationsModel } from "../model/use-appointment-operations";
 
 type AppointmentOperationsControlsProps = {
   appointmentId: string;

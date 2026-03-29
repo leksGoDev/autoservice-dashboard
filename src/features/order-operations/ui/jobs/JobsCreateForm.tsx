@@ -1,4 +1,4 @@
-import type { ServiceJobsControlsModel } from "../../model/use-service-jobs-controls-model";
+import type { ServiceJobsControlsModel } from "../../model/use-service-jobs-model";
 import { useI18n } from "@/shared/i18n/use-i18n";
 
 type JobsCreateFormProps = {

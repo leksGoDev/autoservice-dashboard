@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import type { OrderPartItem } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { ServicePartsControlsModel } from "../../model/use-service-parts-controls-model";
+import type { ServicePartsControlsModel } from "../../model/use-service-parts-model";
 import { PartsTableRow } from "./PartsTableRow";
 
 type PartsTableProps = {

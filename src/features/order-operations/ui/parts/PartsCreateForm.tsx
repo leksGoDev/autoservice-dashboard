@@ -1,5 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { ServicePartsControlsModel } from "../../model/use-service-parts-controls-model";
+import type { ServicePartsControlsModel } from "../../model/use-service-parts-model";
 
 type PartsCreateFormProps = {
   model: ServicePartsControlsModel;

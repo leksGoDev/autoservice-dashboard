@@ -1,5 +1,5 @@
 import type { CustomerListItem } from "@/entities/customer/model/types";
-import type { CreateOrderFormHandle } from "@/features/create-order/model/use-create-order-form-model";
+import type { CreateOrderFormHandle } from "@/features/create-order/model/use-create-order-form";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 import { errorTextClassName, fieldLabelClassName, fieldTitleClassName, inputClassName } from "./form-styles";

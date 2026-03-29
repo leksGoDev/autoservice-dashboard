@@ -1,6 +1,6 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import { useOrderDetailsOverviewModel } from "../hooks/use-order-details-overview-model";
+import { useOrderDetailsOverviewModel } from "../hooks/use-order-details-model";
 import { OrderDetailsContent } from "./OrderDetailsContent";
 import { OrderDetailsHeader } from "./OrderDetailsHeader";
 

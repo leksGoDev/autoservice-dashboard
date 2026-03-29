@@ -3,9 +3,9 @@ import { MemoryRouter } from "react-router-dom";
 
 import { I18nProvider } from "@/shared/i18n/provider";
 import { OrderDetailsPage } from "./OrderDetailsPage";
-import { useOrderDetailsPageModel } from "./model/use-order-details-page-model";
+import { useOrderDetailsPageModel } from "./model/use-order-details-model";
 
-vi.mock("./model/use-order-details-page-model", () => ({
+vi.mock("./model/use-order-details-model", () => ({
   useOrderDetailsPageModel: vi.fn(),
 }));
 

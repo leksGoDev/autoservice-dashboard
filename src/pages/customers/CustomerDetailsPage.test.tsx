@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/react";
 
 import { I18nProvider } from "@/shared/i18n/provider";
 import { CustomerDetailsPage } from "./CustomerDetailsPage";
-import { useCustomerDetailsPageModel } from "./model/use-customer-details-page-model";
+import { useCustomerDetailsPageModel } from "./model/use-customer-details-model";
 
-vi.mock("./model/use-customer-details-page-model", () => ({
+vi.mock("./model/use-customer-details-model", () => ({
   useCustomerDetailsPageModel: vi.fn(),
 }));
 

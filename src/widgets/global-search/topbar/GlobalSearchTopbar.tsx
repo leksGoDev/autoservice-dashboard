@@ -1,6 +1,6 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import styles from "./GlobalSearchTopbar.module.css";
-import { useGlobalSearchTopbarModel } from "./hooks/use-global-search-topbar-model";
+import { useGlobalSearchTopbarModel } from "./hooks/use-global-search-model";
 import { GlobalSearchDropdown } from "./ui/GlobalSearchDropdown";
 
 export const GlobalSearchTopbar = () => {

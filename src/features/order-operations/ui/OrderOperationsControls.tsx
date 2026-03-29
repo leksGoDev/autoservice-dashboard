@@ -1,7 +1,7 @@
 import { ORDER_STATUSES } from "@/entities/order/model/options";
 import type { OrderStatus } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { useOrderOperationsControlsModel } from "../model/use-order-operations-controls-model";
+import { useOrderOperationsControlsModel } from "../model/use-order-operations-model";
 
 type OrderOperationsControlsProps = {
   orderId: string;

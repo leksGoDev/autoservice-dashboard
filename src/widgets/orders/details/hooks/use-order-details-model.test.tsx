@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react";
 import { ApiError } from "@/shared/api/api-error";
 import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { useOrderActivityQuery, useOrderDetailsQuery } from "@/entities/order/api/queries";
-import { useOrderDetailsOverviewModel } from "./use-order-details-overview-model";
+import { useOrderDetailsOverviewModel } from "./use-order-details-model";
 
 vi.mock("@/entities/order/api/queries", () => ({
   useOrderDetailsQuery: vi.fn(),

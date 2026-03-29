@@ -1,6 +1,6 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import type { CustomerDetailsOverviewModel } from "../hooks/use-customer-details-overview-model";
+import type { CustomerDetailsOverviewModel } from "../hooks/use-customer-details-model";
 import { CustomerInfoCard } from "./CustomerInfoCard";
 import { CustomerOrdersTable } from "./CustomerOrdersTable";
 import { CustomerVehiclesTable } from "./CustomerVehiclesTable";

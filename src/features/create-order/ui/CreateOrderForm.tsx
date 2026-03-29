@@ -7,7 +7,7 @@ import { InitialJobsSection } from "./sections/InitialJobsSection";
 import { MetaSection } from "./sections/MetaSection";
 import { ScheduleSection } from "./sections/ScheduleSection";
 import { VehicleSection } from "./sections/VehicleSection";
-import { useCreateOrderFormModel } from "../model/use-create-order-form-model";
+import { useCreateOrderFormModel } from "../model/use-create-order-form";
 
 export const CreateOrderForm = () => {
   const { t } = useI18n();
