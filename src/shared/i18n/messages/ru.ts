@@ -29,7 +29,7 @@ export const ruMessages = {
   },
   topbar: {
     kicker: "Операции автосервиса",
-    searchPlaceholder: "Поиск заказов, клиентов, автомобилей",
+    searchPlaceholder: "Поиск",
     searchAria: "Глобальный поиск",
     search: {
       groups: {
@@ -45,7 +45,7 @@ export const ruMessages = {
       },
       keyboardHint: "Стрелки для навигации, Enter для перехода, Esc для закрытия.",
     },
-    mockReady: "Офлайн-режим",
+    mockReady: "Мок режим",
     languageLabel: "Язык",
   },
   common: {
@@ -73,7 +73,7 @@ export const ruMessages = {
   customersRegistry: {
     title: "Реестр клиентов",
     description: "Поиск клиентов, таблица реестра и визуальная основа для перехода в карточку клиента.",
-    searchPlaceholder: "Поиск по имени, телефону или email",
+    searchPlaceholder: "Поиск",
     searchAria: "Поиск клиентов",
     detailsLink: "Карточка клиента",
     states: {

@@ -29,7 +29,7 @@ export const enMessages = {
   },
   topbar: {
     kicker: "Autoservice Operations",
-    searchPlaceholder: "Search orders, customers, vehicles",
+    searchPlaceholder: "Search",
     searchAria: "Global search",
     search: {
       groups: {
@@ -45,7 +45,7 @@ export const enMessages = {
       },
       keyboardHint: "Use arrow keys to navigate, Enter to open, Esc to close.",
     },
-    mockReady: "Mock data offline-ready",
+    mockReady: "Mock mode",
     languageLabel: "Language",
   },
   common: {
@@ -73,7 +73,7 @@ export const enMessages = {
   customersRegistry: {
     title: "Customers registry",
     description: "Search customers, browse the table, and open customer profile context.",
-    searchPlaceholder: "Search by name, phone, or email",
+    searchPlaceholder: "Search",
     searchAria: "Customers search",
     detailsLink: "Customer profile",
     states: {

@@ -53,7 +53,7 @@ export function AppTopbar({ title, searchSlot }: AppTopbarProps) {
             aria-label={t("topbar.searchAria")}
           />
         )}
-        <span className="rounded-full border border-[rgba(107,164,255,0.28)] px-3 py-2.5 text-[13px] font-semibold text-[var(--color-accent-light-blue)]">
+        <span className="inline-flex h-9 shrink-0 items-center whitespace-nowrap rounded-[10px] border border-[rgba(107,164,255,0.28)] px-3 text-xs leading-4 font-semibold text-[var(--color-accent-light-blue)]">
           {t("topbar.mockReady")}
         </span>
       </div>

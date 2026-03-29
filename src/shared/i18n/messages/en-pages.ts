@@ -7,7 +7,7 @@ export const enPages = {
     toolbar: {
       aria: "Orders filters toolbar",
       search: "Search",
-      searchPlaceholder: "Order number, customer, vehicle",
+      searchPlaceholder: "Search",
       status: "Status",
       priority: "Priority",
       mechanic: "Mechanic",
@@ -79,7 +79,7 @@ export const enPages = {
   ordersCreate: {
     eyebrow: "Create",
     title: "Create order",
-    description: "Build a new service order with customer, vehicle, scheduling, and initial jobs.",
+    description: "Service order creation: customer, vehicle, scheduling, and initial jobs.",
     sections: {
       customer: "Customer",
       vehicle: "Vehicle",
@@ -143,11 +143,11 @@ export const enPages = {
   appointments: {
     eyebrow: "Scheduling",
     title: "Appointments workspace",
-    description: "Plan service visits, balance mechanic slots, and convert ready appointments into work orders.",
+    description: "Service visit scheduling, mechanic slot balancing, and conversion of appointments into work orders.",
     toolbar: {
       aria: "Appointments filters toolbar",
       search: "Search",
-      searchPlaceholder: "Appointment #, customer, vehicle, service",
+      searchPlaceholder: "Search",
       status: "Status",
       mechanic: "Mechanic",
       scheduledFrom: "Scheduled from",
@@ -373,8 +373,7 @@ export const enPages = {
   customers: {
     eyebrow: "Registry",
     title: "Customers workspace",
-    description:
-      "The customers screen will contain search, a paginated table, and drill-down access to customer details.",
+    description: "Customer search, paginated table, and drill-down access to customer details.",
     cards: {
       searchTitle: "Search",
       searchText: "Global and page-level search will reuse shared search behavior.",
@@ -433,7 +432,7 @@ export const enPages = {
     title: "Vehicles Registry",
     description: "Search and track customer vehicles with quick entry points to service history.",
     searchLabel: "Search vehicles",
-    searchPlaceholder: "Plate, VIN, make, model, owner",
+    searchPlaceholder: "Search",
     searchButton: "Search",
     clearSearch: "Clear search",
     loading: "Loading vehicles registry...",
@@ -499,7 +498,7 @@ export const enPages = {
     description:
       "Search mechanics, monitor availability, and track assignment pressure from the current workload.",
     searchLabel: "Search mechanics",
-    searchPlaceholder: "Mechanic name or specialization",
+    searchPlaceholder: "Search",
     searchButton: "Search",
     status: {
       available: "Available",
