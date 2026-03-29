@@ -26,7 +26,7 @@ export function createOrdersTableColumns(
       cell: (info) => (
         <Link
           to={`/orders/${info.row.original.id}`}
-          className="font-mono text-[13px] text-[#9fc3ff] underline decoration-transparent decoration-1 underline-offset-2 transition-colors hover:text-[#cfe1ff] hover:decoration-current"
+          className="inline-flex rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 font-mono text-[12px] font-semibold tracking-[0.02em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
         >
           {info.getValue() as string}
         </Link>
