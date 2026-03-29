@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
@@ -6,6 +7,14 @@ import { AppShell } from "./AppShell";
 
 describe("AppShell", () => {
   it("shows title from matched route handle", async () => {
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+
     const router = createMemoryRouter(
       [
         {
@@ -26,9 +35,11 @@ describe("AppShell", () => {
     );
 
     render(
-      <I18nProvider>
-        <RouterProvider router={router} />
-      </I18nProvider>,
+      <QueryClientProvider client={queryClient}>
+        <I18nProvider>
+          <RouterProvider router={router} />
+        </I18nProvider>
+      </QueryClientProvider>,
     );
 
     expect(await screen.findByText("Orders", { selector: "strong" })).toBeInTheDocument();

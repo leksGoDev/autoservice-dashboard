@@ -35,3 +35,8 @@ export interface MechanicsRegistryParamsKey {
   pageSize?: number;
   search?: string;
 }
+
+export interface GlobalSearchParamsKey {
+  query?: string;
+  limit?: number;
+}

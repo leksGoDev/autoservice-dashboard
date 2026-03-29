@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Outlet, useMatches } from "react-router-dom";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { GlobalSearchTopbar } from "@/widgets/global-search/topbar/GlobalSearchTopbar";
 import { AppSidebar } from "../../shared/ui/AppSidebar";
 import { AppTopbar } from "../../shared/ui/AppTopbar";
 
@@ -20,7 +21,7 @@ export function AppShell() {
     <div className="grid min-h-screen grid-cols-[248px_1fr] max-[960px]:grid-cols-1">
       <AppSidebar />
       <div className="flex min-w-0 flex-col">
-        <AppTopbar title={title} />
+        <AppTopbar title={title} searchSlot={<GlobalSearchTopbar />} />
         <main className="p-6">
           <Suspense
             fallback={

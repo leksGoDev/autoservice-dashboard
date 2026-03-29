@@ -10,3 +10,4 @@ export const DEFAULT_ORDERS_SORT_DIRECTION: SortDirection = "desc";
 export const DEFAULT_DASHBOARD_RANGE = "30d";
 export const DASHBOARD_RANGES = ["7d", "30d", "90d"] as const;
 export const DEFAULT_DASHBOARD_RECENT_ORDERS_LIMIT = 5;
+export const DEFAULT_GLOBAL_SEARCH_LIMIT = 12;

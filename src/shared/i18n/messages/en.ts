@@ -28,6 +28,20 @@ export const enMessages = {
     kicker: "Autoservice Operations",
     searchPlaceholder: "Search orders, customers, vehicles",
     searchAria: "Global search",
+    search: {
+      groups: {
+        order: "Orders",
+        customer: "Customers",
+        vehicle: "Vehicles",
+      },
+      states: {
+        loading: "Searching...",
+        minQuery: "Type at least 2 characters to search.",
+        empty: "No matching records found.",
+        error: "Failed to load search results.",
+      },
+      keyboardHint: "Use arrow keys to navigate, Enter to open, Esc to close.",
+    },
     mockReady: "Mock data offline-ready",
     languageLabel: "Language",
   },
