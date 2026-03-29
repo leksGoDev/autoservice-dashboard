@@ -29,6 +29,20 @@ export const ruMessages = {
     kicker: "Операции автосервиса",
     searchPlaceholder: "Поиск заказов, клиентов, автомобилей",
     searchAria: "Глобальный поиск",
+    search: {
+      groups: {
+        order: "Заказы",
+        customer: "Клиенты",
+        vehicle: "Автомобили",
+      },
+      states: {
+        loading: "Ищем результаты...",
+        minQuery: "Введите минимум 2 символа для поиска.",
+        empty: "Совпадений не найдено.",
+        error: "Не удалось загрузить результаты поиска.",
+      },
+      keyboardHint: "Стрелки для навигации, Enter для перехода, Esc для закрытия.",
+    },
     mockReady: "Моки готовы к офлайн-режиму",
     languageLabel: "Язык",
   },

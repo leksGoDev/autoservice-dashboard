@@ -1,12 +1,14 @@
+import type { ReactNode } from "react";
 import { type AppLocale } from "@/shared/i18n/config";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import styles from "./AppTopbar.module.css";
 
 type AppTopbarProps = {
   title: string;
+  searchSlot?: ReactNode;
 };
 
-export function AppTopbar({ title }: AppTopbarProps) {
+export function AppTopbar({ title, searchSlot }: AppTopbarProps) {
   const { t, locale, setLocale } = useI18n();
   const locales: AppLocale[] = ["en", "ru"];
 
@@ -41,12 +43,16 @@ export function AppTopbar({ title }: AppTopbarProps) {
             </button>
           ))}
         </div>
-        <input
-          className="w-full rounded-xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.7)] px-3.5 py-3 text-[var(--color-text-primary)] md:w-80"
-          type="search"
-          placeholder={t("topbar.searchPlaceholder")}
-          aria-label={t("topbar.searchAria")}
-        />
+        {searchSlot ? (
+          searchSlot
+        ) : (
+          <input
+            className="w-full rounded-xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.7)] px-3.5 py-3 text-[var(--color-text-primary)] md:w-80"
+            type="search"
+            placeholder={t("topbar.searchPlaceholder")}
+            aria-label={t("topbar.searchAria")}
+          />
+        )}
         <span className="rounded-full border border-[rgba(107,164,255,0.28)] px-3 py-2.5 text-[13px] font-semibold text-[var(--color-accent-light-blue)]">
           {t("topbar.mockReady")}
         </span>

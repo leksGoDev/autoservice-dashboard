@@ -37,6 +37,9 @@ export const apiEndpoints = {
   jobParts: {
     detail: (jobPartId: string) => `/job-parts/${jobPartId}`,
   },
+  search: {
+    global: "/search",
+  },
   workBoard: {
     board: "/work-board",
   },
