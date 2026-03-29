@@ -1,5 +1,5 @@
 import type { OrderActivityItem, OrderDetails } from "@/entities/order/model/types";
-import { OrderOperationsControls } from "@/features/order-operations/ui/OrderOperationsControls";
+import { OrderDetailsOperationsControls } from "@/features/order-operations/ui/OrderDetailsOperationsControls";
 import { formatOrderCurrency, formatOrderDate, getOrderStatusChipModifier } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
@@ -103,13 +103,12 @@ export const OrderDetailsContent = ({
           <div className="grid gap-4">
             <OrderDetailsInfoList items={summaryItems} />
             <div className="rounded-xl border border-[rgba(154,164,178,0.12)] bg-[rgba(15,17,21,0.42)] p-3">
-              <OrderOperationsControls
+              <OrderDetailsOperationsControls
                 orderId={order.id}
                 status={order.status}
                 assignedMechanic={order.assignedMechanic}
                 flagged={order.flagged}
                 mechanics={mechanics}
-                variant="details"
               />
             </div>
           </div>

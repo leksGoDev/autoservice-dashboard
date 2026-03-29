@@ -34,43 +34,43 @@ function renderRegistry() {
 }
 
 describe("OrdersRegistry", () => {
-  it("updates order status from registry actions", async () => {
+  it("updates order status from inline status column control", async () => {
     renderRegistry();
 
-    await screen.findByText("Order #");
-
-    const statusSelects = screen.getAllByRole("combobox", { name: "Status" });
-    const rowStatusSelect = statusSelects[1] as HTMLSelectElement;
+    const orderLink = await screen.findByRole("link", { name: "ORD-1001" });
+    const row = orderLink.closest("tr") as HTMLElement;
+    const rowStatusSelect = row.querySelector('select[aria-label="Status"]') as HTMLSelectElement;
+    expect(row.querySelector('button[aria-label="Update status"]')).not.toBeInTheDocument();
     const nextStatus = getAlternativeStatus(rowStatusSelect.value);
 
     fireEvent.change(rowStatusSelect, {
       target: { value: nextStatus },
     });
 
-    const updateButtons = screen.getAllByRole("button", { name: "Update status" });
-    fireEvent.click(updateButtons[0]);
+    const updateButton = row.querySelector('button[aria-label="Update status"]') as HTMLButtonElement;
+    fireEvent.click(updateButton);
 
     await waitFor(() => {
-      expect(screen.getByText("Order status updated.")).toBeInTheDocument();
+      expect(row.querySelector('button[aria-label="Update status"]')).not.toBeInTheDocument();
     });
   });
 
-  it("toggles order flag from registry actions", async () => {
+  it("toggles order flag from compact actions column control", async () => {
     renderRegistry();
 
-    await screen.findByText("Order #");
+    const orderLink = await screen.findByRole("link", { name: "ORD-1001" });
+    const row = orderLink.closest("tr") as HTMLElement;
 
-    const flagButtons = [
-      ...screen.queryAllByRole("button", { name: "Flag order" }),
-      ...screen.queryAllByRole("button", { name: "Remove flag" }),
-    ];
+    const initialFlagButton =
+      (row.querySelector('button[aria-label="Flag order"]') as HTMLButtonElement | null) ??
+      (row.querySelector('button[aria-label="Remove flag"]') as HTMLButtonElement | null);
 
-    fireEvent.click(flagButtons[0]);
+    expect(initialFlagButton).toBeTruthy();
+    const expectedName = initialFlagButton?.getAttribute("aria-label") === "Flag order" ? "Remove flag" : "Flag order";
+    fireEvent.click(initialFlagButton as HTMLButtonElement);
 
     await waitFor(() => {
-      expect(
-        screen.queryByText("Order flagged.") ?? screen.queryByText("Order unflagged."),
-      ).toBeInTheDocument();
+      expect(row.querySelector(`button[aria-label="${expectedName}"]`)).toBeInTheDocument();
     });
   });
 });
