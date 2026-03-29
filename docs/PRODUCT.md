@@ -64,7 +64,6 @@ The system operates around the following core entities:
 - Vehicle
 - Order
 - ServiceJob
-- ServiceCatalog
 - Part
 - JobPart
 - ActivityLog
@@ -97,10 +96,9 @@ Example statuses:
 
 Orders consist of multiple service jobs.
 
-Jobs can be created in two ways:
+Jobs are created directly inside operational workflows.
 
-- selected from the Service Catalog
-- created as a custom job ("Other")
+The project may use seeded service categories or defaults internally, but it does not require a separate end-user Service Catalog module.
 
 Each job has:
 
@@ -226,14 +224,34 @@ Capabilities:
 The flow may use:
 
 - existing customer and vehicle records
-- inline customer creation
-- inline vehicle creation
+- inline customer creation as an accelerator
+- inline vehicle creation as an accelerator
+
+Customer and vehicle creation should also exist as standalone entry points in their own sections so those entities are not introduced only through order creation.
+
+---
+
+### Manage Customers
+
+- browse customer registry
+- open customer details
+- create customer directly from the customers section
+- edit core customer information
+
+---
+
+### Manage Vehicles
+
+- browse vehicle registry
+- open vehicle details
+- create vehicle directly from the vehicles section
+- associate vehicles with customers
 
 ---
 
 ### Manage Service Jobs
 
-- add job (from catalog or custom)
+- add job manually
 - assign mechanic
 - update job status
 - attach parts

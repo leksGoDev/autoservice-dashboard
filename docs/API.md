@@ -157,37 +157,17 @@ GET    /api/vehicles/:id/service-history
 ```txt
 GET    /api/appointments
 GET    /api/appointments/:id
-POST   /api/appointments
 PATCH  /api/appointments/:id
 POST   /api/appointments/:id/convert-to-order
 ```
 
 ---
 
-### Users / Mechanics
+### Mechanics
 
 ```txt
-GET    /api/users
-GET    /api/users/:id
-PATCH  /api/users/:id
+GET    /api/mechanics/registry
 GET    /api/mechanics/workload
-```
-
----
-
-### Service Catalog
-
-```txt
-GET /api/service-catalog
-```
-
----
-
-### Parts
-
-```txt
-GET /api/parts
-GET /api/parts/:id
 ```
 
 ---
@@ -233,9 +213,8 @@ vehicles.list(params)
 vehicles.detail(id)
 vehicles.serviceHistory(id)
 appointments.list(params)
-users.list(params)
-serviceCatalog.list()
-parts.list(params)
+mechanics.registry(params)
+mechanics.workload()
 ```
 
 Guidelines:

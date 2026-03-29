@@ -63,7 +63,6 @@ Expected elements:
 - page title
 - language switcher
 - optional status indicators
-- user menu
 
 ### Language Switcher
 
@@ -270,11 +269,13 @@ Route-level flow for creating a new service order.
 ### Capabilities
 
 - select existing customer
-- create customer inline
+- create customer inline as a shortcut
 - select existing vehicle
-- create vehicle inline
+- create vehicle inline as a shortcut
 - define initial order metadata
 - submit and open created order details
+
+Inline creation may exist in this flow, but it should not be the only entry point for customer and vehicle records in the product.
 
 ---
 
@@ -318,6 +319,12 @@ Customer registry.
 - search
 - customers table
 - pagination
+- primary create customer action
+
+### Main actions
+
+- open customer details
+- create customer
 
 ### Customers table
 
@@ -342,6 +349,10 @@ Customer profile screen.
 - vehicles list
 - order history
 
+### Main actions
+
+- edit customer information
+
 ---
 
 ## Vehicles Page
@@ -353,6 +364,12 @@ Vehicle registry.
 - search
 - vehicles table
 - pagination
+- primary create vehicle action
+
+### Main actions
+
+- open vehicle details
+- create vehicle
 
 ### Vehicles table
 
