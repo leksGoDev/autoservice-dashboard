@@ -60,8 +60,9 @@ export const useAppointmentOperationsModel = ({
   mechanics,
 }: UseAppointmentOperationsModelParams) => {
   const { t } = useI18n();
+  const scheduledForLocalValue = toDateTimeLocalValue(scheduledFor);
 
-  const [nextScheduledFor, setNextScheduledFor] = useState(toDateTimeLocalValue(scheduledFor));
+  const [nextScheduledFor, setNextScheduledFor] = useState(scheduledForLocalValue);
   const [nextMechanic, setNextMechanic] = useState(assignedMechanic);
   const [lastSuccessKey, setLastSuccessKey] = useState<LastSuccessKey | null>(null);
 
@@ -71,8 +72,8 @@ export const useAppointmentOperationsModel = ({
   const convertMutation = useConvertAppointmentToOrderMutation();
 
   useEffect(() => {
-    setNextScheduledFor(toDateTimeLocalValue(scheduledFor));
-  }, [scheduledFor]);
+    setNextScheduledFor(scheduledForLocalValue);
+  }, [scheduledForLocalValue]);
 
   useEffect(() => {
     setNextMechanic(assignedMechanic);
@@ -96,58 +97,48 @@ export const useAppointmentOperationsModel = ({
     convertMutation.reset();
   };
 
-  const handleConfirm = async () => {
+  const runAction = async (
+    mutationCallback: () => Promise<unknown>,
+    successKey: LastSuccessKey,
+  ) => {
     resetFeedback();
 
     try {
-      await confirmMutation.mutateAsync({ appointmentId });
-      setLastSuccessKey("confirm");
+      await mutationCallback();
+      setLastSuccessKey(successKey);
     } catch {
       // Handled by model state.
     }
   };
 
-  const handleReschedule = async () => {
-    resetFeedback();
+  const handleConfirm = async () => {
+    await runAction(() => confirmMutation.mutateAsync({ appointmentId }), "confirm");
+  };
 
+  const handleReschedule = async () => {
     const isoScheduledFor = fromDateTimeLocalValue(nextScheduledFor);
 
     if (!isoScheduledFor || !nextMechanic.trim()) {
       return;
     }
 
-    try {
-      await rescheduleMutation.mutateAsync({
-        appointmentId,
-        scheduledFor: isoScheduledFor,
-        assignedMechanic: nextMechanic,
-      });
-      setLastSuccessKey("reschedule");
-    } catch {
-      // Handled by model state.
-    }
+    await runAction(
+      () =>
+        rescheduleMutation.mutateAsync({
+          appointmentId,
+          scheduledFor: isoScheduledFor,
+          assignedMechanic: nextMechanic,
+        }),
+      "reschedule",
+    );
   };
 
   const handleCancel = async () => {
-    resetFeedback();
-
-    try {
-      await cancelMutation.mutateAsync({ appointmentId });
-      setLastSuccessKey("cancel");
-    } catch {
-      // Handled by model state.
-    }
+    await runAction(() => cancelMutation.mutateAsync({ appointmentId }), "cancel");
   };
 
   const handleConvert = async () => {
-    resetFeedback();
-
-    try {
-      await convertMutation.mutateAsync({ appointmentId });
-      setLastSuccessKey("convert");
-    } catch {
-      // Handled by model state.
-    }
+    await runAction(() => convertMutation.mutateAsync({ appointmentId }), "convert");
   };
 
   const isBusy =
@@ -157,7 +148,7 @@ export const useAppointmentOperationsModel = ({
     convertMutation.isPending;
 
   const isRescheduleDirty =
-    nextScheduledFor !== toDateTimeLocalValue(scheduledFor) || nextMechanic !== assignedMechanic;
+    nextScheduledFor !== scheduledForLocalValue || nextMechanic !== assignedMechanic;
 
   const canConfirm = status === "pending";
   const canReschedule = status !== "cancelled";
@@ -170,16 +161,13 @@ export const useAppointmentOperationsModel = ({
     ? getErrorMessage(currentError, t("pages.appointments.operations.errorFallback") as string)
     : null;
 
-  const successMessage =
-    lastSuccessKey === "confirm"
-      ? t("pages.appointments.operations.success.confirm")
-      : lastSuccessKey === "reschedule"
-        ? t("pages.appointments.operations.success.reschedule")
-        : lastSuccessKey === "cancel"
-          ? t("pages.appointments.operations.success.cancel")
-          : lastSuccessKey === "convert"
-            ? t("pages.appointments.operations.success.convert")
-            : null;
+  const successMessageByKey: Record<LastSuccessKey, string> = {
+    confirm: t("pages.appointments.operations.success.confirm") as string,
+    reschedule: t("pages.appointments.operations.success.reschedule") as string,
+    cancel: t("pages.appointments.operations.success.cancel") as string,
+    convert: t("pages.appointments.operations.success.convert") as string,
+  };
+  const successMessage = lastSuccessKey ? successMessageByKey[lastSuccessKey] : null;
 
   return {
     nextScheduledFor,

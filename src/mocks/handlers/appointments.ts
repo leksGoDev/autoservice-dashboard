@@ -2,9 +2,9 @@ import { delay, http, HttpResponse } from "msw";
 
 import {
   APPOINTMENT_MUTABLE_STATUSES,
-  APPOINTMENT_STATUSES,
 } from "@/entities/appointment/model/options";
-import type { AppointmentStatus, UpdateAppointmentPayload } from "@/entities/appointment/model/types";
+import type { UpdateAppointmentPayload } from "@/entities/appointment/model/types";
+import { isInsideDateRange } from "@/mocks/lib/date-range";
 import {
   convertAppointmentToOrderState,
   getAppointmentMockState,
@@ -13,34 +13,6 @@ import {
 } from "@/mocks/state/appointments";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
-
-function isInsideDateRange(itemDateIso: string, from: string, to: string) {
-  const timestamp = new Date(itemDateIso).getTime();
-
-  if (from) {
-    const fromDate = new Date(from);
-    fromDate.setHours(0, 0, 0, 0);
-
-    if (timestamp < fromDate.getTime()) {
-      return false;
-    }
-  }
-
-  if (to) {
-    const toDate = new Date(to);
-    toDate.setHours(23, 59, 59, 999);
-
-    if (timestamp > toDate.getTime()) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function isValidStatus(value: string): value is AppointmentStatus {
-  return APPOINTMENT_STATUSES.includes(value as AppointmentStatus);
-}
 
 function isValidMutableStatus(value: string): value is NonNullable<UpdateAppointmentPayload["status"]> {
   return APPOINTMENT_MUTABLE_STATUSES.includes(value as NonNullable<UpdateAppointmentPayload["status"]>);
@@ -127,7 +99,7 @@ export const appointmentsHandlers = [
     const assignedMechanic =
       typeof body.assignedMechanic === "string" ? body.assignedMechanic.trim() : undefined;
 
-    if (statusValue && !isValidStatus(statusValue)) {
+    if (statusValue && !isValidMutableStatus(statusValue)) {
       return HttpResponse.json({ message: "Invalid appointment status" }, { status: 400 });
     }
 

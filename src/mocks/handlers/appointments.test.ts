@@ -80,4 +80,13 @@ describe("appointmentsHandlers", () => {
     expect(response.status).toBe(400);
     expect(response.body.message).toContain("Invalid appointment status");
   });
+
+  it("rejects converted status for patch updates", async () => {
+    const response = await patchJson("/api/appointments/apt_001", {
+      status: "converted",
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toContain("Invalid appointment status");
+  });
 });
