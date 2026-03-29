@@ -78,7 +78,7 @@ Hook rules:
 - prefer hooks for reusable stateful behavior over inline ad hoc logic duplicated across screens
 - keep hooks focused on one concern and return a clear view model for the component layer
 - for details routes, keep `pages/model` hooks focused on reading route params only
-- place query orchestration and view-model shaping in `widgets/*/model`, even when the widget is used by a single page
+- place query orchestration and view-model shaping in widget-local hook files, typically under `widgets/*/hooks`, even when the widget is used by a single page
 - use `pages/model` for route concerns such as params, search params, and URL synchronization only
 - avoid passing large prop bundles from pages to widgets; prefer a route id plus widget-owned model logic
 
@@ -104,7 +104,8 @@ Rules:
 
 - use a single file when the widget is still small and readable
 - introduce `ui/` only when the widget has multiple private subcomponents
-- introduce `model/` only when the widget has meaningful widget-local logic
+- introduce `hooks/` when the widget has meaningful React hook orchestration
+- introduce `model/` when the widget has meaningful non-hook widget-local logic
 - keep the entry component easy to find, typically as `WidgetName.tsx`
 - avoid mixing several organizational styles inside one widget without a strong reason
 - clean up empty folders after moving files during refactors
@@ -118,11 +119,18 @@ Naming should optimize for fast recognition of responsibility.
 Rules:
 
 - hooks use the `useXxx` shape
+- hook files should prefer short names that do not repeat surrounding folder context
 - React components use PascalCase
 - props types use `XxxProps`
 - formatting helpers use verbs such as `formatXxx`, `getXxxLabel`, `buildXxxOptions`
 - booleans should read like booleans, for example `isLoading`, `hasFilters`, `canEdit`
 - avoid vague names such as `data`, `item`, `helper`, or `utils` when a more specific name is available
+
+Examples:
+
+- prefer `hooks/use-order-details-model.ts` over `model/use-order-details-overview-model.ts`
+- prefer `hooks/use-create-order-form.ts` over `model/use-create-order-form-model.ts`
+- do not duplicate the same domain or widget name multiple times in one file path unless it adds clarity
 
 Translation key naming should stay hierarchical and predictable.
 

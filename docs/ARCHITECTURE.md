@@ -162,12 +162,13 @@ Widgets should stay reusable across route screens where possible.
 Widget structure rules:
 
 - a small widget may stay as a single `Widget.tsx` file
-- a composite widget should use an explicit internal structure such as `ui/` and `model/`
+- a composite widget should use an explicit internal structure such as `ui/`, `hooks/`, and optionally `model/`
 - use `ui/` only when the widget has multiple private visual parts
-- use `model/` only when the widget has real orchestration, derived view-model logic, or state coordination
-- do not add `ui/` or `model/` preemptively
-- do not keep empty `ui/` or `model/` folders
-- avoid mixing flat private files and `ui/` or `model/` folders inside the same widget without a clear reason
+- use `hooks/` when widget-local logic is primarily React hook orchestration or view-model state
+- use `model/` for pure helpers, options, formatters, or non-hook widget-local logic
+- do not add `ui/`, `hooks/`, or `model/` preemptively
+- do not keep empty `ui/`, `hooks/`, or `model/` folders
+- avoid mixing flat private files and `ui/`, `hooks/`, or `model/` folders inside the same widget without a clear reason
 
 ---
 
@@ -193,7 +194,7 @@ Page rules:
 
 - pages should primarily compose widgets and route-level concerns
 - page hooks in `pages/model` should stay route-focused and prefer params or URL concerns only
-- page-ready data orchestration should live in `widgets/*/model`, even for single-route widgets
+- page-ready data orchestration should live in `widgets/*/hooks` or another widget-local hook module, even for single-route widgets
 - page-ready visual blocks should live in `widgets`, not in `pages/ui`
 - avoid turning `pages` into a second UI layer parallel to `widgets`
 
