@@ -37,9 +37,9 @@ export const LabeledSelectControl = <T extends string>({
   const actionTextClassName = "text-xs leading-4 font-medium text-[var(--color-text-primary)]";
 
   return (
-    <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
-      <label className="grid gap-1">
-        <span className={labelClassName}>{label}</span>
+    <div className="grid gap-1">
+      <span className={labelClassName}>{label}</span>
+      <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
         <select
           value={value}
           onChange={(event) => onChange(event.target.value as T)}
@@ -53,16 +53,16 @@ export const LabeledSelectControl = <T extends string>({
             </option>
           ))}
         </select>
-      </label>
 
-      <button
-        type="button"
-        className={`h-9 cursor-pointer whitespace-nowrap rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 ${actionTextClassName} disabled:cursor-not-allowed disabled:opacity-60 sm:self-end`}
-        onClick={onAction}
-        disabled={isActionDisabled}
-      >
-        {isActionPending ? actionPendingLabel : actionLabel}
-      </button>
+        <button
+          type="button"
+          className={`inline-flex h-10 items-center justify-center cursor-pointer whitespace-nowrap rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 ${actionTextClassName} disabled:cursor-not-allowed disabled:opacity-60`}
+          onClick={onAction}
+          disabled={isActionDisabled}
+        >
+          {isActionPending ? actionPendingLabel : actionLabel}
+        </button>
+      </div>
     </div>
   );
 };

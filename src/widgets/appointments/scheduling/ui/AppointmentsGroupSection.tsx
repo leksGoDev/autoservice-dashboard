@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const thClassName =
   "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs leading-4 font-semibold text-[var(--color-text-secondary)]";
-const tdClassName = "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 leading-5";
+const tdClassName = "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle leading-5";
 const relationLinkClass =
   "inline-flex rounded px-1 py-0.5 text-[var(--color-accent-light-blue)] underline decoration-transparent underline-offset-2 transition-colors hover:text-[#9ac0ff] hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]";
 
@@ -65,7 +65,7 @@ export const AppointmentsGroupSection = ({
 
             <tbody>
               {items.map((item) => (
-                <tr key={item.id} className="align-top hover:bg-[#20283a]">
+                <tr key={item.id} className="hover:bg-[#20283a]">
                   <td className={`${tdClassName} whitespace-nowrap font-semibold`}>{item.number}</td>
                   <td className={tdClassName}>
                     <Link to={`/customers/${item.customerId}`} className={relationLinkClass}>
@@ -80,7 +80,7 @@ export const AppointmentsGroupSection = ({
                   <td className={tdClassName}>{item.serviceLabel}</td>
                   <td className={tdClassName}>
                     <span
-                      className={`${getStatusBadgeClass(item.status)} inline-flex rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase`}
+                      className={`${getStatusBadgeClass(item.status)} inline-flex items-center justify-center rounded-full px-2.5 py-1 text-xs font-semibold uppercase`}
                     >
                       {t(`appointment.status.${item.status}`)}
                     </span>

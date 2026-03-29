@@ -24,7 +24,7 @@ export const OrderDetailsHeader = ({ orderId }: OrderDetailsHeaderProps) => {
         </div>
         <Link
           to="/orders"
-          className="inline-flex h-fit rounded-full border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-2.5 py-1.5 text-xs font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
+          className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-4 text-sm font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
         >
           {t("pages.orderDetails.back")}
         </Link>

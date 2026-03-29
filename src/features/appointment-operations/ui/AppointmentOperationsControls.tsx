@@ -11,9 +11,9 @@ type AppointmentOperationsControlsProps = {
 };
 
 const formControlClassName =
-  "rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-xs text-[var(--color-text-primary)]";
+  "h-9 rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 text-xs leading-4 text-[var(--color-text-primary)]";
 const actionButtonBaseClassName =
-  "cursor-pointer rounded-[10px] border px-3 py-2 text-xs whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex h-9 items-center justify-center cursor-pointer whitespace-nowrap rounded-[10px] border px-3 text-xs leading-4 font-medium disabled:cursor-not-allowed disabled:opacity-60";
 
 export const AppointmentOperationsControls = ({
   appointmentId,
