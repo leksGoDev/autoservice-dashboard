@@ -11,7 +11,7 @@ import { useI18n } from "@/shared/i18n/use-i18n";
 
 type LastSuccessKey = "status" | "mechanic" | "flagged" | "unflagged";
 
-type UseOrderOperationsControlsModelParams = {
+type UseOrderControlsModelParams = {
   orderId: string;
   status: OrderStatus;
   assignedMechanic: string;
@@ -31,13 +31,13 @@ function getErrorMessage(error: unknown, fallback: string) {
   return fallback;
 }
 
-export const useOrderOperationsControlsModel = ({
+export const useOrderControlsModel = ({
   orderId,
   status,
   assignedMechanic,
   flagged,
   mechanics,
-}: UseOrderOperationsControlsModelParams) => {
+}: UseOrderControlsModelParams) => {
   const { t } = useI18n();
 
   const [nextStatus, setNextStatus] = useState<OrderStatus>(status);

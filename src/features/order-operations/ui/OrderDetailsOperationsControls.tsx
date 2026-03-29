@@ -1,7 +1,7 @@
 import { ORDER_STATUSES } from "@/entities/order/model/options";
 import type { OrderStatus } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import { useOrderOperationsControlsModel } from "../model/use-order-operations-model";
+import { useOrderControlsModel } from "../model/use-order-controls-model";
 import { LabeledSelectControl } from "./LabeledSelectControl";
 
 type OrderDetailsOperationsControlsProps = {
@@ -20,7 +20,7 @@ export const OrderDetailsOperationsControls = ({
   mechanics,
 }: OrderDetailsOperationsControlsProps) => {
   const { t } = useI18n();
-  const model = useOrderOperationsControlsModel({
+  const model = useOrderControlsModel({
     orderId,
     status,
     assignedMechanic,
@@ -29,14 +29,6 @@ export const OrderDetailsOperationsControls = ({
   });
   const statusLabel = String(t("pages.orders.operations.status"));
   const mechanicLabel = String(t("pages.orders.operations.mechanic"));
-  const statusActionLabel = String(t("pages.orders.operations.actions.status"));
-  const statusPendingLabel = String(t("pages.orders.operations.actions.statusPending"));
-  const mechanicActionLabel = String(t("pages.orders.operations.actions.mechanic"));
-  const mechanicPendingLabel = String(t("pages.orders.operations.actions.mechanicPending"));
-  const flagPendingLabel = String(t("pages.orders.operations.actions.flagPending"));
-  const unflagLabel = String(t("pages.orders.operations.actions.unflag"));
-  const flagLabel = String(t("pages.orders.operations.actions.flag"));
-  const flagActionLabel = model.setFlagMutation.isPending ? flagPendingLabel : flagged ? unflagLabel : flagLabel;
 
   return (
     <div className="grid gap-3">
@@ -49,8 +41,8 @@ export const OrderDetailsOperationsControls = ({
         }))}
         ariaLabel={statusLabel}
         isBusy={model.isBusy}
-        actionLabel={statusActionLabel}
-        actionPendingLabel={statusPendingLabel}
+        actionLabel={String(t("pages.orders.operations.actions.status"))}
+        actionPendingLabel={String(t("pages.orders.operations.actions.statusPending"))}
         isActionPending={model.updateStatusMutation.isPending}
         isActionDisabled={!model.isStatusDirty || model.isBusy}
         onChange={model.setNextStatus}
@@ -66,8 +58,8 @@ export const OrderDetailsOperationsControls = ({
         }))}
         ariaLabel={mechanicLabel}
         isBusy={model.isBusy}
-        actionLabel={mechanicActionLabel}
-        actionPendingLabel={mechanicPendingLabel}
+        actionLabel={String(t("pages.orders.operations.actions.mechanic"))}
+        actionPendingLabel={String(t("pages.orders.operations.actions.mechanicPending"))}
         isActionPending={model.assignMechanicMutation.isPending}
         isActionDisabled={!model.isMechanicDirty || model.isBusy}
         onChange={model.setNextMechanic}
@@ -80,7 +72,13 @@ export const OrderDetailsOperationsControls = ({
         onClick={model.handleFlagToggle}
         disabled={model.isBusy}
       >
-        {flagActionLabel}
+        {String(
+          model.setFlagMutation.isPending
+            ? t("pages.orders.operations.actions.flagPending")
+            : flagged
+              ? t("pages.orders.operations.actions.unflag")
+              : t("pages.orders.operations.actions.flag"),
+        )}
       </button>
 
       {model.errorMessage ? <p className="m-0 text-xs text-[#fecaca]">{model.errorMessage}</p> : null}
