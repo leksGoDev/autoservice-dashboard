@@ -4,6 +4,21 @@ import { formatDateTime } from "@/shared/lib/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getStatusBadgeClass } from "@/shared/ui/status-badges";
 
+const thClassName =
+  "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]";
+const tdClassName = "border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5";
+
+const APPOINTMENTS_TABLE_HEADERS = [
+  "number",
+  "customer",
+  "vehicle",
+  "service",
+  "status",
+  "mechanic",
+  "scheduledFor",
+  "actions",
+] as const;
+
 type AppointmentsGroupSectionProps = {
   title: string;
   emptyLabel: string;
@@ -37,55 +52,36 @@ export const AppointmentsGroupSection = ({
           <table className="w-full min-w-[980px] border-collapse text-[13px]">
             <thead>
               <tr>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.number")}
-                </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.customer")}
-                </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.vehicle")}
-                </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.service")}
-                </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.status")}
-                </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.mechanic")}
-                </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.scheduledFor")}
-                </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-left text-xs font-semibold text-[var(--color-text-secondary)]">
-                  {t("pages.appointments.table.headers.actions")}
-                </th>
+                {APPOINTMENTS_TABLE_HEADERS.map((header) => (
+                  <th key={header} className={thClassName}>
+                    {t(`pages.appointments.table.headers.${header}`)}
+                  </th>
+                ))}
               </tr>
             </thead>
 
             <tbody>
               {items.map((item) => (
                 <tr key={item.id} className="align-top hover:bg-[#20283a]">
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 font-semibold">{item.number}</td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5">{item.customerName}</td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5">{item.vehicleLabel}</td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5">{item.serviceLabel}</td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5">
+                  <td className={`${tdClassName} font-semibold`}>{item.number}</td>
+                  <td className={tdClassName}>{item.customerName}</td>
+                  <td className={tdClassName}>{item.vehicleLabel}</td>
+                  <td className={tdClassName}>{item.serviceLabel}</td>
+                  <td className={tdClassName}>
                     <span
                       className={`${getStatusBadgeClass(item.status)} inline-flex rounded-full px-2.5 py-[3px] text-[11px] font-semibold uppercase`}
                     >
                       {t(`appointment.status.${item.status}`)}
                     </span>
                   </td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5">{item.assignedMechanic}</td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5">
+                  <td className={tdClassName}>{item.assignedMechanic}</td>
+                  <td className={tdClassName}>
                     {formatDateTime(item.scheduledFor, locale, {
                       dateStyle: "medium",
                       timeStyle: "short",
                     })}
                   </td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5">
+                  <td className={tdClassName}>
                     <AppointmentOperationsControls
                       appointmentId={item.id}
                       status={item.status}

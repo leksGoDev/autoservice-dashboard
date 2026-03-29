@@ -7,6 +7,7 @@ import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { DEFAULT_LIST_PAGE, DEFAULT_LIST_PAGE_SIZE } from "@/shared/api/constants";
 import type { ListResponse } from "@/shared/api/types";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { isAppointmentsFilterStatus } from "@/widgets/appointments/model/options";
 import type {
   AppointmentsGroup,
   AppointmentsToolbarFilters,
@@ -78,10 +79,10 @@ export function useAppointmentsSchedulingModel(): AppointmentsSchedulingModel {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = readPositiveNumber(searchParams.get("page"), DEFAULT_LIST_PAGE);
-  const statusParam = searchParams.get("status");
+  const statusParam = searchParams.get("status") ?? "";
   const filters: AppointmentsToolbarFilters = {
     search: searchParams.get("search") ?? "",
-    status: statusParam ? (statusParam as AppointmentsToolbarFilters["status"]) : "",
+    status: isAppointmentsFilterStatus(statusParam) ? statusParam : "",
     mechanic: searchParams.get("mechanic") ?? "",
     scheduledFrom: searchParams.get("scheduledFrom") ?? "",
     scheduledTo: searchParams.get("scheduledTo") ?? "",
@@ -108,7 +109,7 @@ export function useAppointmentsSchedulingModel(): AppointmentsSchedulingModel {
   }, [mechanicsQuery.data?.items]);
 
   const rows = listQuery.data?.items ?? [];
-  const groups = groupAppointments(rows);
+  const groups = useMemo(() => groupAppointments(rows), [rows]);
   const total = listQuery.data?.total ?? 0;
   const totalPages = listQuery.data?.totalPages ?? 1;
   const safePage = Math.min(listQuery.data?.page ?? page, totalPages);
