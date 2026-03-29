@@ -98,6 +98,10 @@ export function getMutableOrderByIndex(index: number) {
   return ordersState[index];
 }
 
+export function appendOrderState(order: MockOrderStateItem) {
+  ordersState.push(order);
+}
+
 export function toOrderSnapshot(order: MockOrderStateItem): MockOrderStateItem {
   return cloneOrderStateItem(order);
 }

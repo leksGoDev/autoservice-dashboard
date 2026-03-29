@@ -4,6 +4,7 @@ export const ruMessages = {
   nav: {
     dashboard: "Дашборд",
     orders: "Заказы",
+    appointments: "Записи",
     customers: "Клиенты",
     vehicles: "Автомобили",
     mechanics: "Механики",
@@ -13,6 +14,7 @@ export const ruMessages = {
   routes: {
     dashboard: "Дашборд",
     orders: "Заказы",
+    appointments: "Записи",
     customers: "Клиенты",
     vehicles: "Автомобили",
     mechanics: "Механики",
@@ -134,6 +136,14 @@ export const ruMessages = {
       low: "Низкий",
       medium: "Средний",
       high: "Высокий",
+    },
+  },
+  appointment: {
+    status: {
+      pending: "Ожидает",
+      confirmed: "Подтверждена",
+      cancelled: "Отменена",
+      converted: "Преобразована",
     },
   },
   customer: {

@@ -6,6 +6,7 @@ import styles from "./AppSidebar.module.css";
 const navigation = [
   { to: "/dashboard", labelKey: "nav.dashboard" },
   { to: "/orders", labelKey: "nav.orders" },
+  { to: "/appointments", labelKey: "nav.appointments" },
   { to: "/customers", labelKey: "nav.customers" },
   { to: "/vehicles", labelKey: "nav.vehicles" },
   { to: "/mechanics", labelKey: "nav.mechanics" },

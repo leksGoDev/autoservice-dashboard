@@ -2,6 +2,16 @@
   border: 1px solid transparent;
 }
 
+.statusPending {
+  color: #bfdbfe;
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.statusConfirmed {
+  color: #bbf7d0;
+  background: rgba(34, 197, 94, 0.18);
+}
+
 .statusScheduled {
   color: #93c5fd;
   background: rgba(59, 130, 246, 0.16);
@@ -25,6 +35,11 @@
 .statusCancelled {
   color: #fecaca;
   background: rgba(239, 68, 68, 0.2);
+}
+
+.statusConverted {
+  color: #fde68a;
+  background: rgba(245, 158, 11, 0.2);
 }
 
 .priorityLow {
