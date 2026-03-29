@@ -1,4 +1,4 @@
-import { useVehiclesRegistryModel } from "./model/use-vehicles-registry-model";
+import { useVehiclesRegistryModel } from "./hooks/use-vehicles-registry-model";
 import { VehiclesRegistryContent } from "./ui/VehiclesRegistryContent";
 import { VehiclesRegistryHeader } from "./ui/VehiclesRegistryHeader";
 

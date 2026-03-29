@@ -1,4 +1,4 @@
-import { useAnalyticsOverviewModel } from "./model/use-analytics-overview-model";
+import { useAnalyticsOverviewModel } from "./hooks/use-analytics-overview-model";
 import { AnalyticsHeader } from "./ui/AnalyticsHeader";
 import { AnalyticsOverviewContent } from "./ui/AnalyticsOverviewContent";
 

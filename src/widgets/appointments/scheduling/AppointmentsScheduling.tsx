@@ -1,4 +1,4 @@
-import { useAppointmentsSchedulingModel } from "./model/use-appointments-scheduling-model";
+import { useAppointmentsSchedulingModel } from "./hooks/use-appointments-scheduling-model";
 import { AppointmentsSchedulingContent } from "./ui/AppointmentsSchedulingContent";
 import { AppointmentsSchedulingHeader } from "./ui/AppointmentsSchedulingHeader";
 import { AppointmentsSchedulingToolbar } from "./ui/AppointmentsSchedulingToolbar";

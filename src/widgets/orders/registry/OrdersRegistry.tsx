@@ -1,5 +1,5 @@
 import { OrdersToolbar } from "@/widgets/orders/toolbar/OrdersToolbar";
-import { useOrdersRegistryModel } from "./model/use-orders-registry-model";
+import { useOrdersRegistryModel } from "./hooks/use-orders-registry-model";
 import { OrdersRegistryContent } from "./ui/OrdersRegistryContent";
 import { OrdersRegistryHeader } from "./ui/OrdersRegistryHeader";
 

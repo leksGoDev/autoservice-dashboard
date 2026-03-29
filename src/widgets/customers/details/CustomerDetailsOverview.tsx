@@ -1,4 +1,4 @@
-import { useCustomerDetailsOverviewModel } from "./model/use-customer-details-overview-model";
+import { useCustomerDetailsOverviewModel } from "./hooks/use-customer-details-overview-model";
 import { CustomerDetailsHeader } from "./ui/CustomerDetailsHeader";
 import { CustomerDetailsOverviewContent } from "./ui/CustomerDetailsOverviewContent";
 

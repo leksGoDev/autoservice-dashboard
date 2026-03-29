@@ -1,6 +1,6 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
-import type { MechanicsRegistryModel } from "../model/use-mechanics-registry-model";
+import type { MechanicsRegistryModel } from "../hooks/use-mechanics-registry-model";
 import { MechanicsAssignmentsCard } from "./MechanicsAssignmentsCard";
 import { MechanicsAvailabilityCard } from "./MechanicsAvailabilityCard";
 import { MechanicsRegistryTable } from "./MechanicsRegistryTable";

@@ -4,7 +4,7 @@ import { AnalyticsJobsByCategoryChart } from "@/widgets/analytics/jobs-by-catego
 import { DashboardMechanicWorkload } from "@/widgets/dashboard/mechanic-workload/DashboardMechanicWorkload";
 import { DashboardOrdersTrend } from "@/widgets/dashboard/orders-trend/DashboardOrdersTrend";
 import { DashboardRevenueChart } from "@/widgets/dashboard/revenue-chart/DashboardRevenueChart";
-import type { AnalyticsOverviewModel } from "../model/use-analytics-overview-model";
+import type { AnalyticsOverviewModel } from "../hooks/use-analytics-overview-model";
 import { AnalyticsMetricsSection } from "./AnalyticsMetricsSection";
 
 type AnalyticsOverviewContentProps = {

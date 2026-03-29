@@ -1,7 +1,7 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 import { CustomersRegistrySearch } from "./CustomersRegistrySearch";
-import { useCustomersRegistryModel } from "./model/use-customers-registry-model";
+import { useCustomersRegistryModel } from "./hooks/use-customers-registry-model";
 import { CustomersRegistryContent } from "./ui/CustomersRegistryContent";
 
 export const CustomersRegistry = () => {

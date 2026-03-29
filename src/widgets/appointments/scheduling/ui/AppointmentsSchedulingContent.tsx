@@ -1,7 +1,7 @@
 import { DataState } from "@/shared/ui/DataState";
 import { PaginationShell } from "@/shared/ui/PaginationShell";
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { AppointmentsSchedulingModel } from "../model/use-appointments-scheduling-model";
+import type { AppointmentsSchedulingModel } from "../hooks/use-appointments-scheduling-model";
 import { AppointmentsGroupSection } from "./AppointmentsGroupSection";
 
 type AppointmentsSchedulingContentProps = {

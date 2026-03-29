@@ -2,7 +2,7 @@ import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
 import { PaginationShell } from "@/shared/ui/PaginationShell";
 import { CustomersRegistryTable } from "../CustomersRegistryTable";
-import type { CustomersRegistryModel } from "../model/use-customers-registry-model";
+import type { CustomersRegistryModel } from "../hooks/use-customers-registry-model";
 
 type CustomersRegistryContentProps = {
   model: CustomersRegistryModel;

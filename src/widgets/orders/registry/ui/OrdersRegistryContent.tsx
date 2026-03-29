@@ -2,7 +2,7 @@ import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
 import { OrderOperationsControls } from "@/features/order-operations/ui/OrderOperationsControls";
 import { OrdersTable } from "@/widgets/orders/table/OrdersTable";
-import type { OrdersRegistryModel } from "../model/use-orders-registry-model";
+import type { OrdersRegistryModel } from "../hooks/use-orders-registry-model";
 
 type OrdersRegistryContentProps = {
   model: OrdersRegistryModel;

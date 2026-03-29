@@ -6,7 +6,7 @@ import { DashboardOrdersTrend } from "@/widgets/dashboard/orders-trend/Dashboard
 import { DashboardRecentActivity } from "@/widgets/dashboard/recent-activity/DashboardRecentActivity";
 import { DashboardRecentOrders } from "@/widgets/dashboard/recent-orders/DashboardRecentOrders";
 import { DashboardRevenueChart } from "@/widgets/dashboard/revenue-chart/DashboardRevenueChart";
-import type { DashboardOverviewModel } from "../model/use-dashboard-overview-model";
+import type { DashboardOverviewModel } from "../hooks/use-dashboard-overview-model";
 
 type DashboardOverviewContentProps = {
   overviewQuery: DashboardOverviewModel["overviewQuery"];

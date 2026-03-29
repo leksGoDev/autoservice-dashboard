@@ -1,4 +1,4 @@
-import { useWorkBoardOverviewModel } from "./model/use-work-board-overview-model";
+import { useWorkBoardOverviewModel } from "./hooks/use-work-board-overview-model";
 import { WorkBoardOverviewContent } from "./ui/WorkBoardOverviewContent";
 import { WorkBoardOverviewHeader } from "./ui/WorkBoardOverviewHeader";
 import { WorkBoardOverviewSummary } from "./ui/WorkBoardOverviewSummary";

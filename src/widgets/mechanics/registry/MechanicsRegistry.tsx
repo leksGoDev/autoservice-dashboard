@@ -1,4 +1,4 @@
-import { useMechanicsRegistryModel } from "./model/use-mechanics-registry-model";
+import { useMechanicsRegistryModel } from "./hooks/use-mechanics-registry-model";
 import { MechanicsRegistryContent } from "./ui/MechanicsRegistryContent";
 import { MechanicsRegistryHeader } from "./ui/MechanicsRegistryHeader";
 

@@ -1,4 +1,4 @@
-import type { VehiclesRegistryModel } from "../model/use-vehicles-registry-model";
+import type { VehiclesRegistryModel } from "../hooks/use-vehicles-registry-model";
 import { VehiclesEmptyState, VehiclesErrorState, VehiclesLoadingState } from "./VehiclesRegistryStates";
 import { VehiclesRegistryTable } from "./VehiclesRegistryTable";
 

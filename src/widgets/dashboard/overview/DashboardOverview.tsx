@@ -1,4 +1,4 @@
-import { useDashboardOverviewModel } from "./model/use-dashboard-overview-model";
+import { useDashboardOverviewModel } from "./hooks/use-dashboard-overview-model";
 import { DashboardOverviewContent } from "./ui/DashboardOverviewContent";
 import { DashboardOverviewHeader } from "./ui/DashboardOverviewHeader";
 

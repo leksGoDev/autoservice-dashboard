@@ -6,7 +6,7 @@ import type { CustomerListItem } from "@/entities/customer/model/types";
 import type { ListResponse } from "@/shared/api/types";
 import { I18nProvider } from "@/shared/i18n/provider";
 import { CustomersRegistryContent } from "./CustomersRegistryContent";
-import type { CustomersRegistryModel } from "../model/use-customers-registry-model";
+import type { CustomersRegistryModel } from "../hooks/use-customers-registry-model";
 
 function createModel(overrides: Partial<CustomersRegistryModel> = {}): CustomersRegistryModel {
   return {

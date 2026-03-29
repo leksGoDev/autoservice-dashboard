@@ -1,5 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
-import type { VehiclesRegistryModel } from "../model/use-vehicles-registry-model";
+import type { VehiclesRegistryModel } from "../hooks/use-vehicles-registry-model";
 import { VehiclesRegistryToolbar } from "./VehiclesRegistryToolbar";
 
 type VehiclesRegistryHeaderProps = {
