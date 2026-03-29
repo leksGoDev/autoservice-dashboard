@@ -174,6 +174,20 @@ Small Meta Text
 
 Text should prioritize readability in dense data interfaces.
 
+Baseline type scale for operational screens:
+
+- Page Title: 28px / 32px
+- Section Title: 16px / 24px
+- Table Header: 12px / 16px
+- Body Text: 14px / 20px
+- Small Meta Text: 12px / 18px
+
+Consistency rules:
+
+- the same page-level role should use the same size and line-height across all pages
+- registry pages must not visually downgrade the title hierarchy compared to other registry pages
+- table header typography should remain consistent between registries
+
 Localization requirements:
 
 - the primary type choice must support both Latin and Cyrillic text cleanly

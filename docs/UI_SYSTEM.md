@@ -545,6 +545,37 @@ Examples:
 
 ---
 
+## Responsive Behavior
+
+The product remains desktop-first, but mobile and narrow widths should degrade predictably.
+
+Rules for narrow layouts:
+
+- horizontal overflow should stay inside local content containers (table wrappers, board wrappers), not at full page level
+- dense registries should preserve readability by stacking controls and reducing parallel columns where practical
+- action groups in rows and cards should remain tappable and not collapse into unreadable dense clusters
+- top bar controls should keep language switcher and global search visible and usable
+
+---
+
+## UI/UX Stabilization Requirements
+
+Core requirements:
+
+- Work Board and Appointments must not produce page-level horizontal overflow on narrow widths
+- registry page title hierarchy must be consistent across pages with equivalent role
+- table header typography and row vertical rhythm must be consistent across registries
+- chart containers must render with stable sizing and no runtime dimension warnings
+- long forms and dense registries must remain readable on narrow widths without scope expansion
+
+Acceptance criteria:
+
+- desktop screens keep existing information density
+- mobile screens remain usable without horizontal page scrolling
+- typography rhythm is consistent across pages with the same hierarchy level
+
+---
+
 ## Summary
 
 The UI system is designed as a data-heavy, desktop-first operational dashboard.
