@@ -32,15 +32,19 @@ export const LabeledSelectControl = <T extends string>({
   onChange,
   onAction,
 }: LabeledSelectControlProps<T>) => {
+  const labelClassName = "text-xs leading-[18px] font-semibold text-[color:var(--color-text-secondary)]";
+  const controlTextClassName = "text-sm leading-5 text-[color:var(--color-text-primary)]";
+  const actionTextClassName = "text-xs leading-4 font-medium text-[color:var(--color-text-primary)]";
+
   return (
     <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
       <label className="grid gap-1">
-        <span className="text-[11px] font-semibold text-[var(--color-text-secondary)]">{label}</span>
+        <span className={labelClassName}>{label}</span>
         <select
           value={value}
           onChange={(event) => onChange(event.target.value as T)}
           disabled={isBusy}
-          className="rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 py-2 text-xs text-[var(--color-text-primary)]"
+          className={`h-10 rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 ${controlTextClassName}`}
           aria-label={ariaLabel}
         >
           {options.map((option) => (
@@ -53,7 +57,7 @@ export const LabeledSelectControl = <T extends string>({
 
       <button
         type="button"
-        className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-xs text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+        className={`h-9 cursor-pointer whitespace-nowrap rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 ${actionTextClassName} disabled:cursor-not-allowed disabled:opacity-60 sm:self-end`}
         onClick={onAction}
         disabled={isActionDisabled}
       >

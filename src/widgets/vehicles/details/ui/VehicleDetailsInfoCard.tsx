@@ -13,43 +13,43 @@ export const VehicleDetailsInfoCard = ({ details }: VehicleDetailsInfoCardProps)
       <h2 className="m-0 text-base font-bold">{t("pages.vehicleDetails.sections.info")}</h2>
       <dl className="grid gap-3">
         <div className="grid gap-1">
-          <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
+          <dt className="m-0 text-xs uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
             {t("pages.vehicleDetails.labels.vehicleId")}
           </dt>
           <dd className="m-0">{details.id}</dd>
         </div>
         <div className="grid gap-1">
-          <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
+          <dt className="m-0 text-xs uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
             {t("pages.vehicleDetails.labels.plateNumber")}
           </dt>
           <dd className="m-0">{details.plateNumber}</dd>
         </div>
         <div className="grid gap-1">
-          <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
+          <dt className="m-0 text-xs uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
             {t("pages.vehicleDetails.labels.vin")}
           </dt>
           <dd className="m-0">{details.vin}</dd>
         </div>
         <div className="grid gap-1">
-          <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
+          <dt className="m-0 text-xs uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
             {t("pages.vehicleDetails.labels.makeModel")}
           </dt>
           <dd className="m-0">{`${details.make} ${details.model}`}</dd>
         </div>
         <div className="grid gap-1">
-          <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
+          <dt className="m-0 text-xs uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
             {t("pages.vehicleDetails.labels.year")}
           </dt>
           <dd className="m-0">{details.year}</dd>
         </div>
         <div className="grid gap-1">
-          <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
+          <dt className="m-0 text-xs uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
             {t("pages.vehicleDetails.labels.owner")}
           </dt>
           <dd className="m-0">{details.owner}</dd>
         </div>
         <div className="grid gap-1">
-          <dt className="m-0 text-[11px] uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
+          <dt className="m-0 text-xs uppercase tracking-[0.03em] text-[var(--color-text-secondary)]">
             {t("pages.vehicleDetails.labels.ordersCount")}
           </dt>
           <dd className="m-0">{details.ordersCount}</dd>

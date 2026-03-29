@@ -6,14 +6,14 @@ export const VehiclesLoadingState = () => {
 
   return (
     <section
-      className="rounded-2xl border border-[rgba(154,164,178,0.18)] bg-[rgba(27,33,48,0.9)] px-[18px] py-[18px] text-[var(--color-text-secondary)]"
+      className="rounded-2xl border border-[rgba(154,164,178,0.18)] bg-[rgba(27,33,48,0.9)] px-4 py-4 text-[var(--color-text-secondary)]"
       aria-live="polite"
     >
-      <div className="grid gap-[10px]">
+      <div className="grid gap-2.5">
         <span>{t("pages.vehicles.loading")}</span>
         <div className="grid gap-2" role="presentation" aria-hidden>
           {Array.from({ length: 6 }).map((_, index) => (
-            <span key={index} className="block h-[10px] animate-pulse rounded-full bg-[rgba(154,164,178,0.2)]" />
+            <span key={index} className="block h-2.5 animate-pulse rounded-full bg-[rgba(154,164,178,0.2)]" />
           ))}
         </div>
       </div>
@@ -35,7 +35,7 @@ export const VehiclesErrorState = ({ onRetry }: VehiclesErrorStateProps) => {
       action={
         <button
           type="button"
-          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
+          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
           onClick={onRetry}
         >
           {t("common.retry")}
@@ -54,7 +54,7 @@ export const VehiclesEmptyState = ({ hasActiveSearch }: VehiclesEmptyStateProps)
 
   return (
     <section
-      className="grid gap-[10px] rounded-2xl border border-[rgba(154,164,178,0.18)] bg-[rgba(27,33,48,0.9)] px-[18px] py-[18px] text-[var(--color-text-secondary)]"
+      className="grid gap-2.5 rounded-2xl border border-[rgba(154,164,178,0.18)] bg-[rgba(27,33,48,0.9)] px-4 py-4 text-[var(--color-text-secondary)]"
       aria-live="polite"
     >
       <strong>{hasActiveSearch ? t("pages.vehicles.emptySearch") : t("pages.vehicles.empty")}</strong>

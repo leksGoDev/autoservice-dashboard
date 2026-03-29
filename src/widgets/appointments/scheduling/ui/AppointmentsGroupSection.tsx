@@ -38,7 +38,7 @@ export const AppointmentsGroupSection = ({
   const { locale, t } = useI18n();
 
   return (
-    <section className="min-w-0 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[14px] pb-3">
+    <section className="min-w-0 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-3.5 pb-3">
       <header className="mb-3 flex items-center justify-between gap-3 border-b border-[rgba(154,164,178,0.12)] pb-2.5">
         <h2 className="m-0 text-base font-semibold">{title}</h2>
         <span className="text-xs text-[var(--color-text-secondary)]">
@@ -80,7 +80,7 @@ export const AppointmentsGroupSection = ({
                   <td className={tdClassName}>{item.serviceLabel}</td>
                   <td className={tdClassName}>
                     <span
-                      className={`${getStatusBadgeClass(item.status)} inline-flex rounded-full px-2.5 py-[3px] text-[11px] font-semibold uppercase`}
+                      className={`${getStatusBadgeClass(item.status)} inline-flex rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase`}
                     >
                       {t(`appointment.status.${item.status}`)}
                     </span>

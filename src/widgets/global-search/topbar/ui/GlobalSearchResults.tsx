@@ -59,7 +59,7 @@ export const GlobalSearchResults = ({
                     role="option"
                     aria-selected={isActive}
                     className={[
-                      "grid w-full cursor-pointer gap-[2px] rounded-lg border border-transparent px-3 py-2 text-left transition-colors",
+                      "grid w-full cursor-pointer gap-0.5 rounded-lg border border-transparent px-3 py-2 text-left transition-colors",
                       isActive ? styles.resultItemActive : "hover:bg-[rgba(154,164,178,0.1)]",
                     ].join(" ")}
                     onMouseDown={(event) => event.preventDefault()}
@@ -67,7 +67,7 @@ export const GlobalSearchResults = ({
                     onClick={() => onSelect(item)}
                   >
                     <strong className="text-[13px] text-[var(--color-text-primary)]">{item.title}</strong>
-                    <span className="text-[12px] text-[var(--color-text-secondary)]">{item.subtitle}</span>
+                    <span className="text-xs text-[var(--color-text-secondary)]">{item.subtitle}</span>
                     <span className="text-[11px] text-[var(--color-text-muted)]">{item.meta}</span>
                   </button>
                 );

@@ -29,7 +29,7 @@ export const OrderRowFlagControl = ({ orderId, flagged }: OrderRowFlagControlPro
   return (
     <button
       type="button"
-      className="h-7 cursor-pointer rounded-[9px] border border-[rgba(245,158,11,0.35)] bg-[rgba(245,158,11,0.14)] px-2.5 text-[11px] font-semibold text-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+      className="h-7 cursor-pointer rounded-[8px] border border-[rgba(245,158,11,0.35)] bg-[rgba(245,158,11,0.14)] px-2.5 text-[11px] font-semibold text-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
       onClick={handleToggle}
       disabled={mutation.isPending}
       aria-label={flagActionLabel}

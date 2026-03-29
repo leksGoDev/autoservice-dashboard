@@ -68,7 +68,7 @@ export const OrderDetailsOperationsControls = ({
 
       <button
         type="button"
-        className="cursor-pointer rounded-[10px] border border-[rgba(245,158,11,0.35)] bg-[rgba(245,158,11,0.14)] px-3 py-2 text-xs text-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+        className="h-9 cursor-pointer rounded-[10px] border border-[rgba(245,158,11,0.35)] bg-[rgba(245,158,11,0.14)] px-3 text-xs leading-4 font-medium text-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
         onClick={model.handleFlagToggle}
         disabled={model.isBusy}
       >
@@ -81,8 +81,8 @@ export const OrderDetailsOperationsControls = ({
         )}
       </button>
 
-      {model.errorMessage ? <p className="m-0 text-xs text-[#fecaca]">{model.errorMessage}</p> : null}
-      {model.successMessage ? <p className="m-0 text-xs text-emerald-300">{model.successMessage}</p> : null}
+      {model.errorMessage ? <p className="m-0 text-xs leading-[18px] text-[#fecaca]">{model.errorMessage}</p> : null}
+      {model.successMessage ? <p className="m-0 text-xs leading-[18px] text-emerald-300">{model.successMessage}</p> : null}
     </div>
   );
 };

@@ -21,7 +21,7 @@ export const MechanicsAssignmentsCard = ({ leaders }: MechanicsAssignmentsCardPr
             className="flex items-center justify-between rounded-lg border border-[rgba(154,164,178,0.16)] px-3 py-2"
           >
             <span className="text-[13px]">{item.mechanicName}</span>
-            <span className="text-[12px] text-[var(--color-text-secondary)]">
+            <span className="text-xs text-[var(--color-text-secondary)]">
               {t("pages.mechanics.assignments.orders", {
                 count: item.assignedOrders,
                 utilization: item.utilization,

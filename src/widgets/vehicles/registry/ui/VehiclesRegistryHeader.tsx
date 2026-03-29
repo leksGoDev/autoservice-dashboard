@@ -20,8 +20,8 @@ export const VehiclesRegistryHeader = ({
   const { t } = useI18n();
 
   return (
-    <header className="grid gap-[10px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-6">
-      <span className="text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
+    <header className="grid gap-2.5 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-6">
+      <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
         {t("pages.vehicles.eyebrow")}
       </span>
       <h1 className="m-0 text-[28px] leading-[1.15]">{t("pages.vehicles.title")}</h1>

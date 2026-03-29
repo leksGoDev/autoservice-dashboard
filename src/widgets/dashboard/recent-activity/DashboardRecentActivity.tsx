@@ -25,11 +25,11 @@ export const DashboardRecentActivity = ({ items }: DashboardRecentActivityProps)
         {items.map((item) => (
           <li
             key={item.id}
-            className="grid grid-cols-[12px_minmax(0,1fr)_auto] items-start gap-[10px] border-b border-[rgba(154,164,178,0.12)] py-2.5 last:border-b-0"
+            className="grid grid-cols-[12px_minmax(0,1fr)_auto] items-start gap-2.5 border-b border-[rgba(154,164,178,0.12)] py-2.5 last:border-b-0"
           >
             <span
               className={[
-                "mt-1 h-[10px] w-[10px] rounded-full",
+                "mt-1 h-2.5 w-2.5 rounded-full",
                 toneClassMap[getActivityTone(item.type)] ?? toneClassMap.neutral,
               ].join(" ")}
               aria-hidden="true"

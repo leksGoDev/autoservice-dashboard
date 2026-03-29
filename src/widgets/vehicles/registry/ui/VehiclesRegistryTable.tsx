@@ -66,7 +66,7 @@ export const VehiclesRegistryTable = ({
         cell: (info) => (
           <Link
             to={`/vehicles/${info.row.original.id}`}
-            className="inline-flex rounded-full border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-2.5 py-1.5 text-[12px] font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
+            className="inline-flex rounded-full border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-2.5 py-1.5 text-xs font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
           >
             {t("pages.vehicles.actions.serviceHistory")}
           </Link>
@@ -82,7 +82,7 @@ export const VehiclesRegistryTable = ({
   });
 
   return (
-    <section className="grid gap-[14px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[14px]">
+    <section className="grid gap-3.5 rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-3.5">
       <div className="overflow-x-auto">
         <table className="min-w-[980px] w-full border-collapse text-left text-[13px] max-[900px]:min-w-[760px]">
           <thead>
@@ -91,7 +91,7 @@ export const VehiclesRegistryTable = ({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]"
+                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]"
                   >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </th>

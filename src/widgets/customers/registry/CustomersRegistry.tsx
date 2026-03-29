@@ -10,7 +10,7 @@ export const CustomersRegistry = () => {
 
   return (
     <section className="grid gap-5">
-      <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[18px]">
+      <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4">
         <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
           {t("pages.customers.eyebrow")}
         </span>

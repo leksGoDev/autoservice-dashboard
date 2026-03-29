@@ -52,7 +52,7 @@ export const OrdersTable = ({
   const canGoNext = page < totalPages;
 
   return (
-    <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-[14px] pb-3">
+    <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-3.5 pb-3">
       <div className="overflow-x-auto">
         <table className="w-full min-w-[1040px] border-collapse text-[13px]">
           <thead>

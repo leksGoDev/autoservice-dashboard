@@ -17,12 +17,12 @@ export const AnalyticsHeader = ({ range, onRangeChange }: AnalyticsHeaderProps) 
 
   return (
     <header className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-6">
-      <span className="text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
+      <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
         {t("pages.analytics.eyebrow")}
       </span>
       <h1 className="mb-2 mt-2.5 text-[28px] leading-[1.15]">{t("pages.analytics.title")}</h1>
       <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.analytics.description")}</p>
-      <div className="mt-[14px] flex gap-2">
+      <div className="mt-3.5 flex gap-2">
         {DASHBOARD_RANGES.map((value) => (
           <button
             key={value}

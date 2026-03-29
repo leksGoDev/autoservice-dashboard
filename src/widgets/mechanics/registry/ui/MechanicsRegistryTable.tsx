@@ -66,7 +66,7 @@ export const MechanicsRegistryTable = ({
           return (
             <span
               className={[
-                "inline-flex rounded-full px-2 py-1 text-[12px] font-semibold",
+                "inline-flex rounded-full px-2 py-1 text-xs font-semibold",
                 STATUS_CLASS_MAP[status],
               ].join(" ")}
             >
@@ -102,7 +102,7 @@ export const MechanicsRegistryTable = ({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-[12px] font-semibold text-[var(--color-text-secondary)]"
+                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]"
                   >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </th>

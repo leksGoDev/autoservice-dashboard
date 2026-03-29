@@ -8,7 +8,7 @@ export const OrdersRegistryHeader = () => {
       <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
         {t("pages.orders.eyebrow")}
       </span>
-      <h1 className="my-[10px] text-[28px] leading-[1.15]">{t("pages.orders.title")}</h1>
+      <h1 className="my-2.5 text-[28px] leading-[1.15]">{t("pages.orders.title")}</h1>
       <p className="m-0 text-[var(--color-text-secondary)]">{t("pages.orders.description")}</p>
     </header>
   );

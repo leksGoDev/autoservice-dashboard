@@ -29,7 +29,7 @@ export const DashboardMechanicWorkload = ({ items }: DashboardMechanicWorkloadPr
               <p className="m-0 text-sm font-semibold">{item.mechanicName}</p>
               <span
                 className={[
-                  "rounded-full px-2 py-[3px] text-xs font-semibold",
+                  "rounded-full px-2 py-0.5 text-xs font-semibold",
                   toneClassMap[getWorkloadTone(item.utilization)] ?? toneClassMap.normal,
                 ].join(" ")}
               >

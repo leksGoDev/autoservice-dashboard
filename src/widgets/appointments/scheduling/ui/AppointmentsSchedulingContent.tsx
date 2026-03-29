@@ -23,7 +23,7 @@ export const AppointmentsSchedulingContent = ({ model }: AppointmentsSchedulingC
         action={
           <button
             type="button"
-            className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
+            className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
             onClick={() => model.listQuery.refetch()}
           >
             {t("common.retry")}
@@ -54,7 +54,7 @@ export const AppointmentsSchedulingContent = ({ model }: AppointmentsSchedulingC
         />
       ))}
 
-      <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] px-[14px] pb-3 pt-1">
+      <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] px-3.5 pb-3 pt-1">
         <PaginationShell
           summary={`${t("pages.appointments.table.pagination.total", { total: model.total })}${model.listQuery.isFetching ? ` · ${t("pages.appointments.table.pagination.updating")}` : ""}`}
           pageLabel={t("pages.appointments.table.pagination.page", {

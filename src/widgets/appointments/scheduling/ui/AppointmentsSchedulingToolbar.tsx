@@ -41,7 +41,7 @@ export const AppointmentsSchedulingToolbar = ({
           </span>
           <input
             type="search"
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
             value={filters.search}
             onChange={handleSearchChange}
             placeholder={t("pages.appointments.toolbar.searchPlaceholder") as string}
@@ -53,7 +53,7 @@ export const AppointmentsSchedulingToolbar = ({
             {t("pages.appointments.toolbar.status")}
           </span>
           <select
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
             value={filters.status}
             onChange={handleSelectChange("status")}
           >
@@ -71,7 +71,7 @@ export const AppointmentsSchedulingToolbar = ({
             {t("pages.appointments.toolbar.mechanic")}
           </span>
           <select
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
             value={filters.mechanic}
             onChange={handleSelectChange("mechanic")}
           >
@@ -90,7 +90,7 @@ export const AppointmentsSchedulingToolbar = ({
           </span>
           <input
             type="date"
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
             value={filters.scheduledFrom}
             onChange={handleSelectChange("scheduledFrom")}
           />
@@ -102,7 +102,7 @@ export const AppointmentsSchedulingToolbar = ({
           </span>
           <input
             type="date"
-            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-[var(--color-text-primary)]"
+            className="w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-primary)]"
             value={filters.scheduledTo}
             onChange={handleSelectChange("scheduledTo")}
           />
@@ -112,7 +112,7 @@ export const AppointmentsSchedulingToolbar = ({
       <div className="flex justify-end">
         <button
           type="button"
-          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-[var(--color-text-primary)]"
+          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 py-2 text-xs font-semibold text-[var(--color-text-primary)]"
           onClick={onReset}
         >
           {t("pages.appointments.toolbar.reset")}
