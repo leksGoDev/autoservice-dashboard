@@ -52,6 +52,11 @@ export const apiEndpoints = {
     detail: (vehicleId: string) => `/vehicles/${vehicleId}`,
     serviceHistory: (vehicleId: string) => `/vehicles/${vehicleId}/service-history`,
   },
+  appointments: {
+    list: "/appointments",
+    detail: (appointmentId: string) => `/appointments/${appointmentId}`,
+    convertToOrder: (appointmentId: string) => `/appointments/${appointmentId}/convert-to-order`,
+  },
 } as const;
 
 export function toMswPath(path: string): string {

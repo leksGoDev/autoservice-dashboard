@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 
 import { resetCustomersMockState } from "@/mocks/state/customers";
+import { resetAppointmentsMockState } from "@/mocks/state/appointments";
 import { resetOrdersMockState } from "@/mocks/state/orders";
 import { resetVehiclesMockState } from "@/mocks/state/vehicles";
 import { server } from "./test-server";
@@ -76,6 +77,7 @@ beforeAll(() => {
 
 afterEach(() => {
   server.resetHandlers();
+  resetAppointmentsMockState();
   resetOrdersMockState();
   resetCustomersMockState();
   resetVehiclesMockState();

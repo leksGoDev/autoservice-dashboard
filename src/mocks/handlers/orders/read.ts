@@ -1,5 +1,6 @@
 import { delay, http, HttpResponse } from "msw";
 
+import { isInsideDateRange } from "@/mocks/lib/date-range";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
 import { getOrderMockState, getOrdersMockState } from "@/mocks/state/orders";
 import { DEFAULT_ORDERS_SORT_BY, DEFAULT_ORDERS_SORT_DIRECTION } from "@/shared/api/constants";
@@ -21,30 +22,6 @@ function sortOrders(items: ReturnType<typeof toOrderListItem>[], sortBy: string,
   });
 
   return list;
-}
-
-function isInsideDateRange(itemDateIso: string, from: string, to: string) {
-  const timestamp = new Date(itemDateIso).getTime();
-
-  if (from) {
-    const fromDate = new Date(from);
-    fromDate.setHours(0, 0, 0, 0);
-
-    if (timestamp < fromDate.getTime()) {
-      return false;
-    }
-  }
-
-  if (to) {
-    const toDate = new Date(to);
-    toDate.setHours(23, 59, 59, 999);
-
-    if (timestamp > toDate.getTime()) {
-      return false;
-    }
-  }
-
-  return true;
 }
 
 function findOrderDetails(orderId: string) {

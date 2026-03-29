@@ -40,3 +40,15 @@ export interface GlobalSearchParamsKey {
   query?: string;
   limit?: number;
 }
+
+export interface AppointmentsListParamsKey {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  sortBy?: string;
+  sortDirection?: string;
+  status?: string;
+  assignedMechanic?: string;
+  scheduledFrom?: string;
+  scheduledTo?: string;
+}

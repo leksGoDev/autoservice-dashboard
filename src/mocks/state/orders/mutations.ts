@@ -9,13 +9,14 @@ import type {
 } from "@/entities/order/model/types";
 import { createCustomerState, getCustomerMockState } from "@/mocks/state/customers";
 import { createVehicleState, getVehicleMockState } from "@/mocks/state/vehicles";
-import { getActualHours, normalizeMoney } from "./initial";
+import { createActivityItem, getActualHours, getPriority, normalizeMoney } from "./initial";
 import {
   addActivity,
   appendOrder,
   findOrderAndJobIndex,
   findOrderAndPartIndex,
   findOrderIndex,
+  getOrdersMockState,
   getMutableOrderByIndex,
   getNextOrderSequence,
   setUpdated,
@@ -153,6 +154,16 @@ export function createOrderState(payload: CreateOrderPayload): MockOrderStateIte
   appendOrder(nextOrder);
   return toOrderSnapshot(nextOrder);
 }
+
+type CreateOrderFromAppointmentPayload = {
+  customerId: string;
+  customerName: string;
+  vehicleId: string;
+  vehicleLabel: string;
+  assignedMechanic: string;
+  serviceLabel: string;
+  estimatedDurationMin: number;
+};
 
 export function updateOrderStatusState(orderId: string, status: OrderStatus): MockOrderStateItem | undefined {
   const index = findOrderIndex(orderId);
@@ -329,5 +340,76 @@ export function removeJobPartState(partId: string): MockOrderStateItem | undefin
   syncDerivedOrderFields(order);
   addActivity(order, "part_removed", "Parts Desk", `${removedPart.name} was removed from the order.`);
 
+  return toOrderSnapshot(order);
+}
+
+export function createOrderFromAppointmentState(payload: CreateOrderFromAppointmentPayload): MockOrderStateItem {
+  const existingOrders = getOrdersMockState();
+  const maxOrderId = existingOrders.reduce((max, item) => {
+    const numericId = Number(item.id.replace(/\D/g, ""));
+    return Number.isFinite(numericId) ? Math.max(max, numericId) : max;
+  }, 0);
+  const maxOrderNumber = existingOrders.reduce((max, item) => {
+    const numericNumber = Number(item.number.replace(/\D/g, ""));
+    return Number.isFinite(numericNumber) ? Math.max(max, numericNumber) : max;
+  }, 1000);
+  const nextOrderId = `ord_${String(maxOrderId + 1).padStart(3, "0")}`;
+  const nextOrderNumber = `ORD-${maxOrderNumber + 1}`;
+  const estimatedHours = Number((payload.estimatedDurationMin / 60).toFixed(1));
+  const laborPrice = normalizeMoney(Math.max(80, estimatedHours * 120));
+  const now = new Date().toISOString();
+
+  const order: MockOrderStateItem = {
+    id: nextOrderId,
+    number: nextOrderNumber,
+    status: "scheduled",
+    priority: getPriority(laborPrice),
+    flagged: false,
+    customerId: payload.customerId,
+    customerName: payload.customerName,
+    vehicleId: payload.vehicleId,
+    vehicleLabel: payload.vehicleLabel,
+    assignedMechanic: payload.assignedMechanic,
+    jobsCount: 1,
+    totalAmount: laborPrice,
+    createdAt: now,
+    updatedAt: now,
+    jobs: [
+      {
+        id: `${nextOrderId}_job_1`,
+        name: payload.serviceLabel,
+        category: "Diagnostics",
+        status: "pending",
+        assignedMechanic: payload.assignedMechanic,
+        estimatedHours,
+        actualHours: 0,
+        laborPrice,
+      },
+    ],
+    parts: [],
+    activity: [
+      createActivityItem(
+        nextOrderId,
+        2,
+        "order_scheduled",
+        now,
+        "Scheduler",
+        `Order converted from appointment and scheduled for ${payload.serviceLabel}.`,
+      ),
+      createActivityItem(
+        nextOrderId,
+        1,
+        "order_created",
+        now,
+        "Scheduler",
+        `Work order ${nextOrderNumber} was created from appointment conversion.`,
+      ),
+    ],
+    nextJobSequence: 2,
+    nextPartSequence: 1,
+    nextActivitySequence: 3,
+  };
+
+  appendOrder(order);
   return toOrderSnapshot(order);
 }

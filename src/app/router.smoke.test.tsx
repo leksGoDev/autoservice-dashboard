@@ -49,6 +49,13 @@ describe("router smoke", () => {
     expect(screen.getByRole("searchbox", { name: "Customers search" })).toBeInTheDocument();
   });
 
+  it("renders appointments route content", async () => {
+    renderWithRoute("/appointments");
+
+    expect(await screen.findByText("Appointments workspace")).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Appointments filters toolbar" })).toBeInTheDocument();
+  });
+
   it("renders vehicle details route content with param", async () => {
     renderWithRoute("/vehicles/veh_001");
 

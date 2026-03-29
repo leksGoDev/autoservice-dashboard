@@ -102,6 +102,10 @@ export function appendOrder(order: MockOrderStateItem) {
   ordersState.unshift(order);
 }
 
+export function appendOrderState(order: MockOrderStateItem) {
+  appendOrder(order);
+}
+
 export function getNextOrderSequence() {
   return (
     ordersState.reduce((max, order) => {

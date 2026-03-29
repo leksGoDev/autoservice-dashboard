@@ -6,6 +6,7 @@ export {
   addServiceJobState,
   assignOrderMechanicState,
   assignServiceJobMechanicState,
+  createOrderFromAppointmentState,
   removeJobPartState,
   setOrderFlagState,
   updateJobPartQuantityState,

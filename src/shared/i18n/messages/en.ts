@@ -4,6 +4,7 @@ export const enMessages = {
   nav: {
     dashboard: "Dashboard",
     orders: "Orders",
+    appointments: "Appointments",
     customers: "Customers",
     vehicles: "Vehicles",
     mechanics: "Mechanics",
@@ -14,6 +15,7 @@ export const enMessages = {
     dashboard: "Dashboard",
     orders: "Orders",
     ordersCreate: "Create Order",
+    appointments: "Appointments",
     customers: "Customers",
     vehicles: "Vehicles",
     mechanics: "Mechanics",
@@ -149,6 +151,14 @@ export const enMessages = {
       low: "Low",
       medium: "Medium",
       high: "High",
+    },
+  },
+  appointment: {
+    status: {
+      pending: "Pending",
+      confirmed: "Confirmed",
+      cancelled: "Cancelled",
+      converted: "Converted",
     },
   },
   customer: {
