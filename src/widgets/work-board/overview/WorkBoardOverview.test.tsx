@@ -33,9 +33,9 @@ function buildQuery(
               orderNumber: "ORD-1001",
               status: "scheduled",
               priority: "medium",
-              customerName: "Alex Turner",
+              customerName: "Алексей Волков",
               vehicleLabel: "2019 Honda Accord",
-              assignedMechanic: "Ivan Petrov",
+              assignedMechanic: "Артем Бондарь",
               jobsCount: 2,
               totalAmount: 680,
               shortContext: "2 jobs | Updated 09:10",
@@ -54,7 +54,7 @@ function buildQuery(
   return {
     ...baseQuery,
     ...overrides,
-  } as unknown as UseQueryResult<WorkBoardData, Error>;
+  } as UseQueryResult<WorkBoardData, Error>;
 }
 
 function renderOverview() {

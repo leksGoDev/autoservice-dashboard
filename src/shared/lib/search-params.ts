@@ -5,7 +5,7 @@ export function readPositiveNumberParam(value: string | null, fallback: number) 
 
 export function applySearchParamsPatch(
   source: URLSearchParams,
-  patch: Record<string, string>,
+  patch: Partial<Record<string, string>>,
 ): URLSearchParams {
   const next = new URLSearchParams(source);
 
