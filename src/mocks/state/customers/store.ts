@@ -1,4 +1,4 @@
-import type { CreateCustomerPayload, Customer } from "@/entities/customer/model/types";
+import type { CreateCustomerPayload, Customer, UpdateCustomerPayload } from "@/entities/customer/model/types";
 import { customersFixture } from "@/mocks/fixtures/customers";
 
 let customersState: Customer[] = customersFixture.map((customer) => ({ ...customer }));
@@ -39,6 +39,26 @@ export function createCustomerState(payload: CreateCustomerPayload): Customer {
   };
 
   customersState.push(nextCustomer);
+  return toCustomerSnapshot(nextCustomer);
+}
+
+export function updateCustomerState(customerId: string, payload: UpdateCustomerPayload): Customer | undefined {
+  const customerIndex = customersState.findIndex((item) => item.id === customerId);
+
+  if (customerIndex < 0) {
+    return undefined;
+  }
+
+  const nextCustomer: Customer = {
+    ...customersState[customerIndex],
+    fullName: payload.fullName,
+    phone: payload.phone,
+    email: payload.email,
+    loyaltyTier: payload.loyaltyTier,
+  };
+
+  customersState[customerIndex] = nextCustomer;
+
   return toCustomerSnapshot(nextCustomer);
 }
 

@@ -3,4 +3,5 @@ export {
   getCustomerMockState,
   getCustomersMockState,
   resetCustomersMockState,
+  updateCustomerState,
 } from "./store";

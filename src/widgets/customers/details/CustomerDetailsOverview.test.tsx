@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import { I18nProvider } from "@/shared/i18n/provider";
@@ -41,5 +41,26 @@ describe("CustomerDetailsOverview", () => {
 
     expect(await screen.findByText("Failed to load customer details.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
+  });
+
+  it("edits customer from customer details", async () => {
+    renderOverview("cust_001");
+    await screen.findByText("Customer information");
+
+    fireEvent.click(screen.getByRole("button", { name: "Edit" }));
+    fireEvent.change(screen.getByLabelText("Full name"), {
+      target: { value: "Alex Turner Updated" },
+    });
+    fireEvent.change(screen.getByLabelText("Phone"), {
+      target: { value: "+1-555-0109" },
+    });
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "alex.turner.updated@example.com" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
+
+    await waitFor(() => {
+      expect(screen.getAllByText("Alex Turner Updated").length).toBeGreaterThan(0);
+    });
   });
 });

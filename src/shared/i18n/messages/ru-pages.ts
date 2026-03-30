@@ -374,6 +374,16 @@ export const ruPages = {
     eyebrow: "Реестр",
     title: "Клиенты",
     description: "Поиск клиентов, таблица с пагинацией и переход к карточке клиента.",
+    actions: {
+      create: "Создать клиента",
+    },
+    form: {
+      createTitle: "Создать клиента",
+      createAction: "Создать клиента",
+      submitting: "Сохранение...",
+      cancelAction: "Отмена",
+      error: "Не удалось сохранить клиента.",
+    },
     cards: {
       searchTitle: "Поиск",
       searchText: "Глобальный и страничный поиск будут использовать общий паттерн.",
@@ -389,6 +399,13 @@ export const ruPages = {
     description: "Информация о клиенте, список автомобилей и история заказов в одном операционном экране.",
     customerId: "ID клиента: {{customerId}}",
     back: "Назад к реестру клиентов",
+    actions: {
+      edit: "Редактировать",
+    },
+    form: {
+      editTitle: "Редактирование данных клиента",
+      saveAction: "Сохранить изменения",
+    },
     sections: {
       info: "Информация о клиенте",
       vehicles: "Список автомобилей",
@@ -455,6 +472,16 @@ export const ruPages = {
       prev: "Назад",
       next: "Вперёд",
       serviceHistory: "Сервисная история",
+      create: "Создать автомобиль",
+    },
+    form: {
+      createTitle: "Создать автомобиль",
+      customer: "Владелец",
+      createAction: "Создать автомобиль",
+      submitting: "Сохранение...",
+      cancelAction: "Отмена",
+      error: "Не удалось сохранить автомобиль.",
+      customersError: "Не удалось загрузить клиентов для выбора владельца.",
     },
   },
   vehicleDetails: {

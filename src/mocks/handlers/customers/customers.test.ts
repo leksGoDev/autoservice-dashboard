@@ -20,6 +20,21 @@ async function postJson(url: string, body: unknown) {
   };
 }
 
+async function patchJson(url: string, body: unknown) {
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  return {
+    status: response.status,
+    body: await response.json(),
+  };
+}
+
 describe("customersHandlers", () => {
   it("applies search and paginates", async () => {
     const data = await getJson("/api/customers?search=alex&page=1&pageSize=1");
@@ -86,5 +101,20 @@ describe("customersHandlers", () => {
     expect(created.status).toBe(201);
     expect(created.body.fullName).toBe("Riley Stone");
     expect(after.total).toBe(before.total + 1);
+  });
+
+  it("updates customer", async () => {
+    const updated = await patchJson("/api/customers/cust_001", {
+      fullName: "Alex Turner Updated",
+      phone: "+1-555-0101",
+      email: "alex.updated@example.com",
+      loyaltyTier: "gold",
+    });
+    const details = await getJson("/api/customers/cust_001");
+
+    expect(updated.status).toBe(200);
+    expect(updated.body.fullName).toBe("Alex Turner Updated");
+    expect(details.customer.fullName).toBe("Alex Turner Updated");
+    expect(details.customer.loyaltyTier).toBe("gold");
   });
 });

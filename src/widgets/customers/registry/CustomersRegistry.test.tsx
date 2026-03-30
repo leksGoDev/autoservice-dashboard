@@ -53,4 +53,30 @@ describe("CustomersRegistry", () => {
     const customerLink = await screen.findByRole("link", { name: "Alex Turner" });
     expect(customerLink).toHaveAttribute("href", "/customers/cust_001");
   });
+
+  it("creates customer from customers section", async () => {
+    renderRegistry();
+    await screen.findByText("Name");
+
+    fireEvent.click(screen.getByRole("button", { name: "Create customer" }));
+
+    fireEvent.change(screen.getByLabelText("Full name"), {
+      target: { value: "Riley Stone" },
+    });
+    fireEvent.change(screen.getByLabelText("Phone"), {
+      target: { value: "+1-555-0199" },
+    });
+    fireEvent.change(screen.getByLabelText("Email"), {
+      target: { value: "riley.stone@example.com" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Create customer" }));
+
+    fireEvent.change(screen.getByRole("searchbox", { name: "Customers search" }), {
+      target: { value: "riley stone" },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole("link", { name: "Riley Stone" })).toBeInTheDocument();
+    });
+  });
 });

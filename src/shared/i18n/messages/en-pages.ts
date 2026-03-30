@@ -374,6 +374,16 @@ export const enPages = {
     eyebrow: "Registry",
     title: "Customers workspace",
     description: "Customer search, paginated table, and drill-down access to customer details.",
+    actions: {
+      create: "Create customer",
+    },
+    form: {
+      createTitle: "Create customer",
+      createAction: "Create customer",
+      submitting: "Saving...",
+      cancelAction: "Cancel",
+      error: "Failed to save customer.",
+    },
     cards: {
       searchTitle: "Search",
       searchText: "Global and page-level search will reuse shared search behavior.",
@@ -391,6 +401,13 @@ export const enPages = {
     description: "Customer information, linked vehicles, and order history in one operational view.",
     customerId: "Customer ID: {{customerId}}",
     back: "Back to customers",
+    actions: {
+      edit: "Edit",
+    },
+    form: {
+      editTitle: "Edit customer information",
+      saveAction: "Save changes",
+    },
     sections: {
       info: "Customer information",
       vehicles: "Vehicles list",
@@ -457,6 +474,16 @@ export const enPages = {
       prev: "Prev",
       next: "Next",
       serviceHistory: "Service history",
+      create: "Create vehicle",
+    },
+    form: {
+      createTitle: "Create vehicle",
+      customer: "Owner customer",
+      createAction: "Create vehicle",
+      submitting: "Saving...",
+      cancelAction: "Cancel",
+      error: "Failed to save vehicle.",
+      customersError: "Failed to load customers for vehicle owner selection.",
     },
   },
   vehicleDetails: {

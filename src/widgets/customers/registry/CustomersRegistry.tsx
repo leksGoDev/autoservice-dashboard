@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+import { CustomerForm } from "@/features/customer-management/ui/CustomerForm";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 import { CustomersRegistrySearch } from "./CustomersRegistrySearch";
@@ -7,15 +10,28 @@ import { CustomersRegistryContent } from "./ui/CustomersRegistryContent";
 export const CustomersRegistry = () => {
   const { t } = useI18n();
   const model = useCustomersRegistryModel();
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   return (
     <section className="grid gap-5">
       <section className="rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4">
-        <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
-          {t("pages.customers.eyebrow")}
-        </span>
-        <h1 className="m-0 mt-2.5 text-[28px] leading-[1.15]">{t("pages.customers.title")}</h1>
-        <p className="m-0 text-base leading-6 text-[var(--color-text-secondary)]">{t("pages.customers.description")}</p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="grid gap-2.5">
+            <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent-light-blue)]">
+              {t("pages.customers.eyebrow")}
+            </span>
+            <h1 className="m-0 text-[28px] leading-[1.15]">{t("pages.customers.title")}</h1>
+            <p className="m-0 text-base leading-6 text-[var(--color-text-secondary)]">{t("pages.customers.description")}</p>
+          </div>
+
+          <button
+            type="button"
+            className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
+            onClick={() => setIsCreateOpen((value) => !value)}
+          >
+            {isCreateOpen ? t("pages.customers.form.cancelAction") : t("pages.customers.actions.create")}
+          </button>
+        </div>
       </section>
 
       <WidgetCard
@@ -23,6 +39,16 @@ export const CustomersRegistry = () => {
         description={t("customersRegistry.description")}
         className="grid gap-4"
       >
+        {isCreateOpen ? (
+          <CustomerForm
+            mode="create"
+            onSubmitted={() => {
+              setIsCreateOpen(false);
+            }}
+            onCancel={() => setIsCreateOpen(false)}
+          />
+        ) : null}
+
         <CustomersRegistrySearch
           value={model.search}
           onChange={(event) => model.handleSearchChange(event.target.value)}

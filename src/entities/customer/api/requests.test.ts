@@ -1,5 +1,5 @@
 import { httpRequest } from "@/shared/api/http-client";
-import { createCustomer, getCustomerDetails, getCustomersList } from "./requests";
+import { createCustomer, getCustomerDetails, getCustomersList, updateCustomer } from "./requests";
 
 vi.mock("@/shared/api/http-client", () => ({
   httpRequest: vi.fn(),
@@ -54,6 +54,27 @@ describe("customer requests", () => {
         phone: "+1-555-0199",
         email: "riley.stone@example.com",
         loyaltyTier: "standard",
+      },
+    });
+  });
+
+  it("updates customer with PATCH payload", () => {
+    mockedHttpRequest.mockResolvedValueOnce({ id: "cust_001" });
+
+    updateCustomer("cust_001", {
+      fullName: "Alex Turner Updated",
+      phone: "+1-555-0101",
+      email: "alex.turner.updated@example.com",
+      loyaltyTier: "gold",
+    });
+
+    expect(mockedHttpRequest).toHaveBeenCalledWith("/customers/cust_001", {
+      method: "PATCH",
+      body: {
+        fullName: "Alex Turner Updated",
+        phone: "+1-555-0101",
+        email: "alex.turner.updated@example.com",
+        loyaltyTier: "gold",
       },
     });
   });
