@@ -26,7 +26,7 @@ export const CustomersRegistry = () => {
 
           <button
             type="button"
-            className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
+            className="inline-flex h-10 min-w-[156px] items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-4 text-sm leading-5 font-semibold text-[var(--color-text-primary)]"
             onClick={() => setIsCreateOpen((value) => !value)}
           >
             {isCreateOpen ? t("pages.customers.form.cancelAction") : t("pages.customers.actions.create")}
@@ -34,21 +34,21 @@ export const CustomersRegistry = () => {
         </div>
       </section>
 
+      {isCreateOpen ? (
+        <CustomerForm
+          mode="create"
+          onSubmitted={() => {
+            setIsCreateOpen(false);
+          }}
+          onCancel={() => setIsCreateOpen(false)}
+        />
+      ) : null}
+
       <WidgetCard
         title={t("customersRegistry.title")}
         description={t("customersRegistry.description")}
         className="grid gap-4"
       >
-        {isCreateOpen ? (
-          <CustomerForm
-            mode="create"
-            onSubmitted={() => {
-              setIsCreateOpen(false);
-            }}
-            onCancel={() => setIsCreateOpen(false)}
-          />
-        ) : null}
-
         <CustomersRegistrySearch
           value={model.search}
           onChange={(event) => model.handleSearchChange(event.target.value)}
