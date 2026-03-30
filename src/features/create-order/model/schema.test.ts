@@ -18,7 +18,7 @@ function buildValidPayload() {
     scheduledFor: "2026-03-25T10:30",
     complaint: "Engine makes noise after startup",
     notes: "Customer requested fast diagnostics",
-    assignedMechanic: "Ivan Petrov",
+    assignedMechanic: "Artem Bondar",
     priority: "medium",
     status: "scheduled",
     initialJobs: [

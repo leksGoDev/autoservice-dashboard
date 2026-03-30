@@ -37,7 +37,7 @@ describe("useAppointmentsListQuery", () => {
       () =>
         useAppointmentsListQuery({
           status: "confirmed",
-          assignedMechanic: "Ivan Petrov",
+          assignedMechanic: "Artem Bondar",
           page: 1,
           pageSize: 20,
         }),
@@ -52,7 +52,7 @@ describe("useAppointmentsListQuery", () => {
 
     expect(
       (result.current.data?.items ?? []).every(
-        (item) => item.status === "confirmed" && item.assignedMechanic === "Ivan Petrov",
+        (item) => item.status === "confirmed" && item.assignedMechanic === "Artem Bondar",
       ),
     ).toBe(true);
   });

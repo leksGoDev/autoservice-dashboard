@@ -33,7 +33,7 @@ function createdBefore(scheduleIso: string, daysBefore: number) {
 }
 
 function getCustomerPhone(customerId: string) {
-  return customersFixture.find((item) => item.id === customerId)?.phone ?? "+1-555-0100";
+  return customersFixture.find((item) => item.id === customerId)?.phone ?? "+7 (901) 555-01-00";
 }
 
 export const appointmentsFixture: AppointmentFixtureItem[] = [
@@ -41,7 +41,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_001",
     number: "APT-2001",
     customerId: "cust_001",
-    customerName: "Alex Turner",
+    customerName: "Aleksey Volkov",
     vehicleId: "veh_001",
     vehicleLabel: "2019 Honda Accord",
     serviceLabel: "Brake diagnostics",
@@ -57,7 +57,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_002",
     number: "APT-2002",
     customerId: "cust_002",
-    customerName: "Morgan Lee",
+    customerName: "Marina Kim",
     vehicleId: "veh_002",
     vehicleLabel: "2018 Nissan Altima",
     serviceLabel: "Engine warning check",
@@ -73,7 +73,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_003",
     number: "APT-2003",
     customerId: "cust_003",
-    customerName: "Jamie Carter",
+    customerName: "Ilya Karpenko",
     vehicleId: "veh_003",
     vehicleLabel: "2020 Ford F-150",
     serviceLabel: "Suspension noise inspection",
@@ -89,7 +89,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_004",
     number: "APT-2004",
     customerId: "cust_004",
-    customerName: "Taylor Brooks",
+    customerName: "Darya Abdullaeva",
     vehicleId: "veh_004",
     vehicleLabel: "2021 BMW 330i",
     serviceLabel: "A/C system diagnostics",
@@ -105,7 +105,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_005",
     number: "APT-2005",
     customerId: "cust_005",
-    customerName: "Drew Wilson",
+    customerName: "Ruslan Sokolov",
     vehicleId: "veh_005",
     vehicleLabel: "2022 Tesla Model S",
     serviceLabel: "Battery thermal check",
@@ -121,7 +121,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_006",
     number: "APT-2006",
     customerId: "cust_002",
-    customerName: "Morgan Lee",
+    customerName: "Marina Kim",
     vehicleId: "veh_002",
     vehicleLabel: "2018 Nissan Altima",
     serviceLabel: "Oil and filter maintenance",
@@ -137,7 +137,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_007",
     number: "APT-2007",
     customerId: "cust_004",
-    customerName: "Taylor Brooks",
+    customerName: "Darya Abdullaeva",
     vehicleId: "veh_004",
     vehicleLabel: "2021 BMW 330i",
     serviceLabel: "Transmission diagnostics",
@@ -153,7 +153,7 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     id: "apt_008",
     number: "APT-2008",
     customerId: "cust_001",
-    customerName: "Alex Turner",
+    customerName: "Aleksey Volkov",
     vehicleId: "veh_001",
     vehicleLabel: "2019 Honda Accord",
     serviceLabel: "Pre-trip safety inspection",

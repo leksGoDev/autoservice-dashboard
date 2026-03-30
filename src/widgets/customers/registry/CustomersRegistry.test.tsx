@@ -50,7 +50,7 @@ describe("CustomersRegistry", () => {
   it("renders entry point link to customer details", async () => {
     renderRegistry();
 
-    const customerLink = await screen.findByRole("link", { name: "Alex Turner" });
+    const customerLink = await screen.findByRole("link", { name: "Aleksey Volkov" });
     expect(customerLink).toHaveAttribute("href", "/customers/cust_001");
   });
 
@@ -61,22 +61,22 @@ describe("CustomersRegistry", () => {
     fireEvent.click(screen.getByRole("button", { name: "Create customer" }));
 
     fireEvent.change(screen.getByLabelText("Full name"), {
-      target: { value: "Riley Stone" },
+      target: { value: "Egor Stepanov" },
     });
     fireEvent.change(screen.getByLabelText("Phone"), {
-      target: { value: "+1-555-0199" },
+      target: { value: "+7 (999) 555-01-99" },
     });
     fireEvent.change(screen.getByLabelText("Email"), {
-      target: { value: "riley.stone@example.com" },
+      target: { value: "egor.stepanov@example.by" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Create customer" }));
 
     fireEvent.change(screen.getByRole("searchbox", { name: "Customers search" }), {
-      target: { value: "riley stone" },
+      target: { value: "egor stepanov" },
     });
 
     await waitFor(() => {
-      expect(screen.getByRole("link", { name: "Riley Stone" })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "Egor Stepanov" })).toBeInTheDocument();
     });
   });
 });

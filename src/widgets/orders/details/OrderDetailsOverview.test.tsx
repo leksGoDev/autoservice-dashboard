@@ -110,13 +110,13 @@ describe("OrderDetailsOverview", () => {
     });
 
     const jobMechanicSelect = screen.getByRole("combobox", { name: "Job mechanic Brake system service" });
-    fireEvent.change(jobMechanicSelect, { target: { value: "Chris Nolan" } });
+    fireEvent.change(jobMechanicSelect, { target: { value: "Artem Bondar" } });
     fireEvent.click(
       within(jobMechanicSelect.closest("tr") as HTMLElement).getByRole("button", { name: "Assign mechanic" }),
     );
 
     await waitFor(() => {
-      expect(screen.getAllByRole("row", { name: /Brake system service/i })[0]).toHaveTextContent("Chris Nolan");
+      expect(screen.getAllByRole("row", { name: /Brake system service/i })[0]).toHaveTextContent("Artem Bondar");
     });
 
     fireEvent.change(screen.getByRole("textbox", { name: "Part name" }), {

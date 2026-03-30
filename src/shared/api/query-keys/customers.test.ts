@@ -16,7 +16,7 @@ describe("customersQueryKeys", () => {
     const key = customersQueryKeys.list({
       page: 3,
       pageSize: 25,
-      search: "alex",
+      search: "alek",
     });
 
     expect(key).toEqual([
@@ -25,7 +25,7 @@ describe("customersQueryKeys", () => {
       {
         page: 3,
         pageSize: 25,
-        search: "alex",
+        search: "alek",
       },
     ]);
   });

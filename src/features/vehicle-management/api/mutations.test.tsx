@@ -52,7 +52,7 @@ describe("vehicle management mutations", () => {
 
     expect(vehicleList.items).toHaveLength(1);
     expect(vehicleList.items[0].customerId).toBe("cust_001");
-    expect(vehicleList.items[0].owner).toBe("Alex Turner");
+    expect(vehicleList.items[0].owner).toBe("Aleksey Volkov");
     expect(customerAfter.vehicles.length).toBe(customerBefore.vehicles.length + 1);
   });
 });

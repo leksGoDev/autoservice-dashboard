@@ -54,7 +54,7 @@ describe("GlobalSearchTopbar", () => {
 
     const input = screen.getByRole("searchbox", { name: "Global search" });
 
-    fireEvent.change(input, { target: { value: "alex" } });
+    fireEvent.change(input, { target: { value: "alek" } });
 
     expect(await screen.findByText("Orders")).toBeInTheDocument();
     expect(screen.getByText("Customers")).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe("GlobalSearchTopbar", () => {
 
     const input = screen.getByRole("searchbox", { name: "Global search" });
 
-    fireEvent.change(input, { target: { value: "alex" } });
+    fireEvent.change(input, { target: { value: "alek" } });
     await screen.findAllByRole("option");
 
     fireEvent.keyDown(input, { key: "ArrowDown" });
@@ -80,7 +80,7 @@ describe("GlobalSearchTopbar", () => {
 
     const input = screen.getByRole("searchbox", { name: "Global search" });
 
-    fireEvent.change(input, { target: { value: "alex" } });
+    fireEvent.change(input, { target: { value: "alek" } });
     await screen.findAllByRole("option");
 
     fireEvent.keyDown(input, { key: "Escape" });
@@ -111,7 +111,7 @@ describe("GlobalSearchTopbar", () => {
 
     const input = screen.getByRole("searchbox", { name: "Global search" });
 
-    fireEvent.change(input, { target: { value: "alex" } });
+    fireEvent.change(input, { target: { value: "alek" } });
 
     expect(await screen.findByText("Failed to load search results.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();

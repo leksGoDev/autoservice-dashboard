@@ -41,18 +41,18 @@ describe("customer requests", () => {
     mockedHttpRequest.mockResolvedValueOnce({ id: "cust_006" });
 
     createCustomer({
-      fullName: "Riley Stone",
-      phone: "+1-555-0199",
-      email: "riley.stone@example.com",
+      fullName: "Egor Stepanov",
+      phone: "+7 (999) 555-01-99",
+      email: "egor.stepanov@example.by",
       loyaltyTier: "standard",
     });
 
     expect(mockedHttpRequest).toHaveBeenCalledWith("/customers", {
       method: "POST",
       body: {
-        fullName: "Riley Stone",
-        phone: "+1-555-0199",
-        email: "riley.stone@example.com",
+        fullName: "Egor Stepanov",
+        phone: "+7 (999) 555-01-99",
+        email: "egor.stepanov@example.by",
         loyaltyTier: "standard",
       },
     });
@@ -62,18 +62,18 @@ describe("customer requests", () => {
     mockedHttpRequest.mockResolvedValueOnce({ id: "cust_001" });
 
     updateCustomer("cust_001", {
-      fullName: "Alex Turner Updated",
-      phone: "+1-555-0101",
-      email: "alex.turner.updated@example.com",
+      fullName: "Aleksey Volkov Updated",
+      phone: "+7 (902) 555-01-01",
+      email: "aleksey.volkov.updated@example.ru",
       loyaltyTier: "gold",
     });
 
     expect(mockedHttpRequest).toHaveBeenCalledWith("/customers/cust_001", {
       method: "PATCH",
       body: {
-        fullName: "Alex Turner Updated",
-        phone: "+1-555-0101",
-        email: "alex.turner.updated@example.com",
+        fullName: "Aleksey Volkov Updated",
+        phone: "+7 (902) 555-01-01",
+        email: "aleksey.volkov.updated@example.ru",
         loyaltyTier: "gold",
       },
     });

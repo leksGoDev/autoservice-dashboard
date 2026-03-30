@@ -27,7 +27,7 @@ function fillValidExistingSelectionForm(model: ReturnType<typeof useCreateOrderF
   model.form.setValue("vehicleMode", "existing");
   model.form.setValue("scheduledFor", "2026-03-30T11:00");
   model.form.setValue("complaint", "Engine makes abnormal noise");
-  model.form.setValue("assignedMechanic", "Ivan Petrov");
+  model.form.setValue("assignedMechanic", "Artem Bondar");
   model.form.setValue("priority", "high");
   model.form.setValue("status", "scheduled");
   model.form.setValue("initialJobs.0.name", "Initial diagnostics");
@@ -40,12 +40,12 @@ describe("useCreateOrderFormModel", () => {
   beforeEach(() => {
     mockedUseNavigate.mockReturnValue(vi.fn());
     mockedUseCreateOrderBootstrapQuery.mockReturnValue({
-      customers: [{ id: "cust_001", fullName: "Alex Turner" }],
+      customers: [{ id: "cust_001", fullName: "Aleksey Volkov" }],
       vehicles: [
         { id: "veh_001", customerId: "cust_001" },
         { id: "veh_002", customerId: "cust_002" },
       ],
-      mechanics: ["Ivan Petrov"],
+      mechanics: ["Artem Bondar"],
       isLoading: false,
       hasError: false,
       isVehiclesLoading: false,

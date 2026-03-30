@@ -37,13 +37,13 @@ async function patchJson(url: string, body: unknown) {
 
 describe("customersHandlers", () => {
   it("applies search and paginates", async () => {
-    const data = await getJson("/api/customers?search=alex&page=1&pageSize=1");
+    const data = await getJson("/api/customers?search=alek&page=1&pageSize=1");
 
     expect(data.page).toBe(1);
     expect(data.pageSize).toBe(1);
     expect(data.total).toBeGreaterThan(0);
     expect(data.items).toHaveLength(1);
-    expect(data.items[0].fullName).toContain("Alex");
+    expect(data.items[0].fullName).toContain("Alek");
   });
 
   it("returns computed fields", async () => {
@@ -91,30 +91,30 @@ describe("customersHandlers", () => {
   it("creates customer inline", async () => {
     const before = await getJson("/api/customers?page=1&pageSize=50");
     const created = await postJson("/api/customers", {
-      fullName: "Riley Stone",
-      phone: "+1-555-0199",
-      email: "riley.stone@example.com",
+      fullName: "Egor Stepanov",
+      phone: "+7 (999) 555-01-99",
+      email: "egor.stepanov@example.by",
       loyaltyTier: "silver",
     });
     const after = await getJson("/api/customers?page=1&pageSize=50");
 
     expect(created.status).toBe(201);
-    expect(created.body.fullName).toBe("Riley Stone");
+    expect(created.body.fullName).toBe("Egor Stepanov");
     expect(after.total).toBe(before.total + 1);
   });
 
   it("updates customer", async () => {
     const updated = await patchJson("/api/customers/cust_001", {
-      fullName: "Alex Turner Updated",
-      phone: "+1-555-0101",
-      email: "alex.updated@example.com",
+      fullName: "Aleksey Volkov Updated",
+      phone: "+7 (902) 555-01-01",
+      email: "aleksey.volkov.updated@example.ru",
       loyaltyTier: "gold",
     });
     const details = await getJson("/api/customers/cust_001");
 
     expect(updated.status).toBe(200);
-    expect(updated.body.fullName).toBe("Alex Turner Updated");
-    expect(details.customer.fullName).toBe("Alex Turner Updated");
+    expect(updated.body.fullName).toBe("Aleksey Volkov Updated");
+    expect(details.customer.fullName).toBe("Aleksey Volkov Updated");
     expect(details.customer.loyaltyTier).toBe("gold");
   });
 });

@@ -58,7 +58,7 @@ describe("VehiclesRegistry", () => {
 
     const ownerSelect = screen.getByLabelText("Owner customer") as HTMLSelectElement;
     await waitFor(() => {
-      expect(screen.getByRole("option", { name: /Alex Turner/ })).toBeInTheDocument();
+      expect(screen.getByRole("option", { name: /Aleksey Volkov/ })).toBeInTheDocument();
     });
     fireEvent.change(ownerSelect, {
       target: { value: "cust_001" },

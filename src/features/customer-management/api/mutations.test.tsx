@@ -32,9 +32,9 @@ describe("customer management mutations", () => {
 
     await act(async () => {
       await result.current.mutateAsync({
-        fullName: "Riley Stone",
-        phone: "+1-555-0199",
-        email: "riley.stone@example.com",
+        fullName: "Egor Stepanov",
+        phone: "+7 (999) 555-01-99",
+        email: "egor.stepanov@example.by",
         loyaltyTier: "silver",
       });
     });
@@ -47,7 +47,7 @@ describe("customer management mutations", () => {
     const after = await afterResponse.json();
 
     expect(after.total).toBe(before.total + 1);
-    expect(after.items.some((item: { fullName: string }) => item.fullName === "Riley Stone")).toBe(true);
+    expect(after.items.some((item: { fullName: string }) => item.fullName === "Egor Stepanov")).toBe(true);
   });
 
   it("updates customer and refreshes related vehicle owner", async () => {
@@ -59,9 +59,9 @@ describe("customer management mutations", () => {
       await result.current.mutateAsync({
         customerId: "cust_001",
         payload: {
-          fullName: "Alex Turner Updated",
-          phone: "+1-555-0109",
-          email: "alex.turner.updated@example.com",
+          fullName: "Aleksey Volkov Updated",
+          phone: "+7 (901) 555-01-09",
+          email: "aleksey.volkov.updated@example.ru",
           loyaltyTier: "gold",
         },
       });
@@ -76,8 +76,8 @@ describe("customer management mutations", () => {
     const vehicleResponse = await fetch("/api/vehicles/veh_001");
     const vehicle = await vehicleResponse.json();
 
-    expect(customerDetails.customer.fullName).toBe("Alex Turner Updated");
-    expect(customerDetails.customer.phone).toBe("+1-555-0109");
-    expect(vehicle.owner).toBe("Alex Turner Updated");
+    expect(customerDetails.customer.fullName).toBe("Aleksey Volkov Updated");
+    expect(customerDetails.customer.phone).toBe("+7 (901) 555-01-09");
+    expect(vehicle.owner).toBe("Aleksey Volkov Updated");
   });
 });

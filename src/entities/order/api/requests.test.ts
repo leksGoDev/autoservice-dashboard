@@ -57,7 +57,7 @@ describe("order requests", () => {
       search: "ford",
       status: "waiting_parts",
       priority: "high",
-      assignedMechanic: "Ivan Petrov",
+      assignedMechanic: "Artem Bondar",
       createdFrom: "2026-03-01",
       createdTo: "2026-03-31",
       sortBy: "updatedAt",
@@ -72,7 +72,7 @@ describe("order requests", () => {
         search: "ford",
         status: "waiting_parts",
         priority: "high",
-        assignedMechanic: "Ivan Petrov",
+        assignedMechanic: "Artem Bondar",
         createdFrom: "2026-03-01",
         createdTo: "2026-03-31",
         sortBy: "updatedAt",
@@ -112,7 +112,7 @@ describe("order requests", () => {
       notes: "Check after long trip",
       priority: "high",
       status: "scheduled",
-      assignedMechanic: "Ivan Petrov",
+      assignedMechanic: "Artem Bondar",
       initialJobs: [
         {
           name: "Initial inspection",
@@ -180,7 +180,7 @@ describe("order requests", () => {
       category: "Maintenance",
       estimatedHours: 1.4,
       laborPrice: 154,
-      assignedMechanic: "Ivan Petrov",
+      assignedMechanic: "Artem Bondar",
     });
 
     expect(mockedHttpRequest).toHaveBeenCalledWith("/orders/ord_001/jobs", {
@@ -190,7 +190,7 @@ describe("order requests", () => {
         category: "Maintenance",
         estimatedHours: 1.4,
         laborPrice: 154,
-        assignedMechanic: "Ivan Petrov",
+        assignedMechanic: "Artem Bondar",
       },
     });
   });

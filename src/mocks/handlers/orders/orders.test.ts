@@ -84,7 +84,7 @@ describe("ordersHandlers", () => {
       data.items.every(
         (item: { priority: string; assignedMechanic: string; createdAt: string }) =>
           item.priority === "high" &&
-          item.assignedMechanic === "Ivan Petrov" &&
+          item.assignedMechanic === "Artem Bondar" &&
           new Date(item.createdAt).getTime() >= new Date("2026-03-01T00:00:00.000Z").getTime() &&
           new Date(item.createdAt).getTime() <= new Date("2026-03-31T23:59:59.999Z").getTime(),
       ),
@@ -98,7 +98,7 @@ describe("ordersHandlers", () => {
     expect(data.customer).toEqual(
       expect.objectContaining({
         id: "cust_001",
-        fullName: "Alex Turner",
+        fullName: "Aleksey Volkov",
       }),
     );
     expect(data.vehicle).toEqual(
@@ -211,7 +211,7 @@ describe("ordersHandlers", () => {
       category: "Maintenance",
       estimatedHours: 1.5,
       laborPrice: 170,
-      assignedMechanic: "Ivan Petrov",
+      assignedMechanic: "Artem Bondar",
     });
     const after = await getJson("/api/orders/ord_001");
     const activity = await getJson("/api/orders/ord_001/activity");
@@ -277,7 +277,7 @@ describe("ordersHandlers", () => {
       notes: "Please inspect suspension first",
       priority: "high",
       status: "scheduled",
-      assignedMechanic: "Ivan Petrov",
+      assignedMechanic: "Artem Bondar",
       initialJobs: [
         {
           name: "Initial diagnostics",

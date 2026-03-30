@@ -119,11 +119,11 @@ describe("order operation mutations", () => {
 
     await result.current.mutateAsync({
       orderId: "ord_001",
-      assignedMechanic: "Chris Nolan",
+      assignedMechanic: "Artem Bondar",
     });
 
     expect(mockedAssignOrderMechanic).toHaveBeenCalledWith("ord_001", {
-      assignedMechanic: "Chris Nolan",
+      assignedMechanic: "Artem Bondar",
     });
     expectCommonInvalidations(invalidateQueries, "ord_001");
   });
@@ -196,11 +196,11 @@ describe("order operation mutations", () => {
     await result.current.mutateAsync({
       orderId: "ord_001",
       jobId: "job_001",
-      assignedMechanic: "Chris Nolan",
+      assignedMechanic: "Artem Bondar",
     });
 
     expect(mockedAssignServiceJobMechanic).toHaveBeenCalledWith("job_001", {
-      assignedMechanic: "Chris Nolan",
+      assignedMechanic: "Artem Bondar",
     });
     expectCommonInvalidations(invalidateQueries, "ord_001");
   });

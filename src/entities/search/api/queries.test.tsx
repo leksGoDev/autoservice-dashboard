@@ -20,7 +20,7 @@ function createWrapper() {
 
 describe("useGlobalSearchQuery", () => {
   it("returns mixed entity results", async () => {
-    const { result } = renderHook(() => useGlobalSearchQuery({ query: "alex", limit: 10 }), {
+    const { result } = renderHook(() => useGlobalSearchQuery({ query: "alek", limit: 10 }), {
       wrapper: createWrapper(),
     });
 

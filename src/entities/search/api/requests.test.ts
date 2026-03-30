@@ -15,12 +15,12 @@ describe("search requests", () => {
   it("sends global search request with default limit", () => {
     mockedHttpRequest.mockResolvedValueOnce({ items: [] });
 
-    getGlobalSearchResults({ query: "alex" });
+    getGlobalSearchResults({ query: "alek" });
 
     expect(mockedHttpRequest).toHaveBeenCalledWith("/search", {
       method: "GET",
       query: {
-        query: "alex",
+        query: "alek",
         limit: 12,
       },
     });

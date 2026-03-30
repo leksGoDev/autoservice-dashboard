@@ -33,7 +33,7 @@ describe("useCustomersListQuery", () => {
   });
 
   it("applies server-side search", async () => {
-    const { result } = renderHook(() => useCustomersListQuery({ search: "alex", page: 1, pageSize: 20 }), {
+    const { result } = renderHook(() => useCustomersListQuery({ search: "alek", page: 1, pageSize: 20 }), {
       wrapper: createWrapper(),
     });
 
@@ -42,7 +42,7 @@ describe("useCustomersListQuery", () => {
     });
 
     const names = result.current.data?.items.map((item) => item.fullName.toLowerCase()) ?? [];
-    expect(names.every((name) => name.includes("alex"))).toBe(true);
+    expect(names.every((name) => name.includes("alek"))).toBe(true);
   });
 
   it("loads customer details", async () => {

@@ -32,7 +32,7 @@ describe("CustomerDetailsOverview", () => {
     expect(await screen.findByText("Customer information")).toBeInTheDocument();
     expect(screen.getByText("Vehicles list")).toBeInTheDocument();
     expect(screen.getByText("Order history")).toBeInTheDocument();
-    expect(screen.getByText("Alex Turner")).toBeInTheDocument();
+    expect(screen.getByText("Aleksey Volkov")).toBeInTheDocument();
     expect(screen.getByText("ORD-1008")).toBeInTheDocument();
   });
 
@@ -49,18 +49,18 @@ describe("CustomerDetailsOverview", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Edit" }));
     fireEvent.change(screen.getByLabelText("Full name"), {
-      target: { value: "Alex Turner Updated" },
+      target: { value: "Aleksey Volkov Updated" },
     });
     fireEvent.change(screen.getByLabelText("Phone"), {
-      target: { value: "+1-555-0109" },
+      target: { value: "+7 (901) 555-01-09" },
     });
     fireEvent.change(screen.getByLabelText("Email"), {
-      target: { value: "alex.turner.updated@example.com" },
+      target: { value: "aleksey.volkov.updated@example.ru" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
 
     await waitFor(() => {
-      expect(screen.getAllByText("Alex Turner Updated").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("Aleksey Volkov Updated").length).toBeGreaterThan(0);
     });
   });
 
@@ -75,7 +75,7 @@ describe("CustomerDetailsOverview", () => {
     fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
 
     expect(screen.queryByRole("button", { name: "Save changes" })).not.toBeInTheDocument();
-    expect(screen.getByText("Alex Turner")).toBeInTheDocument();
+    expect(screen.getByText("Aleksey Volkov")).toBeInTheDocument();
     expect(screen.queryByText("Alex Draft Name")).not.toBeInTheDocument();
   });
 });

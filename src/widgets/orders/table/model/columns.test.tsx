@@ -11,13 +11,13 @@ const row: OrdersTableRow = {
   id: "ord_001",
   number: "ORD-1001",
   customerId: "cust_001",
-  customerName: "Alex Turner",
+  customerName: "Aleksey Volkov",
   vehicleId: "veh_001",
   vehicleLabel: "2019 Honda Accord",
   status: "waiting_parts",
   priority: "high",
   flagged: true,
-  assignedMechanic: "Ivan Petrov",
+  assignedMechanic: "Artem Bondar",
   jobsCount: 3,
   totalAmount: 1200,
   createdAt: "2026-03-18T09:35:00.000Z",
@@ -126,7 +126,7 @@ describe("createOrdersTableColumns", () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole("link", { name: "Alex Turner" })).toHaveAttribute("href", "/customers/cust_001");
+    expect(screen.getByRole("link", { name: "Aleksey Volkov" })).toHaveAttribute("href", "/customers/cust_001");
     expect(screen.getByRole("link", { name: "2019 Honda Accord" })).toHaveAttribute("href", "/vehicles/veh_001");
     expect(screen.getByRole("link", { name: "ORD-1001" })).toHaveAttribute("href", "/orders/ord_001");
     expect(screen.getByRole("link", { name: "pages.orders.table.actions.placeholder" })).toBeInTheDocument();

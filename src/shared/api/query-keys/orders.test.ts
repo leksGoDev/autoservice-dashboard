@@ -28,7 +28,7 @@ describe("ordersQueryKeys", () => {
       sortDirection: "asc",
       status: "waiting_parts",
       priority: "high",
-      assignedMechanic: "Ivan Petrov",
+      assignedMechanic: "Artem Bondar",
       createdFrom: "2026-03-01",
       createdTo: "2026-03-31",
     });
@@ -44,7 +44,7 @@ describe("ordersQueryKeys", () => {
         sortDirection: "asc",
         status: "waiting_parts",
         priority: "high",
-        assignedMechanic: "Ivan Petrov",
+        assignedMechanic: "Artem Bondar",
         createdFrom: "2026-03-01",
         createdTo: "2026-03-31",
       },

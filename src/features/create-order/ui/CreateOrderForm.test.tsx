@@ -11,9 +11,9 @@ vi.mock("../api/queries", () => ({
     customers: [
       {
         id: "cust_001",
-        fullName: "Alex Turner",
-        phone: "+1-555-0100",
-        email: "alex.turner@example.com",
+        fullName: "Aleksey Volkov",
+        phone: "+7 (901) 555-01-00",
+        email: "aleksey.volkov@example.ru",
         loyaltyTier: "gold",
         vehiclesCount: 1,
         ordersCount: 2,
@@ -29,11 +29,11 @@ vi.mock("../api/queries", () => ({
         make: "Honda",
         model: "Accord",
         year: 2019,
-        owner: "Alex Turner",
+        owner: "Aleksey Volkov",
         ordersCount: 2,
       },
     ],
-    mechanics: ["Ivan Petrov"],
+    mechanics: ["Artem Bondar"],
     isLoading: false,
     isVehiclesLoading: false,
     hasError: false,
@@ -82,7 +82,7 @@ describe("CreateOrderForm", () => {
       target: { value: "veh_001" },
     });
     fireEvent.change(screen.getByRole("combobox", { name: "Assigned mechanic" }), {
-      target: { value: "Ivan Petrov" },
+      target: { value: "Artem Bondar" },
     });
     fireEvent.change(screen.getByLabelText("Scheduled time"), {
       target: { value: "2026-03-25T09:30" },

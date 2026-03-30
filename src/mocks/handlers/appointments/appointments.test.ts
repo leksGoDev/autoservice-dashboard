@@ -33,10 +33,10 @@ async function postJson(url: string) {
 
 describe("appointmentsHandlers", () => {
   it("filters appointments by status and mechanic", async () => {
-    const data = await getJson("/api/appointments?status=confirmed&assignedMechanic=Chris%20Nolan&page=1&pageSize=20");
+    const data = await getJson("/api/appointments?status=confirmed&assignedMechanic=Artem%20Bondar&page=1&pageSize=20");
 
     expect(data.total).toBeGreaterThan(0);
-    expect(data.items.every((item: { status: string; assignedMechanic: string }) => item.status === "confirmed" && item.assignedMechanic === "Chris Nolan")).toBe(true);
+    expect(data.items.every((item: { status: string; assignedMechanic: string }) => item.status === "confirmed" && item.assignedMechanic === "Artem Bondar")).toBe(true);
   });
 
   it("updates appointment status and schedule", async () => {

@@ -91,7 +91,7 @@ describe("vehiclesHandlers", () => {
     const after = await getJson("/api/vehicles?page=1&pageSize=50");
 
     expect(created.status).toBe(201);
-    expect(created.body.owner).toBe("Alex Turner");
+    expect(created.body.owner).toBe("Aleksey Volkov");
     expect(after.total).toBe(before.total + 1);
   });
 });

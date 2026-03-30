@@ -7,7 +7,7 @@ async function getJson(url: string) {
 
 describe("searchHandlers", () => {
   it("returns grouped mixed results for global query", async () => {
-    const data = await getJson("/api/search?query=alex&limit=20");
+    const data = await getJson("/api/search?query=alek&limit=20");
     const entityTypes = data.items.map((item: { entityType: string }) => item.entityType);
 
     expect(entityTypes).toContain("order");

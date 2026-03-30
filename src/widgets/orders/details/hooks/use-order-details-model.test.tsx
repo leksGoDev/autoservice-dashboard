@@ -36,7 +36,7 @@ describe("useOrderDetailsOverviewModel", () => {
     mockedUseMechanicsRegistryQuery.mockReturnValue(
       buildQueryState({
         data: {
-          items: [{ name: "Ivan Petrov" }, { name: "Nikolai Volkov" }],
+          items: [{ name: "Artem Bondar" }, { name: "Nikolai Volkov" }],
         },
       }) as never,
     );
@@ -55,7 +55,7 @@ describe("useOrderDetailsOverviewModel", () => {
 
     expect(result.current.isNotFound).toBe(true);
     expect(result.current.isError).toBe(false);
-    expect(result.current.mechanics).toEqual(["Ivan Petrov", "Nikolai Volkov"]);
+    expect(result.current.mechanics).toEqual(["Artem Bondar", "Nikolai Volkov"]);
   });
 
   it("does not treat activity 404 as not found", () => {
