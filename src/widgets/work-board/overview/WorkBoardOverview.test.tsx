@@ -54,7 +54,7 @@ function buildQuery(
   return {
     ...baseQuery,
     ...overrides,
-  } as unknown as UseQueryResult<WorkBoardData, Error>;
+  } as UseQueryResult<WorkBoardData, Error>;
 }
 
 function renderOverview() {

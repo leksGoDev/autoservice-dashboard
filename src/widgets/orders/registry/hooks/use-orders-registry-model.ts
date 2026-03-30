@@ -4,7 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import type { ListResponse } from "@/shared/api/types";
 import { useMechanicsRegistryQuery } from "@/entities/mechanic/api/queries";
 import { useOrdersListQuery } from "@/entities/order/api/queries";
-import type { OrderListItem, OrderStatus } from "@/entities/order/model/types";
+import type { OrderListItem } from "@/entities/order/model/types";
+import { isOrderPriority, isOrderStatus } from "@/entities/order/model/options";
 import { DEFAULT_LIST_PAGE, DEFAULT_LIST_PAGE_SIZE } from "@/shared/api/constants";
 import { applySearchParamsPatch, readPositiveNumberParam } from "@/shared/lib/search-params";
 import type { UseQueryResult } from "@tanstack/react-query";
@@ -23,16 +24,19 @@ export type OrdersRegistryModel = {
   onPageChange: (nextPage: number) => void;
 };
 const PAGE_SIZE = DEFAULT_LIST_PAGE_SIZE;
+type OrdersSearchParamKey = keyof OrdersToolbarFilters | "page";
+type OrdersSearchParamsPatch = Partial<Record<OrdersSearchParamKey, string>>;
 
 export function useOrdersRegistryModel(): OrdersRegistryModel {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = readPositiveNumberParam(searchParams.get("page"), DEFAULT_LIST_PAGE);
   const priorityParam = searchParams.get("priority");
+  const statusParam = searchParams.get("status") ?? "";
   const filters: OrdersToolbarFilters = {
     search: searchParams.get("search") ?? "",
-    status: (searchParams.get("status") as OrderStatus | "") ?? "",
-    priority: priorityParam ? (priorityParam as OrdersToolbarFilters["priority"]) : "",
+    status: isOrderStatus(statusParam) ? statusParam : "",
+    priority: priorityParam && isOrderPriority(priorityParam) ? priorityParam : "",
     mechanic: searchParams.get("mechanic") ?? "",
     createdFrom: searchParams.get("createdFrom") ?? "",
     createdTo: searchParams.get("createdTo") ?? "",
@@ -64,7 +68,7 @@ export function useOrdersRegistryModel(): OrdersRegistryModel {
   const totalPages = listQuery.data?.totalPages ?? 1;
   const safePage = Math.min(listQuery.data?.page ?? page, totalPages);
 
-  const updateSearchParams = (next: Record<string, string>) => {
+  const updateSearchParams = (next: OrdersSearchParamsPatch) => {
     setSearchParams(applySearchParamsPatch(searchParams, next));
   };
 
