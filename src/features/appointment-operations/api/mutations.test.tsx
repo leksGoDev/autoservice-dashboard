@@ -35,6 +35,9 @@ describe("appointment mutations", () => {
     await act(async () => {
       await result.current.mutateAsync({ appointmentId: "apt_001" });
     });
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
 
     const response = await fetch("/api/appointments/apt_001");
     const body = await response.json();
@@ -58,6 +61,9 @@ describe("appointment mutations", () => {
         assignedMechanic: "Nikolai Volkov",
       });
     });
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
 
     const response = await fetch("/api/appointments/apt_004");
     const body = await response.json();
@@ -73,6 +79,9 @@ describe("appointment mutations", () => {
 
     await act(async () => {
       await result.current.mutateAsync({ appointmentId: "apt_002" });
+    });
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
     });
 
     const response = await fetch("/api/appointments/apt_002");
