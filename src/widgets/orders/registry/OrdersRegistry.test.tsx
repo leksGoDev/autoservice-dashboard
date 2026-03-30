@@ -34,6 +34,15 @@ function renderRegistry() {
 }
 
 describe("OrdersRegistry", () => {
+  it("keeps create order entry point in header", async () => {
+    renderRegistry();
+
+    const createOrderLink = await screen.findByRole("link", { name: "Create order" });
+    expect(createOrderLink).toHaveAttribute("href", "/orders/new");
+    expect(createOrderLink.closest("header")).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Create order" })).toHaveLength(1);
+  });
+
   it("updates order status from inline status column control", async () => {
     renderRegistry();
 

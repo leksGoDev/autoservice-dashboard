@@ -1,5 +1,4 @@
 import type { ChangeEvent } from "react";
-import { Link } from "react-router-dom";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { ORDER_PRIORITIES, ORDER_STATUSES } from "@/widgets/orders/model/options";
@@ -127,7 +126,7 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
       </div>
 
       <div className="flex justify-end">
-        <div className="grid w-full max-w-[360px] gap-2 sm:grid-cols-2">
+        <div className="grid w-full max-w-[180px] gap-2">
           <button
             type="button"
             className={`${actionBaseClassName} cursor-pointer border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)]`}
@@ -135,12 +134,6 @@ export const OrdersToolbar = ({ filters, mechanics, onChange, onReset }: OrdersT
           >
             {t("pages.orders.toolbar.reset")}
           </button>
-          <Link
-            to="/orders/new"
-            className={`${actionBaseClassName} cursor-pointer border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)]`}
-          >
-            {t("pages.orders.toolbar.create")}
-          </Link>
         </div>
       </div>
     </section>

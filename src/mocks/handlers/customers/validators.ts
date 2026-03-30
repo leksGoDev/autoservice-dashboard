@@ -12,7 +12,7 @@ type ParsedCreateCustomerPayload = {
   loyaltyTier: "standard" | "silver" | "gold";
 };
 
-export function parseCreateCustomerPayload(body: CreateCustomerBody | null): ParsedCreateCustomerPayload | null {
+function parseCustomerPayload(body: CreateCustomerBody | null): ParsedCreateCustomerPayload | null {
   const fullName = typeof body?.fullName === "string" ? body.fullName.trim() : "";
   const phone = typeof body?.phone === "string" ? body.phone.trim() : "";
   const email = typeof body?.email === "string" ? body.email.trim() : "";
@@ -32,4 +32,12 @@ export function parseCreateCustomerPayload(body: CreateCustomerBody | null): Par
     email,
     loyaltyTier,
   };
+}
+
+export function parseCreateCustomerPayload(body: CreateCustomerBody | null): ParsedCreateCustomerPayload | null {
+  return parseCustomerPayload(body);
+}
+
+export function parseUpdateCustomerPayload(body: CreateCustomerBody | null): ParsedCreateCustomerPayload | null {
+  return parseCustomerPayload(body);
 }

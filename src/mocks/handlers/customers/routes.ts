@@ -1,10 +1,10 @@
 import { delay, http, HttpResponse } from "msw";
 
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
-import { createCustomerState } from "@/mocks/state/customers";
+import { createCustomerState, updateCustomerState } from "@/mocks/state/customers";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 import { buildCustomerDetails, buildCustomersRegistry } from "./builders";
-import { parseCreateCustomerPayload } from "./validators";
+import { parseCreateCustomerPayload, parseUpdateCustomerPayload } from "./validators";
 
 export const customersHandlers = [
   http.get(toMswPath(apiEndpoints.customers.list), async ({ request }) => {
@@ -64,5 +64,32 @@ export const customersHandlers = [
       },
       { status: 201 },
     );
+  }),
+  http.patch(toMswPath(apiEndpoints.customers.detail(":customerId")), async ({ params, request }) => {
+    await delay(250);
+
+    const customerId = String(params.customerId);
+    const body = (await request.json().catch(() => null)) as
+      | Partial<{ fullName: string; phone: string; email: string; loyaltyTier: "standard" | "silver" | "gold" }>
+      | null;
+    const payload = parseUpdateCustomerPayload(body);
+
+    if (!payload) {
+      return HttpResponse.json({ message: "Invalid customer payload" }, { status: 400 });
+    }
+
+    const updated = updateCustomerState(customerId, payload);
+
+    if (!updated) {
+      return HttpResponse.json({ message: "Customer not found" }, { status: 404 });
+    }
+
+    const details = buildCustomerDetails(customerId);
+
+    if (!details) {
+      return HttpResponse.json({ message: "Customer not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(details.customer);
   }),
 ];
