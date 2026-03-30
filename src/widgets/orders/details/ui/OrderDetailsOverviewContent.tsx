@@ -1,4 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { primaryActionButtonClassName } from "@/shared/ui/class-names";
 import { DataState } from "@/shared/ui/DataState";
 import { useOrderDetailsOverviewModel } from "../hooks/use-order-details-model";
 import { OrderDetailsContent } from "./OrderDetailsContent";
@@ -24,7 +25,7 @@ export const OrderDetailsOverviewContent = ({ orderId }: OrderDetailsOverviewCon
         action={
           <button
             type="button"
-            className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
+            className={primaryActionButtonClassName}
             onClick={model.refetchAll}
           >
             {t("common.retry")}

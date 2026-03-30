@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 
 import { DataState } from "@/shared/ui/DataState";
+import { primaryActionButtonClassName } from "@/shared/ui/class-names";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DashboardMechanicWorkload } from "@/widgets/dashboard/mechanic-workload/DashboardMechanicWorkload";
 import type { AnalyticsOverviewModel } from "../hooks/use-analytics-overview-model";
@@ -41,7 +42,7 @@ export const AnalyticsOverviewContent = ({ model }: AnalyticsOverviewContentProp
         action={
           <button
             type="button"
-            className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
+            className={primaryActionButtonClassName}
             onClick={() => model.query.refetch()}
           >
             {t("common.retry")}

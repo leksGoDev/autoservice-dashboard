@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import type { VehicleListItem } from "@/entities/vehicle/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { tableBodyCellClassName, tableHeaderCellClassName } from "@/shared/ui/class-names";
 import { PaginationShell } from "@/shared/ui/PaginationShell";
 
 type VehiclesRegistryTableProps = {
@@ -91,7 +92,7 @@ export const VehiclesRegistryTable = ({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]"
+                    className={tableHeaderCellClassName}
                   >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
@@ -103,7 +104,7 @@ export const VehiclesRegistryTable = ({
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="transition-colors hover:bg-[#20283a]">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                  <td key={cell.id} className={tableBodyCellClassName}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

@@ -1,6 +1,7 @@
 import type { CustomerOrderHistoryItem } from "@/entities/customer/model/types";
 import { formatCustomerDetailsCurrency, formatCustomerDetailsDate } from "@/entities/customer/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { tableBodyCellClassName, tableHeaderCellClassName } from "@/shared/ui/class-names";
 import { Link } from "react-router-dom";
 
 type CustomerOrdersTableProps = {
@@ -20,19 +21,19 @@ export const CustomerOrdersTable = ({ rows }: CustomerOrdersTableProps) => {
           <table className="min-w-[860px] w-full border-collapse text-left text-[13px]">
             <thead>
               <tr>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+                <th className={tableHeaderCellClassName}>
                   {t("pages.customerDetails.orders.order")}
                 </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+                <th className={tableHeaderCellClassName}>
                   {t("pages.customerDetails.orders.vehicle")}
                 </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+                <th className={tableHeaderCellClassName}>
                   {t("pages.customerDetails.orders.status")}
                 </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+                <th className={tableHeaderCellClassName}>
                   {t("pages.customerDetails.orders.total")}
                 </th>
-                <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+                <th className={tableHeaderCellClassName}>
                   {t("pages.customerDetails.orders.updated")}
                 </th>
               </tr>
@@ -40,7 +41,7 @@ export const CustomerOrdersTable = ({ rows }: CustomerOrdersTableProps) => {
             <tbody>
               {rows.map((order) => (
                 <tr key={order.id} className="transition-colors hover:bg-[#20283a]">
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                  <td className={tableBodyCellClassName}>
                     <Link
                       to={`/orders/${order.id}`}
                       className="inline-flex rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 font-mono text-xs font-semibold tracking-[0.02em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
@@ -48,14 +49,14 @@ export const CustomerOrdersTable = ({ rows }: CustomerOrdersTableProps) => {
                       {order.number}
                     </Link>
                   </td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{order.vehicleLabel}</td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                  <td className={tableBodyCellClassName}>{order.vehicleLabel}</td>
+                  <td className={tableBodyCellClassName}>
                     {t(`order.status.${order.status}`)}
                   </td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                  <td className={tableBodyCellClassName}>
                     {formatCustomerDetailsCurrency(order.totalAmount, locale)}
                   </td>
-                  <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+                  <td className={tableBodyCellClassName}>
                     {formatCustomerDetailsDate(order.updatedAt, locale, t("common.unknown"))}
                   </td>
                 </tr>

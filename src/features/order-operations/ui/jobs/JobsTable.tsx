@@ -2,6 +2,7 @@ import { useCallback } from "react";
 
 import type { OrderServiceJob, ServiceJobStatus } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { tableHeaderCellClassName } from "@/shared/ui/class-names";
 import type { ServiceJobsControlsModel } from "../../model/use-service-jobs-model";
 import { JobsTableRow } from "./JobsTableRow";
 
@@ -38,28 +39,28 @@ export const JobsTable = ({ jobs, model }: JobsTableProps) => {
       <table className="w-full min-w-[1020px] border-collapse text-left text-[13px]">
         <thead>
           <tr>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.jobs.headers.name")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.jobs.headers.category")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.jobs.headers.status")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.jobs.headers.mechanic")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.jobs.headers.estimated")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.jobs.headers.actual")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.jobs.headers.labor")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.controls.jobs.headers.actions")}
             </th>
           </tr>

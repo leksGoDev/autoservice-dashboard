@@ -2,6 +2,7 @@ import { useCallback } from "react";
 
 import type { OrderPartItem } from "@/entities/order/model/types";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { tableHeaderCellClassName } from "@/shared/ui/class-names";
 import type { ServicePartsControlsModel } from "../../model/use-service-parts-model";
 import { PartsTableRow } from "./PartsTableRow";
 
@@ -28,22 +29,22 @@ export const PartsTable = ({ parts, model }: PartsTableProps) => {
       <table className="w-full min-w-[860px] border-collapse text-left text-[13px]">
         <thead>
           <tr>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.parts.headers.name")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.parts.headers.job")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.parts.headers.quantity")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.parts.headers.unitPrice")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.parts.headers.totalPrice")}
             </th>
-            <th className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 text-xs font-semibold text-[var(--color-text-secondary)]">
+            <th className={tableHeaderCellClassName}>
               {t("pages.orderDetails.controls.parts.headers.actions")}
             </th>
           </tr>

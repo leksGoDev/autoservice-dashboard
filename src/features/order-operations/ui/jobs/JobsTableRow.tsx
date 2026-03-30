@@ -4,6 +4,7 @@ import type { OrderServiceJob, ServiceJobStatus } from "@/entities/order/model/t
 import { SERVICE_JOB_STATUSES } from "@/entities/order/model/options";
 import { formatOrderCurrency } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { denseConfirmButtonClassName, denseControlInputClassName, tableBodyCellClassName } from "@/shared/ui/class-names";
 import { getStatusBadgeClass } from "@/shared/ui/status-badges";
 import { formatOrderHours, getJobStatusBadgeModifier } from "@/widgets/orders/details/model/presentation";
 
@@ -39,11 +40,11 @@ export const JobsTableRow = memo(
 
     return (
       <tr className="transition-colors hover:bg-[#20283a]">
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{job.name}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle text-[var(--color-text-secondary)]">
+        <td className={tableBodyCellClassName}>{job.name}</td>
+        <td className={`${tableBodyCellClassName} text-[var(--color-text-secondary)]`}>
           {job.category}
         </td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+        <td className={tableBodyCellClassName}>
           <span
             className={[
               "inline-flex items-center justify-center rounded-full px-2 py-1 text-xs font-semibold",
@@ -53,11 +54,11 @@ export const JobsTableRow = memo(
             {t(`pages.orderDetails.jobs.status.${job.status}`)}
           </span>
         </td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{job.assignedMechanic}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{formatOrderHours(job.estimatedHours)}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{formatOrderHours(job.actualHours)}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{formatOrderCurrency(job.laborPrice)}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+        <td className={tableBodyCellClassName}>{job.assignedMechanic}</td>
+        <td className={tableBodyCellClassName}>{formatOrderHours(job.estimatedHours)}</td>
+        <td className={tableBodyCellClassName}>{formatOrderHours(job.actualHours)}</td>
+        <td className={tableBodyCellClassName}>{formatOrderCurrency(job.laborPrice)}</td>
+        <td className={tableBodyCellClassName}>
           <div className="grid gap-2">
             <div className="grid gap-1 sm:grid-cols-[1fr_auto]">
               <select
@@ -65,7 +66,7 @@ export const JobsTableRow = memo(
                 onChange={(event) => onStatusChange(job.id, event.target.value as ServiceJobStatus)}
                 disabled={isBusy}
                 aria-label={`${t("pages.orderDetails.controls.jobs.row.status")} ${job.name}`}
-                className="rounded-[8px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2 py-1.5 text-xs text-[var(--color-text-primary)]"
+                className={denseControlInputClassName}
               >
                 {SERVICE_JOB_STATUSES.map((statusOption) => (
                   <option key={statusOption} value={statusOption}>
@@ -77,7 +78,7 @@ export const JobsTableRow = memo(
               {selectedStatus !== job.status ? (
                 <button
                   type="button"
-                  className="grid h-7 w-7 cursor-pointer place-items-center rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] text-[13px] font-semibold text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+                  className={denseConfirmButtonClassName}
                   onClick={() => onUpdateJobStatus(job.id, selectedStatus)}
                   disabled={isBusy}
                   aria-label={
@@ -102,7 +103,7 @@ export const JobsTableRow = memo(
                 onChange={(event) => onMechanicChange(job.id, event.target.value)}
                 disabled={isBusy}
                 aria-label={`${t("pages.orderDetails.controls.jobs.row.mechanic")} ${job.name}`}
-                className="rounded-[8px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2 py-1.5 text-xs text-[var(--color-text-primary)]"
+                className={denseControlInputClassName}
               >
                 {availableMechanics.map((mechanic) => (
                   <option key={mechanic} value={mechanic}>
@@ -114,7 +115,7 @@ export const JobsTableRow = memo(
               {selectedMechanic !== job.assignedMechanic ? (
                 <button
                   type="button"
-                  className="grid h-7 w-7 cursor-pointer place-items-center rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] text-[13px] font-semibold text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+                  className={denseConfirmButtonClassName}
                   onClick={() => onAssignJobMechanic(job.id, selectedMechanic)}
                   disabled={isBusy}
                   aria-label={

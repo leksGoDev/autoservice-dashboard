@@ -3,6 +3,7 @@ import { memo } from "react";
 import type { OrderPartItem } from "@/entities/order/model/types";
 import { formatOrderCurrency } from "@/entities/order/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { denseConfirmButtonClassName, denseControlInputClassName, tableBodyCellClassName } from "@/shared/ui/class-names";
 
 export type PartsTableRowProps = {
   part: OrderPartItem;
@@ -30,14 +31,14 @@ export const PartsTableRow = memo(
 
     return (
       <tr className="transition-colors hover:bg-[#20283a]">
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{part.name}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle text-[var(--color-text-secondary)]">
+        <td className={tableBodyCellClassName}>{part.name}</td>
+        <td className={`${tableBodyCellClassName} text-[var(--color-text-secondary)]`}>
           {part.jobName}
         </td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{part.quantity}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{formatOrderCurrency(part.unitPrice)}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">{formatOrderCurrency(part.totalPrice)}</td>
-        <td className="border-b border-[rgba(154,164,178,0.12)] px-3 py-2.5 align-middle">
+        <td className={tableBodyCellClassName}>{part.quantity}</td>
+        <td className={tableBodyCellClassName}>{formatOrderCurrency(part.unitPrice)}</td>
+        <td className={tableBodyCellClassName}>{formatOrderCurrency(part.totalPrice)}</td>
+        <td className={tableBodyCellClassName}>
           <div className="flex flex-wrap gap-2">
             <input
               type="number"
@@ -47,13 +48,13 @@ export const PartsTableRow = memo(
               onChange={(event) => onQuantityChange(part.id, event.target.value)}
               disabled={isBusy}
               aria-label={`${t("pages.orderDetails.controls.parts.row.quantity")} ${part.name}`}
-              className="w-18 rounded-[8px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2 py-1.5 text-xs text-[var(--color-text-primary)]"
+              className={`w-18 ${denseControlInputClassName}`}
             />
 
             {quantityValue !== String(part.quantity) ? (
               <button
                 type="button"
-                className="grid h-7 w-7 cursor-pointer place-items-center rounded-[8px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] text-[13px] font-semibold text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60"
+                className={denseConfirmButtonClassName}
                 onClick={() => onUpdatePartQuantity(part.id, Number(quantityValue))}
                 disabled={isBusy}
                 aria-label={
