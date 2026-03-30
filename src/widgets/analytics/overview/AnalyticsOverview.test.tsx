@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { getAnalyticsMetricsFixtureByRange } from "@/mocks/fixtures/analytics";
 import { I18nProvider } from "@/shared/i18n/provider";
 import { AnalyticsOverview } from "./AnalyticsOverview";
 
@@ -50,12 +51,23 @@ describe("AnalyticsOverview", () => {
   it("updates metrics when range changes", async () => {
     renderOverview();
 
-    expect(await screen.findByText("$21,940")).toBeInTheDocument();
+    const defaultRevenue = getAnalyticsMetricsFixtureByRange("30d").totalRevenue.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+    const shortRangeRevenue = getAnalyticsMetricsFixtureByRange("7d").totalRevenue.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+
+    expect(await screen.findByText(defaultRevenue)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "7D" }));
 
     await waitFor(() => {
-      expect(screen.getByText("$3,010")).toBeInTheDocument();
+      expect(screen.getByText(shortRangeRevenue)).toBeInTheDocument();
     });
   });
 });

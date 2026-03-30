@@ -84,10 +84,9 @@ function expectCommonInvalidations(
   expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.orders.root });
   expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.orders.detail(orderId) });
   expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.orders.activity(orderId) });
-  expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.customers.root });
-  expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.vehicles.root });
   expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.workBoard.root });
   expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.dashboard.root });
+  expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: queryKeys.appointments.root });
 }
 
 describe("order operation mutations", () => {

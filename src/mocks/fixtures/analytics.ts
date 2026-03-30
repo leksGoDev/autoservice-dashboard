@@ -12,34 +12,14 @@ import {
   getOrdersTrendFixtureByRange,
   getRevenueFixtureByRange,
 } from "./dashboard";
-
-const jobsByCategoryByRange: Record<AnalyticsRange, JobsByCategoryPoint[]> = {
-  "7d": [
-    { category: "Diagnostics", scheduled: 6, inProgress: 4, completed: 9 },
-    { category: "Engine", scheduled: 4, inProgress: 3, completed: 7 },
-    { category: "Electrical", scheduled: 3, inProgress: 2, completed: 6 },
-    { category: "Brake", scheduled: 2, inProgress: 1, completed: 5 },
-  ],
-  "30d": [
-    { category: "Diagnostics", scheduled: 15, inProgress: 11, completed: 24 },
-    { category: "Engine", scheduled: 12, inProgress: 9, completed: 21 },
-    { category: "Electrical", scheduled: 9, inProgress: 7, completed: 17 },
-    { category: "Brake", scheduled: 8, inProgress: 5, completed: 14 },
-  ],
-  "90d": [
-    { category: "Diagnostics", scheduled: 37, inProgress: 29, completed: 62 },
-    { category: "Engine", scheduled: 31, inProgress: 23, completed: 54 },
-    { category: "Electrical", scheduled: 26, inProgress: 18, completed: 42 },
-    { category: "Brake", scheduled: 21, inProgress: 14, completed: 35 },
-  ],
-};
+import { getOrdersMockState } from "@/mocks/state/orders";
 
 function buildMetrics(range: AnalyticsRange): AnalyticsMetrics {
   const revenue = getRevenueFixtureByRange(range);
   const orders = getOrdersTrendFixtureByRange(range);
   const workload = getMechanicWorkloadFixtureByRange(range);
 
-  const totalRevenue = revenue[revenue.length - 1]?.revenue ?? 0;
+  const totalRevenue = revenue.reduce((sum, item) => sum + item.revenue, 0);
   const totalOrders = orders.reduce((sum, item) => sum + item.total, 0);
   const completedOrders = orders.reduce((sum, item) => sum + item.completed, 0);
   const averageOrderValue = totalOrders ? Math.round(totalRevenue / totalOrders) : 0;
@@ -52,6 +32,38 @@ function buildMetrics(range: AnalyticsRange): AnalyticsMetrics {
     completionRate,
     activeMechanics,
   };
+}
+
+function buildJobsByCategory(range: AnalyticsRange): JobsByCategoryPoint[] {
+  const recentDates = new Set(getOrdersTrendFixtureByRange(range).map((item) => item.date));
+  const totalsByCategory = getOrdersMockState().reduce<Record<string, JobsByCategoryPoint>>((accumulator, order) => {
+    if (!recentDates.has(order.updatedAt.slice(0, 10))) {
+      return accumulator;
+    }
+
+    order.jobs.forEach((job) => {
+      const existing = accumulator[job.category] ?? {
+        category: job.category,
+        scheduled: 0,
+        inProgress: 0,
+        completed: 0,
+      };
+
+      if (job.status === "pending") {
+        existing.scheduled += 1;
+      } else if (job.status === "completed") {
+        existing.completed += 1;
+      } else {
+        existing.inProgress += 1;
+      }
+
+      accumulator[job.category] = existing;
+    });
+
+    return accumulator;
+  }, {});
+
+  return Object.values(totalsByCategory).sort((left, right) => left.category.localeCompare(right.category));
 }
 
 export function getAnalyticsMetricsFixtureByRange(range: AnalyticsRange = DEFAULT_DASHBOARD_RANGE) {
@@ -71,7 +83,7 @@ export function getAnalyticsOrdersPerDayFixtureByRange(
 export function getAnalyticsJobsByCategoryFixtureByRange(
   range: AnalyticsRange = DEFAULT_DASHBOARD_RANGE,
 ): JobsByCategoryPoint[] {
-  return jobsByCategoryByRange[range];
+  return buildJobsByCategory(range);
 }
 
 export function getAnalyticsMechanicWorkloadFixtureByRange(

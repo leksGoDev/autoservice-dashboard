@@ -1,4 +1,4 @@
-import { mechanicsRegistryFixture } from "@/mocks/fixtures/mechanics";
+import { getMechanicsRegistryFixture } from "@/mocks/fixtures/mechanics";
 
 async function getJson(url: string) {
   const response = await fetch(url);
@@ -32,6 +32,6 @@ describe("mechanicsHandlers", () => {
     const data = await getJson("/api/mechanics/registry?page=1&pageSize=2");
 
     expect(data.items).toHaveLength(2);
-    expect(data.total).toBe(mechanicsRegistryFixture.length);
+    expect(data.total).toBe(getMechanicsRegistryFixture().length);
   });
 });

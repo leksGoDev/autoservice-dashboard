@@ -1,8 +1,8 @@
 import { delay, http, HttpResponse } from "msw";
 
-import { customersFixture } from "@/mocks/fixtures/customers";
-import { vehiclesFixture } from "@/mocks/fixtures/vehicles";
+import { getCustomersMockState } from "@/mocks/state/customers";
 import { getOrdersMockState } from "@/mocks/state/orders";
+import { getVehiclesMockState } from "@/mocks/state/vehicles";
 import { DEFAULT_GLOBAL_SEARCH_LIMIT } from "@/shared/api/constants";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
 import type { GlobalSearchResult } from "@/entities/search/model/types";
@@ -39,7 +39,7 @@ function buildOrderSearchResults(query: string): GlobalSearchResult[] {
 }
 
 function buildCustomerSearchResults(query: string): GlobalSearchResult[] {
-  return customersFixture
+  return getCustomersMockState()
     .filter((customer) => {
       const haystack = `${customer.fullName} ${customer.phone} ${customer.email}`.toLowerCase();
       return haystack.includes(query);
@@ -56,9 +56,11 @@ function buildCustomerSearchResults(query: string): GlobalSearchResult[] {
 }
 
 function buildVehicleSearchResults(query: string): GlobalSearchResult[] {
-  return vehiclesFixture
+  const customers = getCustomersMockState();
+
+  return getVehiclesMockState()
     .map((vehicle) => {
-      const owner = customersFixture.find((customer) => customer.id === vehicle.customerId)?.fullName ?? "Unknown owner";
+      const owner = customers.find((customer) => customer.id === vehicle.customerId)?.fullName ?? "Unknown owner";
 
       return {
         vehicle,

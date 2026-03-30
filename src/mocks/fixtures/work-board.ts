@@ -6,9 +6,7 @@ import type {
   WorkBoardQuickAction,
   WorkBoardStatus,
 } from "@/entities/work-board/model/types";
-import { ordersFixture } from "@/mocks/fixtures/orders";
-
-const MECHANICS = ["Ivan Petrov", "Nikolai Volkov", "Sergey Morozov", "Andrey Sokolov"] as const;
+import { ordersFixture, orderMechanicsFixture } from "@/mocks/fixtures/orders";
 
 const BOARD_STATUSES: WorkBoardStatus[] = ORDER_STATUSES.filter(
   (status): status is WorkBoardStatus => status !== "cancelled",
@@ -48,7 +46,7 @@ function toWorkBoardCard(item: (typeof ordersFixture)[number]): WorkBoardCard | 
   }
 
   const status = item.status as WorkBoardStatus;
-  const mechanicIndex = Number(item.id.replace(/\D/g, "")) % MECHANICS.length;
+  const mechanicIndex = Number(item.id.replace(/\D/g, "")) % orderMechanicsFixture.length;
   const jobsCount = Math.max(1, Math.round(item.totalAmount / 260));
 
   return {
@@ -59,7 +57,7 @@ function toWorkBoardCard(item: (typeof ordersFixture)[number]): WorkBoardCard | 
     priority: getPriority(item.totalAmount),
     customerName: item.customerName,
     vehicleLabel: item.vehicleLabel,
-    assignedMechanic: MECHANICS[mechanicIndex],
+    assignedMechanic: orderMechanicsFixture[mechanicIndex],
     jobsCount,
     totalAmount: item.totalAmount,
     shortContext: `${jobsCount} jobs | Updated ${new Date(item.updatedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`,

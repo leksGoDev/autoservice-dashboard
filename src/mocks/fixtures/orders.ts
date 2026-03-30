@@ -14,10 +14,12 @@ export type OrderPartCatalogItem = {
 };
 
 export const orderMechanicsFixture = [
-  "Ivan Petrov",
-  "Nikolai Volkov",
-  "Sergey Morozov",
-  "Andrey Sokolov",
+  "Chris Nolan",
+  "Sam Rivera",
+  "Jordan Kim",
+  "Riley Adams",
+  "Casey Bennett",
+  "Devon Ortiz",
 ] as const;
 
 export const orderJobCatalogFixture: OrderJobCatalogItem[] = [

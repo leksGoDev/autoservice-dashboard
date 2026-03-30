@@ -46,11 +46,11 @@ describe("AppointmentsScheduling", () => {
     const mechanicSelect = within(toolbar).getByRole("combobox", { name: "Mechanic" });
 
     fireEvent.change(mechanicSelect, {
-      target: { value: "Ivan Petrov" },
+      target: { value: "Chris Nolan" },
     });
 
     await waitFor(() => {
-      expect(screen.getAllByText("Ivan Petrov").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("Chris Nolan").length).toBeGreaterThan(0);
     });
   });
 

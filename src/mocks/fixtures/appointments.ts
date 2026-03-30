@@ -1,5 +1,6 @@
 import type { AppointmentStatus } from "@/entities/appointment/model/types";
-import { orderMechanicsFixture } from "@/mocks/fixtures/orders";
+import { customersFixture } from "@/mocks/fixtures/customers";
+import { mechanicNamesFixture } from "@/mocks/fixtures/mechanics";
 
 type AppointmentFixtureItem = {
   id: string;
@@ -31,6 +32,10 @@ function createdBefore(scheduleIso: string, daysBefore: number) {
   return date.toISOString();
 }
 
+function getCustomerPhone(customerId: string) {
+  return customersFixture.find((item) => item.id === customerId)?.phone ?? "+1-555-0100";
+}
+
 export const appointmentsFixture: AppointmentFixtureItem[] = [
   {
     id: "apt_001",
@@ -42,8 +47,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "Brake diagnostics",
     notes: "Intermittent vibration while braking above 70 km/h.",
     estimatedDurationMin: 90,
-    contactPhone: "+1 555-0101",
-    assignedMechanic: orderMechanicsFixture[0],
+    contactPhone: getCustomerPhone("cust_001"),
+    assignedMechanic: mechanicNamesFixture[0],
     status: "pending",
     scheduledFor: atOffset(0, 10, 30),
     createdAt: createdBefore(atOffset(0, 10, 30), 2),
@@ -58,8 +63,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "Engine warning check",
     notes: "Check engine light returned after last service.",
     estimatedDurationMin: 70,
-    contactPhone: "+1 555-0102",
-    assignedMechanic: orderMechanicsFixture[1],
+    contactPhone: getCustomerPhone("cust_002"),
+    assignedMechanic: mechanicNamesFixture[1],
     status: "confirmed",
     scheduledFor: atOffset(0, 8, 0),
     createdAt: createdBefore(atOffset(0, 8, 0), 1),
@@ -74,8 +79,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "Suspension noise inspection",
     notes: "Noise appears on rough roads.",
     estimatedDurationMin: 80,
-    contactPhone: "+1 555-0103",
-    assignedMechanic: orderMechanicsFixture[2],
+    contactPhone: getCustomerPhone("cust_003"),
+    assignedMechanic: mechanicNamesFixture[2],
     status: "pending",
     scheduledFor: atOffset(1, 12, 15),
     createdAt: createdBefore(atOffset(1, 12, 15), 3),
@@ -90,8 +95,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "A/C system diagnostics",
     notes: "Weak cooling after startup.",
     estimatedDurationMin: 60,
-    contactPhone: "+1 555-0104",
-    assignedMechanic: orderMechanicsFixture[3],
+    contactPhone: getCustomerPhone("cust_004"),
+    assignedMechanic: mechanicNamesFixture[3],
     status: "confirmed",
     scheduledFor: atOffset(2, 15, 45),
     createdAt: createdBefore(atOffset(2, 15, 45), 1),
@@ -106,8 +111,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "Battery thermal check",
     notes: "Customer noticed reduced charging speed.",
     estimatedDurationMin: 95,
-    contactPhone: "+1 555-0105",
-    assignedMechanic: orderMechanicsFixture[0],
+    contactPhone: getCustomerPhone("cust_005"),
+    assignedMechanic: mechanicNamesFixture[0],
     status: "confirmed",
     scheduledFor: atOffset(-1, 16, 20),
     createdAt: createdBefore(atOffset(-1, 16, 20), 4),
@@ -122,8 +127,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "Oil and filter maintenance",
     notes: "Regular maintenance interval.",
     estimatedDurationMin: 45,
-    contactPhone: "+1 555-0102",
-    assignedMechanic: orderMechanicsFixture[1],
+    contactPhone: getCustomerPhone("cust_002"),
+    assignedMechanic: mechanicNamesFixture[1],
     status: "cancelled",
     scheduledFor: atOffset(3, 9, 30),
     createdAt: createdBefore(atOffset(3, 9, 30), 2),
@@ -138,8 +143,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "Transmission diagnostics",
     notes: "Delayed gear engagement on cold start.",
     estimatedDurationMin: 110,
-    contactPhone: "+1 555-0104",
-    assignedMechanic: orderMechanicsFixture[2],
+    contactPhone: getCustomerPhone("cust_004"),
+    assignedMechanic: mechanicNamesFixture[2],
     status: "pending",
     scheduledFor: atOffset(5, 11, 0),
     createdAt: createdBefore(atOffset(5, 11, 0), 5),
@@ -154,8 +159,8 @@ export const appointmentsFixture: AppointmentFixtureItem[] = [
     serviceLabel: "Pre-trip safety inspection",
     notes: "Customer plans long-distance road trip.",
     estimatedDurationMin: 55,
-    contactPhone: "+1 555-0101",
-    assignedMechanic: orderMechanicsFixture[3],
+    contactPhone: getCustomerPhone("cust_001"),
+    assignedMechanic: mechanicNamesFixture[3],
     status: "pending",
     scheduledFor: atOffset(-2, 14, 40),
     createdAt: createdBefore(atOffset(-2, 14, 40), 3),

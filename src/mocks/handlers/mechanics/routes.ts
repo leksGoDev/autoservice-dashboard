@@ -6,7 +6,7 @@ import {
   DEFAULT_DASHBOARD_RANGE,
 } from "@/shared/api/constants";
 import { apiEndpoints, toMswPath } from "@/shared/api/endpoints";
-import { getMechanicsWorkloadFixtureByRange, mechanicsRegistryFixture } from "@/mocks/fixtures/mechanics";
+import { getMechanicsRegistryFixture, getMechanicsWorkloadFixtureByRange } from "@/mocks/fixtures/mechanics";
 import { INVALID_DASHBOARD_RANGE_MESSAGE } from "@/shared/api/messages";
 import { paginateItems, parseListQueryParams } from "@/mocks/lib/list";
 import { invalidRangeResponse, parseRangeParam } from "@/mocks/lib/range";
@@ -18,7 +18,7 @@ export const mechanicsHandlers = [
     const url = new URL(request.url);
     const { page, pageSize, search } = parseListQueryParams(url);
 
-    let filtered = mechanicsRegistryFixture;
+    let filtered = getMechanicsRegistryFixture();
 
     if (search) {
       filtered = filtered.filter((item) => {
