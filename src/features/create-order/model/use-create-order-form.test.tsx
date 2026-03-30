@@ -105,4 +105,53 @@ describe("useCreateOrderFormModel", () => {
       expect(result.current.vehicleMode).toBe("new");
     });
   });
+
+  it("resets selected existing vehicle when another customer is selected", async () => {
+    mockedUseCreateOrderFlowMutation.mockReturnValue({
+      mutateAsync: vi.fn(),
+      isPending: false,
+    } as never);
+
+    const { result } = renderHook(() => useCreateOrderFormModel());
+
+    act(() => {
+      result.current.form.setValue("customerMode", "existing");
+      result.current.form.setValue("existingCustomerId", "cust_001");
+      result.current.form.setValue("vehicleMode", "existing");
+      result.current.form.setValue("existingVehicleId", "veh_001");
+    });
+
+    act(() => {
+      result.current.form.setValue("existingCustomerId", "cust_002");
+    });
+
+    await waitFor(() => {
+      expect(result.current.form.getValues("existingVehicleId")).toBe("");
+    });
+  });
+
+  it("does not reset selected existing vehicle on vehicle mode toggles", async () => {
+    mockedUseCreateOrderFlowMutation.mockReturnValue({
+      mutateAsync: vi.fn(),
+      isPending: false,
+    } as never);
+
+    const { result } = renderHook(() => useCreateOrderFormModel());
+
+    act(() => {
+      result.current.form.setValue("customerMode", "existing");
+      result.current.form.setValue("existingCustomerId", "cust_001");
+      result.current.form.setValue("vehicleMode", "existing");
+      result.current.form.setValue("existingVehicleId", "veh_001");
+    });
+
+    act(() => {
+      result.current.form.setValue("vehicleMode", "new");
+      result.current.form.setValue("vehicleMode", "existing");
+    });
+
+    await waitFor(() => {
+      expect(result.current.form.getValues("existingVehicleId")).toBe("veh_001");
+    });
+  });
 });

@@ -108,6 +108,11 @@ export const enPages = {
       make: "Make",
       model: "Model",
       year: "Year",
+      helpers: {
+        selectCustomerFirst: "Select a customer first to choose an existing vehicle.",
+        existingDisabledForNewCustomer: "For a new customer, create a new vehicle in this form.",
+        noVehiclesForCustomer: "No existing vehicles found for this customer. Create a new vehicle.",
+      },
     },
     schedule: {
       scheduledFor: "Scheduled time",

@@ -33,7 +33,7 @@ export function useCreateOrderFormModel() {
   const customerMode = form.watch("customerMode");
   const vehicleMode = form.watch("vehicleMode");
   const selectedCustomerId = form.watch("existingCustomerId");
-  const shouldLoadVehicles = customerMode === "existing" && vehicleMode === "existing" && Boolean(selectedCustomerId);
+  const shouldLoadVehicles = customerMode === "existing" && Boolean(selectedCustomerId);
   const shouldLoadMechanics = customerMode === "new" || Boolean(selectedCustomerId);
   const bootstrapQuery = useCreateOrderBootstrapQuery({ shouldLoadVehicles, shouldLoadMechanics });
   const customers = bootstrapQuery.customers;
@@ -41,22 +41,36 @@ export function useCreateOrderFormModel() {
   const mechanics = bootstrapQuery.mechanics;
 
   const filteredVehicles = useMemo(() => {
-    if (customerMode !== "existing" || !selectedCustomerId) {
+    if (!selectedCustomerId) {
       return [];
     }
 
     return vehicles.filter((vehicle) => vehicle.customerId === selectedCustomerId);
-  }, [customerMode, selectedCustomerId, vehicles]);
-
-  useEffect(() => {
-    form.setValue("existingVehicleId", "");
-  }, [customerMode, selectedCustomerId, form]);
+  }, [selectedCustomerId, vehicles]);
 
   useEffect(() => {
     if (customerMode === "new" && vehicleMode !== "new") {
       form.setValue("vehicleMode", "new");
     }
   }, [customerMode, vehicleMode, form]);
+
+  useEffect(() => {
+    const existingVehicleId = form.getValues("existingVehicleId");
+
+    if (!existingVehicleId) {
+      return;
+    }
+
+    if (customerMode !== "existing" || !selectedCustomerId) {
+      form.setValue("existingVehicleId", "");
+      return;
+    }
+
+    const selectedVehicle = vehicles.find((vehicle) => vehicle.id === existingVehicleId);
+    if (!selectedVehicle || selectedVehicle.customerId !== selectedCustomerId) {
+      form.setValue("existingVehicleId", "");
+    }
+  }, [customerMode, selectedCustomerId, vehicles, form]);
 
   const submit = form.handleSubmit(async (values) => {
     setSubmitError(null);
@@ -93,9 +107,10 @@ export function useCreateOrderFormModel() {
     jobsFieldArray,
     customerMode,
     vehicleMode,
+    selectedCustomerId,
     customers,
     vehicles: filteredVehicles,
-    canSelectExistingVehicle: Boolean(selectedCustomerId),
+    canSelectExistingVehicle: customerMode === "existing" && Boolean(selectedCustomerId),
     isVehiclesLoading: bootstrapQuery.isVehiclesLoading,
     mechanics,
     isMechanicsLoading: bootstrapQuery.isMechanicsLoading,

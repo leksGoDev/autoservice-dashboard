@@ -108,6 +108,11 @@ export const ruPages = {
       make: "Марка",
       model: "Модель",
       year: "Год",
+      helpers: {
+        selectCustomerFirst: "Сначала выберите клиента, чтобы выбрать существующий автомобиль.",
+        existingDisabledForNewCustomer: "Для нового клиента автомобиль нужно создать в этой форме.",
+        noVehiclesForCustomer: "У выбранного клиента нет автомобилей. Создайте новый автомобиль.",
+      },
     },
     schedule: {
       scheduledFor: "Время визита",

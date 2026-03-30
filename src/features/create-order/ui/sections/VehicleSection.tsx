@@ -6,25 +6,54 @@ import { errorTextClassName, fieldLabelClassName, fieldTitleClassName, inputClas
 
 type VehicleSectionProps = {
   form: CreateOrderFormHandle;
+  customerMode: "existing" | "new";
   mode: "existing" | "new";
+  selectedCustomerId: string | undefined;
   vehicles: VehicleListItem[];
   canSelectExistingVehicle: boolean;
   isLoading: boolean;
 };
 
-export const VehicleSection = ({ form, mode, vehicles, canSelectExistingVehicle, isLoading }: VehicleSectionProps) => {
+export const VehicleSection = ({
+  form,
+  customerMode,
+  mode,
+  selectedCustomerId,
+  vehicles,
+  canSelectExistingVehicle,
+  isLoading,
+}: VehicleSectionProps) => {
   const { t } = useI18n();
   const {
     register,
     formState: { errors },
   } = form;
+  const isExistingLocked = customerMode === "new";
+  const isCustomerRequired = customerMode === "existing" && !selectedCustomerId;
+  const guidanceMessage = isExistingLocked
+    ? t("pages.ordersCreate.vehicle.helpers.existingDisabledForNewCustomer")
+    : isCustomerRequired
+      ? t("pages.ordersCreate.vehicle.helpers.selectCustomerFirst")
+      : !isLoading && mode === "existing" && vehicles.length === 0
+        ? t("pages.ordersCreate.vehicle.helpers.noVehiclesForCustomer")
+        : null;
 
   return (
     <WidgetCard title={t("pages.ordersCreate.sections.vehicle")}>
       <div className="grid gap-3">
         <div className="flex flex-wrap gap-5 text-sm">
-          <label className="inline-flex items-center gap-2">
-            <input type="radio" value="existing" {...register("vehicleMode")} />
+          <label
+            className={[
+              "inline-flex items-center gap-2",
+              isExistingLocked ? "cursor-not-allowed opacity-60" : "",
+            ].join(" ").trim()}
+          >
+            <input
+              type="radio"
+              value="existing"
+              disabled={isExistingLocked}
+              {...register("vehicleMode")}
+            />
             <span>{t("pages.ordersCreate.vehicle.existing")}</span>
           </label>
           <label className="inline-flex items-center gap-2">
@@ -32,20 +61,34 @@ export const VehicleSection = ({ form, mode, vehicles, canSelectExistingVehicle,
             <span>{t("pages.ordersCreate.vehicle.new")}</span>
           </label>
         </div>
+        {guidanceMessage ? (
+          <p className="m-0 text-xs text-[var(--color-text-secondary)]">
+            {guidanceMessage}
+          </p>
+        ) : null}
 
         {mode === "existing" ? (
-          <label className={fieldLabelClassName}>
-            <span className={fieldTitleClassName}>{t("pages.ordersCreate.vehicle.select")}</span>
-            <select className={inputClassName} disabled={!canSelectExistingVehicle || isLoading} {...register("existingVehicleId")}>
-              <option value="">{t("pages.ordersCreate.common.selectPlaceholder")}</option>
-              {vehicles.map((vehicle) => (
-                <option key={vehicle.id} value={vehicle.id}>
-                  {vehicle.year} {vehicle.make} {vehicle.model} · {vehicle.plateNumber}
-                </option>
-              ))}
-            </select>
-            {errors.existingVehicleId ? <span className={errorTextClassName}>{errors.existingVehicleId.message}</span> : null}
-          </label>
+          <div className="grid gap-2">
+            <label className={fieldLabelClassName}>
+              <span className={fieldTitleClassName}>{t("pages.ordersCreate.vehicle.select")}</span>
+              <select
+                className={[
+                  inputClassName,
+                  "disabled:cursor-not-allowed disabled:opacity-60 disabled:text-[var(--color-text-secondary)]",
+                ].join(" ")}
+                disabled={isExistingLocked || !canSelectExistingVehicle || isLoading}
+                {...register("existingVehicleId")}
+              >
+                <option value="">{t("pages.ordersCreate.common.selectPlaceholder")}</option>
+                {vehicles.map((vehicle) => (
+                  <option key={vehicle.id} value={vehicle.id}>
+                    {vehicle.year} {vehicle.make} {vehicle.model} · {vehicle.plateNumber}
+                  </option>
+                ))}
+              </select>
+              {errors.existingVehicleId ? <span className={errorTextClassName}>{errors.existingVehicleId.message}</span> : null}
+            </label>
+          </div>
         ) : (
           <div className="grid gap-3 md:grid-cols-2">
             <label className={fieldLabelClassName}>

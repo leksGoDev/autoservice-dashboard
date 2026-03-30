@@ -107,4 +107,24 @@ describe("CreateOrderForm", () => {
       expect(screen.getByTestId("created-order-details")).toBeInTheDocument();
     });
   });
+
+  it("keeps existing vehicle selection gated until existing customer is selected", () => {
+    renderForm();
+
+    expect(screen.getByRole("combobox", { name: "Vehicle" })).toBeDisabled();
+    expect(screen.getByText("Select a customer first to choose an existing vehicle.")).toBeInTheDocument();
+  });
+
+  it("forces new vehicle flow when customer mode is new", async () => {
+    renderForm();
+
+    fireEvent.click(screen.getByRole("radio", { name: "Create customer inline" }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("radio", { name: "Use existing vehicle" })).toBeDisabled();
+    });
+
+    expect(screen.getByRole("radio", { name: "Create vehicle inline" })).toBeChecked();
+    expect(screen.getByText("For a new customer, create a new vehicle in this form.")).toBeInTheDocument();
+  });
 });

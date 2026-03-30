@@ -41,7 +41,9 @@ export const CreateOrderForm = () => {
       <CustomerSection form={model.form} mode={model.customerMode} customers={model.customers} />
       <VehicleSection
         form={model.form}
+        customerMode={model.customerMode}
         mode={model.vehicleMode}
+        selectedCustomerId={model.selectedCustomerId}
         vehicles={model.vehicles}
         canSelectExistingVehicle={model.canSelectExistingVehicle}
         isLoading={model.isVehiclesLoading}
