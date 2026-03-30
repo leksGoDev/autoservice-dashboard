@@ -73,14 +73,34 @@ type RemoveJobPartVariables = {
   jobPartId: string;
 };
 
-function invalidateRelatedQueries(queryClient: ReturnType<typeof useQueryClient>, orderId: string) {
+type InvalidateOptions = {
+  includeDashboard?: boolean;
+  includeWorkBoard?: boolean;
+  includeAppointments?: boolean;
+};
+
+function invalidateRelatedQueries(
+  queryClient: ReturnType<typeof useQueryClient>,
+  orderId: string,
+  options: InvalidateOptions = {},
+) {
+  const { includeDashboard = true, includeWorkBoard = true, includeAppointments = true } = options;
+
   queryClient.invalidateQueries({ queryKey: queryKeys.orders.root });
   queryClient.invalidateQueries({ queryKey: queryKeys.orders.detail(orderId) });
   queryClient.invalidateQueries({ queryKey: queryKeys.orders.activity(orderId) });
-  queryClient.invalidateQueries({ queryKey: queryKeys.customers.root });
-  queryClient.invalidateQueries({ queryKey: queryKeys.vehicles.root });
-  queryClient.invalidateQueries({ queryKey: queryKeys.workBoard.root });
-  queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.root });
+
+  if (includeDashboard) {
+    queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.root });
+  }
+
+  if (includeWorkBoard) {
+    queryClient.invalidateQueries({ queryKey: queryKeys.workBoard.root });
+  }
+
+  if (includeAppointments) {
+    queryClient.invalidateQueries({ queryKey: queryKeys.appointments.root });
+  }
 }
 
 export function useUpdateOrderStatusMutation() {

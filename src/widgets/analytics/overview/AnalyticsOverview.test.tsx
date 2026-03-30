@@ -43,8 +43,8 @@ describe("AnalyticsOverview", () => {
     renderOverview();
 
     expect(await screen.findByText("Revenue Total")).toBeInTheDocument();
-    expect(screen.getByText("Revenue Chart")).toBeInTheDocument();
-    expect(screen.getByText("Jobs by Category")).toBeInTheDocument();
+    expect(await screen.findByText("Revenue Chart")).toBeInTheDocument();
+    expect(await screen.findByText("Jobs by Category")).toBeInTheDocument();
   });
 
   it("updates metrics when range changes", async () => {

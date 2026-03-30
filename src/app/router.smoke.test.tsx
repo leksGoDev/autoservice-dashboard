@@ -87,6 +87,6 @@ describe("router smoke", () => {
     renderWithRoute("/analytics");
 
     expect(await screen.findByText("Revenue Total")).toBeInTheDocument();
-    expect(screen.getByText("Jobs by Category")).toBeInTheDocument();
+    expect(await screen.findByText("Jobs by Category")).toBeInTheDocument();
   });
 });

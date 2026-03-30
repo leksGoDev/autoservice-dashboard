@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { DataState } from "@/shared/ui/DataState";
 import { OrderRowFlagControl } from "@/features/order-operations/ui/OrderRowFlagControl";
@@ -12,6 +14,28 @@ type OrdersRegistryContentProps = {
 
 export const OrdersRegistryContent = ({ model }: OrdersRegistryContentProps) => {
   const { t } = useI18n();
+  const renderStatusCell = useCallback(
+    (order: OrdersRegistryModel["rows"][number]) => (
+      <OrderRowStatusControl orderId={order.id} status={order.status} />
+    ),
+    [],
+  );
+  const renderMechanicCell = useCallback(
+    (order: OrdersRegistryModel["rows"][number]) => (
+      <OrderRowMechanicControl
+        orderId={order.id}
+        assignedMechanic={order.assignedMechanic}
+        mechanics={model.mechanics}
+      />
+    ),
+    [model.mechanics],
+  );
+  const renderRowActions = useCallback(
+    (order: OrdersRegistryModel["rows"][number]) => (
+      <OrderRowFlagControl orderId={order.id} flagged={order.flagged} />
+    ),
+    [],
+  );
 
   if (model.listQuery.isLoading) {
     return <DataState message={t("pages.orders.states.loading")} />;
@@ -47,17 +71,9 @@ export const OrdersRegistryContent = ({ model }: OrdersRegistryContentProps) => 
       total={model.total}
       isFetching={model.listQuery.isFetching}
       onPageChange={model.onPageChange}
-      renderStatusCell={(order) => (
-        <OrderRowStatusControl orderId={order.id} status={order.status} />
-      )}
-      renderMechanicCell={(order) => (
-        <OrderRowMechanicControl
-          orderId={order.id}
-          assignedMechanic={order.assignedMechanic}
-          mechanics={model.mechanics}
-        />
-      )}
-      renderRowActions={(order) => <OrderRowFlagControl orderId={order.id} flagged={order.flagged} />}
+      renderStatusCell={renderStatusCell}
+      renderMechanicCell={renderMechanicCell}
+      renderRowActions={renderRowActions}
     />
   );
 };
