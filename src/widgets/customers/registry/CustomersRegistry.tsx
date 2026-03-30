@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { CustomerForm } from "@/features/customer-management/ui/CustomerForm";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { headerPrimaryActionButtonClassName } from "@/shared/ui/class-names";
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 import { CustomersRegistrySearch } from "./CustomersRegistrySearch";
 import { useCustomersRegistryModel } from "./hooks/use-customers-registry-model";
@@ -26,7 +27,7 @@ export const CustomersRegistry = () => {
 
           <button
             type="button"
-            className="inline-flex h-10 min-w-[156px] items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-4 text-sm leading-5 font-semibold text-[var(--color-text-primary)]"
+            className={headerPrimaryActionButtonClassName}
             onClick={() => setIsCreateOpen((value) => !value)}
           >
             {isCreateOpen ? t("pages.customers.form.cancelAction") : t("pages.customers.actions.create")}

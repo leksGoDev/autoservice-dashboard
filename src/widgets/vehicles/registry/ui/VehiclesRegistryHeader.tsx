@@ -1,4 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { headerPrimaryActionButtonClassName } from "@/shared/ui/class-names";
 import type { VehiclesRegistryModel } from "../hooks/use-vehicles-registry-model";
 import { VehiclesRegistryToolbar } from "./VehiclesRegistryToolbar";
 
@@ -36,7 +37,7 @@ export const VehiclesRegistryHeader = ({
 
         <button
           type="button"
-          className="inline-flex h-10 min-w-[156px] items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-4 text-sm leading-5 font-semibold text-[var(--color-text-primary)]"
+          className={headerPrimaryActionButtonClassName}
           onClick={onToggleCreate}
         >
           {isCreateOpen ? t("pages.vehicles.form.cancelAction") : t("pages.vehicles.actions.create")}

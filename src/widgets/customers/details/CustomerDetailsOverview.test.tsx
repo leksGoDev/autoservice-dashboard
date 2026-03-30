@@ -63,4 +63,19 @@ describe("CustomerDetailsOverview", () => {
       expect(screen.getAllByText("Alex Turner Updated").length).toBeGreaterThan(0);
     });
   });
+
+  it("closes edit form on cancel without persisting changes", async () => {
+    renderOverview("cust_001");
+    await screen.findByText("Customer information");
+
+    fireEvent.click(screen.getByRole("button", { name: "Edit" }));
+    fireEvent.change(screen.getByLabelText("Full name"), {
+      target: { value: "Alex Draft Name" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+
+    expect(screen.queryByRole("button", { name: "Save changes" })).not.toBeInTheDocument();
+    expect(screen.getByText("Alex Turner")).toBeInTheDocument();
+    expect(screen.queryByText("Alex Draft Name")).not.toBeInTheDocument();
+  });
 });

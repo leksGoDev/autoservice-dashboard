@@ -4,6 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { getMutationErrorMessage } from "@/features/order-operations/model/get-mutation-error-message";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import {
+  formFieldErrorTextClassName,
+  formFieldInputClassName,
+  formFieldLabelClassName,
+  formPrimarySubmitButtonClassName,
+  formSecondaryButtonClassName,
+} from "@/shared/ui/class-names";
 import { useCreateCustomerMutation, useUpdateCustomerMutation } from "../api/mutations";
 import {
   customerFormSchema,
@@ -19,11 +26,6 @@ type CustomerFormProps = {
   onSubmitted?: () => void;
   onCancel?: () => void;
 };
-
-const inputClassName =
-  "w-full rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.45)] px-3 py-2.5 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)]";
-const labelClassName = "grid gap-1.5 text-xs font-semibold text-[var(--color-text-secondary)]";
-const errorTextClassName = "text-xs text-[#fecaca]";
 
 export const CustomerForm = ({ mode, customerId, initialValues, onSubmitted, onCancel }: CustomerFormProps) => {
   const { t } = useI18n();
@@ -83,32 +85,32 @@ export const CustomerForm = ({ mode, customerId, initialValues, onSubmitted, onC
       </h3>
 
       <div className="grid gap-3 md:grid-cols-2">
-        <label className={labelClassName}>
+        <label className={formFieldLabelClassName}>
           <span>{t("pages.ordersCreate.customer.fullName")}</span>
-          <input className={inputClassName} {...register("fullName")} />
-          {errors.fullName ? <span className={errorTextClassName}>{errors.fullName.message}</span> : null}
+          <input className={formFieldInputClassName} {...register("fullName")} />
+          {errors.fullName ? <span className={formFieldErrorTextClassName}>{errors.fullName.message}</span> : null}
         </label>
 
-        <label className={labelClassName}>
+        <label className={formFieldLabelClassName}>
           <span>{t("pages.ordersCreate.customer.phone")}</span>
-          <input className={inputClassName} {...register("phone")} />
-          {errors.phone ? <span className={errorTextClassName}>{errors.phone.message}</span> : null}
+          <input className={formFieldInputClassName} {...register("phone")} />
+          {errors.phone ? <span className={formFieldErrorTextClassName}>{errors.phone.message}</span> : null}
         </label>
 
-        <label className={labelClassName}>
+        <label className={formFieldLabelClassName}>
           <span>{t("pages.ordersCreate.customer.email")}</span>
-          <input className={inputClassName} type="email" {...register("email")} />
-          {errors.email ? <span className={errorTextClassName}>{errors.email.message}</span> : null}
+          <input className={formFieldInputClassName} type="email" {...register("email")} />
+          {errors.email ? <span className={formFieldErrorTextClassName}>{errors.email.message}</span> : null}
         </label>
 
-        <label className={labelClassName}>
+        <label className={formFieldLabelClassName}>
           <span>{t("pages.ordersCreate.customer.loyalty")}</span>
-          <select className={inputClassName} {...register("loyaltyTier")}>
+          <select className={formFieldInputClassName} {...register("loyaltyTier")}>
             <option value="standard">{t("customer.loyaltyTier.standard")}</option>
             <option value="silver">{t("customer.loyaltyTier.silver")}</option>
             <option value="gold">{t("customer.loyaltyTier.gold")}</option>
           </select>
-          {errors.loyaltyTier ? <span className={errorTextClassName}>{errors.loyaltyTier.message}</span> : null}
+          {errors.loyaltyTier ? <span className={formFieldErrorTextClassName}>{errors.loyaltyTier.message}</span> : null}
         </label>
       </div>
 
@@ -117,7 +119,7 @@ export const CustomerForm = ({ mode, customerId, initialValues, onSubmitted, onC
       <div className="flex flex-wrap gap-2">
         <button
           type="submit"
-          className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)]"
+          className={formPrimarySubmitButtonClassName}
           disabled={isSubmitting}
         >
           {isSubmitting
@@ -130,7 +132,7 @@ export const CustomerForm = ({ mode, customerId, initialValues, onSubmitted, onC
         {onCancel ? (
           <button
             type="button"
-            className="inline-flex h-9 items-center justify-center cursor-pointer rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.45)] px-3 text-xs leading-4 font-medium text-[var(--color-text-secondary)]"
+            className={formSecondaryButtonClassName}
             onClick={onCancel}
             disabled={isSubmitting}
           >

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { headerPrimaryActionButtonClassName } from "@/shared/ui/class-names";
 
 export const OrdersRegistryHeader = () => {
   const { t } = useI18n();
@@ -18,7 +19,7 @@ export const OrdersRegistryHeader = () => {
 
         <Link
           to="/orders/new"
-          className="inline-flex h-10 min-w-[156px] items-center justify-center cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.2)] px-4 text-sm leading-5 font-semibold text-[var(--color-text-primary)]"
+          className={headerPrimaryActionButtonClassName}
         >
           {t("pages.orders.toolbar.create")}
         </Link>
