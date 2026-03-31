@@ -14,6 +14,8 @@ const DashboardRevenueChart = lazy(() =>
     default: module.DashboardRevenueChart,
   })),
 );
+const chartLoadingFallbackClassName =
+  "min-h-[320px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4 text-sm text-[var(--color-text-secondary)]";
 
 type DashboardOverviewContentProps = {
   overviewQuery: DashboardOverviewModel["overviewQuery"];
@@ -52,17 +54,9 @@ export const DashboardOverviewContent = ({ overviewQuery }: DashboardOverviewCon
     <>
       <DashboardKpiCards metrics={overviewQuery.data.metrics} />
 
-      <div className="grid gap-4">
-        <Suspense
-          fallback={
-            <div className="min-h-[320px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4 text-sm text-[var(--color-text-secondary)]">
-              {t("common.pageLoading")}
-            </div>
-          }
-        >
-          <DashboardRevenueChart data={overviewQuery.data.revenue} />
-        </Suspense>
-      </div>
+      <Suspense fallback={<div className={chartLoadingFallbackClassName}>{t("common.pageLoading")}</div>}>
+        <DashboardRevenueChart data={overviewQuery.data.revenue} />
+      </Suspense>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)]">
         <DashboardRecentOrders orders={overviewQuery.data.recentOrders} />

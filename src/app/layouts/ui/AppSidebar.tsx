@@ -3,6 +3,11 @@ import { NavLink } from "react-router-dom";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import styles from "./AppSidebar.module.css";
 
+type SidebarNavigationItem = {
+  to: string;
+  labelKey: string;
+};
+
 const navigation = [
   { to: "/dashboard", labelKey: "nav.dashboard" },
   { to: "/work-board", labelKey: "nav.workBoard" },
@@ -12,7 +17,10 @@ const navigation = [
   { to: "/vehicles", labelKey: "nav.vehicles" },
   { to: "/mechanics", labelKey: "nav.mechanics" },
   { to: "/analytics", labelKey: "nav.analytics" },
-];
+] satisfies SidebarNavigationItem[];
+
+const navLinkClassName =
+  "rounded-xl border border-transparent px-3.5 py-3 text-[var(--color-text-secondary)] transition-colors duration-150 hover:bg-white/[0.03] hover:text-[var(--color-text-primary)]";
 
 export function AppSidebar() {
   const { t } = useI18n();
@@ -37,10 +45,7 @@ export function AppSidebar() {
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
-              [
-                "rounded-xl border border-transparent px-3.5 py-3 text-[var(--color-text-secondary)] transition-colors duration-150 hover:bg-white/[0.03] hover:text-[var(--color-text-primary)]",
-                isActive ? styles.linkActive : "",
-              ].join(" ").trim()
+              [navLinkClassName, isActive ? styles.linkActive : ""].join(" ").trim()
             }
           >
             {t(item.labelKey)}
