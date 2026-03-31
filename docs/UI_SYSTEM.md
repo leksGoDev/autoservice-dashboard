@@ -112,10 +112,9 @@ The main operational overview screen.
 
 - KPI cards
 - revenue chart
-- orders trend
-- mechanic workload
 - recent orders
 - recent activity
+- mechanic workload (compact summary)
 
 ### KPI cards
 
@@ -130,10 +129,9 @@ Key metrics:
 ### Dashboard widgets
 
 - Revenue Chart
-- Orders Trend Chart
-- Mechanic Workload Widget
 - Recent Orders Table
 - Recent Activity Feed
+- Mechanic Workload Widget (compact)
 
 ---
 
@@ -424,8 +422,7 @@ Operational analytics screen.
 
 ### Main sections
 
-- revenue chart
-- orders per day
+- orders trend (orders per day)
 - jobs by category
 - mechanic workload
 - filter controls for time range

@@ -14,11 +14,6 @@ const DashboardRevenueChart = lazy(() =>
     default: module.DashboardRevenueChart,
   })),
 );
-const DashboardOrdersTrend = lazy(() =>
-  import("@/widgets/dashboard/orders-trend/DashboardOrdersTrend").then((module) => ({
-    default: module.DashboardOrdersTrend,
-  })),
-);
 
 type DashboardOverviewContentProps = {
   overviewQuery: DashboardOverviewModel["overviewQuery"];
@@ -57,7 +52,7 @@ export const DashboardOverviewContent = ({ overviewQuery }: DashboardOverviewCon
     <>
       <DashboardKpiCards metrics={overviewQuery.data.metrics} />
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4">
         <Suspense
           fallback={
             <div className="min-h-[320px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4 text-sm text-[var(--color-text-secondary)]">
@@ -66,15 +61,6 @@ export const DashboardOverviewContent = ({ overviewQuery }: DashboardOverviewCon
           }
         >
           <DashboardRevenueChart data={overviewQuery.data.revenue} />
-        </Suspense>
-        <Suspense
-          fallback={
-            <div className="min-h-[320px] rounded-2xl border border-[var(--color-border)] bg-[rgba(27,33,48,0.9)] p-4 text-sm text-[var(--color-text-secondary)]">
-              {t("common.pageLoading")}
-            </div>
-          }
-        >
-          <DashboardOrdersTrend data={overviewQuery.data.ordersTrend} />
         </Suspense>
       </div>
 

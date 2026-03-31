@@ -146,10 +146,23 @@ Includes:
 
 - revenue metrics
 - order volume
-- orders trend
-- mechanic workload (lightweight)
+- revenue trend
 - recent orders
 - recent activity
+- mechanic workload (lightweight summary)
+
+---
+
+## Analytics
+
+The analytics screen provides period-based analysis.
+
+Includes:
+
+- orders trend by day
+- jobs by category
+- mechanic workload analysis
+- aggregate metrics for selected period
 
 ---
 
@@ -288,6 +301,7 @@ The current product scope does not require drag-and-drop.
 The application includes:
 
 - Dashboard
+- Analytics
 - Orders (registry)
 - Create Order
 - Order Details

@@ -5,10 +5,6 @@ import { getAnalyticsMetricsFixtureByRange } from "@/mocks/fixtures/analytics";
 import { I18nProvider } from "@/shared/i18n/provider";
 import { AnalyticsOverview } from "./AnalyticsOverview";
 
-vi.mock("@/widgets/dashboard/revenue-chart/DashboardRevenueChart", () => ({
-  DashboardRevenueChart: () => <div>Revenue Chart</div>,
-}));
-
 vi.mock("@/widgets/dashboard/orders-trend/DashboardOrdersTrend", () => ({
   DashboardOrdersTrend: () => <div>Orders Trend</div>,
 }));
@@ -44,7 +40,7 @@ describe("AnalyticsOverview", () => {
     renderOverview();
 
     expect(await screen.findByText("Revenue Total")).toBeInTheDocument();
-    expect(await screen.findByText("Revenue Chart")).toBeInTheDocument();
+    expect(await screen.findByText("Orders Trend")).toBeInTheDocument();
     expect(await screen.findByText("Jobs by Category")).toBeInTheDocument();
   });
 

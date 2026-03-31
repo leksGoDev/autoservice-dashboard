@@ -65,7 +65,7 @@ export const enMessages = {
   dashboardPage: {
     eyebrow: "Overview",
     title: "Operations Dashboard",
-    description: "Live operational snapshot for order flow, revenue, and recent workshop activity.",
+    description: "Quick operational snapshot of current service flow, revenue, and recent workshop activity.",
     loading: "Loading dashboard data...",
     error: "Failed to load dashboard data.",
     empty: "No dashboard data for selected range.",

@@ -577,7 +577,7 @@ export const enPages = {
     eyebrow: "Insights",
     title: "Analytics workspace",
     description:
-      "Revenue, throughput, job mix, and mechanic utilization insights for a selected operational range.",
+      "Period-based analysis of order dynamics, job mix, and mechanic utilization for the selected range.",
     states: {
       loading: "Loading analytics data...",
       error: "Failed to load analytics data.",
