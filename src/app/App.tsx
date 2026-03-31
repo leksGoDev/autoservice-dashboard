@@ -7,7 +7,7 @@ import { useI18n } from "@/shared/i18n/use-i18n";
 import { queryClient } from "./providers/query-client";
 import { router } from "./router";
 
-const AppContent = () => {
+const PwaUpdateBanner = () => {
   const { t } = useI18n();
   const {
     needRefresh: [needRefresh, setNeedRefresh],
@@ -48,6 +48,16 @@ const AppContent = () => {
           </div>
         </div>
       ) : null}
+    </>
+  );
+};
+
+const AppContent = () => {
+  const shouldEnablePwa = import.meta.env.VITE_ENABLE_PWA !== "false";
+
+  return (
+    <>
+      {shouldEnablePwa ? <PwaUpdateBanner /> : null}
       <RouterProvider router={router} />
     </>
   );

@@ -1,5 +1,7 @@
 export async function enableMocking() {
-  if (!import.meta.env.DEV) {
+  const shouldEnableMocking = import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === "true";
+
+  if (!shouldEnableMocking) {
     return;
   }
 
@@ -9,7 +11,7 @@ export async function enableMocking() {
     onUnhandledRequest: "bypass",
     quiet: true,
     serviceWorker: {
-      url: "/mockServiceWorker.js",
+      url: `${import.meta.env.BASE_URL}mockServiceWorker.js`,
     },
   });
 }
