@@ -149,4 +149,31 @@ describe("OrderDetailsOverview", () => {
       expect(screen.getByText("Part removed from job.")).toBeInTheDocument();
     });
   });
+
+  it("keeps add buttons disabled until required fields are provided", async () => {
+    renderOverview("ord_001");
+
+    await screen.findByText("Order summary");
+
+    const addJobButton = screen.getByRole("button", { name: "Add job" });
+    const addPartButton = screen.getByRole("button", { name: "Add part" });
+
+    expect(addJobButton).toBeDisabled();
+    expect(addPartButton).toBeDisabled();
+
+    fireEvent.change(screen.getByRole("textbox", { name: "Job name" }), {
+      target: { value: "Cooling system flush" },
+    });
+    fireEvent.change(screen.getByRole("textbox", { name: "Category" }), {
+      target: { value: "Maintenance" },
+    });
+    fireEvent.change(screen.getByRole("textbox", { name: "Part name" }), {
+      target: { value: "Coolant" },
+    });
+
+    await waitFor(() => {
+      expect(addJobButton).toBeEnabled();
+      expect(addPartButton).toBeEnabled();
+    });
+  });
 });

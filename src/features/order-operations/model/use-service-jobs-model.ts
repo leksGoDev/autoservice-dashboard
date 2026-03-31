@@ -171,6 +171,13 @@ export const useServiceJobsControlsModel = ({
   }, [assignJobMechanicMutation, orderId, resetFeedback]);
 
   const isBusy = addJobMutation.isPending || updateJobStatusMutation.isPending || assignJobMechanicMutation.isPending;
+  const canAddJob =
+    jobName.trim().length > 0 &&
+    jobCategory.trim().length > 0 &&
+    Number.isFinite(Number(jobEstimatedHours)) &&
+    Number(jobEstimatedHours) > 0 &&
+    Number.isFinite(Number(jobLaborPrice)) &&
+    Number(jobLaborPrice) > 0;
   const currentError = addJobMutation.error ?? updateJobStatusMutation.error ?? assignJobMechanicMutation.error;
   const errorMessage = currentError
     ? getMutationErrorMessage(currentError, t("pages.orderDetails.controls.errors.jobsFallback") as string)
@@ -202,6 +209,7 @@ export const useServiceJobsControlsModel = ({
     setJobMechanics,
     availableMechanics,
     isBusy,
+    canAddJob,
     addJobMutation,
     updateJobStatusMutation,
     assignJobMechanicMutation,

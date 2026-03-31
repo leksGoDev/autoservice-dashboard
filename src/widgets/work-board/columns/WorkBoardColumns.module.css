@@ -115,6 +115,28 @@
   font-weight: 600;
   background: rgba(154, 164, 178, 0.14);
   color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+.quickActionButton:hover {
+  border-color: rgba(147, 197, 253, 0.45);
+  background: rgba(147, 197, 253, 0.16);
+  color: #dbeafe;
+}
+
+.quickActionButton:active {
+  transform: translateY(1px);
+}
+
+.quickActionButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.55);
+}
+
+.quickActionButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
 .quickActionNeutral {
@@ -131,6 +153,18 @@
   border-color: rgba(34, 197, 94, 0.34);
   background: rgba(34, 197, 94, 0.16);
   color: #bbf7d0;
+}
+
+.quickActionError {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #fca5a5;
+}
+
+.quickActionPending {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #bfdbfe;
 }
 
 .emptyColumn {

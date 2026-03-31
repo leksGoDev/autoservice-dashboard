@@ -99,7 +99,7 @@ export const JobsCreateForm = ({ model }: JobsCreateFormProps) => {
           type="button"
           className={actionButtonClassName}
           onClick={model.handleAddJob}
-          disabled={model.isBusy}
+          disabled={model.isBusy || !model.canAddJob}
         >
           {model.addJobMutation.isPending
             ? t("pages.orderDetails.controls.jobs.actions.addPending")

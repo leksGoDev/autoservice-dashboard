@@ -623,6 +623,9 @@ export const enPages = {
       wait_parts: "Wait parts",
       complete: "Complete",
       reschedule: "Reschedule",
+      pending: "Applying...",
+      statusUpdating: "Updating order status...",
+      errorFallback: "Could not run quick action. Try again.",
     },
   },
 } as const;
