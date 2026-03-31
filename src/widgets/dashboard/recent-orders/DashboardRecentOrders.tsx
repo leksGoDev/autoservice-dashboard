@@ -26,7 +26,7 @@ export const DashboardRecentOrders = ({ orders }: DashboardRecentOrdersProps) =>
   return (
     <WidgetCard title={t("dashboard.recentOrders.title")} description={t("dashboard.recentOrders.description")}>
       <div className="overflow-x-auto">
-        <table className="min-w-[760px] w-full border-collapse text-left text-[13px]">
+        <table className="w-full border-collapse text-left text-[13px]">
           <thead>
             <tr>
               <th className={headerCellClass}>{t("dashboard.recentOrders.headers.order")}</th>
@@ -45,7 +45,7 @@ export const DashboardRecentOrders = ({ orders }: DashboardRecentOrdersProps) =>
                 <td className={bodyCellClass}>
                   <Link
                     to={`/orders/${order.id}`}
-                    className="inline-flex rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 font-mono text-xs font-semibold tracking-[0.02em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
+                    className="inline-flex whitespace-nowrap rounded-md border border-[rgba(107,164,255,0.46)] bg-[rgba(107,164,255,0.16)] px-2 py-1 font-mono text-xs font-semibold tracking-[0.02em] text-[#dbeafe] transition-colors hover:bg-[rgba(107,164,255,0.28)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(147,197,253,0.7)]"
                   >
                     {order.number}
                   </Link>
@@ -73,8 +73,12 @@ export const DashboardRecentOrders = ({ orders }: DashboardRecentOrdersProps) =>
                   </span>
                 </td>
                 <td className={bodyCellClass}>{order.assignedMechanic}</td>
-                <td className={bodyCellClass}>{formatCurrency(order.totalCost, locale)}</td>
-                <td className={bodyCellClass}>{formatDashboardDate(order.createdAt, locale)}</td>
+                <td className={[bodyCellClass, "whitespace-nowrap"].join(" ").trim()}>
+                  {formatCurrency(order.totalCost, locale)}
+                </td>
+                <td className={[bodyCellClass, "whitespace-nowrap"].join(" ").trim()}>
+                  {formatDashboardDate(order.createdAt, locale)}
+                </td>
               </tr>
             ))}
           </tbody>
