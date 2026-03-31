@@ -377,7 +377,7 @@ export const enPages = {
   },
   customers: {
     eyebrow: "Registry",
-    title: "Customers workspace",
+    title: "Customers registry",
     description: "Customer search, paginated table, and drill-down access to customer details.",
     actions: {
       create: "Create customer",
@@ -575,7 +575,7 @@ export const enPages = {
   },
   analytics: {
     eyebrow: "Insights",
-    title: "Analytics workspace",
+    title: "Analytics overview",
     description:
       "Period-based analysis of order dynamics, job mix, and mechanic utilization for the selected range.",
     states: {
@@ -599,7 +599,7 @@ export const enPages = {
   },
   workBoard: {
     eyebrow: "Core Operations",
-    title: "Work board",
+    title: "Operations board",
     description:
       "Kanban operational board for active order flow. Orders are grouped by service status for quick dispatch actions.",
     boardAria: "Work board columns",

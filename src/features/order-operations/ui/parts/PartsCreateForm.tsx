@@ -10,7 +10,7 @@ export const PartsCreateForm = ({ model }: PartsCreateFormProps) => {
   const formControlClassName =
     "h-9 rounded-[10px] border border-[var(--color-border)] bg-[rgba(15,17,21,0.62)] px-2.5 text-sm leading-5 text-[var(--color-text-primary)]";
   const actionButtonClassName =
-    "inline-flex h-9 items-center justify-center cursor-pointer whitespace-nowrap rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-3 text-xs leading-4 font-medium text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60";
+    "inline-flex h-10 items-center justify-center cursor-pointer whitespace-nowrap rounded-[10px] border border-[rgba(107,164,255,0.38)] bg-[rgba(107,164,255,0.16)] px-4 text-sm leading-5 font-semibold text-[var(--color-text-primary)] disabled:cursor-not-allowed disabled:opacity-60";
 
   return (
     <div className="grid gap-2 rounded-xl border border-[rgba(154,164,178,0.12)] bg-[rgba(15,17,21,0.38)] p-3 sm:grid-cols-2 xl:grid-cols-5">
@@ -84,7 +84,7 @@ export const PartsCreateForm = ({ model }: PartsCreateFormProps) => {
         </span>
         <button
           type="button"
-          className={actionButtonClassName}
+          className={`${actionButtonClassName} justify-self-start`}
           onClick={model.handleAddPart}
           disabled={model.isBusy || !model.canAddPart}
         >

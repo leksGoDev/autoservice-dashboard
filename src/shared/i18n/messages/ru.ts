@@ -71,7 +71,7 @@ export const ruMessages = {
     empty: "Нет данных дашборда для выбранного периода.",
   },
   customersRegistry: {
-    title: "Реестр клиентов",
+    title: "Список клиентов",
     description: "Поиск клиентов, таблица реестра и визуальная основа для перехода в карточку клиента.",
     searchPlaceholder: "Поиск",
     searchAria: "Поиск клиентов",

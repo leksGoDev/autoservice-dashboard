@@ -71,7 +71,7 @@ export const enMessages = {
     empty: "No dashboard data for selected range.",
   },
   customersRegistry: {
-    title: "Customers registry",
+    title: "Customer list",
     description: "Search customers, browse the table, and open customer profile context.",
     searchPlaceholder: "Search",
     searchAria: "Customers search",

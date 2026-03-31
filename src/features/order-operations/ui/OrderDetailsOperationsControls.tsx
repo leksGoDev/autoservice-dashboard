@@ -68,7 +68,7 @@ export const OrderDetailsOperationsControls = ({
 
       <button
         type="button"
-        className="h-9 cursor-pointer rounded-[10px] border border-[rgba(245,158,11,0.35)] bg-[rgba(245,158,11,0.14)] px-3 text-xs leading-4 font-medium text-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex h-10 items-center justify-center justify-self-start cursor-pointer whitespace-nowrap rounded-[10px] border border-[rgba(245,158,11,0.35)] bg-[rgba(245,158,11,0.14)] px-4 text-sm leading-5 font-semibold text-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
         onClick={model.handleFlagToggle}
         disabled={model.isBusy}
       >

@@ -94,7 +94,7 @@ export const InitialJobsSection = ({ form, jobsFieldArray, mechanics }: InitialJ
 
         <button
           type="button"
-          className="cursor-pointer rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-3 py-2 text-sm"
+          className="inline-flex h-10 items-center justify-center justify-self-start cursor-pointer whitespace-nowrap rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-4 text-sm leading-5 font-semibold text-[var(--color-text-primary)]"
           onClick={() =>
             jobsFieldArray.append({
               name: "",
