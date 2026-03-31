@@ -620,6 +620,7 @@ export const ruPages = {
       wait_parts: "Ждать запчасти",
       complete: "Завершить",
       reschedule: "Перепланировать",
+      errorFallback: "Не удалось выполнить быстрое действие. Повторите попытку.",
     },
   },
 } as const;

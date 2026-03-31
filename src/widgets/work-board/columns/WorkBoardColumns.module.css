@@ -133,6 +133,12 @@
   color: #bbf7d0;
 }
 
+.quickActionError {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #fca5a5;
+}
+
 .emptyColumn {
   border: 1px dashed rgba(154, 164, 178, 0.28);
   border-radius: 10px;

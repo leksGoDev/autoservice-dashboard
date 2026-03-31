@@ -1,6 +1,9 @@
-import type { WorkBoardColumn, WorkBoardQuickAction } from "@/entities/work-board/model/types";
+import type { WorkBoardColumn, WorkBoardQuickAction, WorkBoardStatus } from "@/entities/work-board/model/types";
+import { useUpdateOrderStatusMutation } from "@/features/order-operations/api/mutations";
+import { getMutationErrorMessage } from "@/features/order-operations/model/get-mutation-error-message";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { getPriorityBadgeClass, getStatusBadgeClass } from "@/shared/ui/status-badges";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   formatWorkBoardCurrency,
@@ -28,8 +31,38 @@ function getQuickActionClass(action: WorkBoardQuickAction) {
   return styles.quickActionNeutral;
 }
 
+const QUICK_ACTION_STATUS_MAP: Record<WorkBoardQuickAction, WorkBoardStatus> = {
+  start_work: "in_progress",
+  wait_parts: "waiting_parts",
+  complete: "completed",
+  reschedule: "scheduled",
+};
+
 export const WorkBoardColumns = ({ columns }: WorkBoardColumnsProps) => {
   const { t } = useI18n();
+  const updateOrderStatusMutation = useUpdateOrderStatusMutation();
+  const [errorByOrderId, setErrorByOrderId] = useState<Record<string, string>>({});
+
+  const handleQuickAction = async (orderId: string, action: WorkBoardQuickAction) => {
+    setErrorByOrderId((previous) => {
+      const next = { ...previous };
+      delete next[orderId];
+      return next;
+    });
+    try {
+      await updateOrderStatusMutation.mutateAsync({
+        orderId,
+        status: QUICK_ACTION_STATUS_MAP[action],
+      });
+    } catch (error) {
+      const errorMessage = getMutationErrorMessage(error, t("pages.workBoard.quickActions.errorFallback") as string);
+
+      setErrorByOrderId((previous) => ({
+        ...previous,
+        [orderId]: errorMessage,
+      }));
+    }
+  };
 
   return (
     <section className={styles.boardScroller} aria-label={t("pages.workBoard.boardAria")}>
@@ -97,16 +130,27 @@ export const WorkBoardColumns = ({ columns }: WorkBoardColumnsProps) => {
                     <p className={styles.contextText}>{card.shortContext}</p>
 
                     <div className={styles.quickActions}>
-                      {card.availableActions.map((action) => (
-                        <button
-                          key={`${card.id}-${action}`}
-                          type="button"
-                          className={[styles.quickActionButton, getQuickActionClass(action)].join(" ").trim()}
-                        >
-                          {t(`pages.workBoard.quickActions.${action}`)}
-                        </button>
-                      ))}
+                      {card.availableActions.map((action) => {
+                        return (
+                          <button
+                            key={`${card.id}-${action}`}
+                            type="button"
+                            className={[styles.quickActionButton, getQuickActionClass(action)].join(" ").trim()}
+                            onClick={() => {
+                              void handleQuickAction(card.orderId, action);
+                            }}
+                            disabled={updateOrderStatusMutation.isPending}
+                          >
+                            {t(`pages.workBoard.quickActions.${action}`)}
+                          </button>
+                        );
+                      })}
                     </div>
+                    {errorByOrderId[card.orderId] ? (
+                      <p role="alert" className={styles.quickActionError}>
+                        {errorByOrderId[card.orderId]}
+                      </p>
+                    ) : null}
                   </article>
                 ))}
               </div>
