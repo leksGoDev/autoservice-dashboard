@@ -137,6 +137,8 @@ export const enMessages = {
     mechanicWorkload: {
       title: "Mechanic Workload",
       description: "Current active workload by mechanic",
+      summary: "Showing {{shown}} of {{total}} mechanics",
+      openAnalytics: "Open in Analytics",
     },
   },
   order: {

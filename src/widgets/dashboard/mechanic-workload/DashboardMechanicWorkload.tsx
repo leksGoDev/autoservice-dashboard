@@ -1,11 +1,13 @@
 import type { MechanicWorkloadItem } from "@/entities/dashboard/model/types";
 import { getWorkloadTone } from "@/entities/dashboard/model/presentation";
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { Link } from "react-router-dom";
 
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
 type DashboardMechanicWorkloadProps = {
   items: MechanicWorkloadItem[];
+  compact?: boolean;
 };
 
 const toneClassMap: Record<string, string> = {
@@ -14,22 +16,31 @@ const toneClassMap: Record<string, string> = {
   danger: "bg-[rgba(239,68,68,0.2)] text-[#fecaca]",
 };
 
-export const DashboardMechanicWorkload = ({ items }: DashboardMechanicWorkloadProps) => {
+export const DashboardMechanicWorkload = ({ items, compact = false }: DashboardMechanicWorkloadProps) => {
   const { t } = useI18n();
+  const visibleItems = compact ? items.slice(0, 3) : items;
 
   return (
-    <WidgetCard title={t("dashboard.mechanicWorkload.title")} description={t("dashboard.mechanicWorkload.description")}>
-      <ul className="m-0 grid list-none gap-3 p-0">
-        {items.map((item) => (
+    <WidgetCard
+      title={t("dashboard.mechanicWorkload.title")}
+      description={t("dashboard.mechanicWorkload.description")}
+      className={compact ? "p-3" : undefined}
+    >
+      <ul className={["m-0 grid list-none p-0", compact ? "gap-2.5" : "gap-3"].join(" ")}>
+        {visibleItems.map((item) => (
           <li
             key={item.mechanicId}
-            className="rounded-xl border border-[rgba(154,164,178,0.16)] bg-[rgba(15,17,21,0.2)] p-3"
+            className={[
+              "rounded-xl border border-[rgba(154,164,178,0.16)] bg-[rgba(15,17,21,0.2)]",
+              compact ? "p-2.5" : "p-3",
+            ].join(" ")}
           >
-            <div className="mb-2 flex items-center justify-between gap-3">
-              <p className="m-0 text-sm font-semibold">{item.mechanicName}</p>
+            <div className={["flex items-center justify-between gap-3", compact ? "mb-1.5" : "mb-2"].join(" ")}>
+              <p className={["m-0 font-semibold", compact ? "text-[13px]" : "text-sm"].join(" ")}>{item.mechanicName}</p>
               <span
                 className={[
-                  "rounded-full px-2 py-0.5 text-xs font-semibold",
+                  "rounded-full text-xs font-semibold",
+                  compact ? "px-1.5 py-0.5" : "px-2 py-0.5",
                   toneClassMap[getWorkloadTone(item.utilization)] ?? toneClassMap.normal,
                 ].join(" ")}
               >
@@ -37,7 +48,12 @@ export const DashboardMechanicWorkload = ({ items }: DashboardMechanicWorkloadPr
               </span>
             </div>
             <div className="flex items-center justify-between gap-3">
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-[rgba(154,164,178,0.2)]">
+              <div
+                className={[
+                  "flex-1 overflow-hidden rounded-full bg-[rgba(154,164,178,0.2)]",
+                  compact ? "h-1.5" : "h-2",
+                ].join(" ")}
+              >
                 <span
                   className="block h-full rounded-full bg-[linear-gradient(90deg,#6ba4ff,#3b82f6)]"
                   style={{ width: `${item.utilization}%` }}
@@ -48,6 +64,16 @@ export const DashboardMechanicWorkload = ({ items }: DashboardMechanicWorkloadPr
           </li>
         ))}
       </ul>
+      {compact ? (
+        <footer className="mt-2.5 flex items-center justify-between gap-3 text-xs text-[var(--color-text-secondary)]">
+          <span>
+            {t("dashboard.mechanicWorkload.summary", { shown: visibleItems.length, total: items.length })}
+          </span>
+          <Link to="/analytics" className="font-semibold text-[var(--color-accent-light-blue)] hover:underline">
+            {t("dashboard.mechanicWorkload.openAnalytics")}
+          </Link>
+        </footer>
+      ) : null}
     </WidgetCard>
   );
 };

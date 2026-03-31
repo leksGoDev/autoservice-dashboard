@@ -137,6 +137,8 @@ export const ruMessages = {
     mechanicWorkload: {
       title: "Загрузка механиков",
       description: "Текущая активная нагрузка по механикам",
+      summary: "Показано {{shown}} из {{total}} механиков",
+      openAnalytics: "Открыть в аналитике",
     },
   },
   order: {

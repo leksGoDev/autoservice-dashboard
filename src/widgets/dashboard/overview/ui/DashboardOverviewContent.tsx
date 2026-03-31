@@ -67,7 +67,7 @@ export const DashboardOverviewContent = ({ overviewQuery }: DashboardOverviewCon
       <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)]">
         <DashboardRecentOrders orders={overviewQuery.data.recentOrders} />
         <div className="grid content-start gap-4">
-          <DashboardMechanicWorkload items={overviewQuery.data.mechanicWorkload} />
+          <DashboardMechanicWorkload items={overviewQuery.data.mechanicWorkload} compact />
           <DashboardRecentActivity items={overviewQuery.data.recentActivity} />
         </div>
       </div>
