@@ -4,6 +4,10 @@ Portfolio-grade frontend project that simulates a production-like B2B operations
 
 The application is focused on real frontend architecture and product flows rather than demo CRUD. It uses a mocked backend powered by MSW and demonstrates how a complex internal dashboard can be structured, localized, tested, and prepared for deployment.
 
+Live demo:
+
+- [https://leksgodev.github.io/autoservice-dashboard/](https://leksgodev.github.io/autoservice-dashboard/)
+
 ## Highlights
 
 - Operations-focused dashboard with realistic internal-tool structure
