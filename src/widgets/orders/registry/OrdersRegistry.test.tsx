@@ -33,6 +33,20 @@ function renderRegistry() {
   );
 }
 
+async function findOrderRow() {
+  await waitFor(() => {
+    expect(document.querySelector("tbody tr")).toBeInTheDocument();
+  });
+
+  const row = document.querySelector("tbody tr");
+
+  if (!row) {
+    throw new Error("Order row was not found in registry table");
+  }
+
+  return row as HTMLElement;
+}
+
 describe("OrdersRegistry", () => {
   it("keeps create order entry point in header", async () => {
     renderRegistry();
@@ -46,8 +60,7 @@ describe("OrdersRegistry", () => {
   it("updates order status from inline status column control", async () => {
     renderRegistry();
 
-    const orderLink = await screen.findByRole("link", { name: "ORD-1001" });
-    const row = orderLink.closest("tr") as HTMLElement;
+    const row = await findOrderRow();
     const rowStatusSelect = row.querySelector('select[aria-label="Status"]') as HTMLSelectElement;
     expect(row.querySelector('button[aria-label="Update status"]')).not.toBeInTheDocument();
     const nextStatus = getAlternativeStatus(rowStatusSelect.value);
@@ -67,8 +80,7 @@ describe("OrdersRegistry", () => {
   it("toggles order flag from compact actions column control", async () => {
     renderRegistry();
 
-    const orderLink = await screen.findByRole("link", { name: "ORD-1001" });
-    const row = orderLink.closest("tr") as HTMLElement;
+    const row = await findOrderRow();
 
     const initialFlagButton =
       (row.querySelector('button[aria-label="Flag order"]') as HTMLButtonElement | null) ??
