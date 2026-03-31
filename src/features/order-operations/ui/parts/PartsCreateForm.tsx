@@ -86,7 +86,7 @@ export const PartsCreateForm = ({ model }: PartsCreateFormProps) => {
           type="button"
           className={actionButtonClassName}
           onClick={model.handleAddPart}
-          disabled={model.isBusy || model.jobOptions.length === 0}
+          disabled={model.isBusy || !model.canAddPart}
         >
           {model.addPartMutation.isPending
             ? t("pages.orderDetails.controls.parts.actions.addPending")

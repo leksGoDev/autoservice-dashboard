@@ -145,6 +145,13 @@ export const useServicePartsControlsModel = ({
   }, [orderId, removePartMutation, resetFeedback]);
 
   const isBusy = addPartMutation.isPending || updatePartQuantityMutation.isPending || removePartMutation.isPending;
+  const canAddPart =
+    partName.trim().length > 0 &&
+    partJobId.trim().length > 0 &&
+    Number.isInteger(Number(partQuantity)) &&
+    Number(partQuantity) > 0 &&
+    Number.isFinite(Number(partUnitPrice)) &&
+    Number(partUnitPrice) > 0;
   const currentError = addPartMutation.error ?? updatePartQuantityMutation.error ?? removePartMutation.error;
   const errorMessage = currentError
     ? getMutationErrorMessage(currentError, t("pages.orderDetails.controls.errors.partsFallback") as string)
@@ -172,6 +179,7 @@ export const useServicePartsControlsModel = ({
     setPartQuantities,
     jobOptions,
     isBusy,
+    canAddPart,
     addPartMutation,
     updatePartQuantityMutation,
     removePartMutation,
