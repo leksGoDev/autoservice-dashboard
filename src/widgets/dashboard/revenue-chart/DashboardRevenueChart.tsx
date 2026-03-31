@@ -6,12 +6,12 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
+import { MeasuredChart } from "@/shared/ui/MeasuredChart";
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
 type DashboardRevenueChartProps = {
@@ -34,9 +34,9 @@ export const DashboardRevenueChart = ({ data }: DashboardRevenueChartProps) => {
       description={t("dashboard.revenueChart.description")}
       className="min-h-[320px]"
     >
-      <div className="h-[240px] min-w-0 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+      <MeasuredChart className="h-[240px] min-w-0 w-full" fallbackHeight={240}>
+        {({ width, height }) => (
+          <AreaChart width={width} height={height} data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="dashboardRevenueGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#6ba4ff" stopOpacity={0.45} />
@@ -73,8 +73,8 @@ export const DashboardRevenueChart = ({ data }: DashboardRevenueChartProps) => {
               fill="url(#dashboardRevenueGradient)"
             />
           </AreaChart>
-        </ResponsiveContainer>
-      </div>
+        )}
+      </MeasuredChart>
     </WidgetCard>
   );
 };

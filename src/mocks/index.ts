@@ -7,6 +7,7 @@ export async function enableMocking() {
 
   await worker.start({
     onUnhandledRequest: "bypass",
+    quiet: true,
     serviceWorker: {
       url: "/mockServiceWorker.js",
     },

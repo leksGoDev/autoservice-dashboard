@@ -7,12 +7,12 @@ import {
   BarChart,
   CartesianGrid,
   Legend,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
+import { MeasuredChart } from "@/shared/ui/MeasuredChart";
 import { WidgetCard } from "@/shared/ui/WidgetCard";
 
 type DashboardOrdersTrendProps = {
@@ -35,9 +35,9 @@ export const DashboardOrdersTrend = ({ data }: DashboardOrdersTrendProps) => {
       description={t("dashboard.ordersTrend.description")}
       className="min-h-[320px]"
     >
-      <div className="h-[240px] min-w-0 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+      <MeasuredChart className="h-[240px] min-w-0 w-full" fallbackHeight={240}>
+        {({ width, height }) => (
+          <BarChart width={width} height={height} data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid stroke="rgba(154, 164, 178, 0.12)" strokeDasharray="3 3" />
             <XAxis
               dataKey="date"
@@ -57,8 +57,8 @@ export const DashboardOrdersTrend = ({ data }: DashboardOrdersTrendProps) => {
               radius={[6, 6, 0, 0]}
             />
           </BarChart>
-        </ResponsiveContainer>
-      </div>
+        )}
+      </MeasuredChart>
     </WidgetCard>
   );
 };

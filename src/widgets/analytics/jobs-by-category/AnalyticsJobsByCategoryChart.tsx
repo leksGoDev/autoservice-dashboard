@@ -7,11 +7,12 @@ import {
   BarChart,
   CartesianGrid,
   Legend,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+
+import { MeasuredChart } from "@/shared/ui/MeasuredChart";
 
 type AnalyticsJobsByCategoryChartProps = {
   data: JobsByCategoryPoint[];
@@ -33,9 +34,9 @@ export const AnalyticsJobsByCategoryChart = ({ data }: AnalyticsJobsByCategoryCh
       description={t("pages.analytics.jobsByCategory.description")}
       className="min-h-[320px]"
     >
-      <div className="h-[240px] min-w-0 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+      <MeasuredChart className="h-[240px] min-w-0 w-full" fallbackHeight={240}>
+        {({ width, height }) => (
+          <BarChart width={width} height={height} data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid stroke="rgba(154, 164, 178, 0.12)" strokeDasharray="3 3" />
             <XAxis dataKey="category" tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
             <YAxis tick={{ fill: "#9aa4b2", fontSize: 12 }} tickLine={false} axisLine={false} />
@@ -45,8 +46,8 @@ export const AnalyticsJobsByCategoryChart = ({ data }: AnalyticsJobsByCategoryCh
             <Bar dataKey="inProgress" stackId="jobs" name={t("pages.analytics.jobsByCategory.inProgress")} fill="#f59e0b" />
             <Bar dataKey="completed" stackId="jobs" name={t("pages.analytics.jobsByCategory.completed")} fill="#22c55e" />
           </BarChart>
-        </ResponsiveContainer>
-      </div>
+        )}
+      </MeasuredChart>
     </WidgetCard>
   );
 };

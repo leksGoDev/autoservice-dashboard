@@ -68,6 +68,7 @@ export function initializeI18n() {
     resources,
     lng: detectInitialLocale(),
     fallbackLng: DEFAULT_LOCALE,
+    showSupportNotice: false,
     interpolation: {
       escapeValue: false,
     },
