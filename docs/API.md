@@ -35,7 +35,7 @@ The data layer should:
 - all network access goes through a shared API client
 - UI components must not call `fetch` directly
 - TanStack Query owns server state
-- Zustand must not store server-derived data
+- server-derived data must not be copied into ad hoc client-side stores
 - API response shapes may be mapped into frontend-friendly models when useful
 - MSW must mirror the same endpoint contracts used by the frontend
 - API and mocks must not return translated interface labels
@@ -400,7 +400,7 @@ These scenarios help exercise loading, error, and empty states across the UI.
 The data layer should avoid:
 
 - direct network logic in page components
-- storing server state in Zustand
+- storing server state outside TanStack Query without a clear need
 - tightly coupling UI rendering to raw transport DTOs
 - overcomplicated repository-like abstractions without frontend value
 - creating different contracts for mock API and future real API

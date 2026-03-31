@@ -33,7 +33,6 @@ Use the following documents as the source of truth:
 - TanStack Query
 - MSW
 - React Hook Form + Zod
-- Zustand
 - TanStack Table
 - Recharts
 - Tailwind CSS
@@ -47,7 +46,7 @@ Use the following documents as the source of truth:
 - Keep pages thin and compose them from widgets and features
 - Follow the documented architecture and layer boundaries
 - Use TanStack Query for all server state
-- Do not store server data in Zustand
+- Do not duplicate server data in separate client-side stores
 - Do not call `fetch` directly from UI components
 - Keep API logic inside the data layer
 - Follow the design system for UI consistency

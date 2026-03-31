@@ -408,13 +408,13 @@ Examples:
 - analytics data
 - mutations and cache invalidation
 
-Server state must not be duplicated in Zustand.
+Server state must not be duplicated in separate client-side stores.
 
 ---
 
 ### Client UI state
 
-Zustand is used only for UI and interaction state.
+Client UI and interaction state should stay local unless it must be shared across distant parts of the app.
 
 Examples:
 
@@ -422,6 +422,12 @@ Examples:
 - local board view mode
 - temporary UI preferences
 - non-URL toggles
+
+Preferred placement:
+
+- component state for local concerns
+- URL state for navigable filters and route-driven state
+- a dedicated client store only if a real shared UI need appears
 
 ---
 
@@ -505,7 +511,7 @@ The architecture should avoid:
 
 - monolithic pages with all logic inside one file
 - raw network requests inside page components
-- storing server data in Zustand
+- storing server data outside TanStack Query without a clear need
 - shared components containing business logic
 - overengineered abstractions that add no frontend value
 - backend-oriented complexity outside the scope of the project

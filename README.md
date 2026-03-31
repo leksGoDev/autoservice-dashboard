@@ -41,7 +41,6 @@ The application is focused on real frontend architecture and product flows rathe
 - TanStack Query
 - MSW
 - React Hook Form + Zod
-- Zustand
 - TanStack Table
 - Recharts
 - Tailwind CSS
