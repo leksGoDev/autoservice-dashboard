@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { RotateCcw } from "lucide-react";
 
 import { CustomerForm } from "@/features/customer-management/ui/CustomerForm";
 import { useI18n } from "@/shared/i18n/use-i18n";
@@ -50,9 +51,10 @@ export const CustomerDetailsOverviewContent = ({
         action={
           <button
             type="button"
-            className={primaryActionButtonClassName}
+            className={`${primaryActionButtonClassName} gap-1.5`}
             onClick={() => model.query.refetch()}
           >
+            <RotateCcw size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
             {t("common.retry")}
           </button>
         }

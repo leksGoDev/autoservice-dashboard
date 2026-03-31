@@ -1,4 +1,5 @@
 import { DataState } from "@/shared/ui/DataState";
+import { RotateCcw } from "lucide-react";
 import { PaginationShell } from "@/shared/ui/PaginationShell";
 import { primaryActionButtonClassName } from "@/shared/ui/class-names";
 import { useI18n } from "@/shared/i18n/use-i18n";
@@ -24,9 +25,10 @@ export const AppointmentsSchedulingContent = ({ model }: AppointmentsSchedulingC
         action={
           <button
             type="button"
-            className={primaryActionButtonClassName}
+            className={`${primaryActionButtonClassName} gap-1.5`}
             onClick={() => model.listQuery.refetch()}
           >
+            <RotateCcw size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
             {t("common.retry")}
           </button>
         }

@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { RotateCcw } from "lucide-react";
 
 import { DataState } from "@/shared/ui/DataState";
 import { primaryActionButtonClassName } from "@/shared/ui/class-names";
@@ -36,9 +37,10 @@ export const DashboardOverviewContent = ({ overviewQuery }: DashboardOverviewCon
         action={
           <button
             type="button"
-            className={primaryActionButtonClassName}
+            className={`${primaryActionButtonClassName} gap-1.5`}
             onClick={() => overviewQuery.refetch()}
           >
+            <RotateCcw size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
             {t("common.retry")}
           </button>
         }

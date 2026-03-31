@@ -1,4 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { RotateCcw } from "lucide-react";
 import type { VehicleDetailsViewModel } from "../hooks/use-vehicle-details-model";
 import { VehicleDetailsHistoryCard } from "./VehicleDetailsHistoryCard";
 import { VehicleDetailsInfoCard } from "./VehicleDetailsInfoCard";
@@ -24,9 +25,10 @@ export const VehicleDetailsContent = ({ model }: VehicleDetailsContentProps) => 
         <span>{t("pages.vehicleDetails.states.error")}</span>
         <button
           type="button"
-          className="justify-self-start rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
+          className="inline-flex justify-self-start items-center gap-1.5 rounded-[10px] border border-[rgba(107,164,255,0.4)] bg-[rgba(107,164,255,0.18)] px-3 py-2 text-[var(--color-text-primary)]"
           onClick={model.refetchAll}
         >
+          <RotateCcw size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
           {t("common.retry")}
         </button>
       </section>

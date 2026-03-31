@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { RotateCcw } from "lucide-react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { primaryActionButtonClassName } from "@/shared/ui/class-names";
@@ -50,9 +51,10 @@ export const OrdersRegistryContent = ({ model }: OrdersRegistryContentProps) => 
         action={
           <button
             type="button"
-            className={primaryActionButtonClassName}
+            className={`${primaryActionButtonClassName} gap-1.5`}
             onClick={() => model.listQuery.refetch()}
           >
+            <RotateCcw size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
             {t("common.retry")}
           </button>
         }

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CirclePlus } from "lucide-react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { headerPrimaryActionButtonClassName } from "@/shared/ui/class-names";
@@ -19,8 +20,9 @@ export const OrdersRegistryHeader = () => {
 
         <Link
           to="/orders/new"
-          className={headerPrimaryActionButtonClassName}
+          className={`${headerPrimaryActionButtonClassName} gap-1.5`}
         >
+          <CirclePlus size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
           {t("pages.orders.toolbar.create")}
         </Link>
       </div>

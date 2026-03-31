@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CirclePlus } from "lucide-react";
 
 import { CustomerForm } from "@/features/customer-management/ui/CustomerForm";
 import { useI18n } from "@/shared/i18n/use-i18n";
@@ -27,9 +28,10 @@ export const CustomersRegistry = () => {
 
           <button
             type="button"
-            className={headerPrimaryActionButtonClassName}
+            className={`${headerPrimaryActionButtonClassName} gap-1.5`}
             onClick={() => setIsCreateOpen((value) => !value)}
           >
+            {!isCreateOpen ? <CirclePlus size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" /> : null}
             {isCreateOpen ? t("pages.customers.form.cancelAction") : t("pages.customers.actions.create")}
           </button>
         </div>

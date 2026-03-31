@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 import { useI18n } from "@/shared/i18n/use-i18n";
 
@@ -24,8 +25,9 @@ export const OrderDetailsHeader = ({ orderId }: OrderDetailsHeaderProps) => {
         </div>
         <Link
           to="/orders"
-          className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-4 text-sm font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
+          className="inline-flex h-10 items-center justify-center gap-1.5 rounded-[10px] border border-[rgba(107,164,255,0.35)] bg-[rgba(107,164,255,0.14)] px-4 text-sm font-semibold text-[var(--color-accent-light-blue)] transition-colors hover:bg-[rgba(107,164,255,0.2)]"
         >
+          <ArrowLeft size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
           {t("pages.orderDetails.back")}
         </Link>
       </div>

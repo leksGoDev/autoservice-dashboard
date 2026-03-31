@@ -1,4 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { RotateCcw } from "lucide-react";
 import { primaryActionButtonClassName } from "@/shared/ui/class-names";
 import { DataState } from "@/shared/ui/DataState";
 
@@ -36,9 +37,10 @@ export const VehiclesErrorState = ({ onRetry }: VehiclesErrorStateProps) => {
       action={
         <button
           type="button"
-          className={primaryActionButtonClassName}
+          className={`${primaryActionButtonClassName} gap-1.5`}
           onClick={onRetry}
         >
+          <RotateCcw size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
           {t("common.retry")}
         </button>
       }

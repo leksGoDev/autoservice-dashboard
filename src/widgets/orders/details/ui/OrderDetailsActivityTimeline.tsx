@@ -1,4 +1,5 @@
 import type { OrderActivityItem } from "@/entities/order/model/types";
+import { RotateCcw } from "lucide-react";
 import { useI18n } from "@/shared/i18n/use-i18n";
 import { primaryActionButtonClassName } from "@/shared/ui/class-names";
 import { formatOrderActivityTimestamp } from "../model/presentation";
@@ -30,9 +31,10 @@ export const OrderDetailsActivityTimeline = ({
         <p className="m-0 text-sm text-[#fecaca]">{t("pages.orderDetails.states.activityError")}</p>
         <button
           type="button"
-          className={`justify-self-start ${primaryActionButtonClassName}`}
+          className={`justify-self-start ${primaryActionButtonClassName} gap-1.5`}
           onClick={onRetry}
         >
+          <RotateCcw size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" />
           {t("common.retry")}
         </button>
       </div>

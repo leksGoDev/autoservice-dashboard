@@ -1,4 +1,5 @@
 import { useI18n } from "@/shared/i18n/use-i18n";
+import { CirclePlus } from "lucide-react";
 import { headerPrimaryActionButtonClassName } from "@/shared/ui/class-names";
 import type { VehiclesRegistryModel } from "../hooks/use-vehicles-registry-model";
 import { VehiclesRegistryToolbar } from "./VehiclesRegistryToolbar";
@@ -37,9 +38,10 @@ export const VehiclesRegistryHeader = ({
 
         <button
           type="button"
-          className={headerPrimaryActionButtonClassName}
+          className={`${headerPrimaryActionButtonClassName} gap-1.5`}
           onClick={onToggleCreate}
         >
+          {!isCreateOpen ? <CirclePlus size={14} strokeWidth={2} aria-hidden className="shrink-0 opacity-90" /> : null}
           {isCreateOpen ? t("pages.vehicles.form.cancelAction") : t("pages.vehicles.actions.create")}
         </button>
       </div>
