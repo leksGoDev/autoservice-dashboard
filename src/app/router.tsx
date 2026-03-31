@@ -113,4 +113,4 @@ export const appRoutes = [
   },
 ];
 
-export const router = createBrowserRouter(appRoutes);
+export const router = createBrowserRouter(appRoutes, { basename: import.meta.env.BASE_URL });

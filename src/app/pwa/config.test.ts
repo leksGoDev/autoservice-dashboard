@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { pwaManifest, pwaWorkbox } from "./config";
+import { createPwaManifest, pwaManifest, pwaWorkbox } from "./config";
 
 describe("pwa manifest config", () => {
   it("uses installable metadata and standalone mode", () => {
@@ -15,6 +15,15 @@ describe("pwa manifest config", () => {
     const iconSizes = pwaManifest.icons.map((icon) => icon.sizes);
     expect(iconSizes).toContain("192x192");
     expect(iconSizes).toContain("512x512");
+  });
+
+  it("allows rebasing manifest paths for subpath deployments", () => {
+    const manifest = createPwaManifest("/autoservice-dashboard/");
+
+    expect(manifest.start_url).toBe("/autoservice-dashboard/");
+    expect(manifest.scope).toBe("/autoservice-dashboard/");
+    expect(manifest.icons[0]?.src).toBe("/autoservice-dashboard/pwa-icon-192.png");
+    expect(manifest.icons[1]?.src).toBe("/autoservice-dashboard/pwa-icon-512.png");
   });
 });
 

@@ -2,17 +2,20 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
-import { pwaManifest, pwaWorkbox } from "./src/app/pwa/config";
+import { createPwaManifest, pwaWorkbox } from "./src/app/pwa/config";
+
+const githubPagesBase = "/autoservice-dashboard/";
 
 export default defineConfig({
+  base: githubPagesBase,
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
       registerType: "prompt",
       manifest: {
-        ...pwaManifest,
-        icons: [...pwaManifest.icons],
+        ...createPwaManifest(githubPagesBase),
+        icons: [...createPwaManifest(githubPagesBase).icons],
       },
       workbox: {
         ...pwaWorkbox,
